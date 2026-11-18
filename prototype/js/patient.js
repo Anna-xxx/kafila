@@ -18,7 +18,9 @@
   function callBy(c) {
     const h = c.history.find((x) => x.state === "notified"), base = h ? Date.parse(h.at) : Store.now();
     const hr = (new Date(base).getUTCHours() + 4) % 24;
-    if (hr >= 16 || hr < 6) return { late: true, ms: null, base };
+    if (hr >= 16) return { late: true, ms: null, base };
+    // Before 06:00 GST: same day, before 10:00 (medic M1).
+    if (hr < 6) { const d = new Date(base + 4 * 3600000); return { late: false, early: true, ms: Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), 6), base }; }
     return { late: false, ms: Math.ceil((base + 4 * 3600000) / 3600000) * 3600000, base };
   }
   const callByText = (c, lang) => { const b = callBy(c); return b.late ? (lang === "ar" ? "صباح الغد قبل الساعة 10:00" : "tomorrow morning, before 10:00") : (lang === "ar" ? "اليوم، قبل الساعة " : "today, before ") + fmtTime(b.ms); };
@@ -34,12 +36,12 @@
   const NEXT = {
     colonoscopy: null, // uses I18N steps
     remeasure_then_doctor_today: {
-      en: ["A doctor from your centre calls you", "Sit quietly and rest. Keep your phone with you and the sound on",
-        "If you have a blood pressure monitor, measure again after 5 minutes of rest. No monitor? That's fine",
+      en: ["A doctor from your health centre will call you from 02 000 0000", "Sit quietly and rest, and avoid heavy work until the doctor calls. Keep your phone with you and the sound on",
+        "If you have a blood pressure monitor, measure again after 5 minutes of rest. No monitor? That's fine, you don't need to find one",
         "Even if the new reading is lower, keep the doctor's call. The doctor needs both numbers",
         "Do not take extra doses of your medicine, or anyone else's, unless a doctor tells you to"],
-      ar: ["يتصل بك طبيب من مركزك", "اجلس بهدوء واسترح. أبقِ هاتفك معك والصوت مفتوحًا",
-        "إذا كان لديك جهاز لقياس الضغط، قِس مرة أخرى بعد 5 دقائق من الراحة. لا يوجد جهاز؟ لا بأس",
+      ar: ["سيتصل بك طبيب من مركزك الصحي من الرقم 02 000 0000", "اجلس بهدوء واسترح، وتجنّب الأعمال المجهِدة حتى يتصل الطبيب. أبقِ هاتفك معك والصوت مفتوحًا",
+        "إذا كان لديك جهاز لقياس الضغط، قِس مرة أخرى بعد 5 دقائق من الراحة. لا يوجد جهاز؟ لا بأس، لا داعي للبحث عن جهاز",
         "حتى لو كانت القراءة الجديدة أقل، انتظر اتصال الطبيب. يحتاج الطبيب إلى الرقمين",
         "لا تأخذ جرعات إضافية من دوائك، ولا دواء شخص آخر، إلا إذا طلب منك الطبيب ذلك"]
     },
@@ -71,15 +73,12 @@
       en: { q: "One quick check so nothing is missed: what is the next step?", o: ["A colposcopy with a gynaecologist", "Repeat the HPV test in 5 years", "Nothing for now"], ok: "Exactly. A colposcopy looks closely at the cervix.", fix: "Not quite. The next step is a colposcopy with a gynaecologist." },
       ar: { q: "سؤال سريع حتى لا يفوتنا شيء: ما هي الخطوة التالية؟", o: ["تنظير عنق الرحم مع طبيبة نسائية", "إعادة فحص HPV بعد 5 سنوات", "لا شيء الآن"], ok: "بالضبط. تنظير عنق الرحم ينظر عن قرب إلى عنق الرحم.", fix: "ليس تمامًا. الخطوة التالية هي تنظير عنق الرحم مع طبيبة نسائية." }
     },
-    remeasure_then_doctor_today: {
-      en: { q: "To check we explained it well: what happens next?", o: ["A doctor calls me today", "I book a routine visit next month", "Nothing for now"], ok: "Exactly. Keep your phone near you. Chest pain or weakness: call 998.", fix: "Not quite. Because the reading is very high, a doctor calls you today." },
-      ar: { q: "للتأكد من أننا شرحنا جيدًا: ماذا سيحدث بعد ذلك؟", o: ["سيتصل بي طبيب اليوم", "أحجز زيارة عادية الشهر القادم", "لا شيء الآن"], ok: "بالضبط. أبقِ هاتفك قريبًا. ألم في الصدر أو ضعف: اتصل بالرقم 998.", fix: "ليس تمامًا. لأن القراءة مرتفعة جدًا، سيتصل بك طبيب اليوم." }
-    }
+    remeasure_then_doctor_today: null // no quiz on the urgent card (medic M2): the doctor's call is the check
   };
   // Synthetic slots per pathway. Urgent BP and "see your GP" results get no online booking.
   const SLOTS = {
     colonoscopy: {
-      title: { en: "Gastroenterology slots in your network", ar: "مواعيد الجهاز الهضمي في شبكتك" }, why: "auto-referral for FIT+",
+      title: { en: "Colonoscopy slot", ar: "موعد تنظير القولون" }, sub: { en: "The clinic confirms the slot and checks your medicines first.", ar: "يؤكد المركز الموعد ويراجع أدويتكِ أولًا." }, why: "auto-referral for FIT+",
       list: [
         { id: "s1", doc: "Dr. Amna Al Mansoori", f: true, clinic: "Khalifa City GI Centre", km: 4, day: "2026-11-21", time: "10:00", wkd: true, pay: { "Government plan (demo)": 0, Basic: 150, Enhanced: 50 } },
         { id: "s2", doc: "Dr. Omar Khalil", f: false, clinic: "Khalifa City GI Centre", km: 4, day: "2026-11-19", time: "09:30", wkd: false, pay: { "Government plan (demo)": 0, Basic: 150, Enhanced: 50 } },
@@ -170,7 +169,7 @@
   // Sender = the patient's own clinic; doctor = the case's GP, or for urgent calls the duty doctor from the roster (Anna 18 Nov).
   const isUrgent = (c) => c.result.level === "L3" || c.result.level === "L4";
   const clinicOf = (c, lang) => nm(c.clinic || "Khalifa City Family Health Centre", lang);
-  const CLINIC_PHONE = "02 000 0142";
+  const CLINIC_PHONE = "02 000 0000";
   function doctorOf(c, lang) {
     if (isUrgent(c)) {
       const doc = (c.callSlot && c.callSlot.doc) || ((callWindows(c)[0] || {}).doc) || (/^GP/.test(c.owner || "") ? c.owner : null);
@@ -193,7 +192,8 @@
   // Arabic texts are written to a woman by default; for a man, switch the common verb forms (machine draft).
   const MASC = [["افتحي", "افتح"], ["احجزي", "احجز"], ["اختاري", "اختر"], ["اسألي", "اسأل"], ["اضغطي", "اضغط"], ["ابدئي", "ابدأ"], ["رتّبي", "رتّب"], ["أحضري", "أحضر"],
     ["اتبعي", "اتبع"], ["اذهبي", "اذهب"], ["انتظري", "انتظر"], ["اقرئي", "اقرأ"], ["تحدثي", "تحدث"], ["توافقين", "توافق"], ["أرسلي", "أرسل"], ["تدفعينه", "تدفعه"],
-    ["فهمتِ", "فهمت"], ["قلقة", "قلق"], ["خائفة", "خائف"], ["تحتاجين", "تحتاج"], ["اكتبي", "اكتب"], ["شعرتِ", "شعرت"], ["افتحيها", "افتحها"], ["اتّبعي", "اتّبع"], ["تناولي", "تناول"], ["تأكدي", "تأكد"], ["كِ", "ك"]];
+    ["فهمتِ", "فهمت"], ["قلقة", "قلق"], ["خائفة", "خائف"], ["تحتاجين", "تحتاج"], ["اكتبي", "اكتب"], ["شعرتِ", "شعرت"], ["افتحيها", "افتحها"], ["اتّبعي", "اتّبع"], ["تناولي", "تناول"], ["تأكدي", "تأكد"],
+    ["أخبريها", "أخبرها"], ["كنتِ", "كنت"], ["تتناولين", "تتناول"], ["توقفي", "توقف"], ["تغيّريه", "تغيّره"], ["ستحصلين", "ستحصل"], ["تقودي", "تقُد"], ["تحدّثي", "تحدّث"], ["تشعرين", "تشعر"], ["تريدين", "تريد"], ["كِ", "ك"]];
   const gx = (html, c, lang) => lang === "ar" && c.sex === "male" ? MASC.reduce((h, [f, m]) => h.split(f).join(m), html) : html;
   // Patient sees one plain sentence. Exact guideline names stay on the staff case page and the How it works page.
   const PLAIN_SRC_ONE = { en: "Based on your clinic's screening rules, which follow international medical guidelines.", ar: "بناءً على قواعد الفحص في عيادتك، وهي تتبع الإرشادات الطبية الدولية." };
@@ -331,7 +331,7 @@
       if (arg !== 0) {
         c.teachFlag = true; if (!c.callback || c.humanDone) { c.callback = new Date(Store.now()).toISOString(); c.humanDone = false; }
         Store.log(c.id, "System", "Teach-back corrected (answered “" + tb.o[arg] + "”). Nurse call task to check understanding, due within 1 working day.", "human");
-        push(c, { t: "qr", opts: [["nurse", lang === "ar" ? "تحدثي مع الممرضة ليلى" : "Talk to Nurse Layla"], ["teachgo", lang === "ar" ? "متابعة" : "Continue"]] });
+        push(c, { t: "qr", opts: [["nurse", lang === "ar" ? "التحدث مع الممرضة ليلى" : "Talk to Nurse Layla"], ["teachgo", slotsFor(c) ? (lang === "ar" ? "فهمت، لنحجز" : "I understand, let's book") : (lang === "ar" ? "متابعة" : "Continue")]] });
       } else if (slotsFor(c)) askBarriers(c);
       else push(c, { t: "in", text: t.urgentText, tag: "prepared" });
     }
@@ -424,10 +424,11 @@
   }
   function teachFor(c, lang) {
     const T = I18N[lang], p = TEACH[pathway(c)];
+    if (p === null && pathway(c) !== "colonoscopy") return null;
     if (p) return p[lang] || p.en;
     return { q: T.teach, o: T.teachOpts, ok: T.teachOk, fix: T.teachFix };
   }
-  function askTeach(c, lang) { const tb = teachFor(c, lang); push(c, { t: "in", text: tb.q, tag: "prepared" }); push(c, { t: "qr", opts: tb.o.map((o, i) => ["teach", o, i]) }); }
+  function askTeach(c, lang) { const tb = teachFor(c, lang); if (!tb) { push(c, { t: "in", text: I18N[lang].urgentText, tag: "prepared" }); return; } push(c, { t: "in", text: tb.q, tag: "prepared" }); push(c, { t: "qr", opts: tb.o.map((o, i) => ["teach", o, i]) }); }
   function askBarriers(c) { push(c, { t: "in", key: "barrierAsk" }); push(c, { t: "multi", sel: [] }); }
 
   function handleFlag(c, r) {
@@ -508,8 +509,10 @@
     if (!c.slot) return [];
     const appt = Date.parse(c.slot.day + "T" + c.slot.time + ":00+04:00"), gi = pathway(c) === "colonoscopy";
     return [
-      [appt - 2 * Store.DAY, "r2", gi ? (lang === "ar" ? "تذكير: موعد تنظير القولون بعد يومين. ابدئي التحضير غدًا حسب التعليمات." : "Reminder: your colonoscopy is in 2 days. Start the prep tomorrow as in the instructions.") : (lang === "ar" ? "تذكير: موعدك بعد يومين." : "Reminder: your appointment is in 2 days.")],
-      [appt - 1 * Store.DAY, "r1", gi ? (lang === "ar" ? "غدًا موعد تنظير القولون. اليوم، اتّبعي تعليمات المركز للأكل والشرب وتناولي شراب التحضير في الأوقات المحددة. تأكدي أن شخصًا بالغًا سيرافقكِ إلى المنزل." : "Tomorrow is your colonoscopy. Today, follow your clinic's food and drink instructions and take the prep drink at the times they gave you. Make sure an adult can take you home.") : (lang === "ar" ? "موعدك غدًا. أحضري الهوية." : "Your appointment is tomorrow. Bring your ID.")],
+      // Colonoscopy (medic F8): diet 3 days before, prep drink the day before, always "as your clinic told you". No foods, times or doses.
+      gi ? [appt - 3 * Store.DAY, "r3", lang === "ar" ? "تذكير: موعد تنظير القولون بعد 3 أيام. ابدئي اليوم تعليمات النظام الغذائي من المركز، كما أخبركِ المركز." : "Reminder: your colonoscopy is in 3 days. Start the clinic's diet instructions today, as your clinic told you."]
+        : [appt - 2 * Store.DAY, "r2", lang === "ar" ? "تذكير: موعدك بعد يومين." : "Reminder: your appointment is in 2 days."],
+      [appt - 1 * Store.DAY, "r1", gi ? (lang === "ar" ? "غدًا موعد تنظير القولون. اليوم، ابدئي شراب التحضير في الوقت الذي حدده المركز، كما أخبركِ المركز. تأكدي أن شخصًا بالغًا سيرافقكِ إلى المنزل." : "Tomorrow is your colonoscopy. Today, start the prep drink at the time the clinic gave you, as your clinic told you. Make sure an adult can take you home.") : (lang === "ar" ? "موعدك غدًا. أحضري الهوية." : "Your appointment is tomorrow. Bring your ID.")],
       [appt - 3 * 3600000, "r0", lang === "ar" ? "موعدك اليوم الساعة " + c.slot.time + ". هل تحتاجين مساعدة في الوصول؟" : "Your appointment is today at " + c.slot.time + ". Need help getting there?"]
     ].map(([at, k, text]) => ({ at, k, text }));
   }
@@ -552,11 +555,12 @@
       <div class="acard"><b>${esc(T.nextTitle)}</b>
         <ol class="steps">${steps.map((s, i) => `<li><span class="d ${i < done ? "on" : ""}">${i < done ? "✓" : i + 1}</span><span>${esc(s)}</span>${whenFor(c, lang, i, by)}</li>`).join("")}</ol>
         ${callToday ? `<details class="srcs howto"><summary>${lang === "ar" ? "كيف أقيس؟" : "How to measure"}</summary>
-          <div class="small">${lang === "ar" ? "قِس مرتين بفارق دقيقة: الظهر مسنود، القدمان على الأرض، الذراع مرتاحة بمستوى الصدر، دون كلام. لا يوجد جهاز؟ لا داعي للبحث عن جهاز. سيقرر الطبيب إن كان يلزم القياس مرة أخرى وأين." : "Take two readings, one minute apart: back supported, feet flat, arm resting at chest level, no talking. No monitor? You don't need to find one. The doctor will decide if and where to measure again."}</div></details>
+          <ol class="small" style="margin:4px 0 0;padding-inline-start:18px">${(lang === "ar" ? ["ادخل الحمّام أولًا إذا احتجت. اجلس 5 دقائق، الظهر مسنود، القدمان على الأرض، الساقان غير متقاطعتين.", "ضع الكُمّ على أعلى ذراعك مباشرة على الجلد، فوق المرفق بإصبعين تقريبًا. أرح ذراعك على طاولة بحيث يكون الكُمّ بمستوى القلب (منتصف الصدر).", "ابقَ ساكنًا، دون كلام أو استخدام الهاتف. خذ قراءتين بفارق دقيقة، على الذراع نفسها.", "اكتب القراءتين والوقت لتخبر الطبيب بهما.", "إذا شربت قهوة أو شايًا ثقيلًا أو دخّنت أو مارست رياضة خلال آخر 30 دقيقة، قِس على أي حال وأخبر الطبيب.", "حتى لو كانت الأرقام أقل، انتظر اتصال الطبيب."] : ["Use the toilet first if you need to. Sit for 5 minutes, back supported, feet flat on the floor, legs uncrossed.", "Put the cuff on your bare upper arm, about 2 fingers above the elbow. Rest your arm on a table so the cuff is at heart level (middle of your chest).", "Stay still, no talking or using your phone. Take two readings, one minute apart, on the same arm.", "Write down both readings and the time, to tell the doctor.", "If you had coffee, strong tea, a cigarette or exercise in the last 30 minutes, measure anyway and tell the doctor.", "Even if the numbers are lower, keep the doctor's call."]).map((x) => `<li>${esc(x)}</li>`).join("")}</ol>
+          <div class="small" style="margin-top:4px">${lang === "ar" ? "لا يوجد جهاز؟ لا داعي للبحث عن جهاز. سيقرر الطبيب إن كان يلزم القياس مرة أخرى وأين." : "No monitor? You don't need to find one. The doctor will decide if and where to measure again."}</div></details>
+        <div class="fallback">${lang === "ar" ? `إذا لم يتصل بك طبيب ${callBy(c).late ? "حتى الساعة 10:00 صباح الغد" : "حتى الساعة " + fmtTime(callBy(c).ms)}: اتصل بمركزك الصحي على <a href="tel:020000000"><bdi class="nw">${CLINIC_LINE_AR}</bdi></a>.` : `If no doctor has called by ${callBy(c).late ? "10:00 tomorrow" : fmtTime(callBy(c).ms)}: call your health centre on <a href="tel:020000000" class="nw">${CLINIC_LINE}</a>.`}</div>
         <div class="greybox"><b>${lang === "ar" ? "اتصل بالرقم 998 الآن إذا لاحظت أيًّا مما يلي:" : "Call 998 now if you notice any of these:"}</b>
           <ul class="sym">${(lang === "ar" ? ["ألم أو ضغط في الصدر", "ضيق في التنفس", "صداع شديد مفاجئ", "تشوش الرؤية أو فقدانها", "ضعف أو تنميل أو ارتخاء في جانب واحد من الوجه أو الجسم", "صعوبة في الكلام أو الفهم", "ارتباك أو إغماء", "أو إذا شعرت فجأة أنك أسوأ بكثير"] : ["Chest pain or pressure", "Shortness of breath", "A sudden, severe headache", "Blurred vision or loss of vision", "Weakness, numbness or drooping on one side of the face or body", "Trouble speaking or understanding", "Confusion or fainting", "Or if you suddenly feel much worse"]).map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
-          <button class="btn danger block call998" data-act="e998">${ic("phone")} ${lang === "ar" ? "اتصل بالرقم 998" : "Call 998"}</button></div>
-        <div class="fallback">${lang === "ar" ? `إذا لم يتصل بك طبيب ${callBy(c).late ? "حتى الساعة 10:00 صباح الغد" : "حتى الساعة " + fmtTime(callBy(c).ms)}: اتصل بمركزك الصحي على <a href="tel:020000000"><bdi class="nw">${CLINIC_LINE_AR}</bdi></a>.` : `If no doctor has called by ${callBy(c).late ? "10:00 tomorrow" : fmtTime(callBy(c).ms)}: call your health centre on <a href="tel:020000000" class="nw">${CLINIC_LINE}</a>.`}</div>` : ""}
+          <button class="btn danger block call998" data-act="e998">${ic("phone")} ${lang === "ar" ? "اتصل بالرقم 998" : "Call 998"}</button></div>` : ""}
         <details class="srcs"><summary>${callToday ? (lang === "ar" ? "لماذا اليوم؟" : "Why today?") : lang === "ar" ? "كيف قررنا" : "How we decided"}</summary>
           <div class="small">${esc((PLAIN_SRC[r.test] || PLAIN_SRC.FIT)[lang] || "")}</div>
           <div class="tiny" style="margin-top:4px">${esc(T.disclaimer)}</div></details>
@@ -608,7 +612,7 @@
     const fcb = Store.fitClocks(c), by = fcb ? fcb.careBy : c.result.windowDays ? Date.parse(c.history[0].at) + c.result.windowDays * Store.DAY : null;
     let list = P.list.filter((s) => (!f.female || s.f) && (!f.weekend || s.wkd)).sort((a, b) => (a.day + a.time).localeCompare(b.day + b.time));
     if (f.near) list = list.slice().sort((a, b) => a.km - b.km);
-    return `<div class="acard"><b>${esc(P.title[lang] || P.title.en)}</b>${by ? `<div class="small">${esc(fill(fcb ? T.colBy : t.bookBy, { date: fmtDate(by, lang) }))}</div>` : ""}
+    return `<div class="acard"><b>${esc(P.title[lang] || P.title.en)}</b>${P.sub ? `<div class="small">${esc(P.sub[lang] || P.sub.en)}</div>` : ""}${by ? `<div class="small">${esc(fill(fcb ? T.colBy : t.bookBy, { date: fmtDate(by, lang) }))}</div>` : ""}
         <div class="row" style="margin-top:8px">${Object.entries(T.filters).map(([k, v]) => `<button class="chip ${f[k] ? "z-green" : "c-grey"}" data-act="filter" data-arg="${k}" aria-pressed="${!!f[k]}">${f[k] ? "✓ " : ""}${esc(v)}</button>`).join("")}</div></div>
       ${list.map((s) => `<button class="acard slot" data-act="pick" data-arg="${s.id}" style="text-align:start;cursor:pointer;width:100%;font:inherit;color:inherit">
         <b>${esc(fmtDate(Date.parse(s.day + "T" + s.time + ":00+04:00"), lang))} · ${s.time}</b>
@@ -630,7 +634,7 @@
       <div class="tiny">${esc(nm(c.slot.clinic, lang))} · ${c.slot.km} ${lang === "ar" ? "كم" : "km"}</div>
       <div class="small" style="margin-top:4px">${confirmed ? "✓ " + (lang === "ar" ? "مؤكد" : "Confirmed") : ic("clock") + " " + (lang === "ar" ? "تؤكد العيادة عادةً خلال يوم عمل واحد. سنراسلك." : "The clinic usually confirms within 1 working day. We'll message you.")}</div>
       <div class="row" style="margin-top:8px"><button class="btn sm" data-act="ics">${ic("cal")} ${lang === "ar" ? "أضف إلى التقويم" : "Add to calendar"}</button><button class="btn sm" data-act="change">${lang === "ar" ? "تغيير أو إلغاء" : "Change or cancel"}</button></div>
-      ${pathway(c) === "colonoscopy" ? `<div class="small" style="margin-top:8px"><b>${esc(I18N[lang].prep)}</b></div><ol class="small" style="margin:4px 0 0;padding-inline-start:18px">${t.prepSteps.map((s) => `<li>${esc(s)}</li>`).join("")}</ol>` : ""}</div>`;
+      ${pathway(c) === "colonoscopy" ? `<div class="small" style="margin-top:8px"><b>${esc(t.prepTitle)}</b></div><ol class="small" style="margin:4px 0 0;padding-inline-start:18px">${t.prepSteps.map((s) => `<li>${esc(s)}</li>`).join("")}</ol><div class="small" style="margin-top:4px">${esc(t.prepAsk)} <button class="btn sm" data-act="nurse">${lang === "ar" ? "التحدث مع الممرضة ليلى" : "Talk to Nurse Layla"}</button></div>` : ""}</div>`;
   }
   function mycaseTab(c, lang) {
     const T = I18N[lang], t = T.app;
@@ -648,7 +652,7 @@
         <div class="small"><b>${esc(t.youDo)}:</b> ${esc(todo)}</div></div>
       <div class="acard"><b>${esc(T.trackTitle)}</b><p class="tiny muted">${esc(T.trackSame || "")}</p><ol class="timeline">${T.trackSteps.map((st, i) => `<li><span class="dot ${isDone(i) ? "done" : i === cur ? "now" : ""}">${isDone(i) ? "✓" : i + 1}</span><div>${esc(st)}</div></li>`).join("")}</ol></div>
       ${c.slot ? apptCard(c, lang) : ""}
-      <div class="acard"><b>${esc(t.reminders)}</b>${sent.length || planned.length ? sent.map((r) => `<div class="small" style="margin-top:6px">${ic("clock")} ${esc(r.text)}</div>`).join("") + planned.map((r) => `<div class="small muted" style="margin-top:6px">${ic("clock")} ${esc(fmtDate(r.at, lang))} ${fmtTime(r.at)} · ${lang === "ar" ? "مخطط" : "planned"}</div>`).join("") : `<div class="small muted">${c.slot ? (lang === "ar" ? "لا توجد تذكيرات بعد. ستصلك قبل موعدك بيومين." : "No reminders yet. They start 2 days before your appointment.") : (lang === "ar" ? "لا توجد تذكيرات بعد. سنضيفها عند الحجز." : "No reminders yet. We'll add them when you book.")}</div>`}</div>
+      <div class="acard"><b>${esc(t.reminders)}</b>${sent.length || planned.length ? sent.map((r) => `<div class="small" style="margin-top:6px">${ic("clock")} ${esc(r.text)}</div>`).join("") + planned.map((r) => `<div class="small muted" style="margin-top:6px">${ic("clock")} ${esc(fmtDate(r.at, lang))} ${fmtTime(r.at)} · ${lang === "ar" ? "مخطط" : "planned"}</div>`).join("") : `<div class="small muted">${c.slot ? (pathway(c) === "colonoscopy" ? (lang === "ar" ? "لا توجد تذكيرات بعد. تبدأ قبل موعدكِ بثلاثة أيام." : "No reminders yet. They start 3 days before your appointment.") : lang === "ar" ? "لا توجد تذكيرات بعد. ستصلك قبل موعدك بيومين." : "No reminders yet. They start 2 days before your appointment.") : (lang === "ar" ? "لا توجد تذكيرات بعد. سنضيفها عند الحجز." : "No reminders yet. We'll add them when you book.")}</div>`}</div>
       <div class="row"><button class="btn sm" data-act="nurse">${esc(T.nurse)}</button><button class="btn sm" data-act="callme">${esc(T.callMe)}</button></div>
       <div style="margin-top:10px">${c.stopped ? `<span class="tiny">${lang === "ar" ? "الرسائل متوقفة. ستتصل بك المنسقة مرة واحدة." : "Messages stopped. The coordinator will call you once."}</span>` : `<button class="linkbtn" data-act="stopmsg">${lang === "ar" ? "إيقاف الرسائل" : "Stop messages"}</button>`}</div>`;
   }
@@ -687,7 +691,7 @@
     if (!o) return "";
     const pop = o !== lastOverlay ? " pop" : "";
     if (o === "sms") return `<div class="overlay lockscr${pop}"><div class="date">${esc(new Date(Store.now()).toLocaleDateString(lang === "ar" ? "ar-AE" : "en-GB", { weekday: "long", day: "numeric", month: "long", timeZone: "Asia/Dubai" }))}</div><div class="time" dir="ltr">${fmtTime(phoneNow(c))}</div>
-      <button class="notif slide-in" data-act="smsClose"><span class="n-ic sms">${ic("sms")}</span><span class="n-body"><span class="app"><span>Messages · ${esc(T.smsFrom)}</span><span>${lang === "ar" ? "الآن" : "now"}</span></span>${esc(T.sms)}</span></button>
+      <button class="notif slide-in" data-act="smsClose"><span class="n-ic sms">${ic("sms")}</span><span class="n-body"><span class="app"><span>Messages · ${esc(T.smsFrom)}</span><span>${lang === "ar" ? "الآن" : "now"}</span></span>${esc(fill(T.sms, { clinic: clinicOf(c, lang) }))}</span></button>
       <div class="lk-bottom"><span>${ic("phone")}</span><span class="lk-fp">${ic("fp")}</span><span>${ic("camera")}</span></div></div>`;
     if (o === "call") {
       const ans = ui().callAnswered;
@@ -874,5 +878,5 @@
     Store.save();
   }
   async function tourBook() { const c = persona(); if (c.slot) return; const P = slotsFor(c); if (!P) return; ui().sheet = P.list[0].id; await act("confirm"); ui().sheet = null; Store.save(); }
-  window.Patient = { callBy, render, toast, esc, fill, fmtDate, SLOTS, tourGo, tourBook, send };
+  window.Patient = { callBy, callByText, render, toast, esc, fill, fmtDate, SLOTS, tourGo, tourBook, send };
 })();

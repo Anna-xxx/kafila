@@ -61,6 +61,8 @@
   const callNote = (c) => c.state !== "closed" && c.callSlot && !c.callOutcome ? ` · ${c.callSlot.doc.replace(/^GP · /, "")} calls ${tGST(c.callSlot.start)}–${tGST(c.callSlot.end)}` : c.state !== "closed" && c.noRoster && !c.callOutcome ? " · no doctor free on roster: lead arranges call" : "";
   const stepNow = (c) => (c.state !== "referral" ? Store.STATE_NAMES[c.state] + callNote(c) : c.rejected ? "Referral rejected, re-route" : c.accepted ? "Referral accepted, waiting for booking" : "Referral sent, awaiting acceptance");
   const isUrgentBP = (c) => c.result.next === "remeasure_then_doctor_today";
+  // Colonoscopy pre-assessment + prep (medic F8): owner the receiving GI centre, due 5 days before; at risk from 2 days before.
+  const preDue = (c) => { if (c.state !== "booked" || c.result.next !== "colonoscopy" || !c.slot || c.prepIssued) return null; const appt = Date.parse(c.slot.day + "T" + c.slot.time + ":00+04:00"); return { by: appt - 5 * Store.DAY, risk: appt - 2 * Store.DAY, appt }; };
   const isGpPath = (c) => ["gp_confirm", "gp_visit"].includes(c.result.next);
   const talked = (c) => !!(c.humanDone || (c.callOutcome && c.callOutcome.answered) || [...(c.attempts || []), ...(c.retries || [])].some((x) => x.ok && /doctor|nurse|coordinator/i.test(x.channel)));
   // Worklist in plain words (BA part B): rows grouped under headings, 5 columns, one "Due" sentence, coloured row edge.
@@ -89,13 +91,15 @@
     const q = Store.openConsult(c);
     if (q) { const h = (q.dueAt - Store.now()) / 3600000; return h >= 0 ? { text: `e-consult answer in ${h >= 1 ? Math.floor(h) + " h" : Math.round(h * 60) + " min"}`, soon: h < 4 } : { text: `e-consult ${Math.ceil(-h)} h late`, late: true }; }
     const u = urgentDue(c); if (u) return { text: u.text, late: u.late };
+    const pd = preDue(c), dd = (ms) => new Date(ms).toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "Asia/Dubai" });
+    if (pd) return Store.now() >= pd.risk ? { text: "procedure at risk: pre-assessment + prep not done", late: true } : Store.now() >= pd.by ? { text: "pre-assessment + prep due now (procedure " + dd(pd.appt) + ")", soon: true } : { text: "pre-assessment + prep by " + dd(pd.by) };
     if (s.sla === null || !(s.sla > 0)) return { text: "no deadline for this step" };
     const left = s.sla - s.days, n = (x) => { const d = Math.round(Math.abs(x)); return d < 1 ? Math.max(1, Math.round(Math.abs(x) * 24)) + " h" : d + (d === 1 ? " day" : " days"); };
     return left < 0 ? { text: (STEP_W[c.state] || "step") + " step " + n(left) + " late", late: true } : left < 1 ? { text: "due today", soon: true } : { text: "in " + n(left) };
   }
   const GROUPS = [
     ["urgent", "Urgent: call today", (x) => x.s.urgent],
-    ["late", "Late", (x) => x.s.overdue || x.s.hardLimit || x.s.escalated],
+    ["late", "Late", (x) => x.s.overdue || x.s.hardLimit || x.s.escalated || (!!preDue(x.c) && Store.now() >= preDue(x.c).risk)],
     ["returned", "Referral returned", (x) => x.s.rejected],
     ["noowner", "No owner yet", (x) => x.s.unassigned],
     ["sign2", "Waiting for a second signature", (x) => !!x.c.pendingClose],
@@ -105,6 +109,7 @@
     ["incoming", "New referrals to accept or reject", (x) => x.c.state === "referral" && !x.c.accepted],
     ["booking", "Accepted, waiting for booking", (x) => x.c.state === "referral" && x.c.accepted && !x.c.slot],
     ["close", "Outcome ready: close the case", (x) => x.c.state === "attended" || (x.c.state === "confirmation" && !!x.c.outcome)],
+    ["preassess", "Pre-assessment + prep issued (GI centre)", (x) => !!preDue(x.c)],
     ["visit", "Visits to record the outcome", (x) => x.c.state === "booked"],
     ["waiting", "Waiting for patient", (x) => ["notified", "acknowledged"].includes(x.c.state)],
     ["track", "On track", () => true]
@@ -124,7 +129,7 @@
   const MINE = {
     coordinator: (x) => x.s.unassigned || x.s.human || x.s.contact || x.s.rejected || /^Coordinator/.test(x.c.owner || "") || ["noowner", "call", "returned", "booking"].includes(x.g) || waitingFor(x.c) === "Patient to book",
     gp: (x) => (/Dr\. Hessa/.test(x.c.owner || "") && !(x.c.state === "referral" && !x.c.rejected) && x.c.state !== "booked") || (isUrgentBP(x.c) && !x.c.callOutcome) || x.s.rejected || ["answer", "close"].includes(x.g) || (isGpPath(x.c) && ["acknowledged", "confirmation"].includes(x.c.state)),
-    specialist: (x) => (["incoming", "visit"].includes(x.g) && ["FIT", "HPV"].includes(x.c.result.test)) || !!Store.openConsult(x.c) || /^(GI|Gynae) Clinic/.test(x.c.owner || ""),
+    specialist: (x) => !!preDue(x.c) || (["incoming", "visit"].includes(x.g) && ["FIT", "HPV"].includes(x.c.result.test)) || !!Store.openConsult(x.c) || /^(GI|Gynae) Clinic/.test(x.c.owner || ""),
     clinlead: (x) => !!x.c.pendingClose || /^Clinical lead/.test(x.c.owner || "") || (x.c.handover && /^Clinical lead/.test(x.c.handover.to)) || (x.s.urgent && (due(x.c, x.s).late || x.c.noRoster)),
     lead: (x) => x.s.escalated || x.s.hardLimit || /^Clinical lead/.test(x.c.owner || "") || (x.s.urgent && due(x.c, x.s).late)
   };
@@ -152,6 +157,7 @@
     if (s.contact) return "Contact check";
     if (s.human) return x_reason(c);
     if (s.hardLimit) return "Past 180-day limit";
+    if (preDue(c)) return Store.now() >= preDue(c).risk ? "Procedure at risk" : "Pre-assessment due";
     if (c.stopped && c.state !== "closed") return "Messages stopped";
     return "";
   }
@@ -205,6 +211,7 @@
     if (canRefer || (c.state === "referral" && c.rejected)) a.push(["refer", c.rejected ? "Re-route referral" : "Send referral", role === "gp" || role === "coordinator"]);
     if (c.state === "referral" && !c.rejected && !c.accepted) { a.push(["accept", "Accept referral", role === "specialist"]); a.push(["reject", "Reject with reason", role === "specialist"]); }
     if (c.state === "referral" && c.accepted && !c.slot) a.push(["bookfor", "Book a slot for the patient", role === "coordinator"]);
+    if (preDue(c)) a.push(["prepdone", "Pre-assessment done + prep issued", role === "specialist" || role === "coordinator"]);
     if (c.state === "booked") a.push(["attended", "Record attendance and outcome", role === "specialist"]);
     if (c.pendingClose) a.push(["sign2", "Second signature: " + c.pendingClose.reasonLabel.split(" (")[0], role === "clinlead"]);
     else a.push(["close", "Close case", role === "gp" || role === "lead" || role === "clinlead"]);
@@ -275,7 +282,7 @@
     if (c.callOutcome) out.push("same-day call: " + (c.callOutcome.answered ? c.callOutcome.text : "no answer"));
     if (c.slot) out.push("slot held " + (c.slot.labelEn || c.slot.label));
     else if (c.releasedSlot) out.push("earlier slot released after rejection");
-    if (c.result.next === "colonoscopy") out.push(c.prepIssued ? "prep given" : "prep not yet given");
+    if (c.result.next === "colonoscopy") out.push(c.prepIssued ? "pre-assessment done, prep given" : "pre-assessment and prep not yet done");
     const q = (c.econsult || []).filter((e) => e.urgency); if (q.length) out.push("e-consult " + (q[q.length - 1].answered ? "answered" : "waiting for answer"));
     return out.join("; ") + ".";
   }
@@ -400,6 +407,7 @@ R: Please accept for ${c.result.next}.${c.barriers && c.barriers.includes("gende
     if (k === "contactok") { c.contactChecked = true; Store.log(c.id, who, "Contact details checked and corrected. Messages stay stopped until the right person is reached by phone.", "state"); Store.save(); return; }
     if (k === "reqreport") { c.reportRequested = true; Store.log(c.id, who, "Report requested from the other provider (and Malaffi checked). Close as “treated elsewhere” when it arrives.", "state"); Store.save(); return; }
     if (k === "chase") { c.chased = (c.chased || 0) + 1; Store.log(c.id, who, `Chased ${c.referral?.to || c.owner} for referral acceptance (${c.chased}×). ${s_ladder2(c) ? "Over 2× SLA: re-route is now allowed." : "Escalates to re-route at 2× SLA."}`, "state"); Store.save(); return; }
+    if (k === "prepdone") { c.prepIssued = { at: Store.now(), by: who }; Store.log(c.id, who, "Pre-assessment done (medicines and health checked by a clinician) and bowel-prep drink with written instructions issued by the GI centre.", "state"); Store.save(); return; }
     if (k === "nursedone") { c.humanDone = true; c.human = false; Store.log(c.id, who, "Nurse call-back done. Chat handed back to the assistant (red-topic rules always on).", "human"); Store.save(); return; }
     if (k === "assign") { c.owner = "Coordinator · Noura A."; if (c.state === "issued") Store.move(c, "assigned", who); else Store.log(c.id, who, "Took ownership", "state"); Store.save(); }
     if (k === "refer") {

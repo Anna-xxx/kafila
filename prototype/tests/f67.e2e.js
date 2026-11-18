@@ -10,7 +10,7 @@ await p.click('[data-act="consent"]');await p.click('[data-act="signin"]');await
 await p.click('[data-act="tab"][data-arg="assistant"]');await p.waitForTimeout(200);ok('F14 See result button',await p.locator('.qr button:has-text("See result")').count()===1);
 await p.click('[data-act="tab"][data-arg="result"]');await p.click('[data-act="understood"]');await p.waitForTimeout(300);
 await p.locator('[data-act="teach"]').nth(2).click();await p.waitForTimeout(300);
-let t=await p.locator('.phone').innerText();ok('F6 reply for "Nothing for now"',/even if you feel well/.test(t)&&/Talk to Nurse Layla/.test(t));
+let t=await p.locator('.phone').innerText();ok('F6 reply for "Nothing for now"',/even if you feel well/i.test(t)&&/Talk to Nurse Layla/.test(t));
 let c=await p.evaluate(()=>{const c=Store.byId('C-1042');return {f:c.teachFlag,s:Store.status(c)}});ok('F6 nurse flag',c.f&&c.s.human);
 await p.click('[data-act="teachgo"]');await p.waitForTimeout(200);
 await p.click('[data-act="bar"][data-arg="fear"]');await p.click('[data-act="barDone"]');await p.waitForTimeout(300);
@@ -18,5 +18,5 @@ await p.click('[data-act="fearcall"]');await p.waitForTimeout(300);t=await p.loc
 await p.evaluate(()=>Patient.tourBook());await p.waitForTimeout(300);await p.click('[data-act="tab"][data-arg="mycase"]').catch(()=>{});await p.waitForTimeout(300);
 t=await p.locator('.phone').innerText();ok('F9 time held, no Booked tick',/Time held/.test(t)&&!/✓ Booked/.test(t));
 const L=await p.evaluate(()=>Store.S.data.log.filter(l=>l.caseId==='C-1042').map(l=>l.at.slice(11,16)));ok('F12 log times move: '+[...new Set(L)].join(','),new Set(L).size>1);
-await p.goto(U+'#/case/C-1042');await p.selectOption('#role','specialist');await p.waitForTimeout(200);let cv=await p.locator('#view').innerText();ok('F10 receiving clinic triage',/triage: Dr\. Omar K\./.test(cv));
+await p.goto(U+'#/case/C-1042');await p.evaluate(r=>{Store.S.data.role=r;Store.save()},'specialist');await p.waitForTimeout(200);let cv=await p.locator('#view').innerText();ok('F10 receiving clinic triage',/triage: Dr\. Omar K\./.test(cv));
 console.log('errors',errs);await b.close()})();

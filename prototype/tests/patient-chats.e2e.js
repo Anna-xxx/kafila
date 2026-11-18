@@ -8,7 +8,7 @@ const labels=await p.locator('#persona option').allInnerTexts();ok('labels Engli
 const seen={};
 for(const k of ['C-1042','C-1043','C-1045','C-1049','C-1050']){await p.selectOption('#persona',k);await p.waitForTimeout(400);const t=await ph();const cap=await p.locator('.p-cap').innerText();seen[k]=t.replace(/\s+/g," ");
  ok(k+' opens chat with name',/Hello \w+/.test(t));ok(k+' no generic sender',!/^Family Health Centre/m.test(t)&&/Family Health Centre/.test(t));ok(k+' caption',cap.length>10);await p.locator('.stage').screenshot({path:'wa-'+k+'.png'});}
-ok('Rajesh urgent text',/needs a call with a doctor today/.test(seen['C-1043'])&&/call 998 now/.test(seen['C-1043']));
+ok('Rajesh urgent text (neutral)',/A doctor needs to speak with you today/.test(seen['C-1043'])&&/If you feel very unwell, call 998 now/.test(seen['C-1043'])&&!/result|blood pressure|chest pain/i.test(seen['C-1043'].split('Open your result')[0]));
 ok('Fatima routine text',/Dr. Hessa M. asked us to share your screening result/.test(seen['C-1042'])&&/no medical details/.test(seen['C-1042']));
 ok('Ahmed own doctor + clinic',/Dr. Yousef T./.test(seen['C-1045'])&&/Al Ain/.test(seen['C-1045']));
 // Rajesh quick replies
