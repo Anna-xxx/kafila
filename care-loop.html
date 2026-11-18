@@ -25,8 +25,9 @@ button:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
 /* track */
 .trackbox { overflow-x: auto; padding: 10px 2px 4px; }
 .trackbox[hidden] { display: none; }
-.track { display: grid; grid-template-columns: repeat(7, minmax(84px, 1fr)) 18px repeat(2, minmax(84px, 1fr)); align-items: start; min-width: 860px; position: relative; }
-.track::before { content: ""; position: absolute; left: 5%; right: 25%; top: 31px; height: 3px; background: var(--line); border-radius: 2px; }
+.track .sep { border-left: 2px dashed var(--line); height: 70px; justify-self: center; }
+.track { display: grid; grid-template-columns: repeat(6, minmax(84px, 1fr)) 28px repeat(3, minmax(84px, 1fr)); align-items: start; min-width: 860px; position: relative; }
+.track::before { content: ""; position: absolute; left: 5%; right: 36%; top: 31px; height: 3px; background: var(--line); border-radius: 2px; }
 .node { position: relative; display: grid; justify-items: center; gap: 6px; background: none; border: 0; padding: 0 2px; color: var(--ink-2); }
 .node .av { width: 62px; height: 62px; border-radius: 50%; background: var(--card); border: 3px solid var(--line); display: grid; place-items: center; overflow: hidden; transition: transform .2s, border-color .2s, opacity .2s; }
 .node .av svg.f { width: 60px; height: 60px; margin-top: 8px; }
@@ -87,7 +88,7 @@ button:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
 /* whole loop view */
 .whole { display: grid; gap: 16px; }
 .whole[hidden] { display: none; }
-.wtrack { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 10px; position: relative; }
+.wtrack { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; position: relative; }
 .wtrack::before { content: ""; position: absolute; left: 7%; right: 7%; top: 58px; height: 3px; background: var(--green); opacity: .45; }
 .wn { position: relative; display: grid; justify-items: center; align-content: start; gap: 6px; text-align: center; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 12px 8px 14px; }
 .wn .av { width: 56px; height: 56px; border-radius: 50%; background: var(--face-bg); display: grid; place-items: center; overflow: hidden; position: relative; z-index: 1; }
@@ -96,7 +97,7 @@ button:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
 .wn .k { font: 600 12px/1 var(--f-mono); color: var(--green); }
 .wn b { font-size: 14px; line-height: 1.25; }
 .wn em { font-style: normal; font-family: var(--f-mono); font-size: 11px; color: var(--green); background: var(--green-2); border-radius: 99px; padding: 1px 8px; }
-.wrow { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 10px; }
+.wrow { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) minmax(0, 1fr); gap: 10px; }
 .wbox { border-radius: 14px; padding: 14px 16px; display: grid; gap: 8px; align-content: start; }
 .wbox.w { background: var(--warn-bg); border: 1px dashed var(--warn); } .wbox.r { background: var(--red-bg); border: 1px solid var(--red); }
 .wbox h3 { margin: 0; font-size: 15px; } .wbox.w h3 { color: var(--warn); } .wbox.r h3 { color: var(--red); }
@@ -123,8 +124,8 @@ button:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
 <div class="wrap" style="padding-bottom:0"><nav class="topbar" aria-label="Site"><a class="home" href="index.html"><i class="mk"><svg width="28" height="28" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" aria-hidden="true"><g id="mark"><path d="M75.61 21.01 A42 42 0 0 1 92.26 33.10" fill="none" stroke="#69c5b3" stroke-width="10" stroke-linecap="round"/><path d="M101.91 62.80 A42 42 0 0 1 95.55 82.37" fill="none" stroke="#7fb1e1" stroke-width="10" stroke-linecap="round"/><path d="M70.29 100.72 A42 42 0 0 1 49.71 100.72" fill="none" stroke="#f5c873" stroke-width="10" stroke-linecap="round"/><path d="M24.45 82.37 A42 42 0 0 1 18.09 62.80" fill="none" stroke="#f3a473" stroke-width="10" stroke-linecap="round"/><path d="M27.74 33.10 A42 42 0 0 1 44.39 21.01" fill="none" stroke="#8cd1a1" stroke-width="10" stroke-linecap="round"/><circle cx="60.00" cy="18.00" r="11.5" fill="#3fb59d"/><circle cx="99.94" cy="47.02" r="11.5" fill="#5b9bd8"/><circle cx="84.69" cy="93.98" r="11.5" fill="#f2b84b"/><circle cx="35.31" cy="93.98" r="11.5" fill="#f08a4b"/><circle cx="20.06" cy="47.02" r="11.5" fill="#6cc486"/></g></svg></i>Kafila</a><span class="sp"></span><a href="index.html#how">Fatima's case with screenshots</a><a href="architecture.html">Architecture</a><a href="prototype/" target="_blank" rel="noopener">Open the prototype</a></nav></div>
 <div class="wrap">
   <div class="eyebrow">Kafila · Fatima’s case, step by step</div>
-  <h1>One positive test. <span>Each step has a person who owns it.</span></h1>
-  <p class="lead">Fatima, 52, has a positive stool test. Follow her case one step at a time.</p>
+  <h1>One positive test. <span>After it, every step has a person who owns it.</span></h1>
+  <p class="lead">Fatima, 52, has a positive stool test. Her case has six steps, from result to closure. On the right: who watches the whole programme, what happens if something goes wrong, and the emergency rule. Fatima is a composite persona; all people and clinics are fictional.</p>
 
   <div class="trackbox" id="trackbox"><div class="track" id="track" role="tablist" aria-label="Steps"></div></div>
 
@@ -143,6 +144,7 @@ button:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
   <div class="whole" id="whole" hidden>
     <div class="wtrack" id="wtrack"></div>
     <div class="wrow">
+      <div class="wbox"><h3>Programme lead, every day</h3><p id="wlead"></p></div>
       <div class="wbox w"><h3>If something goes wrong</h3><ul id="wexc"></ul></div>
       <div class="wbox r"><h3>Emergency, at any moment</h3><p>She writes “chest pain” or “a lot of blood”: a fixed “call 998” screen, no AI. Her doctor is alerted and calls the same day.</p></div>
     </div>
@@ -157,7 +159,7 @@ button:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
   </div>
 
   <div class="principles">
-    <div><b>Rules decide. AI explains. People sign.</b>A rules table sets the deadline. AI answers questions and drafts letters. Only clinicians accept, sign or close.</div>
+    <div><b>Rules decide. AI explains. People sign.</b>A rules table sets the deadlines. AI answers questions from approved texts. Only clinicians accept, sign or close.</div>
     <div><b>An owner and a deadline at every step</b>Late, unanswered and rejected cases go to the top of the coordinator's list.</div>
     <div><b>Closed only with evidence</b>A report, a health-record entry or a signed reason. Never by AI.</div>
   </div>
@@ -201,10 +203,10 @@ button:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
   };
 
   const S = [
-    { pic: ico("lab"), tag: "Result", short: "Result arrives", who: "Lab and rules table", role: "not a person, not AI", title: "The result arrives", what: "A positive stool test (FIT) comes from the lab. Kafila opens one case for it. A rules table sets two deadlines from the UAE national guideline: referral within 15 working days, colonoscopy within 31 working days after it.", when: "Day 0", why: "Today a result can sit in a system with nobody responsible for the next step.", req: "Brief R1 · one case from the moment the result is issued" },
+    { pic: ico("lab"), tag: "Result", short: "Result arrives", who: "Lab and rules table", role: "system event: opens the case and gives it to Noura", title: "The result arrives", what: "A positive stool test (FIT) comes from the lab. Kafila opens one case for it. A rules table sets two deadlines from the UAE national guideline: referral within 15 working days, colonoscopy within 31 working days after it.", when: "Day 0", why: "Today a result can sit in a system with nobody responsible for the next step.", req: "Brief R1 · one case from the moment the result is issued" },
     { pic: face(F.noura), tag: "Noura", short: "Noura owns the case", who: "Noura", role: "coordinator", title: "Noura takes the case", what: "Noura becomes the owner. Her list shows only the cases that need a person: late, unanswered, rejected or urgent.", when: "Day 0", why: "Someone is responsible at every moment. One coordinator can follow hundreds of cases.", req: "Brief R2 · named owner and a deadline for each step" },
-    { pic: face(F.fatima), tag: "Fatima", short: "Fatima understands and books", who: "Fatima", role: "patient, 52", title: "Fatima understands her result and books", what: "A WhatsApp from her own clinic, in her language. Her result in plain words, what happens next and by when. She books a female doctor on Saturday, covered by her plan.", when: "Day 0–2", why: "People drop out when they are scared or can't find a slot that fits their life.", helps: [["AI chat", "\"Is it cancer? Does it hurt? Who pays?\" Answers from approved texts, day or night. No diagnosis", ""], ["Noura", "calls her if she wants a person", "person"]], req: "Brief R3 · her language, understanding checked" },
-    { pic: face(F.hessa), tag: "Dr. Hessa", short: "Dr. Hessa refers", who: "Dr. Hessa", role: "family doctor", title: "Dr. Hessa sends the referral", what: "The AI drafts the referral letter. Dr. Hessa checks it and signs. If she has a question first, she asks the specialist in writing.", when: "Day 2–5", why: "The clinic gets everything in one packet, so the referral isn't sent back.", helps: [["AI draft", "she checks and signs", ""], ["Ask the specialist", "she writes Dr. Omar a question inside the case, no calls or fax", "person"]], req: "Brief R4 · hand-off between clinics" },
+    { pic: face(F.fatima), tag: "Fatima", short: "Fatima understands and picks a time", who: "Fatima", role: "patient, 52", title: "Fatima understands her result and picks a time", what: "A WhatsApp from her own clinic, in her language. Her result in plain words, what happens next and by when. She picks a Saturday slot with a female doctor, covered by her plan. The slot is held until the clinic accepts the referral.", when: "Day 0–2", why: "People drop out when they are scared or can't find a slot that fits their life.", helps: [["AI chat", "\"Is it cancer? Does it hurt? Who pays?\" Answers from approved texts, day or night. No diagnosis", ""], ["Noura", "calls her if she wants a person", "person"]], req: "Brief R3 · her language, understanding checked" },
+    { pic: face(F.hessa), tag: "Dr. Hessa", short: "Dr. Hessa refers", who: "Dr. Hessa", role: "family doctor", title: "Dr. Hessa sends the referral", what: "Kafila prepares the referral letter from the case (a template in the demo, an AI draft in the pilot). Dr. Hessa checks it and signs. If she has a question first, she asks the specialist in writing.", when: "Day 2–5", why: "The clinic gets everything in one packet, so the referral isn't sent back.", helps: [["Draft letter", "she checks and signs", ""], ["Ask the specialist", "she writes Dr. Omar a question inside the case, no calls or fax", "person"]], req: "Brief R4 · hand-off between clinics" },
     { pic: face(F.omar), tag: "Dr. Omar", short: "The clinic accepts and does the colonoscopy", who: "Dr. Omar", role: "gastroenterologist, receiving clinic", title: "The clinic accepts and does the colonoscopy", what: "Dr. Omar accepts the referral for his clinic, or says no with a reason. The colonoscopy is done there by the female doctor Fatima chose, and the report goes back to Dr. Hessa.", when: "Within 31 working days of referral", why: "Cases are usually lost between clinics. Here the hand-off is confirmed.", req: "Brief R4 · the receiving clinic accepts" },
     { pic: face(F.hessa), tag: "Closed", short: "Dr. Hessa closes with the report", who: "Dr. Hessa", role: "family doctor", title: "Dr. Hessa closes the case", what: "She goes through the report with Fatima and closes the case with evidence: the report or a signed reason. The AI cannot close a case.", when: "On report", why: "Without evidence nobody knows whether care happened.", req: "Brief R5 · closed only with evidence" },
     { pic: face(F.khalid), tag: "Dr. Khalid", short: "Dr. Khalid sees the programme", who: "Dr. Khalid", role: "programme lead", title: "Dr. Khalid sees the whole programme", what: "His dashboard shows who is late, who is lost and why, and the gaps by language and insurance. When three quarters of a deadline has passed, a late case comes to him.", when: "Every day", why: "The programme can fix causes, not just single cases.", req: "Brief R6 · closure and impact measures" },
@@ -214,7 +216,7 @@ button:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
 
   const $ = (id) => document.getElementById(id);
   const track = $("track");
-  track.innerHTML = S.map((s, i) => (i === 7 ? '<span aria-hidden="true"></span>' : "") + `<button class="node ${s.kind || ""}" role="tab" data-i="${i}" aria-label="Step ${i + 1}: ${s.title}"><span class="av">${s.pic}</span><b>${s.tag}</b></button>`).join("");
+  track.innerHTML = S.map((s, i) => (i === 6 ? '<span class="sep" aria-hidden="true"></span>' : "") + `<button class="node ${s.kind || ""}" role="tab" data-i="${i}" aria-label="Step ${i + 1}: ${s.title}"><span class="av">${s.pic}</span><b>${s.tag}</b></button>`).join("");
   const nodes = [...track.querySelectorAll(".node")];
 
   let cur = 0, timer = null;
@@ -222,7 +224,7 @@ button:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
     const s = S[cur], st = $("stage");
     st.className = "stage " + (s.kind || "");
     $("sBig").innerHTML = s.pic; $("sWho").textContent = s.who; $("sRole").textContent = s.role;
-    $("sNo").textContent = `Step ${cur + 1} of ${S.length}`;
+    $("sNo").textContent = cur < 6 ? `Step ${cur + 1} of 6` : ["Watching the programme", "When something goes wrong", "Safety rule"][cur - 6];
     $("sTitle").textContent = s.title; $("sWhat").textContent = s.what;
     let extra = "";
     if (s.helps) extra = `<div class="helps"><span class="lab">Who helps:</span>${s.helps.map(([a, b, c]) => `<span class="chip ${c}"><b>${a}</b> ${b}</span>`).join("")}</div>`;
@@ -257,7 +259,8 @@ button:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
   addEventListener("keydown", (e) => { if (!$("whole").hidden) return; if (e.key === "ArrowRight") $("next").click(); if (e.key === "ArrowLeft") $("prev").click(); });
 
   // Whole loop view: the seven steps with one line each, then the two safety boxes.
-  $("wtrack").innerHTML = S.slice(0, 7).map((s, i) => `<div class="wn"><span class="k">${i + 1}</span><span class="av">${s.pic}</span><b>${s.short}</b><em>${s.when}</em></div>`).join("");
+  $("wtrack").innerHTML = S.slice(0, 6).map((s, i) => `<div class="wn"><span class="k">${i + 1}</span><span class="av">${s.pic}</span><b>${s.short}</b><em>${s.when}</em></div>`).join("");
+  $("wlead").textContent = S[6].what;
   $("wexc").innerHTML = S[7].minis.map(([a, b]) => `<li><b>${a}:</b> ${b}</li>`).join("");
   if (location.hash === "#whole") showWhole(true); else render();
 })();
