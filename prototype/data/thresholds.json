@@ -1,0 +1,262 @@
+{
+  "_about": "Rules table for ScreenPath. The zone is set by these rules, never by AI. AI only explains. Every rule has a source and a review flag. reviewedBy stays empty until Anna checks it.",
+  "version": "0.2.0",
+  "updated": "2026-11-18",
+  "reviewedBy": "",
+  "zones": {
+    "green": {
+      "en": "Routine",
+      "ar": "روتيني",
+      "meaning": "Normal or low-risk result. Next screening by reminder."
+    },
+    "yellow": {
+      "en": "See a doctor",
+      "ar": "راجع الطبيب",
+      "meaning": "Follow-up needed. Book a planned visit."
+    },
+    "red": {
+      "en": "Urgent",
+      "ar": "عاجل",
+      "meaning": "See a doctor today or within days."
+    }
+  },
+  "levels": {
+    "L1": {
+      "zone": "green",
+      "windowDays": null,
+      "en": "Routine"
+    },
+    "L2": {
+      "zone": "yellow",
+      "windowDays": 14,
+      "en": "Book within 2 weeks"
+    },
+    "L3": {
+      "zone": "red",
+      "windowDays": 1,
+      "en": "Contact a doctor today"
+    },
+    "L4": {
+      "zone": "emergency",
+      "windowDays": 0,
+      "en": "Call 998 now"
+    }
+  },
+  "emergencyNumber": "998",
+  "tests": {
+    "FIT": {
+      "name": {
+        "en": "Stool test for hidden blood (FIT)",
+        "ar": "اختبار الدم الخفي في البراز (FIT)"
+      },
+      "eligibleAge": [
+        40,
+        75
+      ],
+      "source": "UAE MOHAP National Guideline for Colorectal Cancer Screening and Diagnosis, 3rd ed. 2022 (12.5.2, Appendix 2); UAE screening page (u.ae, DoH-attributed); USPSTF 2021",
+      "results": {
+        "negative": {
+          "level": "L1",
+          "next": "repeat_fit",
+          "nextMonths": 24,
+          "compare": "No hidden blood found in the sample.",
+          "compare_ar": "لم يُعثر على دم خفي في العينة."
+        },
+        "positive": {
+          "level": "L2",
+          "next": "colonoscopy",
+          "referralWorkdays": 15,
+          "careWorkdays": 31,
+          "escalatePct": 75,
+          "trackUntil": "colonoscopy_done",
+          "clockSource": "UAE MOHAP National Guideline for Colorectal Cancer Screening and Diagnosis, 3rd ed. 2022, 12.5.2 and Appendix 2",
+          "clockNote": "Clock 1: referral sent within 15 working days of the positive result. Clock 2: colonoscopy done within 31 working days of the referral; a returned referral does not restart it. Working days Mon-Fri (UAE weekend Sat-Sun). Public holidays are ignored in this demo. Pilot values to agree with the clinical partner.",
+          "compare": "Hidden blood was found in the sample. A colonoscopy finds the cause.",
+          "compare_ar": "تم العثور على دم خفي في العينة. تنظير القولون يكشف السبب."
+        },
+        "inadequate": {
+          "level": "L1",
+          "next": "repeat_fit",
+          "windowDays": 14,
+          "compare": "The lab could not test the sample. It is not a bad result.",
+          "compare_ar": "لم يتمكن المختبر من فحص العينة. هذه ليست نتيجة سيئة."
+        }
+      }
+    },
+    "HPV": {
+      "name": {
+        "en": "Cervical screening (HPV test)",
+        "ar": "فحص عنق الرحم (فحص فيروس الورم الحليمي)"
+      },
+      "eligibleAge": [
+        25,
+        65
+      ],
+      "sex": "female",
+      "source": "DoH Abu Dhabi Standard for Cervical Cancer Screening V2 (2025); ASCCP 2019; WHO 2021",
+      "results": {
+        "negative": {
+          "level": "L1",
+          "next": "repeat_hpv",
+          "nextMonths": 60,
+          "compare": "No high-risk HPV found.",
+          "compare_ar": "لم يُعثر على فيروس الورم الحليمي عالي الخطورة."
+        },
+        "positive_other": {
+          "level": "L2",
+          "next": "gyn_review",
+          "windowDays": 30,
+          "compare": "High-risk HPV found (not type 16 or 18). Most infections clear on their own in 1–2 years.",
+          "compare_ar": "تم العثور على فيروس الورم الحليمي عالي الخطورة (ليس النوع 16 أو 18). معظم العدوى تزول من تلقاء نفسها خلال سنة إلى سنتين."
+        },
+        "positive_16_18": {
+          "level": "L2",
+          "next": "colposcopy",
+          "windowDays": 14,
+          "compare": "HPV type 16 or 18 found. These types need a closer look.",
+          "compare_ar": "تم العثور على النوع 16 أو 18. هذه الأنواع تحتاج إلى فحص أدق."
+        },
+        "hsil": {
+          "level": "L2",
+          "next": "colposcopy",
+          "windowDays": 14,
+          "compare": "Cell changes that need a closer look.",
+          "compare_ar": "تغيرات في الخلايا تحتاج إلى فحص أدق."
+        },
+        "suspicious": {
+          "level": "L3",
+          "next": "gyn_onc",
+          "windowDays": 1,
+          "compare": "The lab report asks for a quick specialist review.",
+          "compare_ar": "يطلب تقرير المختبر مراجعة سريعة من أخصائي."
+        },
+        "inadequate": {
+          "level": "L1",
+          "next": "repeat_hpv",
+          "windowDays": 84,
+          "compare": "The lab could not read the sample. It is not a bad result.",
+          "compare_ar": "لم يتمكن المختبر من قراءة العينة. هذه ليست نتيجة سيئة."
+        }
+      }
+    },
+    "HBA1C": {
+      "name": {
+        "en": "Blood sugar test (HbA1c)",
+        "ar": "فحص السكر التراكمي (HbA1c)"
+      },
+      "unit": "%",
+      "source": "ADA Standards of Care in Diabetes 2026, Section 2",
+      "bands": [
+        {
+          "below": 5.7,
+          "category": "normal",
+          "level": "L1",
+          "next": "repeat_hba1c",
+          "nextMonths": 36,
+          "compare": "Normal is below 5.7%.",
+          "compare_ar": "الطبيعي أقل من 5.7%."
+        },
+        {
+          "below": 6.5,
+          "category": "prediabetes",
+          "level": "L1",
+          "next": "gp_visit",
+          "windowDays": 60,
+          "compare": "Between 5.7% and 6.4% is higher than normal, below the diabetes range.",
+          "compare_ar": "بين 5.7% و6.4% أعلى من الطبيعي وأقل من نطاق السكري."
+        },
+        {
+          "below": 100,
+          "category": "diabetes_range",
+          "level": "L2",
+          "next": "gp_confirm",
+          "windowDays": 14,
+          "compare": "6.5% or higher is the range where a doctor checks for diabetes with a second test.",
+          "compare_ar": "6.5% أو أكثر هو النطاق الذي يتحقق فيه الطبيب من السكري بفحص ثانٍ."
+        }
+      ],
+      "caveat": "Anaemia, thalassaemia, sickle trait, pregnancy or recent blood loss can make HbA1c misleading. Your doctor may use another test."
+    },
+    "BP": {
+      "name": {
+        "en": "Blood pressure",
+        "ar": "ضغط الدم"
+      },
+      "unit": "mmHg",
+      "source": "2025 AHA/ACC High Blood Pressure Guideline; USPSTF 2021",
+      "bands": [
+        {
+          "sysAtLeast": 180,
+          "diaAtLeast": 120,
+          "category": "severe",
+          "level": "L3",
+          "next": "remeasure_then_doctor_today",
+          "compare": "180/120 or higher is severely high. Rest 5 minutes and measure again.",
+          "compare_ar": "180/120 أو أكثر مرتفع جدًا. استرح 5 دقائق ثم قِس مرة أخرى."
+        },
+        {
+          "sysAtLeast": 160,
+          "diaAtLeast": 100,
+          "category": "stage2_high",
+          "level": "L2",
+          "next": "gp_visit",
+          "windowDays": 7,
+          "compare": "160/100 or higher: see a doctor within a week.",
+          "compare_ar": "160/100 أو أكثر: راجع الطبيب خلال أسبوع."
+        },
+        {
+          "sysAtLeast": 140,
+          "diaAtLeast": 90,
+          "category": "stage2",
+          "level": "L2",
+          "next": "gp_visit",
+          "windowDays": 30,
+          "compare": "140/90 or higher is stage 2. Confirm with home readings.",
+          "compare_ar": "140/90 أو أكثر هي المرحلة الثانية. أكّد بقياسات منزلية."
+        },
+        {
+          "sysAtLeast": 130,
+          "diaAtLeast": 80,
+          "category": "stage1",
+          "level": "L1",
+          "next": "home_bp_then_gp",
+          "windowDays": 90,
+          "compare": "130–139 or 80–89 is stage 1. Confirm with home readings.",
+          "compare_ar": "130–139 أو 80–89 هي المرحلة الأولى. أكّد بقياسات منزلية."
+        },
+        {
+          "sysAtLeast": 120,
+          "diaAtLeast": null,
+          "category": "elevated",
+          "level": "L1",
+          "next": "recheck",
+          "nextMonths": 6,
+          "compare": "120–129 with under 80 is elevated.",
+          "compare_ar": "120–129 مع أقل من 80 يعتبر مرتفعًا قليلًا."
+        },
+        {
+          "sysAtLeast": 0,
+          "diaAtLeast": 0,
+          "category": "normal",
+          "level": "L1",
+          "next": "recheck",
+          "nextMonths": 12,
+          "compare": "Normal is under 120 and under 80.",
+          "compare_ar": "الطبيعي أقل من 120 وأقل من 80."
+        }
+      ],
+      "singleReadingNote": "One reading never gives a stage. Let's confirm with more readings."
+    }
+  },
+  "gates": {
+    "_note": "If any gate fails: 'This explanation may not apply to you, please talk to your doctor' + booking. Uncertainty goes up, never down.",
+    "minAge": 18,
+    "outOfScope": [
+      "pregnant",
+      "already_diagnosed",
+      "on_treatment",
+      "unknown_unit",
+      "unsupported_test"
+    ]
+  }
+}

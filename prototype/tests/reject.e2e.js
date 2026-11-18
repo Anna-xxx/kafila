@@ -1,0 +1,15 @@
+const {chromium}=require('playwright');const U='http://localhost:8765/';
+(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:1280,height:900}});const errs=[];p.on('pageerror',e=>errs.push(e.message));
+const ok=(n,c)=>console.log((c?'PASS ':'FAIL ')+n);
+await p.goto(U+'#/patient');await p.waitForTimeout(500);await p.evaluate(()=>{Store.reset();Store.S.data.lang='en';Store.save()});
+await p.evaluate(()=>Patient.tourBook());await p.waitForTimeout(300);
+let c=await p.evaluate(()=>Store.byId('C-1042'));ok('booked slot held',!!c.slot&&c.state==='referral');
+await p.goto(U+'#/case/C-1042');await p.waitForTimeout(300);await p.selectOption('#role','specialist');await p.waitForTimeout(200);
+await p.click('[data-do="reject"]');await p.selectOption('#r',{index:1});await p.click('[data-ok]');await p.waitForTimeout(300);
+c=await p.evaluate(()=>Store.byId('C-1042'));ok('slot released',!c.slot&&!!c.releasedSlot&&c.rejected&&c.rejected.until);
+await p.goto(U+'#/patient');await p.waitForTimeout(300);await p.evaluate(()=>{const u=Store.S.data.ui;});
+const txt=await p.evaluate(()=>{const c=Store.byId('C-1042');c.pscreen='app';Store.S.data.ui=Store.S.data.ui||{};Store.save();return document.querySelector('#view').innerText});
+await p.evaluate(()=>{document.querySelector('[data-act="tab"][data-arg="mycase"]')?.click()});await p.waitForTimeout(300);
+const my=await p.locator('#view').innerText();ok('patient told: clinic could not take',/could not take this referral/.test(my)&&!/✓ Booked/.test(my)&&!/planned/.test(my));
+const ch=await p.evaluate(()=>Store.S.data.chats['C-1042'].slice(-1)[0].text);ok('chat message',/choosing another clinic/.test(ch));
+console.log('errors',errs);await b.close()})();

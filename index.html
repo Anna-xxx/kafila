@@ -1,0 +1,805 @@
+<title>Closing the Loop</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20120%20120%22%20width%3D%22120%22%20height%3D%22120%22%20role%3D%22img%22%20aria-label%3D%22Kafila%22%3E%3Cg%20transform%3D%22translate%2860%2060%29%20scale%281.1%29%20translate%28-60%20-60%29%22%3E%3Cg%20id%3D%22mark%22%3E%3Cpath%20d%3D%22M75.19%2022.99%20A40%2040%200%200%201%2090.50%2034.12%22%20fill%3D%22none%22%20stroke%3D%22%23448c80%22%20stroke-width%3D%2213%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M99.89%2063.01%20A40%2040%200%200%201%2094.04%2081.01%22%20fill%3D%22none%22%20stroke%3D%22%235082af%22%20stroke-width%3D%2213%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M69.47%2098.86%20A40%2040%200%200%201%2050.53%2098.86%22%20fill%3D%22none%22%20stroke%3D%22%23e7b956%22%20stroke-width%3D%2213%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M25.96%2081.01%20A40%2040%200%200%201%2020.11%2063.01%22%20fill%3D%22none%22%20stroke%3D%22%23e1885a%22%20stroke-width%3D%2213%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M29.50%2034.12%20A40%2040%200%200%201%2044.81%2022.99%22%20fill%3D%22none%22%20stroke%3D%22%2369b37e%22%20stroke-width%3D%2213%22%20stroke-linecap%3D%22round%22/%3E%3Ccircle%20cx%3D%2260.00%22%20cy%3D%2220.00%22%20r%3D%2213%22%20fill%3D%22%230f6b5c%22/%3E%3Ccircle%20cx%3D%2298.04%22%20cy%3D%2247.64%22%20r%3D%2213%22%20fill%3D%22%231f5f99%22/%3E%3Ccircle%20cx%3D%2283.51%22%20cy%3D%2292.36%22%20r%3D%2213%22%20fill%3D%22%23e0a526%22/%3E%3Ccircle%20cx%3D%2236.49%22%20cy%3D%2292.36%22%20r%3D%2213%22%20fill%3D%22%23d9662b%22/%3E%3Ccircle%20cx%3D%2221.96%22%20cy%3D%2247.64%22%20r%3D%2213%22%20fill%3D%22%233f9e5a%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E">
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Kafila: every actionable screening result becomes an owned case with a deadline, until a clinician closes it with evidence. Future Health Challenge 05. Synthetic data only.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Noto+Sans:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a long scroll story, text column left and evidence (phone, screens, tables) right,
+   with a loop ring on the right edge that closes as the reader reaches the end. One deliberate dark look. */
+:root {
+  --night: #06110f;      /* page */
+  --deep: #0b1c18;       /* panels */
+  --deep-2: #10261f;     /* raised panels */
+  --line: #1f3a33;
+  --ink: #eaf2ef;
+  --ink-2: #b0c3bd;
+  --ink-3: #82978f;
+  --teal: #46c2a8;       /* Kafila brand on dark */
+  --teal-soft: #12352d;
+  --amber: #f2b65e;      /* the "see a doctor" zone colour, used for the second half of headlines */
+  --amber-soft: #3a2a12;
+  --red: #ef6a5f;
+  --red-deep: #b42318;
+  --white: #ffffff;
+  --display: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+  --text: "Noto Sans", "Noto Sans Arabic", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --wrap: 1180px;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+body { background: var(--night); color: var(--ink); font: 400 17px/1.6 var(--text); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--night); }
+a { color: var(--teal); }
+:focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; border-radius: 6px; }
+img { max-width: 100%; display: block; }
+.wrap { max-width: var(--wrap); margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+
+/* top bar */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: color-mix(in srgb, var(--night) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.top .wrap { display: flex; align-items: center; gap: 22px; height: 60px; }
+.logo { display: flex; align-items: center; gap: 10px; font: 700 18px/1 var(--display); color: var(--ink); text-decoration: none; letter-spacing: -0.01em; }
+.logo i.mk { background: none; }
+.logo i { width: 28px; height: 28px; border-radius: 8px; background: var(--teal); color: var(--night); display: grid; place-items: center; font-style: normal; font-size: 16px; }
+.top nav { display: flex; gap: 20px; margin-left: auto; }
+.top nav a { color: var(--ink-2); text-decoration: none; font-size: 14.5px; font-weight: 500; }
+.top nav a:hover { color: var(--ink); }
+.btn { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 20px; border-radius: 999px; font: 600 15px/1 var(--text); text-decoration: none; border: 1.5px solid transparent; cursor: pointer; }
+.btn.solid { background: var(--amber); color: #1d1405; }
+.btn.solid:hover { background: #f6c47b; }
+.btn.line { border-color: var(--line); color: var(--ink); background: transparent; }
+.btn.line:hover { border-color: var(--teal); }
+.top .btn { min-height: 38px; padding: 0 16px; font-size: 14px; }
+@media (max-width: 860px) { .top nav { display: none; } .top .btn { margin-left: auto; } }
+
+/* shared type */
+.eyebrow { font: 500 12.5px/1.4 var(--mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); }
+.eyebrow b { color: var(--amber); font-weight: 500; margin-right: 10px; }
+h1, h2, h3 { font-family: var(--display); letter-spacing: -0.02em; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(40px, 6vw, 68px); line-height: 1.02; font-weight: 700; }
+h2 { font-size: clamp(32px, 4.2vw, 50px); line-height: 1.06; font-weight: 700; }
+h3 { font-size: 21px; line-height: 1.25; font-weight: 600; letter-spacing: -0.01em; }
+h1 em, h2 em { font-style: normal; color: var(--amber); }
+.lede { font-size: 19px; color: var(--ink-2); max-width: 60ch; }
+p { margin: 0; }
+.src { font: 400 12.5px/1.5 var(--mono); color: var(--ink-3); }
+.note { font-size: 14px; color: var(--ink-3); }
+.pull { border-left: 3px solid var(--amber); padding: 4px 0 4px 16px; font: 600 20px/1.35 var(--display); color: var(--ink); max-width: 34ch; }
+
+/* sections */
+section { padding-block: 96px; border-top: 1px solid var(--line); position: relative; }
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 56px; align-items: start; }
+.split > * { min-width: 0; }
+.stack { display: grid; gap: 22px; }
+@media (max-width: 960px) { .split { grid-template-columns: 1fr; gap: 36px; } section { padding-block: 72px; } }
+
+/* hero */
+.hero { border-top: 0; padding-block: 64px 88px; overflow-x: clip; }
+.hero .split { align-items: center; }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; border-top: 1px solid var(--line); padding-top: 20px; }
+.stat b { display: block; font: 700 34px/1 var(--display); color: var(--amber); letter-spacing: -0.02em; }
+.stat span { display: block; font-size: 14px; color: var(--ink-2); margin-top: 6px; line-height: 1.4; }
+.stat small { display: block; margin-top: 6px; font: 400 11.5px/1.4 var(--mono); color: var(--ink-3); }
+@media (max-width: 560px) { .stats { grid-template-columns: 1fr; } }
+.herolist { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; max-width: 58ch; } .herolist li { position: relative; padding-left: 22px; color: var(--ink-2); font-size: 17px; line-height: 1.5; } .herolist li::before { content: ""; position: absolute; left: 2px; top: .62em; width: 9px; height: 9px; border-radius: 50%; background: var(--teal); } .herolist b { color: var(--ink); } .herofoot { color: var(--amber); font-weight: 600; margin: 0; }
+.motto { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 0; cursor: default; }
+.motto span { font: 500 13px/1.3 var(--mono); color: var(--ink-2); letter-spacing: .02em; }
+.motto span + span::before { content: "·"; margin: 0 12px; color: var(--teal); }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* hero visual: the loop with five ADPHC steps around a phone */
+.loopviz { position: relative; width: min(100%, 540px); aspect-ratio: 1 / 1; margin-inline: auto; }
+.loopviz svg.ring { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.ring .track { fill: none; stroke: var(--line); stroke-width: 2; }
+.ring .arc { fill: none; stroke: var(--teal); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 1131; stroke-dashoffset: 0; animation: draw 2.4s cubic-bezier(.6,.1,.2,1) both .3s; }
+@keyframes draw { from { stroke-dashoffset: 1131; } to { stroke-dashoffset: 0; } }
+.node { position: absolute; transform: translate(-50%, -50%); text-align: center; display: grid; justify-items: center; gap: 4px; background: var(--night); padding: 6px 10px; border-radius: 12px; }
+.node i { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--deep-2); border: 2px solid var(--teal); font: 600 13px/1 var(--mono); font-style: normal; color: var(--teal); }
+.node b { display: block; font: 600 14px/1.2 var(--display); }
+.node small { display: block; font-size: 11.5px; line-height: 1.3; color: var(--ink-3); }
+.node.end i { background: var(--teal); color: var(--night); }
+.phone { width: 214px; border-radius: 30px; border: 7px solid #1b2a26; background: #1b2a26; box-shadow: 0 30px 60px -20px rgba(0,0,0,.7), 0 0 0 1px #2c4740; overflow: hidden; }
+.phone img { border-radius: 22px; width: 100%; height: auto; }
+.loopviz .phone { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 33%; border-width: 5px; border-radius: 24px; }
+.loopviz .phone img { border-radius: 19px; transition: opacity .15s; }
+.herovis { display: grid; justify-items: center; gap: 18px; min-width: 0; }
+.casechip { background: var(--deep-2); border: 1px solid #2f5149; border-radius: 12px; padding: 10px 12px; font-size: 12.5px; line-height: 1.45; color: var(--ink-2); box-shadow: 0 12px 30px -12px rgba(0,0,0,.8); }
+button.node { border: 0; color: inherit; font: inherit; cursor: pointer; }
+button.node:hover i, button.node.on i { background: var(--teal); color: var(--night); }
+button.node.on b { color: var(--teal); }
+button.node:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+.casechip .hint { color: var(--teal); font-size: 11.5px; }
+.casechip b { color: var(--ink); font-weight: 600; }
+.casechip .z { display: inline-block; background: var(--amber-soft); color: var(--amber); border-radius: 999px; padding: 1px 8px; font-weight: 600; font-size: 11.5px; }
+@media (max-width: 560px) { .node { padding: 4px 6px; } .node b { font-size: 12.5px; } .node i { width: 28px; height: 28px; } }
+
+/* 01 steps */
+.steps5 { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin-top: 40px; }
+.steps5 > div { background: var(--deep); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: grid; gap: 8px; align-content: start; }
+.steps5 .n { font: 500 12px/1 var(--mono); color: var(--amber); }
+.steps5 h3 { font-size: 18px; }
+.steps5 p { font-size: 14.5px; color: var(--ink-2); line-height: 1.5; }
+.steps5 .adphc { font: 400 11.5px/1.4 var(--mono); color: var(--ink-3); border-top: 1px dashed var(--line); padding-top: 8px; }
+@media (max-width: 960px) { .steps5 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .steps5 { grid-template-columns: 1fr; } }
+
+/* 02 comparison */
+.cmp { width: 100%; border-collapse: separate; border-spacing: 6px; font-size: 14.5px; line-height: 1.45; }
+.cmp th { text-align: left; font: 500 11.5px/1.3 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); padding: 2px 10px; vertical-align: bottom; }
+.cmp th.us { color: var(--teal); }
+.cmp td { background: var(--deep); border-radius: 10px; padding: 10px 12px; vertical-align: top; color: var(--ink-2); }
+.cmp td.q { background: transparent; color: var(--ink); font-weight: 600; padding-left: 0; width: 26%; }
+.cmp td.us { background: var(--teal-soft); color: var(--ink); }
+.tablebox { overflow-x: auto; margin-inline: -6px; }
+.bigfig { display: flex; gap: 18px; align-items: baseline; border-top: 1px solid var(--line); padding-top: 18px; }
+.bigfig b { font: 700 40px/1 var(--display); color: var(--amber); white-space: nowrap; }
+
+/* 03 where */
+.where { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.where > div { background: var(--deep); border: 1px solid var(--line); border-radius: 14px; padding: 18px; display: grid; gap: 10px; align-content: start; }
+.where p { font-size: 15px; color: var(--ink-2); }
+.valh { margin: 44px 0 14px; } .value ul { margin: 0; padding-left: 18px; display: grid; gap: 8px; font-size: 15px; color: var(--ink-2); line-height: 1.5; } .valf { margin: 14px 0 28px; max-width: 90ch; }
+.tag { justify-self: start; font: 500 11px/1.3 var(--mono); letter-spacing: .08em; text-transform: uppercase; padding: 3px 8px; border-radius: 6px; }
+.tag.built { background: var(--teal-soft); color: var(--teal); }
+.tag.sim { background: #1d2a40; color: #9fb8e8; }
+.tag.prop { background: var(--amber-soft); color: var(--amber); }
+.pipe { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 26px; font: 500 13px/1.3 var(--mono); color: var(--ink-2); }
+.pipe span { border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; background: var(--deep); }
+.pipe span.on { border-color: var(--teal); color: var(--ink); }
+.pipe em { font-style: normal; color: var(--ink-3); }
+@media (max-width: 860px) { .where { grid-template-columns: 1fr; } }
+
+/* 04 who */
+.people { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; margin-top: 40px; }
+.person { background: var(--deep); border: 1px solid var(--line); border-radius: 16px; padding: 18px 16px; display: grid; gap: 8px; align-content: start; }
+.person.pt { border-color: #5b4a2a; background: linear-gradient(180deg, #1a1a10, var(--deep) 60%); }
+.face { width: 64px; height: 64px; border-radius: 50%; background: #23413a; display: grid; place-items: center; overflow: hidden; }
+.person.pt .face { background: #4a3b1e; }
+.face svg { width: 60px; height: 60px; margin-top: 8px; }
+.person .role { font: 500 11.5px/1.3 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--teal); }
+.person.pt .role { color: var(--amber); }
+.person p { font-size: 14.5px; color: var(--ink-2); line-height: 1.5; }
+.person .pwhy { font-size: 13px; color: var(--ink-2); background: var(--deep-2); border-left: 3px solid var(--amber); border-radius: 8px; padding: 8px 10px; margin: 0; }
+.person .can { font: 400 12px/1.45 var(--mono); color: var(--ink-3); border-top: 1px dashed var(--line); padding-top: 8px; }
+@media (max-width: 1060px) { .people { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .people { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 420px) { .people { grid-template-columns: 1fr; } }
+
+/* 05 story: steps left, sticky phone right */
+.story { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 64px; margin-top: 44px; }
+.story > * { min-width: 0; }
+.beats { display: grid; gap: 0; counter-reset: beat; }
+.beat { padding: 26px 0 26px 56px; position: relative; border-left: 2px solid var(--line); margin-left: 16px; min-height: 34vh; display: grid; gap: 10px; align-content: start; }
+.beat:last-child { min-height: 0; }
+.beat::before { counter-increment: beat; content: counter(beat); position: absolute; left: -18px; top: 24px; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--deep-2); border: 2px solid var(--line); font: 500 13px/1 var(--mono); color: var(--ink-2); transition: border-color .3s, color .3s, background .3s; }
+.beat.on::before { border-color: var(--teal); color: var(--night); background: var(--teal); }
+.beat .t { font: 500 12px/1.3 var(--mono); color: var(--amber); letter-spacing: .06em; text-transform: uppercase; }
+.beat p { color: var(--ink-2); max-width: 52ch; }
+.beat .why { font-size: 14px; color: var(--ink-3); }
+.beat .why b { color: var(--teal); font-weight: 600; }
+.beat .m-shot { display: none; }
+.stick { position: sticky; top: 96px; align-self: start; display: grid; justify-items: center; gap: 12px; }
+.stick .phone { width: 280px; }
+.stick .phone img { transition: opacity .25s; }
+.stick .cap { font-size: 13px; color: var(--ink-3); text-align: center; max-width: 30ch; }
+.lang { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; gap: 2px; justify-self: start; }
+.lang button { border: 0; background: transparent; color: var(--ink-2); font: 600 13px/1 var(--text); padding: 7px 12px; border-radius: 999px; cursor: pointer; }
+.lang button[aria-pressed="true"] { background: var(--teal); color: var(--night); }
+.lang button:lang(ar) { font-family: "Noto Sans Arabic", var(--text); }
+@media (max-width: 960px) {
+  .story { grid-template-columns: 1fr; }
+  .stick { display: none; }
+  .beat { min-height: 0; }
+  .beat .m-shot { display: block; margin-top: 8px; }
+  .beat .m-shot .phone { width: min(260px, 100%); }
+}
+
+/* staff screens */
+.screens { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 30px; }
+.shot { position: relative; }
+.shot::after { content: ""; position: absolute; top: 18px; right: 18px; width: 34px; height: 34px; border-radius: 50%; background: rgba(6,17,15,.82) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2346c2a8' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='10.5' cy='10.5' r='6'/%3E%3Cpath d='M15 15l5 5M10.5 8v5M8 10.5h5'/%3E%3C/svg%3E") center / 18px no-repeat; border: 1px solid var(--line); pointer-events: none; }
+.shot .req { font: 500 11.5px/1.3 var(--mono); color: var(--teal); font-style: normal; padding: 0 4px 4px; }
+.shot { background: var(--deep); border: 1px solid var(--line); border-radius: 14px; padding: 10px; display: grid; gap: 10px; text-align: left; cursor: zoom-in; color: inherit; font: inherit; }
+.shot img { border-radius: 8px; height: auto; aspect-ratio: 16 / 11; object-fit: cover; object-position: top left; width: 100%; }
+.shot b { font: 600 15px/1.3 var(--display); padding: 0 4px; }
+.datafig { margin: 40px 0 0; display: grid; gap: 10px; } .datafig p { color: var(--ink-2); margin: 0; max-width: 70ch; } .datafig .shot img { aspect-ratio: auto; object-fit: contain; background: #fff; }
+.shot span { font-size: 13.5px; color: var(--ink-2); padding: 0 4px 4px; line-height: 1.45; }
+@media (max-width: 860px) { .screens { grid-template-columns: 1fr; } }
+
+/* ladder */
+.ladder { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0; margin-top: 30px; position: relative; }
+@media (min-width: 861px) { .ladder.l6 { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+.ladder::before { content: ""; position: absolute; left: 3%; right: 3%; top: 17px; height: 2px; background: linear-gradient(90deg, var(--teal), var(--amber) 70%, var(--red)); }
+.rung { position: relative; display: grid; gap: 6px; justify-items: center; text-align: center; padding: 0 4px; }
+.rung i { width: 36px; height: 36px; border-radius: 50%; background: var(--deep-2); border: 2px solid var(--teal); display: grid; place-items: center; font: 500 11px/1 var(--mono); font-style: normal; color: var(--ink); z-index: 1; }
+.rung:nth-child(n+4) i { border-color: var(--amber); }
+.rung:last-child i { border-color: var(--red); }
+.rung b { font: 600 14px/1.25 var(--display); }
+.rung small { font-size: 12.5px; color: var(--ink-3); line-height: 1.35; }
+@media (max-width: 860px) {
+  .ladder { grid-template-columns: 1fr; gap: 14px; }
+  .ladder::before { left: 17px; right: auto; top: 6px; bottom: 6px; width: 2px; height: auto; background: linear-gradient(180deg, var(--teal), var(--amber) 70%, var(--red)); }
+  .rung { grid-template-columns: 36px 1fr; justify-items: start; text-align: left; column-gap: 14px; }
+  .rung i { grid-row: span 2; }
+}
+
+/* 06 urgent */
+.urgent { background: linear-gradient(180deg, #1a0d0b, var(--night) 70%); }
+.urgent h2 em { color: var(--red); }
+.tl { display: grid; gap: 14px; }
+.tl > div { display: grid; grid-template-columns: 92px 1fr; gap: 14px; align-items: baseline; }
+.tl .when { font: 500 13px/1.3 var(--mono); color: var(--red); }
+.tl p { color: var(--ink-2); font-size: 15.5px; }
+.tl p b { color: var(--ink); }
+.duo { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
+.duo .phone { width: 230px; }
+.duo figure { margin: 0; display: grid; gap: 8px; justify-items: center; }
+.duo figcaption { font-size: 13px; color: var(--ink-3); text-align: center; max-width: 26ch; }
+
+/* AI */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips span { font: 500 12.5px/1.3 var(--mono); padding: 6px 10px; border-radius: 8px; background: var(--deep-2); border: 1px solid var(--line); color: var(--ink-2); }
+.chips.no span { border-color: #4a2622; color: #f2b0a9; background: #1d0f0d; }
+.chips.no span::before { content: "✕ "; color: var(--red); }
+.panel { background: var(--deep); border: 1px solid var(--line); border-radius: 18px; padding: 22px; display: grid; gap: 18px; }
+.panel h3 { font-size: 13px; font: 500 12px/1.3 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+.who-does { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.who-does > div { border-radius: 12px; padding: 14px; display: grid; gap: 6px; align-content: start; }
+.who-does .r { background: #142019; border: 1px solid #2b4a3d; }
+.who-does .a { background: var(--teal-soft); border: 1.5px dashed var(--teal); }
+.who-does .h { background: var(--amber-soft); border: 1px solid #6a4f22; }
+.who-does b { font: 600 16px/1.2 var(--display); }
+.who-does small { font-size: 13px; color: var(--ink-2); line-height: 1.45; }
+@media (max-width: 560px) { .who-does { grid-template-columns: 1fr; } }
+.tests { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.tests div { border-top: 2px solid var(--teal); padding-top: 10px; }
+.tests b { display: block; font: 700 28px/1 var(--display); font-variant-numeric: tabular-nums; }
+.tests span { font-size: 13px; color: var(--ink-2); line-height: 1.4; display: block; margin-top: 4px; }
+@media (max-width: 560px) { .tests { grid-template-columns: 1fr; } }
+
+/* 07 pilot */
+.north { background: var(--deep); border: 1px solid var(--line); border-radius: 18px; padding: 24px; display: grid; gap: 14px; }
+.north .big { font: 700 clamp(26px, 3vw, 34px)/1.15 var(--display); }
+.north .big em { font-style: normal; color: var(--amber); }
+.plan { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 34px; }
+.plan > div { border-top: 3px solid var(--line); padding-top: 12px; display: grid; gap: 4px; align-content: start; }
+.plan > div:nth-child(3) { border-color: var(--amber); }
+.plan .d { font: 500 12.5px/1.3 var(--mono); color: var(--teal); }
+.plan b { font: 600 17px/1.3 var(--display); }
+.plan span { font-size: 14px; color: var(--ink-2); }
+@media (max-width: 860px) { .plan { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 460px) { .plan { grid-template-columns: 1fr; } }
+.ask { margin-top: 56px; background: var(--amber); color: #1d1405; border-radius: 22px; padding: 34px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; align-items: center; }
+.ask h3 { font-size: clamp(24px, 3vw, 32px); line-height: 1.15; }
+.ask p { margin-top: 8px; font-size: 16px; color: #3d2d10; max-width: 60ch; }
+.ask .btn { background: #1d1405; color: var(--amber); }
+@media (max-width: 760px) { .ask { grid-template-columns: 1fr; padding: 24px; } }
+
+/* footer */
+footer { border-top: 1px solid var(--line); padding-block: 56px 72px; }
+footer .cols { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 40px; }
+footer h3 { font: 500 12px/1.3 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 12px; }
+footer ol { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 13.5px; color: var(--ink-2); }
+footer p { font-size: 14px; color: var(--ink-2); }
+footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
+@media (max-width: 860px) { footer .cols { grid-template-columns: 1fr; } }
+
+/* loop progress ring, right edge */
+.progress { position: fixed; right: max(18px, env(safe-area-inset-right, 0px)); top: 50%; transform: translateY(-50%); z-index: 15; display: grid; justify-items: end; gap: 10px; }
+.progress svg { width: 54px; height: 54px; }
+.progress .bg { fill: var(--night); stroke: var(--line); stroke-width: 3; }
+.progress .fg { fill: none; stroke: var(--teal); stroke-width: 3.5; stroke-linecap: round; stroke-dasharray: 145; stroke-dashoffset: 145; transform: rotate(-90deg); transform-origin: 27px 27px; transition: stroke-dashoffset .2s linear; }
+.progress .ok { fill: var(--teal); opacity: 0; transition: opacity .3s; }
+.progress.done .ok { opacity: 1; }
+.progress .lbl { font: 500 10.5px/1.3 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); text-align: right; max-width: 120px; }
+.progress .lbl b { display: block; color: var(--ink); font-weight: 500; }
+@media (max-width: 1320px) { .progress { display: none; } }
+
+/* lightbox */
+.lb { position: fixed; inset: 0; z-index: 50; background: rgba(2, 8, 7, .92); display: grid; place-items: center; padding: max(20px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(20px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+.lb[hidden] { display: none; }
+.lb img { max-height: 86vh; width: auto; border-radius: 10px; }
+.lb button { position: absolute; top: max(14px, env(safe-area-inset-top, 0px)); right: max(14px, env(safe-area-inset-right, 0px)); }
+.fn a{color:var(--amber);text-decoration:none;font-weight:700;padding:0 2px}
+.totop{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));z-index:20;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:var(--amber);color:#1a1206;font:700 20px/44px system-ui,sans-serif;text-align:center;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:opacity .2s}
+.totop.show{opacity:1;pointer-events:auto}
+@media print{.totop{display:none}}
+.archlink{color:var(--teal);font-weight:600;text-decoration:none;white-space:nowrap}.archlink:hover{text-decoration:underline}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#top"><i class="mk"><svg width="28" height="28" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" aria-hidden="true"><g id="mark"><path d="M75.61 21.01 A42 42 0 0 1 92.26 33.10" fill="none" stroke="#69c5b3" stroke-width="10" stroke-linecap="round"/><path d="M101.91 62.80 A42 42 0 0 1 95.55 82.37" fill="none" stroke="#7fb1e1" stroke-width="10" stroke-linecap="round"/><path d="M70.29 100.72 A42 42 0 0 1 49.71 100.72" fill="none" stroke="#f5c873" stroke-width="10" stroke-linecap="round"/><path d="M24.45 82.37 A42 42 0 0 1 18.09 62.80" fill="none" stroke="#f3a473" stroke-width="10" stroke-linecap="round"/><path d="M27.74 33.10 A42 42 0 0 1 44.39 21.01" fill="none" stroke="#8cd1a1" stroke-width="10" stroke-linecap="round"/><circle cx="60.00" cy="18.00" r="11.5" fill="#3fb59d"/><circle cx="99.94" cy="47.02" r="11.5" fill="#5b9bd8"/><circle cx="84.69" cy="93.98" r="11.5" fill="#f2b84b"/><circle cx="35.31" cy="93.98" r="11.5" fill="#f08a4b"/><circle cx="20.06" cy="47.02" r="11.5" fill="#6cc486"/></g></svg></i>Kafila <span lang="ar" dir="rtl" style="opacity:.7;font-weight:500">قافلة</span></a>
+    <nav aria-label="Sections">
+      <a href="#what">Five steps</a><a href="#why">The gap</a><a href="#who">People</a><a href="#how">Fatima's case</a><a href="care-loop.html">Step by step</a><a href="#safety">Urgent cases</a><a href="#ai">AI</a><a href="#pilot">Impact</a><a href="architecture.html">Architecture</a>
+    </nav>
+    <a class="btn solid" href="prototype/" target="_blank" rel="noopener">Prototype</a>
+  </div>
+</header>
+
+<aside class="progress" aria-hidden="true" id="progress">
+  <svg viewBox="0 0 54 54"><circle class="bg" cx="27" cy="27" r="23"/><circle class="fg" cx="27" cy="27" r="23" id="pfg"/><circle class="ok" cx="27" cy="27" r="9"/></svg>
+  <div class="lbl">Case state<b id="plbl">Result issued</b></div>
+</aside>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero" data-state="Result issued">
+  <div class="wrap split">
+    <div class="stack">
+      <p class="eyebrow">Kafila <span lang="ar" dir="rtl">قافلة</span> · a screening-to-care accountability platform · Future Health Challenge 05</p>
+      <h1>A positive test. <em>Then a person, a plan and a date.</em></h1><p class="lede">Fatima's stool test is positive. Kafila makes sure the next step actually happens:</p>
+      <ul class="herolist">
+        <li><b>She understands.</b> Her own clinic messages her the same day and explains the result in her language. She can ask anything, at any hour.</li>
+        <li><b>She books.</b> A slot that fits her life: a female doctor, a weekend, covered by her plan.</li>
+        <li><b>She is not forgotten.</b> If she does not reply, an SMS, then a call, then a nurse.</li>
+        <li><b>Someone owns it.</b> One named person is responsible until a doctor closes the case with the report.</li>
+      </ul>
+      <p class="herofoot">Without this, almost half of people like Fatima never get the colonoscopy.</p>
+      <p class="herofoot"><b>Sahatna helps patients reach care. Kafila makes sure the next step actually happens:</b> every case has a named owner, a clinically approved deadline and a verified outcome.</p>
+      <div class="stats">
+        <div class="stat"><b>47 of 100</b><span>people with a positive stool test had no colonoscopy within a year</span><small>952 of 2,018 · US community clinics · O’Connor 2020</small></div>
+        <div class="stat"><b>Almost 2×</b><span>the odds of finding advanced-stage cancer when the colonoscopy comes 10–12 months after the test, and about 3× after a year, compared with 8–30 days</span><small>70,124 patients · Kaiser Permanente · Corley 2017, JAMA</small></div>
+        <div class="stat"><b>+13 points</b><span>more people completed the colonoscopy when a navigator phoned them, explained it and helped them book: 55.1% vs 42.1% without one</span><small>PRECISE randomised trial · Coronado 2025</small></div>
+      </div>
+      <p class="pull">With Kafila: a named owner and a deadline at every step, until a clinician closes the case with evidence.</p>
+      <div class="motto"><span>Rules set urgency and deadlines</span><span>AI explains</span><span>Clinicians decide and sign</span></div>
+      <div class="cta">
+        <a class="btn solid" href="#how">Follow Fatima's case</a>
+        <a class="btn line" href="prototype/" target="_blank" rel="noopener">Open the prototype</a>
+        <a class="btn line" href="care-loop.html">Step by step: who does what</a>
+      </div>
+    </div>
+    <div class="herovis">
+    <div class="loopviz" aria-label="The Kafila loop: record, prioritise, refer, navigate, track">
+      <svg class="ring" viewBox="0 0 400 400" aria-hidden="true">
+        <circle class="track" cx="200" cy="200" r="180"/>
+        <circle class="arc" cx="200" cy="200" r="180" transform="rotate(-90 200 200)"/>
+      </svg>
+      <button type="button" class="node" style="left:50%;top:5%" aria-pressed="false" data-img="img/wa.webp" data-cap="The lab result opens one case for Fatima. Her clinic messages her the same day."><i>1</i><b>Record</b></button>
+      <button type="button" class="node" style="left:93%;top:36%" aria-pressed="false" data-img="img/result-en.webp" data-cap="Rules, not AI, set the zone and the deadlines: see a doctor, referral within 15 working days, colonoscopy within 31 working days after it."><i>2</i><b>Prioritise</b></button>
+      <button type="button" class="node" style="left:78%;top:88%" aria-pressed="false" data-img="img/book.webp" data-cap="A slot in her insurance network: a female doctor, on Saturday, covered by her plan."><i>3</i><b>Refer</b></button>
+      <button type="button" class="node" style="left:22%;top:88%" aria-pressed="false" data-img="img/ask.webp" data-cap="She asks “Is it cancer?” and gets a calm answer from approved texts, with its source."><i>4</i><b>Navigate</b></button>
+      <button type="button" class="node end" style="left:7%;top:36%" aria-pressed="false" data-img="img/mycase.webp" data-cap="She always sees where her case is and who owns it, until a doctor closes it."><i>✓</i><b>Track</b></button>
+      <div class="phone"><img src="img/wa.webp" alt="WhatsApp message from Khalifa City Family Health Centre: Hello Fatima, Dr. Hessa asked us to share your new screening result. Open your result. Buttons: Talk to a nurse, This is not me." width="780" height="1540"></div>
+
+    </div>
+<div class="casechip"><b>C-1042 · Fatima A.</b> <span class="z">See a doctor</span><br>Owner: Noura (coordinator)<br>Referral due in 15 working days · now day 0<br><span class="hint">Tap a step on the loop to see its screen.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 01 WHAT -->
+<section id="what" data-state="Owner assigned">
+  <div class="wrap">
+    <div class="split">
+      <div class="stack">
+        <p class="eyebrow"><b>01</b>Five steps</p>
+        <h2>More than a reminder. <em>One owned case, from result to closure.</em></h2>
+      </div>
+      <div class="stack">
+        <p class="lede">Kafila turns each result into one case that moves through five steps: record, prioritise, refer, navigate, track. At every step a named person owns it, and a clock shows when it is late.</p>
+        <p class="pull">Every actionable result gets a next step, a responsible team and a documented outcome.</p>
+        <p class="src">The five steps match the journey the Abu Dhabi Public Health Centre set out for Challenge 05 (challenge webinar, 29 Oct 2026, paraphrased).</p>
+      </div>
+    </div>
+    <div class="steps5">
+      <div><span class="n">1 · Record</span><h3>Result arrives</h3><p>The lab result becomes a case on the person's record, with the rules version that judged it.</p><span class="adphc">Malaffi link in the pilot</span></div>
+      <div><span class="n">2 · Prioritise</span><h3>Rules set the urgency</h3><p>A versioned table, built on published guidelines, sets the zone and the deadline. AI never does.</p><span class="adphc">Stool test, HPV, HbA1c, blood pressure</span></div>
+      <div><span class="n">3 · Refer</span><h3>Right clinic, right plan</h3><p>The referral goes to a clinic in her insurance network, with a letter the doctor checks and signs.</p><span class="adphc">Government plan, Thiqa, Basic, Enhanced (simulated)</span></div>
+      <div><span class="n">4 · Navigate</span><h3>She understands and books</h3><p>Plain words in Arabic or English, by text or voice, a nurse one tap away, slots that fit her barriers.</p><span class="adphc">WhatsApp, SMS, calls, a letter</span></div>
+      <div><span class="n">5 · Track</span><h3>Closed with evidence</h3><p>Only a clinician closes the case, with the report or a signed reason. The dashboard shows who is lost and why.</p><span class="adphc">Clinicians stay central</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 WHY -->
+<section id="why" data-state="Patient notified">
+  <div class="wrap split">
+    <div class="stack">
+      <p class="eyebrow"><b>02</b>The gap</p>
+      <h2>A positive test is <em>where people get lost.</em></h2>
+      <p class="lede">Screening finds the problem. Then the result sits in a system that nobody is watching. The person is scared, unsure what it means, or cannot find a slot that fits her life, and nobody notices that she never booked.</p>
+      <div class="bigfig"><b>1 in 3</b><p>people with a positive stool test in the Dutch national programme said they had no colonoscopy. The gap exists even in organised programmes. <span class="src">Bertels 2022, Ann Fam Med</span></p></div>
+      <p class="note"><b>Abu Dhabi has the same gap.</b> In SEHA primary care clinics in 2015–2016, only 30.5% of Emirati adults with a positive stool test had the follow-up colonoscopy (436 people; Almansoori 2021, BMC Cancer). This is an older figure, not today’s rate. Kafila measures today’s gap and helps close it.</p>
+    </div>
+    <div class="tablebox">
+      <table class="cmp">
+        <thead><tr><th></th><th>Today</th><th class="us">With Kafila</th></tr></thead>
+        <tbody>
+          <tr><td class="q">How she hears about it</td><td>A code in an app or a generic SMS</td><td class="us">A WhatsApp from her own health centre, in her language, with the result in plain words</td></tr>
+          <tr><td class="q">Who owns the next step</td><td>Nobody in particular</td><td class="us">Coordinator Noura, named on the case, with a deadline for each step</td></tr>
+          <tr><td class="q">If she is scared or wants a female doctor</td><td>She waits</td><td class="us">She says what is hard, a nurse is one tap away, female-doctor slots her plan covers</td></tr>
+          <tr><td class="q">If she never books</td><td>Nobody notices</td><td class="us">SMS on day 2 and 4, a call on day 5, then Noura calls. The programme lead sees it when three quarters of the time has passed</td></tr>
+          <tr><td class="q">When it ends</td><td>Unclear</td><td class="us">When a doctor closes it with the report or a signed reason</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- 03 WHERE -->
+<section id="where" data-state="Patient understood">
+  <div class="wrap">
+    <div class="split">
+      <div class="stack">
+        <p class="eyebrow"><b>03</b>Where it runs</p>
+        <h2>On her phone. On the clinic's computers. <em>Connected to Malaffi, Sahatna and the clinic's own systems.</em></h2>
+      </div>
+      <div class="stack">
+        <p class="lede">No new device and no new download. The patient opens a secure link from a message; the care team uses any browser. In a pilot, results arrive automatically from the clinic's systems, and the outcome is written back to her health record. The patient side can also live inside Sahatna, the Abu Dhabi health app, as the organisers suggested.</p>
+        <p class="note">Messages, booking, insurance and integrations are simulated in the demo. The labels below say what is built and what is proposed.</p>
+      </div>
+    </div>
+    <div class="where" style="margin-top:36px">
+      <div><span class="tag built">Built · web app</span><h3>Patient phone</h3><p>WhatsApp or SMS link opens the result, the AI chat, booking and "Where is my case". Arabic and English, text and voice.</p><span class="tag prop">Proposed · module inside Sahatna</span></div>
+      <div><span class="tag built">Built · web app</span><h3>Care team</h3><p>Worklist of exceptions, case timeline, referral with accept or reject, e-consult, closure with evidence, dashboard.</p><span class="tag sim">Simulated · insurance network and slots</span></div>
+      <div><span class="tag built">Built · FHIR R4 export</span><h3>Health record</h3><p>Start with a daily secure file and coordinator booking. Then FHIR with the EMR, scheduling and eligibility.</p><span class="tag prop">Proposed · Malaffi events</span></div>
+    </div>
+    <div class="pipe" aria-label="Integration path">
+      <span>v0 daily secure file</span><em>→</em><span>v1 FHIR R4 with EMR and scheduling</span><em>→</em><span class="on">Malaffi events + Sahatna module</span>
+    </div>
+    <figure class="datafig">
+      <p>Where Kafila learns which clinic Fatima belongs to, which language to write in, which slots fit her and what her plan pays for. The clinic already has all four sources. <a class="archlink" href="architecture.html">See the full architecture →</a></p>
+      <button class="shot" type="button" data-full="img/data-sources.webp"><img src="img/data-sources.webp" alt="Diagram: laboratory, clinic health record, appointment system and insurer feed Kafila; Fatima gets a WhatsApp from her clinic, in her language, a slot that fits her, covered by her plan" width="2560" height="1520"></button>
+    </figure>
+  </div>
+</section>
+
+<!-- 04 WHO -->
+<section id="who" data-state="Referral sent">
+  <div class="wrap">
+    <div class="split">
+      <div class="stack">
+        <p class="eyebrow"><b>04</b>People</p>
+        <h2>One case. Five people. <em>Everyone knows their part.</em></h2>
+      </div>
+      <div class="stack">
+        <p class="lede">Each step has one named owner. The system moves the case between them and shows when a step is late.<sup class="fn"><a href="#fn-demo" aria-label="footnote">*</a></sup></p>
+        <a class="btn line" style="justify-self:start" href="care-loop.html">Fatima’s case step by step: who does what, and when</a>
+      </div>
+    </div>
+    <div class="people" id="people"></div>
+  </div>
+</section>
+
+<!-- 05 HOW -->
+<section id="how" data-state="Booked">
+  <div class="wrap">
+    <div class="split">
+      <div class="stack">
+        <p class="eyebrow"><b>05</b>Fatima's case</p>
+        <h2>Meet Fatima, 52. <em>Day 0.</em></h2>
+      </div>
+      <p class="lede">Her stool test (FIT) is positive. Deadlines follow the UAE national guideline: referral within 15 working days, colonoscopy within 31 working days after the referral. The pilot agrees the final values with the clinical partner. These are real screens from the prototype.<sup class="fn"><a href="#fn-demo" aria-label="footnote">*</a></sup></p>
+    </div>
+    <div class="story">
+      <div class="beats" id="beats">
+        <div class="beat" data-img="img/wa.webp" data-cap="WhatsApp message from her clinic">
+          <span class="t">Day 0 · 09:00</span>
+          <h3>A message from her own clinic</h3>
+          <p>In the language her clinic has on record for her (in the pilot; the demo shows it in English). No result in the preview, only a secure link. If the number is wrong, "This is not me" stops all messages.</p>
+          <p class="why"><b>Privacy:</b> nothing medical is shown before sign-in. In the pilot she signs in with UAE PASS or a one-time code, and every view and change goes to an audit log that cannot be edited.</p>
+          <div class="m-shot"><div class="phone"><img loading="lazy" src="img/wa.webp" alt="WhatsApp message with Open your result" width="780" height="1540"></div></div>
+        </div>
+        <div class="beat" data-img="img/signin.webp" data-cap="Sign-in with consent and two ways out">
+          <span class="t">Day 0 · 09:01</span>
+          <h3>She agrees, or asks for a call</h3>
+          <p>Consent is a free choice. She can say "I'd rather get a phone call" and Noura calls her instead.</p>
+          <p class="why"><b>Consent:</b> always with an alternative.</p>
+          <div class="m-shot"><div class="phone"><img loading="lazy" src="img/signin.webp" alt="Sign-in with a one-time code, an I agree checkbox, and links I'd rather get a phone call and This is not me" width="780" height="1540"></div></div>
+        </div>
+        <div class="beat" data-img="img/result-ar.webp" data-cap="Result card, in Arabic" id="beat-result">
+          <span class="t">Day 0 · 09:02</span>
+          <h3>Her result, in plain words</h3>
+          <p>"See a doctor." A small amount of hidden blood was found. It is not a diagnosis. Below: what happens next and by when.</p>
+          <div class="lang" role="group" aria-label="Result language">
+            <button type="button" lang="ar" aria-pressed="true" data-l="ar">العربية</button>
+            <button type="button" aria-pressed="false" data-l="en">English</button>
+          </div>
+          <p class="why"><b>Rules, not AI:</b> the zone and the deadline come from the screening programme's rules table.</p>
+          <div class="m-shot"><div class="phone"><img loading="lazy" src="img/result-ar.webp" alt="Result card in Arabic: see a doctor, with next steps and dates" width="780" height="1540"></div></div>
+        </div>
+        <div class="beat" data-img="img/ask.webp" data-cap="The AI chat answers with a source">
+          <span class="t">Day 0 · 09:12</span>
+          <h3>"Is it cancer?"</h3>
+          <p>The AI chat answers from approved text: most people with a positive test do not have cancer, and a colonoscopy is the way to find out. Every answer names what it is compared with and its source.</p>
+          <p class="why"><b>Understanding:</b> a one-tap check that she knows the next step.</p>
+          <div class="m-shot"><div class="phone"><img loading="lazy" src="img/ask.webp" alt="AI chat: Is it cancer? Answer with comparison and source" width="780" height="1540"></div></div>
+        </div>
+        <div class="beat" data-img="img/barrier.webp" data-cap="What makes it hard to go?">
+          <span class="t">Day 0 · 09:13</span>
+          <h3>What makes it hard to go?</h3>
+          <p>Fear, cost, time off, the preparation, transport, privacy, or "I prefer a female doctor". She taps one, and the booking filters follow.</p>
+          <p class="why"><b>Barriers:</b> the reasons people do not go, asked in the first minute.</p>
+          <div class="m-shot"><div class="phone"><img loading="lazy" src="img/barrier.webp" alt="Barrier options with I prefer a female doctor selected" width="780" height="1540"></div></div>
+        </div>
+        <div class="beat" data-img="img/book.webp" data-cap="Slots in her network">
+          <span class="t">Day 0 · 09:14</span>
+          <h3>A slot that fits</h3>
+          <p>Gastroenterology slots in her network, female doctors first, with what her plan covers. If nothing fits, one tap asks Noura to call and book for her.</p>
+          <p class="why"><b>Where the slots come from:</b> in the pilot, the free times are read from the booking system of the gastroenterology clinics in her network, and what her plan covers from the insurer. In the demo both are simulated.</p>
+          <div class="m-shot"><div class="phone"><img loading="lazy" src="img/book.webp" alt="Slots: Sat 21 Nov 10:00 Dr. Amna Al Mansoori, female doctor, covered by Government plan" width="780" height="1540"></div></div>
+        </div>
+        <div class="beat" data-img="img/mycase.webp" data-cap="Where is my case">
+          <span class="t">Day 0 → day 7</span>
+          <h3>She always knows where her case is</h3>
+          <p>The same steps her care team sees, in plain words, each with who is doing it now. After the colonoscopy, Dr. Hessa reviews the report with her and closes the case.</p>
+          <p class="why"><b>Closure:</b> only a clinician, only with evidence.</p>
+          <div class="m-shot"><div class="phone"><img loading="lazy" src="img/mycase.webp" alt="My case: booked Saturday 21 November, step 3 of 6" width="780" height="1540"></div></div>
+        </div>
+      </div>
+      <div class="stick" aria-live="polite">
+        <div class="phone"><img id="stickImg" src="img/wa.webp" alt="Prototype screen" width="780" height="1540"></div>
+        <p class="cap" id="stickCap">WhatsApp message from her clinic</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:72px">Meanwhile, at the clinic</h3>
+    <p class="note" style="margin-top:6px">Four people, four screens. Each one acts only on its own step, and each action is logged on the case. Click a screen to enlarge.</p>
+    <div class="screens">
+      <button class="shot" type="button" data-full="img/worklist.webp"><img src="img/worklist.webp" alt="Care team worklist with exceptions: urgent, overdue, unassigned, rejected" width="1920" height="1350"><b>Noura sees only what needs her</b><span>Urgent calls first, then late, returned and unowned cases. Each row says what it is waiting for, who owns it and when it is due.</span><em class="req">Brief R1 · R2</em></button>
+      <button class="shot" type="button" data-full="img/case.webp"><img src="img/case.webp" alt="Case page for Fatima with draft summary, actions and timeline" width="1920" height="1350"><b>Dr. Hessa refers and signs</b><span>A draft summary and referral letter are built from the case fields. She edits and signs; nothing is sent without her. In the pilot an AI rewrites the draft in plain words from the same fields.</span><em class="req">Brief R4 · R5</em></button>
+      <button class="shot" type="button" data-full="img/omar.webp"><img src="img/omar.webp" alt="Specialist view: accept referral, reject with reason, e-consult" width="1920" height="1350"><b>Dr. Omar accepts or rejects</b><span>The GI clinic accepts the referral, or rejects it with a reason so Dr. Hessa can send it elsewhere within 2 working days. The doctors can ask each other a written question inside the case.</span><em class="req">Brief R4</em></button>
+      <button class="shot" type="button" data-full="img/dashboard.webp"><img src="img/dashboard.webp" alt="Programme dashboard with funnel, overdue cases and treatment started" width="1920" height="1350"><b>Dr. Khalid sees the whole programme</b><span>Funnel, days to care, reasons for delay, treatment started, gaps by language. Only a clinician can close a case, with the report or a signed reason.</span><em class="req">Brief R5 · R6</em></button>
+    </div>
+
+    <h3 style="margin-top:72px">And if she had never answered?</h3>
+    <p class="note" style="margin-top:6px">Each attempt is logged on the case. "Lost to follow-up" is allowed only after 3 or more attempts on 2 or more channels over at least 30 days, including a call and a letter.</p>
+    <div class="ladder">
+      <div class="rung"><i>D0</i><b>WhatsApp</b><small>from her clinic</small></div>
+      <div class="rung"><i>D2</i><b>SMS</b><small>same secure link</small></div>
+      <div class="rung"><i>D4</i><b>SMS</b><small>second reminder</small></div>
+      <div class="rung"><i>D5</i><b>Automated call</b></div>
+      <div class="rung"><i>D6</i><b>Noura calls</b><small>contact step is late</small></div>
+      <div class="rung"><i>✉</i><b>Letter</b><small>to her home address</small></div>
+      <div class="rung"><i>75%</i><b>Programme lead</b><small>when three quarters of the time has passed</small></div>
+    </div>
+
+    <h3 style="margin-top:72px">And if the clinic says no?</h3>
+    <p class="note" style="margin-top:6px">This is where patients are usually lost. In Kafila a rejected referral starts the next action at once, and the case stays owned until care happens.</p>
+    <div class="ladder l6">
+      <div class="rung"><i>1</i><b>Clinic rejects</b><small>reason logged, e.g. no capacity</small></div>
+      <div class="rung"><i>2</i><b>Slot released</b><small>reminders and prep cancelled</small></div>
+      <div class="rung"><i>3</i><b>Fatima is told</b><small>"your doctor is choosing another clinic"</small></div>
+      <div class="rung"><i>4</i><b>Dr. Hessa re-routes</b><small>within 2 working days</small></div>
+      <div class="rung"><i>5</i><b>Noura follows it</b><small>under "Referral returned"</small></div>
+      <div class="rung"><i>⏱</i><b>Clock keeps running</b><small>the deadlines do not restart</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 URGENT -->
+<section id="safety" class="urgent" data-state="Seen by specialist">
+  <div class="wrap split">
+    <div class="stack">
+      <p class="eyebrow"><b>06</b>Urgent cases</p>
+      <h2>When it is urgent, <em>Kafila does not wait for AI.</em></h2>
+      <p class="lede">Rajesh, 45, works shifts. His blood pressure at screening is 185/115. Normal is below 120/80.</p>
+      <div class="tl">
+        <div><span class="when">09:00</span><p><b>Rules mark it urgent.</b> He sees "Needs care today: a doctor will call you before 13:00", in the call window he chose.</p></div>
+        <div><span class="when">09:04</span><p><b>He types "chest pain".</b> A fixed screen says call 998 now. The phrase list is checked before any AI, in Arabic and English. His care team is alerted.</p></div>
+        <div><span class="when">+30 min</span><p><b>No answer to the doctor's call?</b> Retry, then an SMS with the clinic's number.</p></div>
+        <div><span class="when">Same day</span><p><b>Still nobody reached after 3 tries:</b> the clinical lead gets the case today.</p></div>
+      </div>
+    </div>
+    <div class="duo">
+      <figure><div class="phone"><img src="img/rajesh.webp" alt="Result card: Needs care today, a doctor will call you before 13:00" width="780" height="1540"></div><figcaption>Urgent result, same-day call</figcaption></figure>
+      <figure><div class="phone"><img src="img/redflag.webp" alt="Red screen: Call 998 now. Safety rule: this answer never comes from AI" width="780" height="1540"></div><figcaption>Red-flag phrase: fixed answer, no AI</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- AI -->
+<section id="ai" data-state="Report received">
+  <div class="wrap split">
+    <div class="stack">
+      <p class="eyebrow">AI inside Kafila</p>
+      <h2>AI that explains and drafts, <em>inside rules that clinicians set.</em></h2>
+      <ul class="stack" style="margin:0;padding-left:20px;gap:8px;color:var(--ink-2)">
+        <li><b>In the demo:</b> answers the patient's questions in Arabic or English, by text or voice, from approved texts.</li>
+        <li><b>In the pilot:</b> rewrites the case summary and the referral letter in plain words for the doctor. Today these drafts are built from the case fields.</li>
+        <li><b>In the pilot:</b> sorts what the patient writes into barriers (fear, cost, time…) and suggests the next action from a fixed list. A person clicks to accept.</li>
+      </ul>
+      <p class="pull">The rules set the zone. The AI explains it. A person signs.</p>
+      <p class="note">If the AI is off or fails, the prepared answers take over and the loop keeps working.</p>
+    </div>
+    <div class="panel">
+      <h3>Who does what</h3>
+      <div class="who-does">
+        <div class="r"><b>Rules</b><small>Zone, deadline, urgency, red flags, who is overdue. Versioned table with a source on every row.</small></div>
+        <div class="a"><b>AI</b><small>Plain-language answers to the patient; in the pilot also drafts for staff. Each draft is labelled "check before use": a person reads it before anything is sent.</small></div>
+        <div class="h"><b>People</b><small>Accept or reject referrals, sign letters, close cases. Every action is logged.</small></div>
+      </div>
+      <h3>What the AI may not do</h3>
+      <div class="chips no"><span>Diagnose</span><span>Name medicines or doses</span><span>Set a zone or deadline</span><span>Lower urgency</span><span>Close a case</span><span>Send a clinical message without a person</span></div>
+      <h3>Tested, 17 Nov 2026</h3>
+      <div class="tests">
+        <div><b>35 / 35</b><span>rules engine tests passed</span></div>
+        <div><b>50 / 50</b><span>AI safety questions passed with prepared answers. Live-model run pending</span></div>
+        <div><b>0</b><span>cases the AI can close: the button does not exist for it</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 PILOT -->
+<section id="pilot" data-state="Closed with evidence">
+  <div class="wrap">
+    <div class="split">
+      <div class="stack">
+        <p class="eyebrow"><b>07</b>Impact and pilot</p>
+        <h2>One number to judge us by: <em>follow-up completed in time.</em></h2>
+        <p class="lede">People whose next clinical step was done and confirmed within the agreed window, divided by all actionable results in the same period. Compared with the partner's previous 12 months. "Declined", "lost to follow-up" and "moved away" are shown separately and never count as success.</p>
+      </div>
+      <div class="north">
+        <p class="big">Pilot target: <em>+15 points</em> in follow-up completed in time</p>
+        <p class="note">Compared with the partner's own previous 12 months. A working assumption to agree with the partner. For scale: patient navigation added 13 points in the PRECISE trial.</p>
+        <div class="chips"><span>Days to notification, booking, visit</span><span>Overdue and unassigned cases</span><span>Treatment started</span><span>"I understood" and "I felt guided"</span><span>Gaps by language, nationality, insurance</span></div>
+      </div>
+    </div>
+    <h3 class="valh">Who gains, and how</h3>
+    <div class="where value">
+      <div><span class="tag built">People</span><h3>Found earlier, less fear</h3><ul>
+        <li>A positive test is no longer lost. Today about 47 in 100 have no colonoscopy within a year (O’Connor 2020, US community clinics).</li>
+        <li>Cancer found earlier: 5-year survival 91% when found localised vs 13% once it has spread (colon, ACS/SEER 2014–2020).</li>
+        <li>Answers in her language at any hour, a slot that fits her life, a female doctor, and what her plan covers before she books.</li></ul></div>
+      <div><span class="tag built">Health system</span><h3>Screening that pays off</h3><ul>
+        <li>Tests already paid for lead to care, instead of stopping at a result.</li>
+        <li>The programme lead sees who is lost and why: by language, district, insurance.</li>
+        <li>More people reach the procedure without hiring a navigator for every case. Navigation added 13 points in PRECISE (55.1% vs 42.1%).</li>
+        <li>Safe by design: rules set urgency and deadlines, clinicians decide, AI explains, every step is logged.</li></ul></div>
+      <div><span class="tag built">Economy</span><h3>Cheaper care, fuller clinics</h3><ul>
+        <li>Early-stage treatment is shorter and cheaper than late-stage treatment. The UAE figure is measured in the pilot.</li>
+        <li>Fewer empty endoscopy slots and no-shows.</li>
+        <li>Less coordinator time per case (target −50%, an assumption to test).</li>
+        <li>People stay at work: shorter treatment, less sick leave.</li>
+        <li>A base platform fee, plus a bonus for each follow-up completed and checked independently, adjusted for how complex the cases are. No reward for easy patients or paper closures.</li></ul></div>
+    </div>
+    <p class="note valf">Value to a payer per year = positive results × extra people who reach follow-up × share with disease found × saving from earlier stage + coordinator hours saved + no-shows avoided. Filled with the partner's own data in the pilot.</p>
+    <div class="plan">
+      <div><span class="d">Jan–Feb 2027</span><b>Partner and baseline</b><span>One provider network; last 12 months measured</span></div>
+      <div><span class="d">Mar–Apr</span><b>Build and approvals</b><span>Daily file in, coordinator booking, DoH and consent reviews</span></div>
+      <div><span class="d">May–Aug</span><b>12-week pilot</b><span>Positive stool test → colonoscopy, 300–500 results</span></div>
+      <div><span class="d">Sep–Dec</span><b>Evaluate, add a pathway</b><span>Results to DoH; HPV or HbA1c next</span></div>
+    </div>
+    <div class="ask">
+      <div>
+        <h3>No patient left behind after an abnormal result.</h3>
+        <p>Next step, if Kafila is selected: a 12-week pilot in one Abu Dhabi clinic group in 2027. It starts with positive stool tests, then adds cervical screening (HPV), diabetes (HbA1c) and high blood pressure: the same five steps work for any screening result. Clinicians stay in charge of every decision.</p>
+      </div>
+      <a class="btn" href="prototype/" target="_blank" rel="noopener">Try the prototype</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap cols">
+    <div>
+      <h3>Sources</h3>
+      <ol>
+        <li>O’Connor EA et al. Sci Rep 2020;10:2441: follow-up colonoscopy after abnormal FIT in US community clinics (952 of 2,018 not followed up within 12 months).</li>
+        <li>Almansoori A et al. BMC Cancer 2021: colorectal cancer screening in SEHA ambulatory clinics, Abu Dhabi, 2015–2016 (30.5% follow-up colonoscopy after a positive FIT/gFOBT).</li>
+        <li>Coronado GD et al. PRECISE randomised trial, Ann Intern Med 2025: patient navigation vs usual care after abnormal FIT (55.1% vs 42.1%).</li>
+        <li>Bertels L et al. Ann Fam Med 2022: self-reported non-adherence to colonoscopy after positive FIT, Dutch programme.</li>
+        <li>Al-Maskari F et al. Front Public Health 2025: colorectal cancer screening in Al Ain, UAE (n = 493).</li>
+        <li>American Cancer Society. Survival rates for colorectal cancer: colon cancer 5-year relative survival by SEER stage, people diagnosed 2014–2020 (localised 91%, regional 74%, distant 13%). cancer.org.</li>
+        <li>Corley DA et al. JAMA 2017;317(16):1631–1641: time to colonoscopy after positive FIT and risk of cancer and advanced-stage disease (10–12 months vs 8–30 days).</li>
+        <li>USPSTF 2021, Colorectal Cancer: Screening.</li>
+        <li>ADPHC, Population Health Challenge explainer webinar, 29 Oct 2026.</li>
+      </ol>
+    </div>
+    <div>
+      <h3>About this prototype</h3>
+      <p>Built during the Future Health Digital Innovation Challenge by a solo founder with medical education, working with a team of AI roles: developer, tester, business analyst, architect, designer, medical reviewer, writer.</p>
+      <p class="disc" id="fn-demo"><b>*</b> Concept and demonstration prototype. All people, results, clinics and insurance plans are synthetic. Clinical logic follows published guidelines and is pending review by a licensed clinician. Messages, booking and integrations are simulated. Not a medical device. Not affiliated with or endorsed by DoH Abu Dhabi or ADPHC. Logo: concept AI-generated, redrawn as vector.</p>
+    </div>
+  </div>
+</footer>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Enlarged screen">
+  <img id="lbImg" src="" alt="">
+  <button class="btn line" type="button" id="lbClose">Close</button>
+</div>
+
+<script>
+(function () {
+  // People with simple illustrated faces (fictional demo characters).
+  function face(f) {
+    const s = [];
+    const top = f.top === "coat" ? "#ffffff" : f.top;
+    if (f.head === "scarf") s.push(`<path d="M13 27c0-11 5-18 11-18s11 7 11 18v6c-3 2.5-7 3.5-11 3.5s-8-1-11-3.5z" fill="${f.scarf}"/>`);
+    if (f.head === "ghutra") s.push(`<path d="M12.5 30c0-12 5-20 11.5-20s11.5 8 11.5 20v4l-4-1v-9c-2 2-5 3-7.5 3s-5.5-1-7.5-3v9l-4 1z" fill="#f4f4f1"/>`);
+    s.push(`<path d="M6 50c0-10 8-15 18-15s18 5 18 15z" fill="${top}"/>`);
+    if (f.top === "coat") s.push(`<path d="M24 35l-5 15M24 35l5 15" stroke="#c9d3cf" stroke-width="1.4"/><path d="M19 37l5 6 5-6" fill="${f.extra === "steth" ? "#5f8f7a" : "#4a6fa5"}"/>`);
+    if (f.head === "scarf") s.push(`<path d="M16 34c2 2.5 5 3.5 8 3.5s6-1 8-3.5l-2 6h-12z" fill="${f.scarf}"/>`);
+    s.push(`<rect x="21" y="27" width="6" height="7" rx="2" fill="${f.skin}"/>`);
+    s.push(`<ellipse cx="24" cy="21.5" rx="${f.head === "scarf" ? 7.2 : 7.8}" ry="8.4" fill="${f.skin}"/>`);
+    if (f.head === "hair") s.push(`<path d="M16 20c0-6 3.5-9.5 8-9.5s8 3.5 8 9.5c-1.5-3-4-4.5-8-4.5s-6.5 1.5-8 4.5z" fill="${f.hair}"/>`);
+    if (f.head === "ghutra") s.push(`<path d="M15.5 15c2-3.5 5-5 8.5-5s6.5 1.5 8.5 5" stroke="#1d1d1f" stroke-width="2.6" fill="none"/><path d="M16 17.5c2.5-2 5-2.8 8-2.8s5.5.8 8 2.8" fill="#f4f4f1"/>`);
+    if (f.extra === "beard") s.push(`<path d="M17 22.5c.5 5 3.5 8 7 8s6.5-3 7-8c-1 2.5-3.5 3.5-7 3.5s-6-1-7-3.5z" fill="#2a211c"/>`);
+    s.push(`<circle cx="21" cy="21" r="1" fill="#1d1d1f"/><circle cx="27" cy="21" r="1" fill="#1d1d1f"/><path d="M21.5 25.2c1.5 1.2 3.5 1.2 5 0" stroke="#7a3b2e" stroke-width="1.1" fill="none" stroke-linecap="round"/>`);
+    if (f.extra === "steth") s.push(`<path d="M20 37c-1 5 1 8 4 8s5-3 4-8" stroke="#3d4a46" stroke-width="1.3" fill="none"/><circle cx="24" cy="45" r="1.6" fill="#3d4a46"/>`);
+    if (f.extra === "headset") s.push(`<path d="M15.5 20a8.5 8.5 0 0 1 17 0" stroke="#e9eef0" stroke-width="1.6" fill="none"/><rect x="14" y="19" width="3" height="5" rx="1.2" fill="#e9eef0"/><rect x="31" y="19" width="3" height="5" rx="1.2" fill="#e9eef0"/><path d="M15.5 24c0 3 2 4.5 5 4.5" stroke="#e9eef0" stroke-width="1.2" fill="none"/>`);
+    if (f.extra === "phone") s.push(`<rect x="30" y="38" width="6.5" height="10" rx="1.4" fill="#1d1d1f"/><rect x="31" y="39.3" width="4.5" height="7" rx=".6" fill="#7fd1a8"/>`);
+    return `<span class="face"><svg viewBox="0 0 48 48" aria-hidden="true">${s.join("")}</svg></span>`;
+  }
+  const P = [
+    { pt: true, name: "Fatima", role: "Patient", f: { skin: "#c48d63", head: "scarf", scarf: "#5a2f55", top: "#3b3f4a", extra: "phone" }, w: `Why: the loop exists for her. She has to understand the result and feel guided, not just be told (Brief R3).`, d: "52, Khalifa City, reads Arabic. Understands her result and books the next test.", can: "Asks · chooses a slot · asks for a nurse" },
+    { name: "Noura", role: "Coordinator", f: { skin: "#d9a77f", head: "scarf", scarf: "#2d3e6b", top: "#1f7a6d", extra: "headset" }, w: `Why: someone must own the case between result and booking, or nobody notices she never booked. Navigators raised colonoscopy completion by 13 points in PRECISE (Brief R2).`, d: "Owns the case until Fatima is booked, then hands it to Dr. Hessa and keeps watching the dates. Calls and books when a message is not enough.", can: "Assigns · calls · books · changes owner" },
+    { name: "Dr. Hessa", role: "Family doctor", f: { skin: "#e2b893", head: "scarf", scarf: "#4f6a8f", top: "coat", extra: "steth" }, w: `Why: only a clinician may refer, sign and close. The brief asks for closure with evidence or an authorised human decision, and she knows the patient (Brief R5).`, d: "Clinical owner. Sends the referral, reads the report, closes the case.", can: "Refers · asks the specialist · signs · closes" },
+    { name: "Dr. Omar", role: "Gastroenterologist", f: { skin: "#9c6b4a", head: "hair", hair: "#1f1a17", top: "coat", extra: "beard" }, w: `Why: the colonoscopy is done in another clinic. Referrals get lost between providers: in one US study 38.9% never got an appointment date (Patel 2018). Accept or reject closes that gap (Brief R4).`, d: "Accepts the referral or rejects it with a reason. Sends the report back.", can: "Accepts · rejects · records outcome" },
+    { name: "Dr. Khalid", role: "Programme lead", f: { skin: "#b07b56", head: "ghutra", top: "#f4f4f1", extra: "beard" }, w: `Why: someone must see the whole programme and step in before a deadline runs out, and know where and why people drop out (Brief R5, R6).`, d: "Sees every case at 75% of its window and who is lost, and why.", can: "Watches · escalates · changes owner" },
+  ];
+  const box = document.getElementById("people");
+  if (box) box.innerHTML = P.map((p) => `<div class="person${p.pt ? " pt" : ""}">${face(p.f)}<span class="role">${p.role}</span><h3>${p.name}</h3><p>${p.d}</p><span class="can">${p.can}</span><p class="pwhy">${p.w}</p></div>`).join("");
+
+
+  // Hero loop: each step is clickable and shows its screen and a one-line caption.
+  const heroImg = document.querySelector(".loopviz .phone img"), chip = document.querySelector(".casechip");
+  document.querySelectorAll("button.node").forEach((n) => n.addEventListener("click", () => {
+    document.querySelectorAll("button.node").forEach((x) => { x.classList.toggle("on", x === n); x.setAttribute("aria-pressed", String(x === n)); });
+    heroImg.style.opacity = 0; setTimeout(() => { heroImg.src = n.dataset.img; heroImg.style.opacity = 1; }, 150);
+    chip.innerHTML = "<b>" + n.querySelector("i").textContent + " · " + n.querySelector("b").textContent + "</b><br>" + n.dataset.cap;
+  }));
+
+  // Story: the sticky phone follows the step in view.
+  const beats = [...document.querySelectorAll(".beat")];
+  const sImg = document.getElementById("stickImg"), sCap = document.getElementById("stickCap");
+  let resultLang = "ar";
+  function show(b) {
+    beats.forEach((x) => x.classList.toggle("on", x === b));
+    let src = b.dataset.img, cap = b.dataset.cap;
+    if (b.id === "beat-result") { src = "img/result-" + resultLang + ".webp"; cap = "Result card, in " + (resultLang === "ar" ? "Arabic" : "English"); }
+    if (sImg.getAttribute("src") !== src) { sImg.style.opacity = 0; setTimeout(() => { sImg.src = src; sImg.style.opacity = 1; }, 160); }
+    sCap.textContent = cap;
+  }
+  if (beats.length) {
+    beats[0].classList.add("on");
+    const io = new IntersectionObserver((es) => { es.forEach((e) => { if (e.isIntersecting) show(e.target); }); }, { rootMargin: "-45% 0px -45% 0px" });
+    beats.forEach((b) => io.observe(b));
+  }
+  document.querySelectorAll(".lang button").forEach((btn) => btn.addEventListener("click", () => {
+    resultLang = btn.dataset.l;
+    document.querySelectorAll(".lang button").forEach((x) => x.setAttribute("aria-pressed", String(x === btn)));
+    const m = document.querySelector("#beat-result .m-shot img"); if (m) m.src = "img/result-" + resultLang + ".webp";
+    show(document.getElementById("beat-result"));
+  }));
+
+  // Loop ring on the right: fills with scroll, shows the case state of the section in view.
+  const fg = document.getElementById("pfg"), lbl = document.getElementById("plbl"), pr = document.getElementById("progress");
+  const secs = [...document.querySelectorAll("section[data-state]")];
+  const L = 2 * Math.PI * 23;
+  function onScroll() {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    const k = max > 0 ? Math.min(1, scrollY / max) : 1;
+    fg.style.strokeDashoffset = String(L * (1 - k));
+    let cur = secs[0];
+    secs.forEach((s) => { if (s.getBoundingClientRect().top < innerHeight * 0.5) cur = s; });
+    lbl.textContent = k > 0.985 ? "Loop closed" : cur.dataset.state;
+    pr.classList.toggle("done", k > 0.985);
+  }
+  fg.style.strokeDasharray = String(L);
+  addEventListener("scroll", onScroll, { passive: true }); addEventListener("resize", onScroll); onScroll();
+
+  // Lightbox for staff screens.
+  const lb = document.getElementById("lb"), lbImg = document.getElementById("lbImg"), lbClose = document.getElementById("lbClose");
+  let opener = null;
+  document.querySelectorAll(".shot").forEach((b) => b.addEventListener("click", () => {
+    opener = b; lbImg.src = b.dataset.full; lbImg.alt = b.querySelector("img").alt; lb.hidden = false; lbClose.focus();
+  }));
+  function closeLb() { lb.hidden = true; if (opener) opener.focus(); }
+  lbClose.addEventListener("click", closeLb);
+  lb.addEventListener("click", (e) => { if (e.target === lb) closeLb(); });
+  addEventListener("keydown", (e) => { if (e.key === "Escape" && !lb.hidden) closeLb(); });
+})();
+</script>
+<a id="totop" class="totop" href="#top" aria-label="Back to top" title="Back to top">↑</a>
+<script>(function(){var b=document.getElementById("totop");if(!b)return;function f(){b.classList.toggle("show",window.scrollY>600)}addEventListener("scroll",f,{passive:true});f();b.addEventListener("click",function(e){e.preventDefault();scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"})})})();</script>

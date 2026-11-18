@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kafila Architecture</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20120%20120%22%20width%3D%22120%22%20height%3D%22120%22%20role%3D%22img%22%20aria-label%3D%22Kafila%22%3E%3Cg%20transform%3D%22translate%2860%2060%29%20scale%281.1%29%20translate%28-60%20-60%29%22%3E%3Cg%20id%3D%22mark%22%3E%3Cpath%20d%3D%22M75.19%2022.99%20A40%2040%200%200%201%2090.50%2034.12%22%20fill%3D%22none%22%20stroke%3D%22%23448c80%22%20stroke-width%3D%2213%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M99.89%2063.01%20A40%2040%200%200%201%2094.04%2081.01%22%20fill%3D%22none%22%20stroke%3D%22%235082af%22%20stroke-width%3D%2213%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M69.47%2098.86%20A40%2040%200%200%201%2050.53%2098.86%22%20fill%3D%22none%22%20stroke%3D%22%23e7b956%22%20stroke-width%3D%2213%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M25.96%2081.01%20A40%2040%200%200%201%2020.11%2063.01%22%20fill%3D%22none%22%20stroke%3D%22%23e1885a%22%20stroke-width%3D%2213%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M29.50%2034.12%20A40%2040%200%200%201%2044.81%2022.99%22%20fill%3D%22none%22%20stroke%3D%22%2369b37e%22%20stroke-width%3D%2213%22%20stroke-linecap%3D%22round%22/%3E%3Ccircle%20cx%3D%2260.00%22%20cy%3D%2220.00%22%20r%3D%2213%22%20fill%3D%22%230f6b5c%22/%3E%3Ccircle%20cx%3D%2298.04%22%20cy%3D%2247.64%22%20r%3D%2213%22%20fill%3D%22%231f5f99%22/%3E%3Ccircle%20cx%3D%2283.51%22%20cy%3D%2292.36%22%20r%3D%2213%22%20fill%3D%22%23e0a526%22/%3E%3Ccircle%20cx%3D%2236.49%22%20cy%3D%2292.36%22%20r%3D%2213%22%20fill%3D%22%23d9662b%22/%3E%3Ccircle%20cx%3D%2221.96%22%20cy%3D%2247.64%22%20r%3D%2213%22%20fill%3D%22%233f9e5a%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E">
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="How Kafila connects to the lab, the clinic record, Malaffi and the patient in an Abu Dhabi pilot.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Noto+Sans:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a long scroll story, text column left and evidence (phone, screens, tables) right,
+   with a loop ring on the right edge that closes as the reader reaches the end. One deliberate dark look. */
+:root {
+  --night: #06110f;      /* page */
+  --deep: #0b1c18;       /* panels */
+  --deep-2: #10261f;     /* raised panels */
+  --line: #1f3a33;
+  --ink: #eaf2ef;
+  --ink-2: #b0c3bd;
+  --ink-3: #82978f;
+  --teal: #46c2a8;       /* Kafila brand on dark */
+  --teal-soft: #12352d;
+  --amber: #f2b65e;      /* the "see a doctor" zone colour, used for the second half of headlines */
+  --amber-soft: #3a2a12;
+  --red: #ef6a5f;
+  --red-deep: #b42318;
+  --white: #ffffff;
+  --display: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+  --text: "Noto Sans", "Noto Sans Arabic", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --wrap: 1180px;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+body { background: var(--night); color: var(--ink); font: 400 17px/1.6 var(--text); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--night); }
+a { color: var(--teal); }
+:focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; border-radius: 6px; }
+img { max-width: 100%; display: block; }
+.wrap { max-width: var(--wrap); margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+
+/* top bar */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: color-mix(in srgb, var(--night) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.top .wrap { display: flex; align-items: center; gap: 22px; height: 60px; }
+.logo { display: flex; align-items: center; gap: 10px; font: 700 18px/1 var(--display); color: var(--ink); text-decoration: none; letter-spacing: -0.01em; }
+.logo i.mk { background: none; }
+.logo i { width: 28px; height: 28px; border-radius: 8px; background: var(--teal); color: var(--night); display: grid; place-items: center; font-style: normal; font-size: 16px; }
+.top nav { display: flex; gap: 20px; margin-left: auto; }
+.top nav a { color: var(--ink-2); text-decoration: none; font-size: 14.5px; font-weight: 500; }
+.top nav a:hover { color: var(--ink); }
+.top nav a.on { color: var(--ink); box-shadow: inset 0 -2px 0 var(--amber); padding-bottom: 4px; }
+.subnav { border-bottom: 1px solid var(--line, rgba(255,255,255,.08)); }
+.subnav .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; padding-top: 12px; padding-bottom: 12px; font-size: 14px; }
+.subnav span { font: 500 11px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+.subnav a { color: var(--ink-2); text-decoration: none; }
+.subnav a:hover { color: var(--ink); }
+.btn { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 20px; border-radius: 999px; font: 600 15px/1 var(--text); text-decoration: none; border: 1.5px solid transparent; cursor: pointer; }
+.btn.solid { background: var(--amber); color: #1d1405; }
+.btn.solid:hover { background: #f6c47b; }
+.btn.line { border-color: var(--line); color: var(--ink); background: transparent; }
+.btn.line:hover { border-color: var(--teal); }
+.top .btn { min-height: 38px; padding: 0 16px; font-size: 14px; }
+@media (max-width: 860px) { .top nav { display: none; } .top .btn { margin-left: auto; } }
+
+/* shared type */
+.eyebrow { font: 500 12.5px/1.4 var(--mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); }
+.eyebrow b { color: var(--amber); font-weight: 500; margin-right: 10px; }
+h1, h2, h3 { font-family: var(--display); letter-spacing: -0.02em; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(40px, 6vw, 68px); line-height: 1.02; font-weight: 700; }
+h2 { font-size: clamp(32px, 4.2vw, 50px); line-height: 1.06; font-weight: 700; }
+h3 { font-size: 21px; line-height: 1.25; font-weight: 600; letter-spacing: -0.01em; }
+h1 em, h2 em { font-style: normal; color: var(--amber); }
+.lede { font-size: 19px; color: var(--ink-2); max-width: 60ch; }
+p { margin: 0; }
+.src { font: 400 12.5px/1.5 var(--mono); color: var(--ink-3); }
+.note { font-size: 14px; color: var(--ink-3); }
+.pull { border-left: 3px solid var(--amber); padding: 4px 0 4px 16px; font: 600 20px/1.35 var(--display); color: var(--ink); max-width: 34ch; }
+
+/* sections */
+section { padding-block: 96px; border-top: 1px solid var(--line); position: relative; }
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 56px; align-items: start; }
+.split > * { min-width: 0; }
+.stack { display: grid; gap: 22px; }
+@media (max-width: 960px) { .split { grid-template-columns: 1fr; gap: 36px; } section { padding-block: 72px; } }
+
+/* hero */
+.hero { border-top: 0; padding-block: 64px 88px; overflow-x: clip; }
+.hero .split { align-items: center; }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; border-top: 1px solid var(--line); padding-top: 20px; }
+.stat b { display: block; font: 700 34px/1 var(--display); color: var(--amber); letter-spacing: -0.02em; }
+.stat span { display: block; font-size: 14px; color: var(--ink-2); margin-top: 6px; line-height: 1.4; }
+.stat small { display: block; margin-top: 6px; font: 400 11.5px/1.4 var(--mono); color: var(--ink-3); }
+@media (max-width: 560px) { .stats { grid-template-columns: 1fr; } }
+.herolist { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; max-width: 58ch; } .herolist li { position: relative; padding-left: 22px; color: var(--ink-2); font-size: 17px; line-height: 1.5; } .herolist li::before { content: ""; position: absolute; left: 2px; top: .62em; width: 9px; height: 9px; border-radius: 50%; background: var(--teal); } .herolist b { color: var(--ink); } .herofoot { color: var(--amber); font-weight: 600; margin: 0; }
+.motto { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 0; cursor: default; }
+.motto span { font: 500 13px/1.3 var(--mono); color: var(--ink-2); letter-spacing: .02em; }
+.motto span + span::before { content: "·"; margin: 0 12px; color: var(--teal); }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* hero visual: the loop with five ADPHC steps around a phone */
+.loopviz { position: relative; width: min(100%, 540px); aspect-ratio: 1 / 1; margin-inline: auto; }
+.loopviz svg.ring { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.ring .track { fill: none; stroke: var(--line); stroke-width: 2; }
+.ring .arc { fill: none; stroke: var(--teal); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 1131; stroke-dashoffset: 0; animation: draw 2.4s cubic-bezier(.6,.1,.2,1) both .3s; }
+@keyframes draw { from { stroke-dashoffset: 1131; } to { stroke-dashoffset: 0; } }
+.node { position: absolute; transform: translate(-50%, -50%); text-align: center; display: grid; justify-items: center; gap: 4px; background: var(--night); padding: 6px 10px; border-radius: 12px; }
+.node i { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--deep-2); border: 2px solid var(--teal); font: 600 13px/1 var(--mono); font-style: normal; color: var(--teal); }
+.node b { display: block; font: 600 14px/1.2 var(--display); }
+.node small { display: block; font-size: 11.5px; line-height: 1.3; color: var(--ink-3); }
+.node.end i { background: var(--teal); color: var(--night); }
+.phone { width: 214px; border-radius: 30px; border: 7px solid #1b2a26; background: #1b2a26; box-shadow: 0 30px 60px -20px rgba(0,0,0,.7), 0 0 0 1px #2c4740; overflow: hidden; }
+.phone img { border-radius: 22px; width: 100%; height: auto; }
+.loopviz .phone { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 33%; border-width: 5px; border-radius: 24px; }
+.loopviz .phone img { border-radius: 19px; transition: opacity .15s; }
+.herovis { display: grid; justify-items: center; gap: 18px; min-width: 0; }
+.casechip { background: var(--deep-2); border: 1px solid #2f5149; border-radius: 12px; padding: 10px 12px; font-size: 12.5px; line-height: 1.45; color: var(--ink-2); box-shadow: 0 12px 30px -12px rgba(0,0,0,.8); }
+button.node { border: 0; color: inherit; font: inherit; cursor: pointer; }
+button.node:hover i, button.node.on i { background: var(--teal); color: var(--night); }
+button.node.on b { color: var(--teal); }
+button.node:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+.casechip .hint { color: var(--teal); font-size: 11.5px; }
+.casechip b { color: var(--ink); font-weight: 600; }
+.casechip .z { display: inline-block; background: var(--amber-soft); color: var(--amber); border-radius: 999px; padding: 1px 8px; font-weight: 600; font-size: 11.5px; }
+@media (max-width: 560px) { .node { padding: 4px 6px; } .node b { font-size: 12.5px; } .node i { width: 28px; height: 28px; } }
+
+/* 01 steps */
+.steps5 { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin-top: 40px; }
+.steps5 > div { background: var(--deep); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: grid; gap: 8px; align-content: start; }
+.steps5 .n { font: 500 12px/1 var(--mono); color: var(--amber); }
+.steps5 h3 { font-size: 18px; }
+.steps5 p { font-size: 14.5px; color: var(--ink-2); line-height: 1.5; }
+.steps5 .adphc { font: 400 11.5px/1.4 var(--mono); color: var(--ink-3); border-top: 1px dashed var(--line); padding-top: 8px; }
+@media (max-width: 960px) { .steps5 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .steps5 { grid-template-columns: 1fr; } }
+
+/* 02 comparison */
+.cmp { width: 100%; border-collapse: separate; border-spacing: 6px; font-size: 14.5px; line-height: 1.45; }
+.cmp th { text-align: left; font: 500 11.5px/1.3 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); padding: 2px 10px; vertical-align: bottom; }
+.cmp th.us { color: var(--teal); }
+.cmp td { background: var(--deep); border-radius: 10px; padding: 10px 12px; vertical-align: top; color: var(--ink-2); }
+.cmp td.q { background: transparent; color: var(--ink); font-weight: 600; padding-left: 0; width: 26%; }
+.cmp td.us { background: var(--teal-soft); color: var(--ink); }
+.tablebox { overflow-x: auto; margin-inline: -6px; }
+.bigfig { display: flex; gap: 18px; align-items: baseline; border-top: 1px solid var(--line); padding-top: 18px; }
+.bigfig b { font: 700 40px/1 var(--display); color: var(--amber); white-space: nowrap; }
+
+/* 03 where */
+.where { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.where > div { background: var(--deep); border: 1px solid var(--line); border-radius: 14px; padding: 18px; display: grid; gap: 10px; align-content: start; }
+.where p { font-size: 15px; color: var(--ink-2); }
+.valh { margin: 44px 0 14px; } .value ul { margin: 0; padding-left: 18px; display: grid; gap: 8px; font-size: 15px; color: var(--ink-2); line-height: 1.5; } .valf { margin: 14px 0 28px; max-width: 90ch; }
+.tag { justify-self: start; font: 500 11px/1.3 var(--mono); letter-spacing: .08em; text-transform: uppercase; padding: 3px 8px; border-radius: 6px; }
+.tag.built { background: var(--teal-soft); color: var(--teal); }
+.tag.sim { background: #1d2a40; color: #9fb8e8; }
+.tag.prop { background: var(--amber-soft); color: var(--amber); }
+.pipe { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 26px; font: 500 13px/1.3 var(--mono); color: var(--ink-2); }
+.pipe span { border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; background: var(--deep); }
+.pipe span.on { border-color: var(--teal); color: var(--ink); }
+.pipe em { font-style: normal; color: var(--ink-3); }
+@media (max-width: 860px) { .where { grid-template-columns: 1fr; } }
+
+/* 04 who */
+.people { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; margin-top: 40px; }
+.person { background: var(--deep); border: 1px solid var(--line); border-radius: 16px; padding: 18px 16px; display: grid; gap: 8px; align-content: start; }
+.person.pt { border-color: #5b4a2a; background: linear-gradient(180deg, #1a1a10, var(--deep) 60%); }
+.face { width: 64px; height: 64px; border-radius: 50%; background: #23413a; display: grid; place-items: center; overflow: hidden; }
+.person.pt .face { background: #4a3b1e; }
+.face svg { width: 60px; height: 60px; margin-top: 8px; }
+.person .role { font: 500 11.5px/1.3 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--teal); }
+.person.pt .role { color: var(--amber); }
+.person p { font-size: 14.5px; color: var(--ink-2); line-height: 1.5; }
+.person .pwhy { font-size: 13px; color: var(--ink-2); background: var(--deep-2); border-left: 3px solid var(--amber); border-radius: 8px; padding: 8px 10px; margin: 0; }
+.person .can { font: 400 12px/1.45 var(--mono); color: var(--ink-3); border-top: 1px dashed var(--line); padding-top: 8px; }
+@media (max-width: 1060px) { .people { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .people { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 420px) { .people { grid-template-columns: 1fr; } }
+
+/* 05 story: steps left, sticky phone right */
+.story { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 64px; margin-top: 44px; }
+.story > * { min-width: 0; }
+.beats { display: grid; gap: 0; counter-reset: beat; }
+.beat { padding: 26px 0 26px 56px; position: relative; border-left: 2px solid var(--line); margin-left: 16px; min-height: 34vh; display: grid; gap: 10px; align-content: start; }
+.beat:last-child { min-height: 0; }
+.beat::before { counter-increment: beat; content: counter(beat); position: absolute; left: -18px; top: 24px; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--deep-2); border: 2px solid var(--line); font: 500 13px/1 var(--mono); color: var(--ink-2); transition: border-color .3s, color .3s, background .3s; }
+.beat.on::before { border-color: var(--teal); color: var(--night); background: var(--teal); }
+.beat .t { font: 500 12px/1.3 var(--mono); color: var(--amber); letter-spacing: .06em; text-transform: uppercase; }
+.beat p { color: var(--ink-2); max-width: 52ch; }
+.beat .why { font-size: 14px; color: var(--ink-3); }
+.beat .why b { color: var(--teal); font-weight: 600; }
+.beat .m-shot { display: none; }
+.stick { position: sticky; top: 96px; align-self: start; display: grid; justify-items: center; gap: 12px; }
+.stick .phone { width: 280px; }
+.stick .phone img { transition: opacity .25s; }
+.stick .cap { font-size: 13px; color: var(--ink-3); text-align: center; max-width: 30ch; }
+.lang { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; gap: 2px; justify-self: start; }
+.lang button { border: 0; background: transparent; color: var(--ink-2); font: 600 13px/1 var(--text); padding: 7px 12px; border-radius: 999px; cursor: pointer; }
+.lang button[aria-pressed="true"] { background: var(--teal); color: var(--night); }
+.lang button:lang(ar) { font-family: "Noto Sans Arabic", var(--text); }
+@media (max-width: 960px) {
+  .story { grid-template-columns: 1fr; }
+  .stick { display: none; }
+  .beat { min-height: 0; }
+  .beat .m-shot { display: block; margin-top: 8px; }
+  .beat .m-shot .phone { width: min(260px, 100%); }
+}
+
+/* staff screens */
+.screens { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 30px; }
+.shot { position: relative; }
+.shot::after { content: ""; position: absolute; top: 18px; right: 18px; width: 34px; height: 34px; border-radius: 50%; background: rgba(6,17,15,.82) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2346c2a8' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='10.5' cy='10.5' r='6'/%3E%3Cpath d='M15 15l5 5M10.5 8v5M8 10.5h5'/%3E%3C/svg%3E") center / 18px no-repeat; border: 1px solid var(--line); pointer-events: none; }
+.shot .req { font: 500 11.5px/1.3 var(--mono); color: var(--teal); font-style: normal; padding: 0 4px 4px; }
+.shot { background: var(--deep); border: 1px solid var(--line); border-radius: 14px; padding: 10px; display: grid; gap: 10px; text-align: left; cursor: zoom-in; color: inherit; font: inherit; }
+.shot img { border-radius: 8px; height: auto; aspect-ratio: 16 / 11; object-fit: cover; object-position: top left; width: 100%; }
+.shot b { font: 600 15px/1.3 var(--display); padding: 0 4px; }
+.datafig { margin: 40px 0 0; display: grid; gap: 10px; } .datafig p { color: var(--ink-2); margin: 0; max-width: 70ch; } .datafig .shot img { aspect-ratio: auto; object-fit: contain; background: #fff; }
+.shot span { font-size: 13.5px; color: var(--ink-2); padding: 0 4px 4px; line-height: 1.45; }
+@media (max-width: 860px) { .screens { grid-template-columns: 1fr; } }
+
+/* ladder */
+.ladder { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0; margin-top: 30px; position: relative; }
+.ladder::before { content: ""; position: absolute; left: 3%; right: 3%; top: 17px; height: 2px; background: linear-gradient(90deg, var(--teal), var(--amber) 70%, var(--red)); }
+.rung { position: relative; display: grid; gap: 6px; justify-items: center; text-align: center; padding: 0 4px; }
+.rung i { width: 36px; height: 36px; border-radius: 50%; background: var(--deep-2); border: 2px solid var(--teal); display: grid; place-items: center; font: 500 11px/1 var(--mono); font-style: normal; color: var(--ink); z-index: 1; }
+.rung:nth-child(n+4) i { border-color: var(--amber); }
+.rung:last-child i { border-color: var(--red); }
+.rung b { font: 600 14px/1.25 var(--display); }
+.rung small { font-size: 12.5px; color: var(--ink-3); line-height: 1.35; }
+@media (max-width: 860px) {
+  .ladder { grid-template-columns: 1fr; gap: 14px; }
+  .ladder::before { left: 17px; right: auto; top: 6px; bottom: 6px; width: 2px; height: auto; background: linear-gradient(180deg, var(--teal), var(--amber) 70%, var(--red)); }
+  .rung { grid-template-columns: 36px 1fr; justify-items: start; text-align: left; column-gap: 14px; }
+  .rung i { grid-row: span 2; }
+}
+
+/* 06 urgent */
+.urgent { background: linear-gradient(180deg, #1a0d0b, var(--night) 70%); }
+.urgent h2 em { color: var(--red); }
+.tl { display: grid; gap: 14px; }
+.tl > div { display: grid; grid-template-columns: 92px 1fr; gap: 14px; align-items: baseline; }
+.tl .when { font: 500 13px/1.3 var(--mono); color: var(--red); }
+.tl p { color: var(--ink-2); font-size: 15.5px; }
+.tl p b { color: var(--ink); }
+.duo { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
+.duo .phone { width: 230px; }
+.duo figure { margin: 0; display: grid; gap: 8px; justify-items: center; }
+.duo figcaption { font-size: 13px; color: var(--ink-3); text-align: center; max-width: 26ch; }
+
+/* AI */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips span { font: 500 12.5px/1.3 var(--mono); padding: 6px 10px; border-radius: 8px; background: var(--deep-2); border: 1px solid var(--line); color: var(--ink-2); }
+.chips.no span { border-color: #4a2622; color: #f2b0a9; background: #1d0f0d; }
+.chips.no span::before { content: "✕ "; color: var(--red); }
+.panel { background: var(--deep); border: 1px solid var(--line); border-radius: 18px; padding: 22px; display: grid; gap: 18px; }
+.panel h3 { font-size: 13px; font: 500 12px/1.3 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+.who-does { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.who-does > div { border-radius: 12px; padding: 14px; display: grid; gap: 6px; align-content: start; }
+.who-does .r { background: #142019; border: 1px solid #2b4a3d; }
+.who-does .a { background: var(--teal-soft); border: 1.5px dashed var(--teal); }
+.who-does .h { background: var(--amber-soft); border: 1px solid #6a4f22; }
+.who-does b { font: 600 16px/1.2 var(--display); }
+.who-does small { font-size: 13px; color: var(--ink-2); line-height: 1.45; }
+@media (max-width: 560px) { .who-does { grid-template-columns: 1fr; } }
+.tests { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.tests div { border-top: 2px solid var(--teal); padding-top: 10px; }
+.tests b { display: block; font: 700 28px/1 var(--display); font-variant-numeric: tabular-nums; }
+.tests span { font-size: 13px; color: var(--ink-2); line-height: 1.4; display: block; margin-top: 4px; }
+@media (max-width: 560px) { .tests { grid-template-columns: 1fr; } }
+
+/* 07 pilot */
+.north { background: var(--deep); border: 1px solid var(--line); border-radius: 18px; padding: 24px; display: grid; gap: 14px; }
+.north .big { font: 700 clamp(26px, 3vw, 34px)/1.15 var(--display); }
+.north .big em { font-style: normal; color: var(--amber); }
+.plan { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 34px; }
+.plan > div { border-top: 3px solid var(--line); padding-top: 12px; display: grid; gap: 4px; align-content: start; }
+.plan > div:nth-child(3) { border-color: var(--amber); }
+.plan .d { font: 500 12.5px/1.3 var(--mono); color: var(--teal); }
+.plan b { font: 600 17px/1.3 var(--display); }
+.plan span { font-size: 14px; color: var(--ink-2); }
+@media (max-width: 860px) { .plan { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 460px) { .plan { grid-template-columns: 1fr; } }
+.ask { margin-top: 56px; background: var(--amber); color: #1d1405; border-radius: 22px; padding: 34px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; align-items: center; }
+.ask h3 { font-size: clamp(24px, 3vw, 32px); line-height: 1.15; }
+.ask p { margin-top: 8px; font-size: 16px; color: #3d2d10; max-width: 60ch; }
+.ask .btn { background: #1d1405; color: var(--amber); }
+@media (max-width: 760px) { .ask { grid-template-columns: 1fr; padding: 24px; } }
+
+/* footer */
+footer { border-top: 1px solid var(--line); padding-block: 56px 72px; }
+footer .cols { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 40px; }
+footer h3 { font: 500 12px/1.3 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 12px; }
+footer ol { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 13.5px; color: var(--ink-2); }
+footer p { font-size: 14px; color: var(--ink-2); }
+footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
+@media (max-width: 860px) { footer .cols { grid-template-columns: 1fr; } }
+
+/* loop progress ring, right edge */
+.progress { position: fixed; right: max(18px, env(safe-area-inset-right, 0px)); top: 50%; transform: translateY(-50%); z-index: 15; display: grid; justify-items: end; gap: 10px; }
+.progress svg { width: 54px; height: 54px; }
+.progress .bg { fill: var(--night); stroke: var(--line); stroke-width: 3; }
+.progress .fg { fill: none; stroke: var(--teal); stroke-width: 3.5; stroke-linecap: round; stroke-dasharray: 145; stroke-dashoffset: 145; transform: rotate(-90deg); transform-origin: 27px 27px; transition: stroke-dashoffset .2s linear; }
+.progress .ok { fill: var(--teal); opacity: 0; transition: opacity .3s; }
+.progress.done .ok { opacity: 1; }
+.progress .lbl { font: 500 10.5px/1.3 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); text-align: right; max-width: 120px; }
+.progress .lbl b { display: block; color: var(--ink); font-weight: 500; }
+@media (max-width: 1320px) { .progress { display: none; } }
+
+/* lightbox */
+.lb { position: fixed; inset: 0; z-index: 50; background: rgba(2, 8, 7, .92); display: grid; place-items: center; padding: max(20px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(20px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+.lb[hidden] { display: none; }
+.lb img { max-height: 86vh; width: auto; border-radius: 10px; }
+.lb button { position: absolute; top: max(14px, env(safe-area-inset-top, 0px)); right: max(14px, env(safe-area-inset-right, 0px)); }
+.fn a{color:var(--amber);text-decoration:none;font-weight:700;padding:0 2px}
+.totop{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));z-index:20;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:var(--amber);color:#1a1206;font:700 20px/44px system-ui,sans-serif;text-align:center;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:opacity .2s}
+.totop.show{opacity:1;pointer-events:auto}
+@media print{.totop{display:none}}
+.archhero h1{max-width:20ch}.archhero .lede{max-width:75ch;margin-top:22px}.archhero .cta{margin-top:22px}.cmp td.q.n{width:3.5em}.cmp.int td.q{width:auto}
+.vf{font-size:12px;color:var(--ink-3);white-space:nowrap}
+.rules6{grid-template-columns:repeat(3,minmax(0,1fr))}@media(max-width:860px){.rules6{grid-template-columns:1fr}}
+.checklist{margin:24px 0 10px;padding-left:20px;display:grid;gap:10px;max-width:75ch;color:var(--ink-2)}
+.datafig .shot::after{display:block}
+</style>
+
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="index.html"><i class="mk"><svg width="28" height="28" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" aria-hidden="true"><g id="mark"><path d="M75.61 21.01 A42 42 0 0 1 92.26 33.10" fill="none" stroke="#69c5b3" stroke-width="10" stroke-linecap="round"/><path d="M101.91 62.80 A42 42 0 0 1 95.55 82.37" fill="none" stroke="#7fb1e1" stroke-width="10" stroke-linecap="round"/><path d="M70.29 100.72 A42 42 0 0 1 49.71 100.72" fill="none" stroke="#f5c873" stroke-width="10" stroke-linecap="round"/><path d="M24.45 82.37 A42 42 0 0 1 18.09 62.80" fill="none" stroke="#f3a473" stroke-width="10" stroke-linecap="round"/><path d="M27.74 33.10 A42 42 0 0 1 44.39 21.01" fill="none" stroke="#8cd1a1" stroke-width="10" stroke-linecap="round"/><circle cx="60.00" cy="18.00" r="11.5" fill="#3fb59d"/><circle cx="99.94" cy="47.02" r="11.5" fill="#5b9bd8"/><circle cx="84.69" cy="93.98" r="11.5" fill="#f2b84b"/><circle cx="35.31" cy="93.98" r="11.5" fill="#f08a4b"/><circle cx="20.06" cy="47.02" r="11.5" fill="#6cc486"/></g></svg></i>Kafila <span lang="ar" dir="rtl" style="opacity:.7;font-weight:500">قافلة</span></a>
+    <nav aria-label="Sections">
+      <a href="index.html#what">Five steps</a><a href="index.html#why">The gap</a><a href="index.html#who">People</a><a href="index.html#how">Fatima's case</a><a href="care-loop.html">Step by step</a><a href="index.html#safety">Urgent cases</a><a href="index.html#ai">AI</a><a href="index.html#pilot">Impact</a><a href="architecture.html" class="on" aria-current="page">Architecture</a>
+    </nav>
+    <a class="btn solid" href="prototype/" target="_blank" rel="noopener">Prototype</a>
+  </div>
+</header>
+<nav class="subnav" aria-label="On this page"><div class="wrap"><span>On this page</span><a href="#demo">Demo and pilot</a><a href="#connect">How it connects</a><a href="#pilot-arch">Pilot</a><a href="#safe">Safety</a><a href="#ai-arch">AI</a></div></nav>
+<main id="top">
+<section class="hero archhero">
+  <div class="wrap">
+    <p class="eyebrow">Kafila <span lang="ar" dir="rtl">قافلة</span> · Architecture</p>
+    <h1>Built around existing care systems. <em>Designed to close the gaps between them.</em></h1>
+    <p class="lede">Hospitals in Abu Dhabi already pass lab results between their systems, and to Malaffi, as standard messages. In a pilot, the partner clinic asks its IT team to send Kafila a copy of each positive screening result, together with the patient's phone number, language, family doctor and insurance plan. Kafila then opens a case with a named owner and a deadline, messages the patient from the clinic's own verified WhatsApp number, helps her book, and writes the referral, the booking and the closure note back into the clinic record. Nothing is replaced. A first pilot can start with one protected file of positive stool tests a day and coordinator-assisted booking; deeper links to the clinic record, Malaffi, insurers and Sahatna are added as interfaces and approvals become available.</p>
+    <div class="cta"><a class="btn line" href="index.html">← Back to the presentation</a><a class="btn line" href="prototype/" target="_blank" rel="noopener">Open the prototype</a></div>
+  </div>
+</section>
+
+<section id="demo">
+  <div class="wrap">
+    <p class="eyebrow"><b>01</b>Demo and pilot</p>
+    <h2>What runs today, <em>and what changes in a pilot.</em></h2>
+    <div class="where" style="margin-top:28px">
+      <div><span class="tag built">The demo today</span><h3>One browser, invented data</h3><p>Everything runs in one browser. The "lab" is a file of 220 invented results. The patient tab and the clinic tab share the browser's storage, so a tap on her phone shows up at once for Noura. WhatsApp, SMS, booking and insurance are drawn. The only server is our Cloudflare Worker for the AI chat: Gemini through the Worker, and prepared answers whenever AI is off.</p></div>
+      <div><span class="tag prop">The pilot</span><h3>Connected to the clinic's systems</h3><p>Results arrive from the lab, patient details come from the clinic record, updates go back to it. Real WhatsApp, SMS and calls through licensed providers. Storage, AI and speech hosted in the UAE.</p></div>
+      <div><span class="tag built">The same in both</span><h3>The same safety principles</h3><p>The rules table, the red-flag list, the approved answer library and the safety tests carry into the pilot. A real deployment adds secure hosting, sign-in, audit trails, integration monitoring and clinical validation by the partner.</p></div>
+    </div>
+    <figure class="datafig">
+      <p>The prototype as built: a static site, the rules table, the approved texts and one small server for AI.</p>
+      <button class="shot" type="button" data-full="img/arch-prototype.webp"><img src="img/arch-prototype.webp" alt="Prototype architecture, 18 Nov: static site with patient and staff screens, rules table, red flags, duty roster, content library, browser storage, and a Cloudflare Worker for AI that is off until the key is entered" width="2560" height="1484"></button>
+    </figure>
+  </div>
+</section>
+
+<section id="connect">
+  <div class="wrap">
+    <p class="eyebrow"><b>02</b>How it connects</p>
+    <h2>Seven steps to connect <em>one clinic group.</em></h2>
+    <div class="tablebox" style="margin-top:24px">
+      <table class="cmp">
+        <thead><tr><th>Step</th><th>What happens</th><th>Who does it</th><th class="us">Standard</th></tr></thead>
+        <tbody>
+          <tr><td class="q">1. Agreement</td><td>The provider network signs a data-sharing agreement and names a clinical lead</td><td>Partner + Kafila</td><td class="us">Contract, ADHICS</td></tr>
+          <tr><td class="q">2. Results in</td><td>The clinic's IT team adds one rule to its integration engine: send a copy of every positive screening result to Kafila. To start, a protected file once a day is enough</td><td>Partner IT</td><td class="us">HL7 v2, or secure file (SFTP)</td></tr>
+          <tr><td class="q">3. Patient details in</td><td>Kafila reads only what it needs: mobile number, preferred language, family doctor and clinic, insurance plan</td><td>Partner IT</td><td class="us">FHIR / HL7</td></tr>
+          <tr><td class="q">4. Updates back</td><td>The referral, "appointment booked" and the clinician's closure note go back into the record. Clinicians see Kafila as a worklist next to their own system</td><td>Kafila</td><td class="us">FHIR</td></tr>
+          <tr><td class="q">5. Messages to the patient</td><td>WhatsApp from the clinic's verified business number, SMS through a UAE-licensed operator, calls through a local telecom provider. No medical words, only a link</td><td>Kafila + providers</td><td class="us">WhatsApp Business Platform, TDRA rules</td></tr>
+          <tr><td class="q">6. Done elsewhere</td><td>Through the partner's official connection, Kafila can see in Malaffi that the colonoscopy was done at another clinic, and the case can close with that evidence</td><td>Partner + DoH</td><td class="us">Malaffi interface <span class="vf">· with partner</span></td></tr>
+          <tr><td class="q">7. Storage</td><td>Everything is stored and processed on servers in the UAE</td><td>Kafila</td><td class="us">Federal Law No. 2 of 2019</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note" style="margin-top:14px">What the partner's IT team has to do: one outbound rule in the integration engine (or a daily file), one read / write connection to the record, and staff sign-in through the clinic's own login. No new hardware. The pilot can start with steps 1–5 and 7. A daily file is enough for positive stool tests only. Urgent results, like a blood pressure of 185/115, need a same-day feed and a clinician on call; without that they stay out of the live pilot.</p>
+    <figure class="datafig">
+      <p>Where Kafila learns which clinic Fatima belongs to, which language to write in, which slots fit her and what her plan pays for.</p>
+      <button class="shot" type="button" data-full="img/data-sources.webp"><img src="img/data-sources.webp" alt="Diagram: laboratory, clinic health record, appointment system and insurer feed Kafila; Fatima gets a WhatsApp from her clinic, in her language"></button>
+    </figure>
+  </div>
+</section>
+
+<section id="pilot-arch">
+  <div class="wrap">
+    <p class="eyebrow"><b>03</b>Pilot architecture</p>
+    <h2>The Abu Dhabi pilot, <em>component by component.</em></h2>
+    <p class="lede" style="margin-top:14px">Everything with health data runs in a UAE cloud region, with a second UAE region for backup. Examples of technology are assumptions to agree with the partner.</p>
+    <figure class="datafig">
+      <button class="shot" type="button" data-full="img/arch-pilot.webp"><img src="img/arch-pilot.webp" alt="Pilot architecture: users, channels and identity, UAE cloud region with edge, application services, integration, AI zone, data stores and operations; partner systems lab, EMR, scheduling and duty roster, Malaffi, insurer, Sahatna" width="2880" height="1800"></button>
+    </figure>
+    <div class="tablebox" style="margin-top:28px">
+      <table class="cmp int">
+        <thead><tr><th>#</th><th>System</th><th>What flows</th><th>Standard</th><th class="us">When</th></tr></thead>
+        <tbody>
+          <tr><td class="q n">I1</td><td>Lab / screening programme</td><td>Positive results in</td><td>Daily secure file, then HL7 v2 or FHIR</td><td class="us">Start → v1</td></tr>
+          <tr><td class="q n">I2</td><td>Clinic health record (EMR)</td><td>In: contact, language, doctor. Out: referral, closure note</td><td>FHIR R4, or HL7 v2</td><td class="us">v1</td></tr>
+          <tr><td class="q n">I3</td><td>Appointment system</td><td>In: free slots. Out: booking</td><td>Partner API or FHIR; coordinator books at the start</td><td class="us">Start → v1</td></tr>
+          <tr><td class="q n">I4</td><td>Malaffi</td><td>Evidence that the test was done elsewhere</td><td>Malaffi specs <span class="vf">· with partner</span></td><td class="us">Scale</td></tr>
+          <tr><td class="q n">I5</td><td>WhatsApp Business</td><td>Notice + link out; replies and read receipts in</td><td>Official business provider</td><td class="us">Start</td></tr>
+          <tr><td class="q n">I6</td><td>SMS</td><td>Same notice + link</td><td>UAE-licensed operator, TDRA sender ID</td><td class="us">Start</td></tr>
+          <tr><td class="q n">I7</td><td>Voice call</td><td>Automated call in Arabic or English, "press 1 for a nurse"</td><td>UAE telecom provider</td><td class="us">Start</td></tr>
+          <tr><td class="q n">I8</td><td>Insurer</td><td>Is the colonoscopy covered for this plan</td><td>Insurer or eClaim channel <span class="vf">· with partner</span></td><td class="us">v1</td></tr>
+          <tr><td class="q n">I9</td><td>Clinic login</td><td>Staff sign-in</td><td>OIDC / SAML</td><td class="us">Start</td></tr>
+          <tr><td class="q n">I10</td><td>Sahatna</td><td>Patient side as a module inside the app</td><td>Sahatna partner interface <span class="vf">· with partner</span></td><td class="us">Scale</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="safe">
+  <div class="wrap">
+    <p class="eyebrow"><b>04</b>Safety and privacy</p>
+    <h2>Six rules <em>built into the design.</em></h2>
+    <div class="where rules6" style="margin-top:28px">
+      <div><h3>Rules set urgency</h3><p>Zone, deadline, red flags, escalation and closure come from a versioned rules table. No AI output can change them. AI may flag a concern for a person to review; only the rules and authorised clinicians set urgency.</p></div>
+      <div><h3>Works without AI</h3><p>Every AI call has a prepared, approved fallback. The pilot can run with AI switched off.</p></div>
+      <div><h3>An owner at every step</h3><p>Every positive result is one case with a named owner and a deadline on each step, until a clinician closes it with evidence. If an expected event does not arrive (no reply, no booking, no report), the case goes to the top of a list.</p></div>
+      <div><h3>No health words in messages</h3><p>WhatsApp, SMS and calls say only "your clinic has a message for you" plus a link. The result appears only after an identity check. Consent, opt-outs and every contact attempt are logged.</p></div>
+      <div><h3>Minimum data to AI</h3><p>The model never gets name, Emirates ID, phone, address or record number. Red-flag questions never reach it.</p></div>
+      <div><h3>Designed to stay in the UAE</h3><p>Hosting, database, backups, logs, AI and speech, as the health-data law requires. The whole chain, including message providers and support access, is checked before real patients.</p></div>
+    </div>
+    <figure class="datafig">
+      <p>Security zones: what data may cross each line. The database has no route to the internet; the AI zone sees de-identified context only.</p>
+      <button class="shot" type="button" data-full="img/arch-zones.webp"><img src="img/arch-zones.webp" alt="Security zones Z0 internet to Z5 operations, with the AI zone receiving only minimised case context" width="2200" height="1280"></button>
+    </figure>
+  </div>
+</section>
+
+<section id="ai-arch">
+  <div class="wrap">
+    <p class="eyebrow"><b>05</b>AI</p>
+    <h2>Which AI, <em>and where it runs.</em></h2>
+    <div class="where" style="margin-top:28px">
+      <div><span class="tag built">Demo</span><h3>Gemini through our Worker</h3><p>The patient AI chat can call Gemini through our Cloudflare Worker. The code is ready, but AI is off until the key is entered, so today prepared answers from the approved library reply. This is acceptable only because all data is invented.</p></div>
+      <div><span class="tag prop">Pilot</span><h3>A model hosted in the UAE</h3><p>An in-region model with no training on our data and no retention: a large cloud provider's model in a UAE region, or an Arabic-first model such as Jais or Falcon. The model is chosen with the partner and tested on our 50-question safety set.</p></div>
+      <div><span class="tag prop">Pilot</span><h3>Drafts for staff</h3><p>Case summary and referral letter drafts, built from case fields. Every draft is checked by code, marked "AI draft · check before use", and a person accepts, edits or ignores it. In the demo these drafts are templates.</p></div>
+    </div>
+    <figure class="datafig">
+      <p>How a staff draft is made and checked before anyone sees it.</p>
+      <button class="shot" type="button" data-full="img/arch-staffai.webp"><img src="img/arch-staffai.webp" alt="Staff AI flow: de-identified case fields, prompt template, model, code checks, fallback template, accept edit or ignore logged" width="2600" height="1120"></button>
+    </figure>
+  </div>
+</section>
+
+</main>
+<footer>
+  <div class="wrap">
+    <p class="disc">Arranged with the pilot partner and DoH, not needed to start: Malaffi access, insurer eligibility checks, the in-UAE AI model, ADHICS control mapping, the Sahatna interface.</p>
+    <p class="disc">Source: Kafila architecture document v0.7 (18 Nov 2026). Technology examples are assumptions to agree with the pilot partner. All people, results, clinics and insurance plans in the demo are synthetic. Not a medical device. Not affiliated with or endorsed by DoH Abu Dhabi or ADPHC. Logo: concept AI-generated, redrawn as vector.</p>
+  </div>
+</footer>
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Enlarged diagram">
+  <img id="lbImg" src="" alt="">
+  <button class="btn line" type="button" id="lbClose">Close</button>
+</div>
+<script>
+(function(){const lb=document.getElementById("lb"),lbImg=document.getElementById("lbImg"),lbClose=document.getElementById("lbClose");let opener=null;
+document.querySelectorAll(".shot").forEach(b=>b.addEventListener("click",()=>{opener=b;lbImg.src=b.dataset.full;lbImg.alt=b.querySelector("img").alt;lb.hidden=false;lbClose.focus();}));
+function closeLb(){lb.hidden=true;if(opener)opener.focus();}
+lbClose.addEventListener("click",closeLb);lb.addEventListener("click",e=>{if(e.target===lb)closeLb();});addEventListener("keydown",e=>{if(e.key==="Escape"&&!lb.hidden)closeLb();});})();
+</script>
+<a id="totop" class="totop" href="#top" aria-label="Back to top" title="Back to top">↑</a>
+<script>(function(){var b=document.getElementById("totop");if(!b)return;function f(){b.classList.toggle("show",window.scrollY>600)}addEventListener("scroll",f,{passive:true});f();b.addEventListener("click",function(e){e.preventDefault();scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"})})})();</script>
+
+</body>
+</html>

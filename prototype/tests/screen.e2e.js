@@ -1,0 +1,20 @@
+const {chromium}=require('playwright');const U='http://localhost:8765/';
+(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:1280,height:900}});const errs=[];p.on('pageerror',e=>errs.push(e.message));
+const ok=(n,c)=>console.log((c?'PASS ':'FAIL ')+n);
+await p.goto(U+'#/patient');await p.evaluate(()=>{localStorage.clear();localStorage.setItem('kafila-entry','1');localStorage.setItem('screenpath-tour','{"open":false}');localStorage.setItem('screenpath-demo-ui','0')});await p.reload();await p.waitForTimeout(700);
+ok('chip visible demo off',await p.isVisible('#screenChip'));ok('chip says Fatima',/Fatima/.test(await p.textContent('#screenChip')));
+await p.click('#screenChip');ok('menu opens 6',(await p.locator('#screenMenu [data-s]').count())===6);
+await p.click('#screenMenu [data-s=gp]');await p.waitForTimeout(400);
+ok('gp -> #/team',p.url().endsWith('#/team'));let t=await p.locator('#view').innerText();ok('gp banner',/You now see Dr. Hessa's screen/.test(t));ok('chip Dr. Hessa',/Dr. Hessa/.test(await p.textContent('#screenChip')));
+await p.screenshot({path:'scr-gp.png',clip:{x:0,y:0,width:1280,height:330}});
+await p.click('#scrX');await p.waitForTimeout(200);ok('banner dismissed',!(await p.isVisible('.scr-banner')));
+await p.click('#screenChip');await p.click('#screenMenu [data-s=lead]');await p.waitForTimeout(400);ok('lead -> dashboard',p.url().endsWith('#/dashboard')&&await p.isVisible('.scr-banner'));
+await p.click('#screenChip');await p.click('#screenMenu [data-s=patient]');await p.waitForTimeout(500);ok('patient -> phone',p.url().endsWith('#/patient')&&/Fatima/.test(await p.locator('.scr-banner').innerText()));
+// demo bar on
+await p.click('#demoBtn');await p.waitForTimeout(200);ok('lang visible on patient',await p.isVisible('#lang'));
+await p.selectOption('#role','clinlead');await p.waitForTimeout(400);ok('select clinlead -> team',p.url().endsWith('#/team')&&/Dr. Mona/.test(await p.locator('.scr-banner').innerText()));
+ok('lang hidden on staff',!(await p.isVisible('#lang')));ok('select shows clinlead',(await p.inputValue('#role'))==='clinlead');
+await p.selectOption('#role','specialist');await p.waitForTimeout(400);t=await p.locator('#view').innerText();ok('specialist My work',/Dr. Omar/.test(t));
+await p.setViewportSize({width:390,height:800});await p.goto(U+'#/patient');await p.click('#demoBtn');await p.waitForTimeout(400);ok('mobile chip visible',await p.isVisible('#screenChip'));
+const ov=await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth);ok('no horizontal scroll mobile',!ov);await p.screenshot({path:'scr-mob.png'});
+console.log('errors',errs);await b.close()})();

@@ -1,0 +1,30 @@
+const {chromium}=require('playwright');const U='http://localhost:8765/';
+(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:1280,height:900}});const errs=[];p.on('pageerror',e=>errs.push(e.message));
+const ok=(n,c)=>console.log((c?'PASS ':'FAIL ')+n);
+await p.goto(U+'#/patient');await p.waitForTimeout(500);await p.evaluate(()=>{Store.reset();localStorage.setItem('screenpath-demo-ui','1')});
+const open=async(lang)=>{await p.evaluate((l)=>{Store.S.data.persona='C-1043';Store.S.data.lang=l;Store.save()},lang);await p.waitForTimeout(200);
+await p.click('[data-act="lock"]').catch(()=>{});await p.waitForTimeout(200);await p.click('[data-act="openapp"]');await p.waitForTimeout(1400);
+await p.click('[data-act="consent"]').catch(()=>{});await p.click('[data-act="signin"]').catch(()=>{});await p.waitForTimeout(400);};
+await open('en');
+await p.click('[data-act="understood"]');await p.waitForTimeout(300);
+await p.click('[data-act="callat"]');await p.waitForTimeout(300);
+const wins=await p.locator('[data-act="callwin"]').allInnerTexts();console.log(wins);
+ok('windows from roster, end ≥30 min before deadline, current hour offered',wins.length===3&&wins.every(w=>w.slice(6,11)<='12:30')&&/^09:/.test(wins[0]));
+ok('names doctor',wins.some(w=>/Dr\. Hessa/.test(w))&&wins.some(w=>/Dr\. Faisal/.test(w)));
+const iH=wins.findIndex(w=>/Hessa/.test(w));await p.locator('[data-act="callwin"]').nth(iH).click();await p.waitForTimeout(300);
+const chat=await p.locator('.phone').innerText();ok('reply says who and when',/Dr\. Hessa will call you today between 09:00 and 10:00/.test(chat));
+const s=await p.evaluate(()=>({b:Store.S.data.callBook,slot:Store.byId('C-1043').callSlot}));ok('booked in roster',Object.values(s.b).includes('C-1043')&&/Hessa/.test(s.slot.doc));
+// same window not offered to another case
+const again=await p.evaluate(()=>{const c=Store.byId('C-1043');const x=Store.callBlocks(Store.now()-3*3600000,Store.now()+6*3600000,null,'OTHER');return x.map(w=>new Date(w.start).toISOString().slice(11,16)+w.doc)});
+ok('booked block not offered twice',!again.some(w=>w.startsWith('05:00')&&/Hessa/.test(w)));
+await p.goto(U+'#/team');await p.waitForTimeout(400);const wl=await p.locator('#view').innerText();ok('worklist shows call',/Hessa M\. calls 09:00–10:00/.test(wl));
+await p.goto(U+'#/case/C-1043');await p.waitForTimeout(400);const cv=await p.locator('#view').innerText();ok('case page doctor call',/Booked: GP · Dr\. Hessa M\., 09:00–10:00/.test(cv)&&/rule deadline 13:00/.test(cv)&&/Duty roster today/.test(cv));
+await p.screenshot({path:'roster-case.png',fullPage:true});
+// nobody free: make all busy
+await p.goto(U+'#/patient');await p.evaluate(()=>{Store.reset();Store.S.R.doctors['GP · Dr. Faisal R.'].busy.push(['10:00','11:00','clinic'],['12:00','13:00','clinic']);Store.S.R.doctors['GP · Dr. Hessa M.'].busy.push(['11:00','12:00','clinic'],['09:00','10:00','clinic']);Store.save()});await p.waitForTimeout(200);
+await open('ar');await p.click('[data-act="understood"]');await p.waitForTimeout(300);
+const n=await p.evaluate(()=>({qr:[...document.querySelectorAll('.qr button')].map(b=>b.dataset.act),c:Store.byId('C-1043'),s:Store.status(Store.byId('C-1043'))}));
+ok('no windows offered, phone-with-me kept',!n.qr.includes('callat')&&n.qr.includes('callok'));ok('lead task',n.c.noRoster&&n.s.human);
+await p.click('[data-act="callok"]');await p.waitForTimeout(300);const o=await p.evaluate(()=>{const c=Store.byId('C-1043');return c.owner});ok('urgent owner is a doctor, not Patient: '+o,/Dr\./.test(o));
+await p.goto(U+'#/case/C-1043');await p.waitForTimeout(300);const cv2=await p.locator('#view').innerText();ok('deadline in hours',/call by 13:00 today · 4 h left/.test(cv2)&&!/escalated/.test(cv2));
+console.log('errors',errs);await b.close()})();

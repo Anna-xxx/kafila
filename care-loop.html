@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Fatima’s case, step by step · Kafila</title><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20120%20120%22%20width%3D%22120%22%20height%3D%22120%22%20role%3D%22img%22%20aria-label%3D%22Kafila%22%3E%3Cg%20transform%3D%22translate%2860%2060%29%20scale%281.1%29%20translate%28-60%20-60%29%22%3E%3Cg%20id%3D%22mark%22%3E%3Cpath%20d%3D%22M75.19%2022.99%20A40%2040%200%200%201%2090.50%2034.12%22%20fill%3D%22none%22%20stroke%3D%22%23448c80%22%20stroke-width%3D%2213%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M99.89%2063.01%20A40%2040%200%200%201%2094.04%2081.01%22%20fill%3D%22none%22%20stroke%3D%22%235082af%22%20stroke-width%3D%2213%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M69.47%2098.86%20A40%2040%200%200%201%2050.53%2098.86%22%20fill%3D%22none%22%20stroke%3D%22%23e7b956%22%20stroke-width%3D%2213%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M25.96%2081.01%20A40%2040%200%200%201%2020.11%2063.01%22%20fill%3D%22none%22%20stroke%3D%22%23e1885a%22%20stroke-width%3D%2213%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M29.50%2034.12%20A40%2040%200%200%201%2044.81%2022.99%22%20fill%3D%22none%22%20stroke%3D%22%2369b37e%22%20stroke-width%3D%2213%22%20stroke-linecap%3D%22round%22/%3E%3Ccircle%20cx%3D%2260.00%22%20cy%3D%2220.00%22%20r%3D%2213%22%20fill%3D%22%230f6b5c%22/%3E%3Ccircle%20cx%3D%2298.04%22%20cy%3D%2247.64%22%20r%3D%2213%22%20fill%3D%22%231f5f99%22/%3E%3Ccircle%20cx%3D%2283.51%22%20cy%3D%2292.36%22%20r%3D%2213%22%20fill%3D%22%23e0a526%22/%3E%3Ccircle%20cx%3D%2236.49%22%20cy%3D%2292.36%22%20r%3D%2213%22%20fill%3D%22%23d9662b%22/%3E%3Ccircle%20cx%3D%2221.96%22%20cy%3D%2247.64%22%20r%3D%2213%22%20fill%3D%22%233f9e5a%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: one step at a time. A track of people across the top (where we are), one large card below (what happens now),
+   Back / Next under the card. A final "whole loop" view shows every step with a one-line caption. Light only, by request. */
+:root {
+  --bg: #f2f6f4; --card: #ffffff; --ink: #14211d; --ink-2: #4c5c57; --line: #cfdcd6;
+  --green: #17663a; --green-2: #e1efe7; --tile: #1c2b27; --warn: #a85c12; --warn-bg: #fbf1e6;
+  --red: #b3261e; --red-bg: #fbe9e7; --face-bg: #d6e6de; --sand: #f4efe4; --sand-ink: #6b5a2e;
+  --f-text: "Noto Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-text); font-size: 16px; line-height: 1.5; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-block: 28px 44px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 22px; }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .12em; color: var(--green); text-transform: uppercase; }
+h1 { margin: 0; font-size: clamp(26px, 3.4vw, 36px); line-height: 1.15; text-wrap: balance; }
+h1 span { color: var(--green); }
+.lead { margin: 0; color: var(--ink-2); font-size: 17px; }
+button { font: inherit; cursor: pointer; }
+button:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
+
+/* track */
+.trackbox { overflow-x: auto; padding: 10px 2px 4px; }
+.trackbox[hidden] { display: none; }
+.track { display: grid; grid-template-columns: repeat(7, minmax(84px, 1fr)) 18px repeat(2, minmax(84px, 1fr)); align-items: start; min-width: 860px; position: relative; }
+.track::before { content: ""; position: absolute; left: 5%; right: 25%; top: 31px; height: 3px; background: var(--line); border-radius: 2px; }
+.node { position: relative; display: grid; justify-items: center; gap: 6px; background: none; border: 0; padding: 0 2px; color: var(--ink-2); }
+.node .av { width: 62px; height: 62px; border-radius: 50%; background: var(--card); border: 3px solid var(--line); display: grid; place-items: center; overflow: hidden; transition: transform .2s, border-color .2s, opacity .2s; }
+.node .av svg.f { width: 60px; height: 60px; margin-top: 8px; }
+.node .av svg.i { width: 28px; height: 28px; fill: none; stroke: var(--ink); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.node b { margin-top: 8px; font-size: 13px; font-weight: 600; line-height: 1.2; text-align: center; }
+.node.past .av { border-color: var(--green); }
+.node.past b { color: var(--ink); }
+.node.now .av { border-color: var(--green); transform: scale(1.18); box-shadow: 0 0 0 6px var(--green-2); }
+.node.now b { color: var(--green); font-weight: 700; }
+.node.future .av { opacity: .5; }
+.node.w .av { border-color: #e2c39c; } .node.w.now .av, .node.w.past .av { border-color: var(--warn); } .node.w.now b { color: var(--warn); } .node.w.now .av { box-shadow: 0 0 0 6px var(--warn-bg); }
+.node.r .av { border-color: #eab3ae; } .node.r.now .av, .node.r.past .av { border-color: var(--red); } .node.r.now b { color: var(--red); } .node.r.now .av { box-shadow: 0 0 0 6px var(--red-bg); }
+.node.w svg.i { stroke: var(--warn); } .node.r svg.i { stroke: var(--red); }
+
+/* step card */
+.stage { background: var(--card); border: 2px solid var(--green); border-radius: 18px; padding: 26px; display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 28px; min-height: 330px; }
+.stage[hidden] { display: none; }
+.stage.w { border-color: var(--warn); } .stage.r { border-color: var(--red); }
+.who { display: grid; justify-items: center; align-content: start; gap: 8px; text-align: center; }
+.who .big { width: 132px; height: 132px; border-radius: 50%; background: var(--face-bg); display: grid; place-items: center; overflow: hidden; }
+.who .big svg.f { width: 128px; height: 128px; margin-top: 16px; }
+.who .big svg.i { width: 56px; height: 56px; fill: none; stroke: var(--ink); stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.stage.w .who .big { background: var(--warn-bg); } .stage.w .who .big svg.i { stroke: var(--warn); }
+.stage.r .who .big { background: var(--red-bg); } .stage.r .who .big svg.i { stroke: var(--red); }
+.who b { font-size: 17px; } .who span { font-size: 14px; color: var(--ink-2); line-height: 1.3; }
+.body { display: grid; gap: 14px; align-content: start; min-width: 0; }
+.stepno { font-family: var(--f-mono); font-size: 13px; color: var(--green); letter-spacing: .06em; }
+.stage.w .stepno { color: var(--warn); } .stage.r .stepno { color: var(--red); }
+.body h2 { margin: 0; font-size: clamp(22px, 2.6vw, 28px); line-height: 1.2; }
+.body .what { margin: 0; font-size: 18px; line-height: 1.55; max-width: 62ch; }
+.facts { display: flex; flex-wrap: wrap; gap: 10px; }
+.facts > div { border-radius: 12px; padding: 8px 14px; font-size: 15px; display: grid; gap: 1px; }
+.facts small { font: 600 11px/1.3 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; }
+.f-when { background: var(--green-2); } .f-when small { color: var(--green); }
+.f-why { background: var(--sand); flex: 1 1 320px; } .f-why small { color: var(--sand-ink); }
+.helps { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 15px; }
+.helps .lab { font-weight: 700; margin-right: 2px; }
+.helps .chip { display: inline-flex; align-items: center; gap: 6px; border: 1.5px dashed var(--green); background: var(--green-2); border-radius: 99px; padding: 4px 12px; }
+.helps .chip.person { border-style: solid; background: var(--card); }
+.minis { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.minis div { background: var(--warn-bg); border: 1px solid #ecd2b3; border-radius: 12px; padding: 10px 14px; display: grid; gap: 2px; }
+.minis b { color: var(--warn); font-size: 16px; } .minis span { font-size: 14.5px; color: var(--ink-2); }
+.req { font-size: 12.5px; color: var(--ink-2); }
+@media (max-width: 720px) { .stage { grid-template-columns: 1fr; padding: 20px; gap: 16px; } .who { grid-template-columns: auto 1fr; justify-items: start; text-align: start; align-items: center; } .who .big { width: 84px; height: 84px; grid-row: span 2; } .who .big svg.f { width: 82px; height: 82px; margin-top: 10px; } .minis { grid-template-columns: 1fr; } }
+
+/* controls */
+.ctrl { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.ctrl button { min-height: 46px; border-radius: 99px; padding: 0 22px; border: 1.5px solid var(--line); background: var(--card); color: var(--ink); font-weight: 600; }
+.ctrl .next { background: var(--green); color: #fff; border-color: var(--green); font-size: 17px; padding: 0 30px; }
+.ctrl .next.pulse { animation: pulse 1.8s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(23, 102, 58, .35); } 50% { box-shadow: 0 0 0 10px rgba(23, 102, 58, 0); } }
+@media (prefers-reduced-motion: reduce) { .ctrl .next.pulse { animation: none; } .node .av { transition: none; } }
+.ctrl button:disabled { opacity: .4; cursor: default; }
+.ctrl button[hidden] { display: none; }
+.ctrl .sp { flex: 1; }
+.ctrl .ghost { border-color: transparent; background: transparent; color: var(--green); text-decoration: underline; text-underline-offset: 3px; padding: 0 8px; }
+
+/* whole loop view */
+.whole { display: grid; gap: 16px; }
+.whole[hidden] { display: none; }
+.wtrack { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 10px; position: relative; }
+.wtrack::before { content: ""; position: absolute; left: 7%; right: 7%; top: 58px; height: 3px; background: var(--green); opacity: .45; }
+.wn { position: relative; display: grid; justify-items: center; align-content: start; gap: 6px; text-align: center; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 12px 8px 14px; }
+.wn .av { width: 56px; height: 56px; border-radius: 50%; background: var(--face-bg); display: grid; place-items: center; overflow: hidden; position: relative; z-index: 1; }
+.wn .av svg.f { width: 54px; height: 54px; margin-top: 7px; }
+.wn .av svg.i { width: 26px; height: 26px; fill: none; stroke: var(--ink); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.wn .k { font: 600 12px/1 var(--f-mono); color: var(--green); }
+.wn b { font-size: 14px; line-height: 1.25; }
+.wn em { font-style: normal; font-family: var(--f-mono); font-size: 11px; color: var(--green); background: var(--green-2); border-radius: 99px; padding: 1px 8px; }
+.wrow { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 10px; }
+.wbox { border-radius: 14px; padding: 14px 16px; display: grid; gap: 8px; align-content: start; }
+.wbox.w { background: var(--warn-bg); border: 1px dashed var(--warn); } .wbox.r { background: var(--red-bg); border: 1px solid var(--red); }
+.wbox h3 { margin: 0; font-size: 15px; } .wbox.w h3 { color: var(--warn); } .wbox.r h3 { color: var(--red); }
+.wbox ul { margin: 0; padding-left: 18px; display: grid; gap: 3px; font-size: 14px; color: var(--ink-2); }
+.wbox ul b { color: var(--ink); }
+.wbox p { margin: 0; font-size: 14px; color: var(--ink-2); }
+@media (max-width: 900px) { .wtrack { grid-template-columns: repeat(2, minmax(0, 1fr)); } .wtrack::before { display: none; } .wrow { grid-template-columns: 1fr; } }
+
+.principles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.principles div { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; font-size: 14.5px; color: var(--ink-2); }
+.principles b { display: block; color: var(--ink); font-size: 15.5px; margin-bottom: 4px; }
+@media (max-width: 760px) { .principles { grid-template-columns: 1fr; } }
+.foot { font-size: 13px; color: var(--ink-2); margin: 0; }
+
+.topbar { display: flex; align-items: center; gap: 12px 18px; flex-wrap: wrap; font-size: 15px; }
+.topbar a { color: var(--green); font-weight: 600; text-decoration: none; }
+.topbar a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.topbar .home { display: inline-flex; align-items: center; gap: 8px; color: var(--ink); }
+.topbar .sp { flex: 1; }
+</style>
+<style>body{margin:0}[hidden]{display:none!important}</style></head><body>
+
+
+<div class="wrap" style="padding-bottom:0"><nav class="topbar" aria-label="Site"><a class="home" href="index.html"><i class="mk"><svg width="28" height="28" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" aria-hidden="true"><g id="mark"><path d="M75.61 21.01 A42 42 0 0 1 92.26 33.10" fill="none" stroke="#69c5b3" stroke-width="10" stroke-linecap="round"/><path d="M101.91 62.80 A42 42 0 0 1 95.55 82.37" fill="none" stroke="#7fb1e1" stroke-width="10" stroke-linecap="round"/><path d="M70.29 100.72 A42 42 0 0 1 49.71 100.72" fill="none" stroke="#f5c873" stroke-width="10" stroke-linecap="round"/><path d="M24.45 82.37 A42 42 0 0 1 18.09 62.80" fill="none" stroke="#f3a473" stroke-width="10" stroke-linecap="round"/><path d="M27.74 33.10 A42 42 0 0 1 44.39 21.01" fill="none" stroke="#8cd1a1" stroke-width="10" stroke-linecap="round"/><circle cx="60.00" cy="18.00" r="11.5" fill="#3fb59d"/><circle cx="99.94" cy="47.02" r="11.5" fill="#5b9bd8"/><circle cx="84.69" cy="93.98" r="11.5" fill="#f2b84b"/><circle cx="35.31" cy="93.98" r="11.5" fill="#f08a4b"/><circle cx="20.06" cy="47.02" r="11.5" fill="#6cc486"/></g></svg></i>Kafila</a><span class="sp"></span><a href="index.html#how">Fatima's case with screenshots</a><a href="architecture.html">Architecture</a><a href="prototype/" target="_blank" rel="noopener">Open the prototype</a></nav></div>
+<div class="wrap">
+  <div class="eyebrow">Kafila · Fatima’s case, step by step</div>
+  <h1>One positive test. <span>Each step has a person who owns it.</span></h1>
+  <p class="lead">Fatima, 52, has a positive stool test. Follow her case one step at a time.</p>
+
+  <div class="trackbox" id="trackbox"><div class="track" id="track" role="tablist" aria-label="Steps"></div></div>
+
+  <section class="stage" id="stage" aria-live="polite">
+    <div class="who"><div class="big" id="sBig"></div><b id="sWho"></b><span id="sRole"></span></div>
+    <div class="body">
+      <span class="stepno" id="sNo"></span>
+      <h2 id="sTitle"></h2>
+      <p class="what" id="sWhat"></p>
+      <div id="sExtra"></div>
+      <div class="facts" id="sFacts"></div>
+      <span class="req" id="sReq"></span>
+    </div>
+  </section>
+
+  <div class="whole" id="whole" hidden>
+    <div class="wtrack" id="wtrack"></div>
+    <div class="wrow">
+      <div class="wbox w"><h3>If something goes wrong</h3><ul id="wexc"></ul></div>
+      <div class="wbox r"><h3>Emergency, at any moment</h3><p>She writes “chest pain” or “a lot of blood”: a fixed “call 998” screen, no AI. Her doctor is alerted and calls the same day.</p></div>
+    </div>
+  </div>
+
+  <div class="ctrl">
+    <button id="prev">‹ Back</button>
+    <button id="next" class="next pulse">Next ›</button>
+    <button id="play">▶ Play</button>
+    <span class="sp"></span>
+    <button id="toggle" class="ghost">See the whole loop</button>
+  </div>
+
+  <div class="principles">
+    <div><b>Rules decide. AI explains. People sign.</b>A rules table sets the deadline. AI answers questions and drafts letters. Only clinicians accept, sign or close.</div>
+    <div><b>An owner and a deadline at every step</b>Late, unanswered and rejected cases go to the top of the coordinator's list.</div>
+    <div><b>Closed only with evidence</b>A report, a health-record entry or a signed reason. Never by AI.</div>
+  </div>
+  <p class="foot">Prototype with synthetic data. People and clinic names are fictional. Pilot: positive stool test → colonoscopy, one Abu Dhabi provider network, 12 weeks.</p>
+</div>
+
+<script>
+(function () {
+  const I = {
+    lab: '<path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.8 3h10.4a2 2 0 0 0 1.8-3l-5-9V3"/><path d="M7.5 15h9"/>',
+    warn: '<path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/>',
+    sos: '<path d="M5 4h4l2 5-3 2a11 11 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/>'
+  };
+  // Simple illustrated faces (fictional people).
+  function face(f) {
+    const s = [];
+    const top = f.top === "coat" ? "#ffffff" : f.top;
+    if (f.head === "scarf") s.push(`<path d="M13 27c0-11 5-18 11-18s11 7 11 18v6c-3 2.5-7 3.5-11 3.5s-8-1-11-3.5z" fill="${f.scarf}"/>`);
+    if (f.head === "ghutra") s.push(`<path d="M12.5 30c0-12 5-20 11.5-20s11.5 8 11.5 20v4l-4-1v-9c-2 2-5 3-7.5 3s-5.5-1-7.5-3v9l-4 1z" fill="#f4f4f1"/>`);
+    s.push(`<path d="M6 50c0-10 8-15 18-15s18 5 18 15z" fill="${top}"/>`);
+    if (f.top === "coat") s.push(`<path d="M24 35l-5 15M24 35l5 15" stroke="#c9d3cf" stroke-width="1.4"/><path d="M19 37l5 6 5-6" fill="${f.extra === "steth" ? "#5f8f7a" : "#4a6fa5"}"/>`);
+    if (f.head === "scarf") s.push(`<path d="M16 34c2 2.5 5 3.5 8 3.5s6-1 8-3.5l-2 6h-12z" fill="${f.scarf}"/>`);
+    s.push(`<rect x="21" y="27" width="6" height="7" rx="2" fill="${f.skin}"/>`);
+    s.push(`<ellipse cx="24" cy="21.5" rx="${f.head === "scarf" ? 7.2 : 7.8}" ry="8.4" fill="${f.skin}"/>`);
+    if (f.head === "hair") s.push(`<path d="M16 20c0-6 3.5-9.5 8-9.5s8 3.5 8 9.5c-1.5-3-4-4.5-8-4.5s-6.5 1.5-8 4.5z" fill="${f.hair}"/>`);
+    if (f.head === "ghutra") s.push(`<path d="M15.5 15c2-3.5 5-5 8.5-5s6.5 1.5 8.5 5" stroke="#1d1d1f" stroke-width="2.6" fill="none"/><path d="M16 17.5c2.5-2 5-2.8 8-2.8s5.5.8 8 2.8" fill="#f4f4f1"/>`);
+    if (f.extra === "beard") s.push(`<path d="M17 22.5c.5 5 3.5 8 7 8s6.5-3 7-8c-1 2.5-3.5 3.5-7 3.5s-6-1-7-3.5z" fill="#2a211c"/>`);
+    s.push(`<circle cx="21" cy="21" r="1" fill="#1d1d1f"/><circle cx="27" cy="21" r="1" fill="#1d1d1f"/><path d="M21.5 25.2c1.5 1.2 3.5 1.2 5 0" stroke="#7a3b2e" stroke-width="1.1" fill="none" stroke-linecap="round"/>`);
+    if (f.extra === "steth") s.push(`<path d="M20 37c-1 5 1 8 4 8s5-3 4-8" stroke="#3d4a46" stroke-width="1.3" fill="none"/><circle cx="24" cy="45" r="1.6" fill="#3d4a46"/>`);
+    if (f.extra === "headset") s.push(`<path d="M15.5 20a8.5 8.5 0 0 1 17 0" stroke="#e9eef0" stroke-width="1.6" fill="none"/><rect x="14" y="19" width="3" height="5" rx="1.2" fill="#e9eef0"/><rect x="31" y="19" width="3" height="5" rx="1.2" fill="#e9eef0"/><path d="M15.5 24c0 3 2 4.5 5 4.5" stroke="#e9eef0" stroke-width="1.2" fill="none"/>`);
+    if (f.extra === "phone") s.push(`<rect x="30" y="38" width="6.5" height="10" rx="1.4" fill="#1d1d1f"/><rect x="31" y="39.3" width="4.5" height="7" rx=".6" fill="#7fd1a8"/>`);
+    return `<svg class="f" viewBox="0 0 48 48" aria-hidden="true">${s.join("")}</svg>`;
+  }
+  const ico = (k) => `<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${I[k]}</svg>`;
+  const F = {
+    fatima: { skin: "#c48d63", head: "scarf", scarf: "#5a2f55", top: "#3b3f4a", extra: "phone" },
+    noura: { skin: "#d9a77f", head: "scarf", scarf: "#2d3e6b", top: "#1f7a6d", extra: "headset" },
+    hessa: { skin: "#e2b893", head: "scarf", scarf: "#4f6a8f", top: "coat", extra: "steth" },
+    omar: { skin: "#9c6b4a", head: "hair", hair: "#1f1a17", top: "coat", extra: "beard" },
+    khalid: { skin: "#b07b56", head: "ghutra", top: "#f4f4f1", extra: "beard" }
+  };
+
+  const S = [
+    { pic: ico("lab"), tag: "Result", short: "Result arrives", who: "Lab and rules table", role: "not a person, not AI", title: "The result arrives", what: "A positive stool test (FIT) comes from the lab. Kafila opens one case for it. A rules table sets two deadlines from the UAE national guideline: referral within 15 working days, colonoscopy within 31 working days after it.", when: "Day 0", why: "Today a result can sit in a system with nobody responsible for the next step.", req: "Brief R1 · one case from the moment the result is issued" },
+    { pic: face(F.noura), tag: "Noura", short: "Noura owns the case", who: "Noura", role: "coordinator", title: "Noura takes the case", what: "Noura becomes the owner. Her list shows only the cases that need a person: late, unanswered, rejected or urgent.", when: "Day 0", why: "Someone is responsible at every moment. One coordinator can follow hundreds of cases.", req: "Brief R2 · named owner and a deadline for each step" },
+    { pic: face(F.fatima), tag: "Fatima", short: "Fatima understands and books", who: "Fatima", role: "patient, 52", title: "Fatima understands her result and books", what: "A WhatsApp from her own clinic, in her language. Her result in plain words, what happens next and by when. She books a female doctor on Saturday, covered by her plan.", when: "Day 0–2", why: "People drop out when they are scared or can't find a slot that fits their life.", helps: [["AI chat", "\"Is it cancer? Does it hurt? Who pays?\" Answers from approved texts, day or night. No diagnosis", ""], ["Noura", "calls her if she wants a person", "person"]], req: "Brief R3 · her language, understanding checked" },
+    { pic: face(F.hessa), tag: "Dr. Hessa", short: "Dr. Hessa refers", who: "Dr. Hessa", role: "family doctor", title: "Dr. Hessa sends the referral", what: "The AI drafts the referral letter. Dr. Hessa checks it and signs. If she has a question first, she asks the specialist in writing.", when: "Day 2–5", why: "The clinic gets everything in one packet, so the referral isn't sent back.", helps: [["AI draft", "she checks and signs", ""], ["Ask the specialist", "she writes Dr. Omar a question inside the case, no calls or fax", "person"]], req: "Brief R4 · hand-off between clinics" },
+    { pic: face(F.omar), tag: "Dr. Omar", short: "The clinic accepts and does the colonoscopy", who: "Dr. Omar", role: "gastroenterologist, receiving clinic", title: "The clinic accepts and does the colonoscopy", what: "Dr. Omar accepts the referral for his clinic, or says no with a reason. The colonoscopy is done there by the female doctor Fatima chose, and the report goes back to Dr. Hessa.", when: "Within 31 working days of referral", why: "Cases are usually lost between clinics. Here the hand-off is confirmed.", req: "Brief R4 · the receiving clinic accepts" },
+    { pic: face(F.hessa), tag: "Closed", short: "Dr. Hessa closes with the report", who: "Dr. Hessa", role: "family doctor", title: "Dr. Hessa closes the case", what: "She goes through the report with Fatima and closes the case with evidence: the report or a signed reason. The AI cannot close a case.", when: "On report", why: "Without evidence nobody knows whether care happened.", req: "Brief R5 · closed only with evidence" },
+    { pic: face(F.khalid), tag: "Dr. Khalid", short: "Dr. Khalid sees the programme", who: "Dr. Khalid", role: "programme lead", title: "Dr. Khalid sees the whole programme", what: "His dashboard shows who is late, who is lost and why, and the gaps by language and insurance. When three quarters of a deadline has passed, a late case comes to him.", when: "Every day", why: "The programme can fix causes, not just single cases.", req: "Brief R6 · closure and impact measures" },
+    { pic: ico("warn"), tag: "If it goes wrong", kind: "w", who: "Noura and Dr. Hessa", role: "act on it", title: "If something goes wrong", what: "Each problem has a rule and a person who acts.", minis: [["No reply", "SMS on day 2 and 4, a call on day 5, then Noura calls, then a letter"], ["Clinic says no", "It gives a reason. Dr. Hessa picks another clinic within 2 days"], ["Missed the visit", "Noura offers a new slot within 24 hours. A second time, Dr. Hessa calls"], ["Running late", "At three quarters of a deadline the case goes to Dr. Khalid"]], when: "Any time", why: "Silence and missed hand-offs are how people get lost.", req: "Brief R2 · timely progression" },
+    { pic: ico("sos"), tag: "Emergency", kind: "r", who: "No AI", role: "fixed safety rule", title: "Emergency, at any moment", what: "If Fatima writes “chest pain” or “a lot of blood”, she sees a fixed screen: call 998. No AI answers. Her doctor is alerted and calls her the same day.", when: "At any moment", why: "Danger words in Arabic and English are checked before any AI answer.", req: "Brief R5 · safe escalation" }
+  ];
+
+  const $ = (id) => document.getElementById(id);
+  const track = $("track");
+  track.innerHTML = S.map((s, i) => (i === 7 ? '<span aria-hidden="true"></span>' : "") + `<button class="node ${s.kind || ""}" role="tab" data-i="${i}" aria-label="Step ${i + 1}: ${s.title}"><span class="av">${s.pic}</span><b>${s.tag}</b></button>`).join("");
+  const nodes = [...track.querySelectorAll(".node")];
+
+  let cur = 0, timer = null;
+  function render() {
+    const s = S[cur], st = $("stage");
+    st.className = "stage " + (s.kind || "");
+    $("sBig").innerHTML = s.pic; $("sWho").textContent = s.who; $("sRole").textContent = s.role;
+    $("sNo").textContent = `Step ${cur + 1} of ${S.length}`;
+    $("sTitle").textContent = s.title; $("sWhat").textContent = s.what;
+    let extra = "";
+    if (s.helps) extra = `<div class="helps"><span class="lab">Who helps:</span>${s.helps.map(([a, b, c]) => `<span class="chip ${c}"><b>${a}</b> ${b}</span>`).join("")}</div>`;
+    if (s.minis) extra = `<div class="minis">${s.minis.map(([a, b]) => `<div><b>${a}</b><span>${b}</span></div>`).join("")}</div>`;
+    $("sExtra").innerHTML = extra;
+    $("sFacts").innerHTML = `<div class="f-when"><small>When</small>${s.when}</div><div class="f-why"><small>Why it matters</small>${s.why}</div>`;
+    $("sReq").textContent = s.req;
+    nodes.forEach((n, i) => { n.classList.toggle("past", i < cur); n.classList.toggle("now", i === cur); n.classList.toggle("future", i > cur); n.setAttribute("aria-selected", String(i === cur)); });
+    $("prev").disabled = cur === 0;
+    $("next").textContent = cur === S.length - 1 ? "See the whole loop ›" : "Next ›";
+    const n = nodes[cur], box = $("trackbox");
+    if (box.scrollWidth > box.clientWidth) box.scrollTo({ left: n.offsetLeft - box.clientWidth / 2 + n.offsetWidth / 2, behavior: "smooth" });
+  }
+  function showWhole(on) {
+    $("whole").hidden = !on; $("stage").hidden = on; $("trackbox").hidden = on;
+    $("toggle").textContent = on ? "Back to the steps" : "See the whole loop";
+    $("prev").hidden = on; $("next").hidden = on; $("play").hidden = on;
+    if (!on) render();
+  }
+  function stopPlay() { clearInterval(timer); timer = null; $("play").textContent = "▶ Play"; }
+  $("next").onclick = () => { $("next").classList.remove("pulse"); stopPlay(); if (cur === S.length - 1) return showWhole(true); cur++; render(); };
+  $("prev").onclick = () => { stopPlay(); if (cur > 0) { cur--; render(); } };
+  $("play").onclick = () => {
+    $("next").classList.remove("pulse");
+    if (timer) return stopPlay();
+    if (cur === S.length - 1) { cur = 0; render(); }
+    $("play").textContent = "❚❚ Pause";
+    timer = setInterval(() => { if (cur >= S.length - 1) return stopPlay(); cur++; render(); }, 6000);
+  };
+  $("toggle").onclick = () => { stopPlay(); showWhole($("whole").hidden); };
+  track.addEventListener("click", (e) => { const b = e.target.closest(".node"); if (!b) return; stopPlay(); $("next").classList.remove("pulse"); cur = +b.dataset.i; render(); });
+  addEventListener("keydown", (e) => { if (!$("whole").hidden) return; if (e.key === "ArrowRight") $("next").click(); if (e.key === "ArrowLeft") $("prev").click(); });
+
+  // Whole loop view: the seven steps with one line each, then the two safety boxes.
+  $("wtrack").innerHTML = S.slice(0, 7).map((s, i) => `<div class="wn"><span class="k">${i + 1}</span><span class="av">${s.pic}</span><b>${s.short}</b><em>${s.when}</em></div>`).join("");
+  $("wexc").innerHTML = S[7].minis.map(([a, b]) => `<li><b>${a}:</b> ${b}</li>`).join("");
+  if (location.hash === "#whole") showWhole(true); else render();
+})();
+</script>
+</body></html>

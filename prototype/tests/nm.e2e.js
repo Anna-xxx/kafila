@@ -1,0 +1,20 @@
+const {chromium}=require('playwright');const U='http://localhost:8765/';
+(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:1280,height:1000}});const errs=[];p.on('pageerror',e=>errs.push(e.message));
+const ok=(n,c)=>console.log((c?'PASS ':'FAIL ')+n);
+await p.goto(U+'#/patient');await p.evaluate(()=>{localStorage.clear();localStorage.setItem('kafila-entry','1');localStorage.setItem('screenpath-tour','{"open":false}');localStorage.setItem('screenpath-demo-ui','1')});await p.reload();await p.waitForTimeout(600);
+await p.evaluate(()=>{Store.S.data.lang='en';Store.save()});
+await p.click('[data-act=lock]').catch(()=>{});await p.click('[data-act=openapp]');await p.waitForTimeout(1400);
+await p.click('[data-act=notme]');await p.waitForTimeout(300);let t=await p.locator('.phone').innerText();ok('notme demo line + buttons',/protects a wrong number/.test(t)&&/See the coordinator's task/.test(t));
+await p.screenshot({path:'notme.png'});
+await p.click('[data-act=seeTask]');await p.waitForTimeout(400);ok('opens case as Noura',/#\/case\/C-1042/.test(p.url())&&await p.evaluate(()=>Store.S.data.role==='coordinator'));
+await p.goto(U+'#/team');await p.waitForTimeout(300);t=await p.locator('#view').innerText();ok('worklist heading + Contact check',/Patient needs a call or a contact check/.test(t)&&/Contact check/.test(t));
+await p.goto(U+'#/patient');await p.waitForTimeout(300);await p.click('[data-act=undoNotme]');await p.waitForTimeout(300);
+let c=await p.evaluate(()=>{const c=Store.byId('C-1042');return {n:c.notMe,s:c.stopped,sc:c.pscreen}});ok('undo returns to sign-in',!c.n&&!c.s&&c.sc==='signin');
+// preset returned
+await p.selectOption('#persona','C-1042:returned');await p.waitForTimeout(800);
+c=await p.evaluate(()=>{const c=Store.byId('C-1042');return {r:c.rejected,slot:c.slot,rel:!!c.releasedSlot,owner:c.owner,iss:c.history[0].at}});
+t=await p.locator('.phone').innerText();ok('returned preset',c.r&&!c.slot&&c.rel&&/Hessa/.test(c.owner)&&/(could not take this referral|لم تتمكن العيادة من قبول)/.test(t));
+const before=await p.evaluate(()=>Store.status(Store.byId('C-1042')).win-Store.status(Store.byId('C-1042')).age);ok('guideline clock not reset',before<90);
+await p.goto(U+'#/case/C-1042');await p.selectOption('#role','gp');await p.waitForTimeout(300);ok('GP has Re-route',/Re-route referral|Send referral/.test(await p.locator('#view').innerText()));
+await p.selectOption('#role','coordinator');await p.goto(U+'#/team');await p.waitForTimeout(300);ok('Noura sees Referral returned',/Referral returned/.test(await p.locator('#view').innerText()));
+console.log('errors',errs);await b.close()})();

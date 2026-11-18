@@ -1,0 +1,70 @@
+{
+  "_about": "Synthetic duty roster for same-day doctor call-backs (urgent blood pressure). Same pattern every day of the demo. Times are Gulf Standard Time. The call deadline comes from the rules table, never from this roster.",
+  "version": "0.1-demo",
+  "blockMinutes": 60,
+  "callbackOrder": [
+    "GP · Dr. Hessa M.",
+    "GP · Dr. Faisal R."
+  ],
+  "doctors": {
+    "GP · Dr. Hessa M.": {
+      "short": {
+        "en": "Dr. Hessa",
+        "ar": "د. حصة"
+      },
+      "shift": [
+        "08:00",
+        "16:00"
+      ],
+      "busy": [
+        [
+          "08:00",
+          "09:00",
+          "clinic"
+        ],
+        [
+          "10:00",
+          "11:00",
+          "clinic"
+        ],
+        [
+          "12:00",
+          "13:00",
+          "clinic"
+        ],
+        [
+          "13:00",
+          "14:00",
+          "lunch"
+        ]
+      ]
+    },
+    "GP · Dr. Faisal R.": {
+      "short": {
+        "en": "Dr. Faisal",
+        "ar": "د. فيصل"
+      },
+      "shift": [
+        "10:00",
+        "20:00"
+      ],
+      "busy": [
+        [
+          "11:00",
+          "12:00",
+          "clinic"
+        ],
+        [
+          "14:00",
+          "15:00",
+          "lunch"
+        ],
+        [
+          "15:00",
+          "18:00",
+          "clinic"
+        ]
+      ]
+    }
+  }
+}

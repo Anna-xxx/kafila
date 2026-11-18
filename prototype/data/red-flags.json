@@ -1,0 +1,179 @@
+{
+  "_about": "Red-flag phrases. A match never goes to AI: the app shows a fixed safe answer. High recall on purpose: a false alarm is safer than a missed one. Source: clinical-safety-pack.md §4.3 (draft, Anna checks).",
+  "L4": {
+    "answer": {
+      "en": "What you describe may need emergency care. Call 998 now. Do not wait for an appointment.",
+      "ar": "ما تصفه قد يحتاج إلى رعاية طارئة. اتصل بالرقم 998 الآن. لا تنتظر الموعد."
+    },
+    "en": [
+      "chest pain",
+      "chest pressure",
+      "can't breathe",
+      "cannot breathe",
+      "short of breath",
+      "hard to breathe",
+      "fainted",
+      "fainting",
+      "passed out",
+      "collapse",
+      "heavy bleeding",
+      "bleeding a lot",
+      "lot of blood",
+      "losing blood",
+      "face drooping",
+      "face is drooping",
+      "drooping",
+      "arm weakness",
+      "arm is weak",
+      "weak arm",
+      "slurred speech",
+      "can't speak",
+      "seizure",
+      "confused",
+      "very drowsy",
+      "vomiting blood",
+      "shortness of breath",
+      "chest hurts",
+      "chest is hurting",
+      "bleeding heavily",
+      "pain in my chest",
+      "pain in the chest",
+      "heart attack",
+      "having a stroke",
+      "a stroke",
+      "soaking pads",
+      "fruity breath",
+      "one-sided weakness",
+      "weakness on one side",
+      "trouble speaking"
+    ],
+    "ar": [
+      "ألم في الصدر",
+      "ضيق في التنفس",
+      "لا أستطيع التنفس",
+      "إغماء",
+      "أغمي علي",
+      "نزيف شديد",
+      "نزيف كثير",
+      "دم كثير",
+      "تشنج",
+      "ارتباك",
+      "تقيؤ دم",
+      "ضيق تنفس",
+      "ألم بالصدر",
+      "صدري يؤلمني",
+      "نوبة قلبية",
+      "جلطة",
+      "نزيف غزير",
+      "ضعف في جانب واحد",
+      "صعوبة في الكلام"
+    ],
+    "bleeding": {
+      "_about": "Medical review 17 Nov: heavy bleeding keeps the 998 screen; one fixed line for milder cases, because the chat cannot judge the amount. Wording waits for Anna.",
+      "phrases": [
+        "heavy bleeding",
+        "bleeding a lot",
+        "lot of blood",
+        "losing blood",
+        "bleeding heavily",
+        "نزيف شديد",
+        "نزيف كثير",
+        "دم كثير"
+      ],
+      "line": {
+        "en": "If it is only a small amount of blood and you feel well, call your clinic today instead.",
+        "ar": "إذا كانت كمية الدم قليلة فقط وتشعر أنك بخير، اتصل بعيادتك اليوم بدلًا من ذلك."
+      }
+    }
+  },
+  "L3": {
+    "answer": {
+      "en": "Please contact a doctor today. If it gets worse, call 998.",
+      "ar": "يرجى التواصل مع طبيب اليوم. إذا ساءت الحالة، اتصل بالرقم 998."
+    },
+    "en": [
+      "black stool",
+      "black stools",
+      "blood in stool",
+      "bloody stool",
+      "rectal bleeding",
+      "bleeding after menopause",
+      "severe headache",
+      "vision change",
+      "blurred vision",
+      "bleeding from bottom",
+      "bleeding after sex",
+      "bleeding between periods",
+      "bloody discharge",
+      "very thirsty",
+      "losing weight without trying"
+    ],
+    "ar": [
+      "براز أسود",
+      "دم في البراز",
+      "نزيف من الشرج",
+      "نزيف بعد انقطاع الطمث",
+      "صداع شديد",
+      "تشوش الرؤية",
+      "عندي نزيف",
+      "نزيف بعد العلاقة",
+      "نزيف بين الدورات",
+      "إفرازات دموية",
+      "عطش شديد",
+      "نقص الوزن دون سبب"
+    ]
+  },
+  "MH": {
+    "answer": {
+      "en": "You are not alone. If you are in danger now, call 998. You can also talk to a person from our care team right now.",
+      "ar": "لست وحدك. إذا كنت في خطر الآن، اتصل بالرقم 998. يمكنك أيضًا التحدث الآن مع شخص من فريق الرعاية."
+    },
+    "en": [
+      "kill myself",
+      "end my life",
+      "suicide",
+      "hurt myself",
+      "self harm",
+      "self-harm",
+      "don't want to live",
+      "want to die",
+      "suicidal",
+      "kill my self",
+      "end it all"
+    ],
+    "ar": [
+      "انتحار",
+      "أقتل نفسي",
+      "أؤذي نفسي",
+      "لا أريد أن أعيش",
+      "أريد أن أموت"
+    ]
+  },
+  "HUMAN": {
+    "_about": "Not a medical emergency: hand over to a nurse navigator (demo: 'I'm scared').",
+    "answer": {
+      "en": "It is normal to feel scared. I am connecting you with Nurse Layla from the care team. She will message you here.",
+      "ar": "من الطبيعي أن تشعر بالخوف. سأوصلك بالممرضة ليلى من فريق الرعاية. ستراسلك هنا."
+    },
+    "en": [
+      "i'm scared",
+      "i am scared",
+      "im scared",
+      "afraid",
+      "frightened",
+      "terrified",
+      "talk to a person",
+      "talk to a human",
+      "real person",
+      "nurse"
+    ],
+    "ar": [
+      "خائفة",
+      "خائف",
+      "أخاف",
+      "أريد التحدث مع شخص",
+      "ممرضة"
+    ]
+  },
+  "_pending_review": "Added 17 Nov 2026 after QA run 1 (BUG-08), waiting for Anna to approve: L4 en shortness of breath, chest hurts, chest is hurting, bleeding heavily; L4 ar ضيق تنفس, ألم بالصدر, صدري يؤلمني; MH en suicidal, kill my self, end it all; L3 ar عندي نزيف. Matching also ignores apostrophes and Arabic letter variants (أ/إ/آ, ة, ى, tashkeel). Added later (BUG-17): L4 en pain in my chest, pain in the chest, heart attack, having a stroke, a stroke; L4 ar نوبة قلبية, جلطة. Added 18 Nov from the medic's HPV/HbA1c draft (global lists, waiting for Anna): L4 en soaking pads, fruity breath, one-sided weakness, weakness on one side, trouble speaking; L4 ar نزيف غزير, ضعف في جانب واحد, صعوبة في الكلام; L3 en bleeding after sex, bleeding between periods, bloody discharge, very thirsty, losing weight without trying; L3 ar نزيف بعد العلاقة, نزيف بين الدورات, إفرازات دموية, عطش شديد, نقص الوزن دون سبب. The medic's per-test fixed answers (nurse within 1 working day for HPV bleeding) are not wired yet: these phrases get the stricter L3 'contact a doctor today' answer."
+}
