@@ -224,7 +224,7 @@ button.chip { min-height: 40px; padding-inline: 12px; }
 .grid2 > *, .grid4 > * { min-width: 0; }
 .kv dd { overflow-wrap: anywhere; }
 .card .row .chip { white-space: normal; }
-div.sla { white-space: normal; }
+div.sla, dd.sla { white-space: normal; }
 .hero .why-row b, .hero .small b { font-size: inherit; display: inline; }
 
 /* ===== Realistic phone (17 Nov, Anna: "как реальный телефон") ===== */

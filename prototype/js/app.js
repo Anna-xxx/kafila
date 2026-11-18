@@ -7,14 +7,14 @@
       <ol>
         <li><b>Result arrives</b> from the lab or screening programme. A <b>rules table</b> (versioned, each rule with its source) sets the zone, urgency level and deadline. The AI never sets them.</li>
         <li><b>Case opens</b> with a named owner and a deadline (SLA) for each step: assigned → notified → acknowledged → referral accepted → booked → attended → closed.</li>
-        <li><b>The health centre messages the patient</b> on WhatsApp (SMS, automated call and a coordinator call if there is no reply). An AI assistant explains the result in Arabic or English using only approved texts, checks understanding, asks about barriers and books a slot. A nurse is one tap away.</li>
+        <li><b>The health centre messages the patient</b> on WhatsApp (SMS, automated call and a coordinator call if there is no reply). An AI assistant explains the result in Arabic or English using only prepared texts (pending clinical review), checks understanding, asks about barriers and books a slot. A nurse is one tap away.</li>
         <li><b>Red topics skip the AI</b>: phrases like “chest pain” or “bleeding a lot” get a fixed “Call 998” answer and an urgent clinician task.</li>
         <li><b>Care team works the exceptions</b>: overdue, unassigned, rejected and urgent cases. Specialists accept or reject referrals with a reason. A clinician closes the case only with evidence or a signed reason code.</li>
         <li><b>Dashboard</b> shows the loop funnel, time to care, drop-off reasons and equity gaps.</li>
       </ol>
       <h3>Safety design</h3>
       <ul><li>Deterministic rules decide; AI only explains. AI may flag a concern for review, but only approved clinical rules and authorised clinicians determine urgency.</li>
-      <li>The AI gets minimised case context (result, zone, next step, approved texts), not the full record. Minimised, not anonymous: it is still health data and is handled as such.</li>
+      <li>The AI gets minimised case context (result, zone, next step, prepared texts), not the full record. Minimised, not anonymous: it is still health data and is handled as such.</li>
       <li>First pilot: positive stool test (FIT) to colonoscopy only. The other tests in this demo show how the same loop extends.</li>
       <li>If the AI is off or fails, a prepared answer from the approved library is shown.</li>
       <li>Output guard blocks diagnosis, reassurance and dose phrases.</li>

@@ -24,7 +24,7 @@
     if (!data.aiUrl) return prepared;
     try {
       const ctx = { result: { test: c.result.test, zone: c.result.zone, level: c.result.level, next: c.result.next, windowDays: c.result.windowDays, compare: c.result.compare, source: c.result.source },
-        content: C.faq.filter((f) => f.test === c.result.test || f.test === "*").map((f) => ({ id: f.id, text: f[lang] || f.en, src: f.src })) };
+        content: C.faq.filter((f) => f.test === c.result.test || f.test === "*").map((f) => ({ id: f.id, text: (fem && f.ar_f) || f[lang] || f.en, src: f.src })) };
       const r = await fetch(data.aiUrl.replace(/\/$/, "") + "/ai", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ q, lang, ctx }), signal: AbortSignal.timeout(9000) });
       const j = await r.json();
       if (j.error === "red_flag") { const f2 = Rules.redFlag(F, "heavy bleeding", lang); return { kind: "flag", flag: f2, text: f2.answer, noAI: true }; }

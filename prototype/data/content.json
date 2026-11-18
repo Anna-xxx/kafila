@@ -28,8 +28,8 @@
         "S1",
         "S2"
       ],
-      "en": "A positive FIT means a small amount of hidden blood was found in your stool sample. This result is not a diagnosis. Most people with a positive test do not have cancer. A colonoscopy is the way to find out, so it's important to go.",
-      "ar": "نتيجة FIT الإيجابية تعني أنه تم العثور على كمية صغيرة من الدم الخفي في عينة البراز. هذه النتيجة ليست تشخيصًا. معظم الأشخاص الذين تكون نتيجتهم إيجابية ليس لديهم سرطان. تنظير القولون هو الطريقة لمعرفة السبب، لذلك من المهم إجراؤه.",
+      "en": "A positive FIT means a small amount of hidden blood was found in your stool sample. This result is not a diagnosis. Most people with a positive test do not have cancer. A colonoscopy can help identify the cause. Your care team will help you arrange it.",
+      "ar": "نتيجة FIT الإيجابية تعني أنه تم العثور على كمية صغيرة من الدم الخفي في عينة البراز. هذه النتيجة ليست تشخيصًا. معظم الأشخاص الذين تكون نتيجتهم إيجابية ليس لديهم سرطان. يمكن لتنظير القولون أن يساعد في معرفة السبب. سيساعدك فريق الرعاية في ترتيبه.",
       "c": {
         "en": "Compared with: a negative FIT, where no hidden blood is found.",
         "ar": "مقارنة بـ: نتيجة FIT سلبية، حيث لا يوجد دم خفي."
@@ -190,11 +190,7 @@
         "S5"
       ],
       "en": "Your result is private. Only you and your care team can see it. Notifications on your phone never show the result, only 'You have a new message from your health centre'. You decide what, and whether, to tell your family.",
-      "ar": "نتيجتكِ خاصة. لا يراها إلا أنتِ وفريق رعايتكِ. إشعارات هاتفكِ لا تعرض النتيجة أبدًا، فقط «لديكِ رسالة جديدة من مركزكِ الصحي». أنتِ من تقررين ماذا تقولين لعائلتكِ، وهل تقولين.",
-      "c": {
-        "en": "Compared with: —",
-        "ar": "—"
-      },
+      "ar": "نتيجتكِ خاصة. لا يراها إلا أنتِ وفريق رعايتكِ. إشعارات هاتفكِ لا تعرض النتيجة أبدًا، فقط «لديكِ رسالة جديدة من مركزكِ الصحي». أنتِ من تقررين ما إذا كنتِ ترغبين في إخبار عائلتكِ، وما المعلومات التي تريدين مشاركتها.",
       "draft": "medic draft 18 Nov, pending Anna's review"
     },
     {
@@ -278,7 +274,8 @@
         "en": "Compared with: 6.5% or more on two tests, which is how diabetes is confirmed.",
         "ar": "مقارنة بـ: 6.5% أو أكثر في فحصين، وهكذا يتم تأكيد السكري."
       },
-      "draft": "medic draft 18 Nov, pending Anna's review"
+      "draft": "medic draft 18 Nov, pending Anna's review",
+      "ar_f": "ليس بالضرورة حتى الآن. نتيجتكِ في نطاق السكري، لكن الأطباء يؤكدون السكري بفحص ثانٍ، إلا إذا كانت هناك أعراض واضحة. سيعيد طبيبكِ الفحص خلال أسبوعين تقريبًا ويخبركِ بما يعنيه ذلك لكِ."
     },
     {
       "id": "a1c_what_is",
@@ -299,7 +296,8 @@
         "en": "Compared with: a finger-prick sugar test, which shows only that moment.",
         "ar": "مقارنة بـ: فحص السكر بوخز الإصبع، الذي يُظهر تلك اللحظة فقط."
       },
-      "draft": "medic draft 18 Nov, pending Anna's review"
+      "draft": "medic draft 18 Nov, pending Anna's review",
+      "ar_f": "HbA1c فحص دم يُظهر متوسط السكر في دمكِ خلال الشهرين أو الثلاثة الماضية. لا تحتاجين إلى الصيام قبله."
     },
     {
       "id": "a1c_diet",
@@ -320,13 +318,14 @@
       "src": [
         "S6"
       ],
-      "en": "Small changes help, and you can start today: drink water instead of sweet drinks and juices, eat more vegetables, choose smaller portions of rice and bread, and keep sweets and dates for small amounts. Walking about 30 minutes on most days also helps. Please don't start a strict diet or long fasting before you talk to your doctor. If you plan to fast, ask your doctor first.",
+      "en": "Small changes help, and you can start today: drink water instead of sweet drinks and juices, eat more vegetables, choose smaller portions of rice and bread, and have sweets and dates in smaller portions. Walking about 30 minutes on most days also helps. Please don't start a strict diet or long fasting before you talk to your doctor. If you plan to fast, ask your doctor first.",
       "ar": "التغييرات الصغيرة تساعد، ويمكنك البدء اليوم: اشرب الماء بدل المشروبات المحلّاة والعصائر، كُل خضارًا أكثر، اختر كميات أصغر من الرز والخبز، وتناول الحلويات والتمر بكميات صغيرة. المشي حوالي 30 دقيقة في معظم الأيام يساعد أيضًا. من فضلك لا تبدأ حمية قاسية أو صيامًا طويلًا قبل أن تتحدث مع طبيبك. إذا كنت تنوي الصيام، اسأل طبيبك أولًا.",
       "c": {
         "en": "Compared with: the general advice of at least 150 minutes of activity a week.",
         "ar": "مقارنة بـ: النصيحة العامة بممارسة 150 دقيقة على الأقل من النشاط أسبوعيًا."
       },
-      "draft": "medic draft 18 Nov, pending Anna's review"
+      "draft": "medic draft 18 Nov, pending Anna's review",
+      "ar_f": "التغييرات الصغيرة تساعد، ويمكنكِ البدء اليوم: اشربي الماء بدل المشروبات المحلّاة والعصائر، كُلي خضارًا أكثر، اختاري كميات أصغر من الرز والخبز، وتناولي الحلويات والتمر بكميات صغيرة. المشي حوالي 30 دقيقة في معظم الأيام يساعد أيضًا. من فضلكِ لا تبدئي حمية قاسية أو صيامًا طويلًا قبل أن تتحدثي مع طبيبكِ. إذا كنتِ تنوين الصيام، اسألي طبيبكِ أولًا."
     },
     {
       "id": "a1c_medicine",
@@ -345,13 +344,10 @@
       "src": [
         "S6"
       ],
-      "en": "Your doctor will decide that with you after the second test. Some people start with changes in food and activity; others need medicine from the start. Please don't start any medicine, supplement or someone else's tablets on your own.",
+      "en": "Your doctor will decide that with you after the second test. Some people start with changes in food and activity; others need medicine from the start. Please don't start medication or supplements, or take someone else's prescription medicine, without speaking to your clinician.",
       "ar": "سيقرر طبيبك ذلك معك بعد الفحص الثاني. بعض الناس يبدؤون بتغيير الطعام والنشاط، وآخرون يحتاجون إلى دواء من البداية. من فضلك لا تبدأ أي دواء أو مكمّل غذائي أو أدوية موصوفة لشخص آخر دون استشارة الطبيب.",
-      "c": {
-        "en": "Compared with: —",
-        "ar": "—"
-      },
-      "draft": "medic draft 18 Nov, pending Anna's review"
+      "draft": "medic draft 18 Nov, pending Anna's review",
+      "ar_f": "سيقرر طبيبكِ ذلك معكِ بعد الفحص الثاني. بعض الناس يبدؤون بتغيير الطعام والنشاط، وآخرون يحتاجون إلى دواء من البداية. من فضلكِ لا تبدئي أي دواء أو مكمّل غذائي أو أدوية موصوفة لشخص آخر دون استشارة الطبيب."
     },
     {
       "id": "a1c_serious",
@@ -368,12 +364,9 @@
         "S6"
       ],
       "en": "Finding high blood sugar early is good news, because acting now lowers the risk of problems later with the eyes, kidneys, nerves and heart. Many people bring their numbers down with treatment and lifestyle changes. Your doctor will explain what fits you.",
-      "ar": "اكتشاف ارتفاع السكر مبكرًا أمر جيد، لأن التصرف الآن يقلل خطر المشاكل لاحقًا في العينين والكليتين والأعصاب والقلب. كثير من الناس يخفضون أرقامهم بالعلاج وتغيير نمط الحياة. سيشرح لك طبيبك ما يناسبك.",
-      "c": {
-        "en": "Compared with: —",
-        "ar": "—"
-      },
-      "draft": "medic draft 18 Nov, pending Anna's review"
+      "ar": "اكتشاف ارتفاع السكر مبكرًا أمر جيد، لأن التصرف الآن يقلل خطر المشاكل لاحقًا في العينين والكليتين والأعصاب والقلب. يتمكن كثير من الأشخاص من تحسين مستويات السكر في الدم بالعلاج وتغييرات نمط الحياة. سيشرح لك طبيبك ما يناسبك.",
+      "draft": "medic draft 18 Nov, pending Anna's review",
+      "ar_f": "اكتشاف ارتفاع السكر مبكرًا أمر جيد، لأن التصرف الآن يقلل خطر المشاكل لاحقًا في العينين والكليتين والأعصاب والقلب. يتمكن كثير من الأشخاص من تحسين مستويات السكر في الدم بالعلاج وتغييرات نمط الحياة. سيشرح لكِ طبيبكِ ما يناسبكِ."
     },
     {
       "id": "a1c_reliability",
@@ -397,7 +390,8 @@
         "en": "Compared with: a fasting blood sugar test, which is not affected by these conditions.",
         "ar": "مقارنة بـ: فحص السكر الصائم، الذي لا يتأثر بهذه الحالات."
       },
-      "draft": "medic draft 18 Nov, pending Anna's review"
+      "draft": "medic draft 18 Nov, pending Anna's review",
+      "ar_f": "بعض الحالات، مثل فقر الدم أو حمل صفة الثلاسيميا أو صفة الخلايا المنجلية، قد تجعل فحص HbA1c أقل دقة. إذا كانت لديكِ إحداها، أخبري طبيبكِ: قد يستخدم فحصًا آخر للسكر."
     },
     {
       "id": "female_doctor",

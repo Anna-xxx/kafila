@@ -186,15 +186,18 @@
     "Dr. Faisal R.": "د. فيصل ر.", "Nurse Layla": "الممرضة ليلى", "Khalifa City Family Health Centre": "مركز مدينة خليفة لصحة الأسرة", "Al Ain Family Health Centre": "مركز العين لصحة الأسرة", "Dr. Yousef T.": "د. يوسف ت.",
     "Family Health Centre": "مركز صحة الأسرة", "Khalifa City GI Centre": "مركز مدينة خليفة لأمراض الجهاز الهضمي", "Al Reem GI Centre": "مركز الريم لأمراض الجهاز الهضمي",
     "GI Clinic": "عيادة الجهاز الهضمي", "Gynae Clinic": "عيادة أمراض النساء", "Mussafah Day Clinic (demo)": "عيادة مصفح النهارية", "Coordinator": "المنسقة", "Noura A.": "نورة أ.",
-    "GP": "طبيبة الأسرة", "Gynae Clinic · Khalifa City": "عيادة أمراض النساء · مدينة خليفة", "Bayside Women's Clinic (demo)": "عيادة بيسايد للنساء", "Mussafah Women's Health": "صحة المرأة في مصفح", "Patient": "أنت" };
+    "GP": "طبيبة الأسرة", "Gynae Clinic · Khalifa City": "عيادة أمراض النساء · مدينة خليفة", "Bayside Women's Clinic (demo)": "عيادة بيسايد للنساء", "Mussafah Women's Health": "صحة المرأة في مصفح", "Patient": "أنت", "Clinical lead": "الطبيبة المسؤولة", "Dr. Mona S. (duty)": "د. منى س. (مناوبة)", "Dr. Mona S.": "د. منى س.", "Dr. Hessa": "د. حصة" };
   const nm = (s, lang) => lang !== "ar" ? s : String(s || "").split(" · ").map((x) => AR_NAME[x.trim()] || x).join(" · ");
   const docLine = (s, lang) => `<bdi>${esc(nm(s.doc, lang))}</bdi>${lang === "ar" ? (s.f ? " · طبيبة" : " · طبيب") : s.f ? " (female doctor)" : ""}`;
   // Arabic texts are written to a woman by default; for a man, switch the common verb forms (machine draft).
   const MASC = [["افتحي", "افتح"], ["احجزي", "احجز"], ["اختاري", "اختر"], ["اسألي", "اسأل"], ["اضغطي", "اضغط"], ["ابدئي", "ابدأ"], ["رتّبي", "رتّب"], ["أحضري", "أحضر"],
     ["اتبعي", "اتبع"], ["اذهبي", "اذهب"], ["انتظري", "انتظر"], ["اقرئي", "اقرأ"], ["تحدثي", "تحدث"], ["توافقين", "توافق"], ["أرسلي", "أرسل"], ["تدفعينه", "تدفعه"],
-    ["فهمتِ", "فهمت"], ["قلقة", "قلق"], ["خائفة", "خائف"], ["تحتاجين", "تحتاج"], ["اكتبي", "اكتب"], ["شعرتِ", "شعرت"], ["افتحيها", "افتحها"], ["اتّبعي", "اتّبع"], ["تناولي", "تناول"], ["تأكدي", "تأكد"],
+    ["فهمتِ", "فهمت"], ["قلقة", "قلق"], ["خائفة", "خائف"], ["تحتاجين", "تحتاج"], ["اكتبي", "اكتب"], ["شعرتِ", "شعرت"], ["افتحيها", "افتحها"], ["اتّبعي", "اتّبع"], ["تناولي", "تناول"], ["تأكدي", "تأكد"], ["اتصلي", "اتصل"],
     ["أخبريها", "أخبرها"], ["كنتِ", "كنت"], ["تتناولين", "تتناول"], ["توقفي", "توقف"], ["تغيّريه", "تغيّره"], ["ستحصلين", "ستحصل"], ["تقودي", "تقُد"], ["تحدّثي", "تحدّث"], ["تشعرين", "تشعر"], ["تريدين", "تريد"], ["كِ", "ك"]];
-  const gx = (html, c, lang) => lang === "ar" && c.sex === "male" ? MASC.reduce((h, [f, m]) => h.split(f).join(m), html) : html;
+  const MALE_GP = /Yousef|Omar|Khalid|Faisal|Rami|Sami/;
+  const GPM = [["تراجع طبيبة الأسرة", "يراجع طبيب الأسرة"], ["ترسل طبيبة الأسرة", "يرسل طبيب الأسرة"], ["أرسلت طبيبة الأسرة", "أرسل طبيب الأسرة"], ["طبيبة الأسرة", "طبيب الأسرة"]];
+  const gpx = (html, c, lang) => lang === "ar" && MALE_GP.test(c.gp || "") ? GPM.reduce((h, [f, m]) => h.split(f).join(m), html) : html;
+  const gx = (html, c, lang) => gpx(lang === "ar" && c.sex === "male" ? MASC.reduce((h, [f, m]) => h.split(f).join(m), html) : html, c, lang);
   // Patient sees one plain sentence. Exact guideline names stay on the staff case page and the How it works page.
   const PLAIN_SRC_ONE = { en: "Based on your clinic's screening rules, which follow international medical guidelines.", ar: "بناءً على قواعد الفحص في عيادتك، وهي تتبع الإرشادات الطبية الدولية." };
   const PLAIN_SRC = { FIT: PLAIN_SRC_ONE, BP: PLAIN_SRC_ONE, HPV: PLAIN_SRC_ONE, HBA1C: PLAIN_SRC_ONE };
@@ -471,7 +474,7 @@
     if (c.slot && /\b(appointment|booking|my slot)\b|موعدي|حجزي/i.test(text)) {
       const conf = ["booked", "attended", "closed"].includes(c.state);
       const label = lang === "ar" ? c.slot.label : c.slot.labelEn;
-      push(c, { t: "in", text: lang === "ar" ? `موعدك: ${label}، ${c.slot.clinic}. ${conf ? "مؤكد." : "بانتظار تأكيد العيادة."}` : `Your appointment: ${label}, ${c.slot.clinic}. ${conf ? "Confirmed." : "Waiting for the clinic to confirm."}`, tag: "prepared" });
+      push(c, { t: "in", text: lang === "ar" ? `موعدك: ${label}، ${nm(c.slot.clinic, lang)}. ${conf ? "مؤكد." : "بانتظار تأكيد العيادة."}` : `Your appointment: ${label}, ${c.slot.clinic}. ${conf ? "Confirmed." : "Waiting for the clinic to confirm."}`, tag: "prepared" });
       Store.log(c.id, "Assistant (prepared)", "Answered from booked slot: " + text.slice(0, 60), "ai"); Store.save(); return;
     }
     push(c, { t: "typing" }); Store.save();
@@ -645,7 +648,7 @@
     const isDone = (i) => i < cur || c.state === "closed";
     // Before the clinic accepts, the time is only held: no green tick yet (BA F9).
     const held = c.slot && c.state === "referral";
-    const booked = c.slot && (["referral", "booked"].includes(c.state) || (c.state === "confirmation" && pathway(c) === "gp_confirm")) ? `<div class="acard ${held ? "" : "booked-banner"}"><b>${held ? ic("clock") + " " + (lang === "ar" ? "الموعد محجوز مؤقتًا" : "Time held") : "✓ " + (lang === "ar" ? "تم حجز موعدك" : "Booked")}: <bdi>${esc(fmtDate(Date.parse(c.slot.day + "T" + c.slot.time + ":00+04:00"), lang))} · ${esc(c.slot.time)}</bdi></b><div class="small"><bdi>${esc(c.slot.doc)}</bdi> · ${esc(c.slot.clinic)}</div><div class="small">${c.state === "booked" || c.state === "confirmation" ? (lang === "ar" ? "أكدت العيادة الموعد." : "The clinic confirmed it.") : (lang === "ar" ? "بانتظار تأكيد العيادة (عادةً خلال يوم عمل واحد). سنراسلك." : "Waiting for the clinic to confirm (usually 1 working day). We'll message you.")}</div></div>` : "";
+    const booked = c.slot && (["referral", "booked"].includes(c.state) || (c.state === "confirmation" && pathway(c) === "gp_confirm")) ? `<div class="acard ${held ? "" : "booked-banner"}"><b>${held ? ic("clock") + " " + (lang === "ar" ? "الموعد محجوز مؤقتًا" : "Time held") : "✓ " + (lang === "ar" ? "تم حجز موعدك" : "Booked")}: <bdi>${esc(fmtDate(Date.parse(c.slot.day + "T" + c.slot.time + ":00+04:00"), lang))} · ${esc(c.slot.time)}</bdi></b><div class="small">${docLine(c.slot, lang)} · ${esc(nm(c.slot.clinic, lang))}</div><div class="small">${c.state === "booked" || c.state === "confirmation" ? (lang === "ar" ? "أكدت العيادة الموعد." : "The clinic confirmed it.") : (lang === "ar" ? "بانتظار تأكيد العيادة (عادةً خلال يوم عمل واحد). سنراسلك." : "Waiting for the clinic to confirm (usually 1 working day). We'll message you.")}</div></div>` : "";
     return `${booked}${c.rejected && !c.slot ? returnedCard(c, lang) : ""}${outcomeCard(c, lang)}<div class="acard"><div class="small">${esc(fill(t.stepOf, { n: cur + 1 }))}</div>
         <div class="track" style="margin:6px 0">${T.trackSteps.map((_, i) => `<span class="${isDone(i) ? "on" : i === cur ? "cur" : ""}"></span>`).join("")}</div>
         <div class="small"><b>${esc(t.nowWith)}:</b> ${c.slot && ["referral", "booked", "attended"].includes(c.state) ? `${docLine(c.slot, lang)} · ${esc(nm(c.slot.clinic, lang))}` : esc(nm(c.owner || "—", lang))}</div>
@@ -784,7 +787,7 @@
         ${pp ? "" : `<div class="demo-note">${lang === "ar" ? "عرض تجريبي: هكذا تحمي قافلة الرقم الخاطئ. لدى المنسقة الآن مهمة للتحقق من بيانات الاتصال." : "Demo: this is how Kafila protects a wrong number. The coordinator now has a contact-check task."}
           <button class="btn block" data-act="seeTask">${lang === "ar" ? "اعرض مهمة المنسقة" : "See the coordinator's task"}</button>
           <button class="btn block" data-act="undoNotme">${lang === "ar" ? "العودة إلى رسالة المركز" : "Back to the clinic's message"}</button></div>`}
-        ${pp ? `<p class="small" style="text-align:center">${lang === "ar" ? "إذا شعرت بأعراض شديدة، اتصل بالرقم 998." : "If you have severe symptoms, call 998."}</p><button class="btn block" data-act="backSignin">${lang === "ar" ? "أريد فتح النتيجة الآن" : "Open my result now instead"}</button>` : ""}</div>`);
+        ${pp ? `<p class="small" style="text-align:center">${lang === "ar" ? "إذا شعرتِ بأعراض شديدة، اتصلي بالرقم 998." : "If you have severe symptoms, call 998."}</p><button class="btn block" data-act="backSignin">${lang === "ar" ? "أريد فتح النتيجة الآن" : "Open my result now instead"}</button>` : ""}</div>`);
     }
     const tb = c.ptab || "result";
     const title = { result: fill(t.hello, { name: first(c) }), assistant: t.askTitle, book: c.slot ? t.apptCard : t.bookTitle, mycase: t.mycaseTitle }[tb];
@@ -857,7 +860,7 @@
     root.querySelectorAll("[data-plang]").forEach((b) => (b.onclick = () => { d.lang = b.dataset.plang; Store.save(); }));
     root.querySelectorAll("[data-try]").forEach((b) => (b.onclick = () => send(b.dataset.try)));
     root.querySelectorAll("[data-lad]").forEach((b) => (b.onclick = () => ladder(b.dataset.lad)));
-    // AI voice gets only approved texts with the patient's name taken out; the 998 and nurse texts use the browser voice.
+    // AI voice gets only prepared texts with the patient's name taken out; the 998 and nurse texts use the browser voice.
     const noName = (t) => [c.name.split(" ")[0], NAMES_AR[c.name.split(" ")[0]]].filter(Boolean).reduce((x, n) => x.split(n).join(""), t).replace(/\s+([,.،])/g, "$1");
     root.querySelectorAll("[data-speak]").forEach((b) => (b.onclick = () => {
       const ai = b.dataset.ai === "1";
