@@ -190,10 +190,10 @@
         "S5"
       ],
       "en": "Your result is private. Only you and your care team can see it. Notifications on your phone never show the result, only 'You have a new message from your health centre'. You decide what, and whether, to tell your family.",
-      "ar": "نتيجتكِ خاصة. لا يراها إلا أنتِ وفريق رعايتكِ. إشعارات هاتفكِ لا تعرض النتيجة أبدًا، فقط «لديكِ رسالة جديدة من مركزكِ الصحي». أنتِ من تقررين ماذا تقولين لعائلتكِ، وهل تقولين.",
+      "ar": "نتيجتكِ خاصة. لا يراها إلا أنتِ وفريق رعايتكِ. إشعارات هاتفكِ لا تعرض النتيجة أبدًا، فقط «لديكِ رسالة جديدة من مركزكِ الصحي». أنتِ من تقررين ما إذا كنتِ ترغبين في إخبار عائلتكِ، وما المعلومات التي تريدين مشاركتها.",
       "c": {
-        "en": "Compared with: —",
-        "ar": "—"
+        "en": "",
+        "ar": ""
       },
       "draft": "medic draft 18 Nov, pending Anna's review"
     },
@@ -320,7 +320,7 @@
       "src": [
         "S6"
       ],
-      "en": "Small changes help, and you can start today: drink water instead of sweet drinks and juices, eat more vegetables, choose smaller portions of rice and bread, and keep sweets and dates for small amounts. Walking about 30 minutes on most days also helps. Please don't start a strict diet or long fasting before you talk to your doctor. If you plan to fast, ask your doctor first.",
+      "en": "Small changes help, and you can start today: drink water instead of sweet drinks and juices, eat more vegetables, choose smaller portions of rice and bread, and have sweets and dates in smaller portions. Walking about 30 minutes on most days also helps. Please don't start a strict diet or long fasting before you talk to your doctor. If you plan to fast, ask your doctor first.",
       "ar": "التغييرات الصغيرة تساعد، ويمكنك البدء اليوم: اشرب الماء بدل المشروبات المحلّاة والعصائر، كُل خضارًا أكثر، اختر كميات أصغر من الرز والخبز، وتناول الحلويات والتمر بكميات صغيرة. المشي حوالي 30 دقيقة في معظم الأيام يساعد أيضًا. من فضلك لا تبدأ حمية قاسية أو صيامًا طويلًا قبل أن تتحدث مع طبيبك. إذا كنت تنوي الصيام، اسأل طبيبك أولًا.",
       "c": {
         "en": "Compared with: the general advice of at least 150 minutes of activity a week.",
@@ -345,11 +345,11 @@
       "src": [
         "S6"
       ],
-      "en": "Your doctor will decide that with you after the second test. Some people start with changes in food and activity; others need medicine from the start. Please don't start any medicine, supplement or someone else's tablets on your own.",
+      "en": "Your doctor will decide that with you after the second test. Some people start with changes in food and activity; others need medicine from the start. Please don't start medication or supplements, or take someone else's prescription medicine, without speaking to your clinician.",
       "ar": "سيقرر طبيبك ذلك معك بعد الفحص الثاني. بعض الناس يبدؤون بتغيير الطعام والنشاط، وآخرون يحتاجون إلى دواء من البداية. من فضلك لا تبدأ أي دواء أو مكمّل غذائي أو أدوية موصوفة لشخص آخر دون استشارة الطبيب.",
       "c": {
-        "en": "Compared with: —",
-        "ar": "—"
+        "en": "",
+        "ar": ""
       },
       "draft": "medic draft 18 Nov, pending Anna's review"
     },
@@ -367,11 +367,11 @@
       "src": [
         "S6"
       ],
-      "en": "Finding high blood sugar early is good news, because acting now lowers the risk of problems later with the eyes, kidneys, nerves and heart. Many people bring their numbers down with treatment and lifestyle changes. Your doctor will explain what fits you.",
-      "ar": "اكتشاف ارتفاع السكر مبكرًا أمر جيد، لأن التصرف الآن يقلل خطر المشاكل لاحقًا في العينين والكليتين والأعصاب والقلب. كثير من الناس يخفضون أرقامهم بالعلاج وتغيير نمط الحياة. سيشرح لك طبيبك ما يناسبك.",
+      "en": "Finding high blood sugar early is good news, because acting now lowers the risk of problems later with the eyes, kidneys, nerves and heart. Treatment and lifestyle changes can help improve blood sugar levels. Your doctor will explain what fits you.",
+      "ar": "اكتشاف ارتفاع السكر مبكرًا أمر جيد، لأن التصرف الآن يقلل خطر المشاكل لاحقًا في العينين والكليتين والأعصاب والقلب. يمكن للعلاج وتغييرات نمط الحياة أن تساعد في تحسين مستويات السكر في الدم. سيشرح لك طبيبك ما يناسبك.",
       "c": {
-        "en": "Compared with: —",
-        "ar": "—"
+        "en": "",
+        "ar": ""
       },
       "draft": "medic draft 18 Nov, pending Anna's review"
     },
