@@ -3,7 +3,8 @@
   "L4": {
     "answer": {
       "en": "What you describe may need emergency care. Call 998 now. Do not wait for an appointment.",
-      "ar": "ما تصفه قد يحتاج إلى رعاية طارئة. اتصل بالرقم 998 الآن. لا تنتظر الموعد."
+      "ar": "ما تصفه قد يحتاج إلى رعاية طارئة. يُرجى الاتصال بالرقم 998 فورًا. لا داعي لانتظار الموعد.",
+      "ar_f": "ما تصفينه قد يحتاج إلى رعاية طارئة. يُرجى الاتصال بالرقم 998 فورًا. لا داعي لانتظار الموعد."
     },
     "en": [
       "chest pain",
@@ -82,14 +83,14 @@
       ],
       "line": {
         "en": "If it is only a small amount of blood and you feel well, call your clinic today instead.",
-        "ar": "إذا كانت كمية الدم قليلة فقط وتشعر أنك بخير، اتصل بعيادتك اليوم بدلًا من ذلك."
+        "ar": "إذا كانت كمية الدم قليلة والحالة العامة جيدة، يُرجى الاتصال بالعيادة اليوم بدلًا من ذلك."
       }
     }
   },
   "L3": {
     "answer": {
       "en": "Please contact a doctor today. If it gets worse, call 998.",
-      "ar": "يرجى التواصل مع طبيب اليوم. إذا ساءت الحالة، اتصل بالرقم 998."
+      "ar": "يُرجى التواصل مع طبيب اليوم. إذا ساءت الحالة، يُرجى الاتصال بالرقم 998 فورًا."
     },
     "en": [
       "black stool",
@@ -126,7 +127,8 @@
   "MH": {
     "answer": {
       "en": "You are not alone. If you are in danger now, call 998. You can also talk to a person from our care team right now.",
-      "ar": "لست وحدك. إذا كنت في خطر الآن، اتصل بالرقم 998. يمكنك أيضًا التحدث الآن مع شخص من فريق الرعاية."
+      "ar": "لست وحدك. إذا كنت في خطر الآن، اتصل بالرقم 998. يمكنك أيضًا التحدث الآن مع شخص من فريق الرعاية.",
+      "ar_f": "لستِ وحدكِ. إذا كنتِ في خطر الآن، اتصلي بالرقم 998. يمكنكِ أيضًا التحدث الآن مع شخص من فريق الرعاية."
     },
     "en": [
       "kill myself",
@@ -153,7 +155,8 @@
     "_about": "Not a medical emergency: hand over to a nurse navigator (demo: 'I'm scared').",
     "answer": {
       "en": "It is normal to feel scared. I am connecting you with Nurse Layla from the care team. She will message you here.",
-      "ar": "من الطبيعي أن تشعر بالخوف. سأوصلك بالممرضة ليلى من فريق الرعاية. ستراسلك هنا."
+      "ar": "من الطبيعي أن تشعر بالخوف. سأوصلك بالممرضة ليلى من فريق الرعاية. ستراسلك هنا.",
+      "ar_f": "من الطبيعي أن تشعري بالخوف. سأوصلكِ بالممرضة ليلى من فريق الرعاية. ستراسلكِ هنا."
     },
     "en": [
       "i'm scared",

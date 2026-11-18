@@ -11,7 +11,8 @@
     "S6": "ADA Standards of Care in Diabetes 2026, Section 2",
     "S7": "2025 AHA/ACC High Blood Pressure Guideline",
     "S8": "Perkins RB et al. 2019 ASCCP Risk-Based Management Consensus Guidelines, J Low Genit Tract Dis 2020",
-    "S9": "CDC, HPV: basic information and HPV and men (patient information)"
+    "S9": "CDC, HPV: basic information and HPV and men (patient information)",
+    "S10": "UAE MOHAP National Guideline for Colorectal Cancer Screening and Diagnosis, 3rd ed. 2022 (12.5.2, Appendix 2)"
   },
   "faq": [
     {
@@ -69,14 +70,16 @@
         "تأجيل"
       ],
       "src": [
-        "S2"
+        "S2",
+        "S10"
       ],
-      "en": "Your care team asks you to book within 14 days. Studies show that waiting longer than about 9 to 10 months after a positive FIT is linked to more advanced findings. Booking soon keeps things simple.",
-      "ar": "يطلب منك فريق الرعاية الحجز خلال 14 يومًا. تُظهر الدراسات أن الانتظار أكثر من 9 إلى 10 أشهر تقريبًا بعد FIT إيجابي يرتبط بنتائج أكثر تقدمًا. الحجز المبكر يجعل الأمور أبسط.",
+      "en": "Your doctor sends the referral within 15 working days. The colonoscopy should take place within 31 working days of the referral. The exact dates are on your result card. Please book as soon as the clinic contacts you. Studies show that waiting longer than about 9 to 10 months after a positive FIT is linked to more advanced findings.",
+      "ar": "يرسل طبيبك التحويل خلال 15 يوم عمل. يجب أن يُجرى تنظير القولون خلال 31 يوم عمل من التحويل. التواريخ الدقيقة في بطاقة نتيجتك. يُرجى الحجز فور تواصل المركز معك. تُظهر الدراسات أن الانتظار أكثر من 9 إلى 10 أشهر تقريبًا بعد FIT إيجابي يرتبط بنتائج أكثر تقدمًا.",
       "c": {
-        "en": "Compared with: booking window from the rules table (14 days) and the 9-10 month delay in Corley 2017.",
-        "ar": "مقارنة بـ: مدة الحجز من جدول القواعد (14 يومًا) وتأخير 9-10 أشهر في دراسة Corley 2017."
-      }
+        "en": "Compared with: the two deadlines in the rules table (national guideline: 15 working days to referral, 31 working days to colonoscopy) and the 9-10 month delay in Corley 2017.",
+        "ar": "مقارنة بـ: الموعدان في جدول القواعد (الإرشادات الوطنية: 15 يوم عمل للتحويل و31 يوم عمل لتنظير القولون) وتأخير 9-10 أشهر في دراسة Corley 2017."
+      },
+      "ar_f": "يرسل طبيبكِ التحويل خلال 15 يوم عمل. يجب أن يُجرى تنظير القولون خلال 31 يوم عمل من التحويل. التواريخ الدقيقة في بطاقة نتيجتكِ. يُرجى الحجز فور تواصل المركز معكِ. تُظهر الدراسات أن الانتظار أكثر من 9 إلى 10 أشهر تقريبًا بعد FIT إيجابي يرتبط بنتائج أكثر تقدمًا."
     },
     {
       "id": "colonoscopy_what",
@@ -93,8 +96,8 @@
       "src": [
         "S4"
       ],
-      "en": "A colonoscopy is a look inside the large bowel with a thin flexible camera. You usually get medicine to make you relaxed and sleepy, so most people feel little or nothing. It takes about 30 to 60 minutes. If polyps are found, they can often be removed during the same test.",
-      "ar": "تنظير القولون هو فحص لداخل الأمعاء الغليظة بكاميرا رفيعة ومرنة. عادة تحصل على دواء يجعلك مسترخيًا ونعسانًا، لذلك يشعر معظم الناس بالقليل أو لا شيء. يستغرق حوالي 30 إلى 60 دقيقة. إذا وُجدت زوائد لحمية، يمكن غالبًا إزالتها أثناء الفحص نفسه.",
+      "en": "A colonoscopy is a look inside the large bowel with a thin, flexible camera. It takes about 30 to 60 minutes. You are usually offered medicine to help you relax, and your clinic will explain the comfort and sedation options before the procedure. If polyps are found, they can usually be removed during the same test.",
+      "ar": "تنظير القولون فحص لداخل الأمعاء الغليظة بكاميرا رفيعة ومرنة. يستغرق حوالي 30 إلى 60 دقيقة. عادةً يُعرض دواء يساعد على الاسترخاء، وسيشرح المركز خيارات الراحة والتهدئة قبل الفحص. إذا وُجدت زوائد (سلائل)، يمكن عادةً إزالتها خلال الفحص نفسه.",
       "c": {
         "en": "Compared with: standard patient information on colonoscopy.",
         "ar": "مقارنة بـ: معلومات المرضى المعتادة عن تنظير القولون."
@@ -116,12 +119,13 @@
       "src": [
         "S4"
       ],
-      "en": "Your clinic will give you exact prep instructions. Usually you eat light food the day before, then drink a bowel-cleaning liquid, and come with someone who can take you home. Follow the clinic's instructions over anything you read here.",
-      "ar": "ستعطيك العيادة تعليمات التحضير الدقيقة. عادة تتناول طعامًا خفيفًا في اليوم السابق، ثم تشرب سائلًا لتنظيف الأمعاء، وتأتي مع شخص يمكنه إعادتك إلى المنزل. اتبع تعليمات العيادة قبل أي شيء تقرؤه هنا.",
+      "en": "Your clinic gives you the bowel-prep drink and written instructions after it checks your medicines. The instructions tell you what to eat and drink in the days before and when to take the drink. Follow the clinic's instructions exactly, even if you read something different elsewhere. Do not stop any medicine on your own. Arrange for an adult to take you home.",
+      "ar": "يعطيك المركز شراب تحضير الأمعاء وتعليمات مكتوبة بعد مراجعة أدويتك. توضح التعليمات ماذا تأكل وتشرب في الأيام السابقة ومتى تتناول الشراب. يُرجى اتباع تعليمات المركز بدقة، حتى لو قرأت شيئًا مختلفًا في مكان آخر. لا توقف أي دواء من تلقاء نفسك. رتّب أن يرافقك شخص بالغ إلى المنزل.",
       "c": {
         "en": "Compared with: general prep guidance; the clinic's instructions come first.",
         "ar": "مقارنة بـ: إرشادات التحضير العامة؛ تعليمات العيادة تأتي أولًا."
-      }
+      },
+      "ar_f": "يعطيكِ المركز شراب تحضير الأمعاء وتعليمات مكتوبة بعد مراجعة أدويتكِ. توضح التعليمات ماذا تأكلين وتشربين في الأيام السابقة ومتى تتناولين الشراب. يُرجى اتباع تعليمات المركز بدقة، حتى لو قرأتِ شيئًا مختلفًا في مكان آخر. لا توقفي أي دواء من تلقاء نفسكِ. رتّبي أن يرافقكِ شخص بالغ إلى المنزل."
     },
     {
       "id": "hpv1618_cancer",
@@ -137,8 +141,8 @@
         "S5",
         "S8"
       ],
-      "en": "No, this result does not mean you have cancer. It means you have a type of HPV that can cause cell changes over many years if it stays. Cervical cancer usually takes 10 years or more to develop, and the colposcopy can find early changes that are easy to treat. That is why going soon matters.",
-      "ar": "لا، هذه النتيجة لا تعني أن لديكِ سرطانًا. تعني أن لديكِ نوعًا من فيروس HPV قد يسبب تغيّرات في الخلايا على مدى سنوات طويلة إذا بقي. سرطان عنق الرحم يحتاج عادةً 10 سنوات أو أكثر ليتكوّن، ويمكن لفحص المنظار أن يكشف التغيّرات المبكرة التي يسهل علاجها. لهذا من المهم أن تذهبي قريبًا.",
+      "en": "A positive HPV test is not a diagnosis of cancer. It means you have a type of HPV that can cause cell changes if it stays for many years. These changes usually take many years to develop, and the colposcopy can find early changes that are easy to treat. Your doctor will explain what the next examination shows.",
+      "ar": "نتيجة HPV الإيجابية ليست تشخيصًا للسرطان. تعني أن لديكِ نوعًا من فيروس HPV قد يسبب تغيّرات في الخلايا إذا بقي سنوات طويلة. هذه التغيّرات تحتاج عادةً إلى سنوات طويلة لتتكوّن، ويمكن لتنظير عنق الرحم (Colposcopy) أن يكشف التغيّرات المبكرة التي يسهل علاجها. ستشرح لكِ طبيبتكِ ما يُظهره الفحص التالي.",
       "c": {
         "en": "Compared with: cervical cancer, which is diagnosed only by a biopsy, not by an HPV test.",
         "ar": "مقارنة بـ: سرطان عنق الرحم، الذي يُشخَّص فقط بأخذ عيّنة، وليس بفحص HPV."
@@ -161,8 +165,8 @@
       "src": [
         "S9"
       ],
-      "en": "HPV is so common that most adults who have ever been sexually active get it at some point. It can stay hidden for many years, even decades, before a test finds it. The test cannot tell when you got it or from whom. A positive result does not mean anyone was unfaithful. Your husband does not need a test or treatment for this.",
-      "ar": "فيروس HPV شائع جدًا، ومعظم البالغين الذين مارسوا العلاقة الزوجية يُصابون به في وقت ما. يمكن أن يبقى مختفيًا سنوات طويلة، حتى عقودًا، قبل أن يكشفه الفحص. لا يستطيع الفحص أن يحدد متى أو ممّن انتقل إليكِ. النتيجة الإيجابية لا تعني أن أحدًا كان غير مخلص. زوجكِ لا يحتاج إلى فحص أو علاج بسبب هذه النتيجة.",
+      "en": "HPV is so common that most adults get it at some point in their lives. It can stay hidden for many years, even decades, before a test finds it. The test cannot tell when you got it or from whom. A positive result does not mean anyone was unfaithful. Your husband does not need a test or treatment for this.",
+      "ar": "فيروس HPV شائع جدًا، ومعظم البالغين يُصابون به في مرحلة ما من حياتهم. يمكن أن يبقى مختفيًا سنوات طويلة، حتى عقودًا، قبل أن يكشفه الفحص. لا يستطيع الفحص أن يحدد متى أو ممّن انتقل إليكِ. النتيجة الإيجابية لا تعني أن أحدًا كان غير مخلص. زوجكِ لا يحتاج إلى فحص أو علاج بسبب هذه النتيجة.",
       "c": {
         "en": "Compared with: other infections where partner testing is needed. For HPV it is not.",
         "ar": "مقارنة بـ: التهابات أخرى يحتاج فيها الشريك إلى فحص. في حالة HPV لا يحتاج."
@@ -228,7 +232,7 @@
         "S8"
       ],
       "en": "A colposcopy is like a smear test, but the doctor uses a magnifier to look closely at the cervix. It takes about 15 minutes. Most women feel only mild discomfort. The doctor may take a tiny sample, which can feel like a short pinch. You can go back to normal activities the same day. Tell the clinic if your period is due or if you might be pregnant: the test is still possible, but they may plan it differently.",
-      "ar": "فحص المنظار المهبلي يشبه مسحة عنق الرحم، لكن الطبيبة تستخدم عدسة مكبّرة لتنظر عن قرب إلى عنق الرحم. يستغرق حوالي 15 دقيقة. تشعر معظم النساء بانزعاج بسيط فقط. قد تأخذ الطبيبة عيّنة صغيرة جدًا، قد تشعرين معها بوخزة قصيرة. يمكنكِ العودة إلى نشاطكِ العادي في اليوم نفسه. أخبري المركز إذا كان موعد الدورة قريبًا أو إذا كان هناك احتمال حمل: الفحص ممكن، لكن قد يُخطَّط له بشكل مختلف.",
+      "ar": "تنظير عنق الرحم (Colposcopy) يشبه مسحة عنق الرحم، لكن الطبيبة تستخدم عدسة مكبّرة لتنظر عن قرب إلى عنق الرحم. يستغرق حوالي 15 دقيقة. تشعر معظم النساء بانزعاج بسيط فقط. قد تأخذ الطبيبة عيّنة صغيرة جدًا، قد تشعرين معها بوخزة قصيرة. يمكنكِ العودة إلى نشاطكِ العادي في اليوم نفسه. أخبري المركز إذا كان موعد الدورة قريبًا أو إذا كان هناك احتمال حمل: الفحص ممكن، لكن قد يُخطَّط له بشكل مختلف.",
       "c": {
         "en": "Compared with: a routine smear test, which takes about 5 minutes.",
         "ar": "مقارنة بـ: مسحة عنق الرحم العادية، التي تستغرق حوالي 5 دقائق."
@@ -248,7 +252,7 @@
         "S5"
       ],
       "en": "The HPV vaccine protects against new infections, but it does not clear an infection you already have. For women aged 27 to 45, Abu Dhabi guidance says to decide together with your doctor. Ask about it at your colposcopy visit. It does not replace the colposcopy.",
-      "ar": "لقاح HPV يحمي من الإصابات الجديدة، لكنه لا يزيل إصابة موجودة. بالنسبة للنساء من 27 إلى 45 سنة، توصي إرشادات أبوظبي باتخاذ القرار مع الطبيبة. اسألي عنه في موعد فحص المنظار. اللقاح لا يغني عن فحص المنظار.",
+      "ar": "لقاح HPV يحمي من الإصابات الجديدة، لكنه لا يزيل إصابة موجودة. بالنسبة للنساء من 27 إلى 45 سنة، توصي إرشادات أبوظبي باتخاذ القرار مع الطبيبة. اسألي عنه في موعد تنظير عنق الرحم. اللقاح لا يغني عن تنظير عنق الرحم.",
       "c": {
         "en": "Compared with: girls aged 9 to 14, for whom the vaccine is routinely recommended.",
         "ar": "مقارنة بـ: الفتيات من 9 إلى 14 سنة، اللواتي يُوصى لهن باللقاح بشكل روتيني."
@@ -317,7 +321,7 @@
         "S6"
       ],
       "en": "Small changes help, and you can start today: drink water instead of sweet drinks and juices, eat more vegetables, choose smaller portions of rice and bread, and keep sweets and dates for small amounts. Walking about 30 minutes on most days also helps. Please don't start a strict diet or long fasting before you talk to your doctor. If you plan to fast, ask your doctor first.",
-      "ar": "التغييرات الصغيرة تساعد، ويمكنك البدء اليوم: اشرب الماء بدل المشروبات المحلّاة والعصائر، كُل خضارًا أكثر، اختر كميات أصغر من الرز والخبز، واجعل الحلويات والتمر بكميات قليلة. المشي حوالي 30 دقيقة في معظم الأيام يساعد أيضًا. من فضلك لا تبدأ حمية قاسية أو صيامًا طويلًا قبل أن تتحدث مع طبيبك. إذا كنت تنوي الصيام، اسأل طبيبك أولًا.",
+      "ar": "التغييرات الصغيرة تساعد، ويمكنك البدء اليوم: اشرب الماء بدل المشروبات المحلّاة والعصائر، كُل خضارًا أكثر، اختر كميات أصغر من الرز والخبز، وتناول الحلويات والتمر بكميات صغيرة. المشي حوالي 30 دقيقة في معظم الأيام يساعد أيضًا. من فضلك لا تبدأ حمية قاسية أو صيامًا طويلًا قبل أن تتحدث مع طبيبك. إذا كنت تنوي الصيام، اسأل طبيبك أولًا.",
       "c": {
         "en": "Compared with: the general advice of at least 150 minutes of activity a week.",
         "ar": "مقارنة بـ: النصيحة العامة بممارسة 150 دقيقة على الأقل من النشاط أسبوعيًا."
@@ -342,7 +346,7 @@
         "S6"
       ],
       "en": "Your doctor will decide that with you after the second test. Some people start with changes in food and activity; others need medicine from the start. Please don't start any medicine, supplement or someone else's tablets on your own.",
-      "ar": "سيقرر طبيبك ذلك معك بعد الفحص الثاني. بعض الناس يبدؤون بتغيير الطعام والنشاط، وآخرون يحتاجون إلى دواء من البداية. من فضلك لا تبدأ أي دواء أو مكمّل غذائي أو حبوب شخص آخر من نفسك.",
+      "ar": "سيقرر طبيبك ذلك معك بعد الفحص الثاني. بعض الناس يبدؤون بتغيير الطعام والنشاط، وآخرون يحتاجون إلى دواء من البداية. من فضلك لا تبدأ أي دواء أو مكمّل غذائي أو أدوية موصوفة لشخص آخر دون استشارة الطبيب.",
       "c": {
         "en": "Compared with: —",
         "ar": "—"
@@ -410,7 +414,8 @@
       "c": {
         "en": "Compared with: clinic list in the demo (synthetic).",
         "ar": "مقارنة بـ: قائمة العيادات في العرض (بيانات اصطناعية)."
-      }
+      },
+      "ar_f": "نعم. يمكنكِ اختيار طبيبة عند الحجز. استخدمي الفلتر في شاشة الحجز."
     },
     {
       "id": "coverage",
@@ -431,7 +436,8 @@
       "c": {
         "en": "Compared with: mock plan rules (synthetic).",
         "ar": "مقارنة بـ: قواعد خطة تأمين تجريبية (اصطناعية)."
-      }
+      },
+      "ar_f": "تعرض شاشة الحجز العيادات ضمن شبكة تأمينكِ والمبلغ التقديري الذي قد تدفعينه. في هذا العرض بيانات التأمين اصطناعية. شركة التأمين تؤكد المبلغ النهائي."
     },
     {
       "id": "medicine",
@@ -452,7 +458,8 @@
       "c": {
         "en": "Compared with: safety rule (no medicines in this service).",
         "ar": "مقارنة بـ: قاعدة السلامة (لا أدوية في هذه الخدمة)."
-      }
+      },
+      "ar_f": "لا أستطيع أن أوصي بأدوية أو جرعات. يرجى سؤال طبيبكِ أو الصيدلي. يمكنني مساعدتكِ في حجز موعد."
     },
     {
       "id": "fallback",
@@ -464,7 +471,9 @@
       "c": {
         "en": "Compared with: your result card.",
         "ar": "مقارنة بـ: بطاقة نتيجتك."
-      }
+      },
+      "ar_f": "لا أستطيع الإجابة عن ذلك بأمان. خطوتكِ التالية تبقى كما هي: اتبعي الخطوات الظاهرة في بطاقة نتيجتكِ. يمكنكِ أيضًا سؤال فريق الرعاية."
     }
-  ]
+  ],
+  "_gender": "ar = masculine/neutral; ar_f = feminine form, shown to female patients when present. Wording is the same, only grammatical gender differs."
 }

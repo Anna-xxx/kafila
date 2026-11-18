@@ -46,7 +46,7 @@
     colposcopy: {
       // Medic draft 18 Nov (patient-content-hpv-hba1c.md), pending Anna's review.
       en: ["Book a colposcopy (a closer look at the cervix) with a gynaecologist. You can choose a female doctor", "Your family doctor sends the referral with your booking", "Have the colposcopy (about 15 minutes, similar to a smear test)", "The gynaecologist explains the result and the next steps (about 2 weeks later, if a sample was taken)"],
-      ar: ["احجزي فحص المنظار المهبلي (نظرة أقرب إلى عنق الرحم) مع طبيبة نسائية. يمكنكِ اختيار طبيبة", "ترسل طبيبة الأسرة التحويل مع حجزكِ", "إجراء الفحص (حوالي 15 دقيقة، يشبه مسحة عنق الرحم)", "تشرح لكِ الطبيبة النتيجة والخطوات التالية (بعد حوالي أسبوعين إذا أُخذت عيّنة)"]
+      ar: ["احجزي تنظير عنق الرحم (Colposcopy) مع طبيبة نسائية. يمكنكِ اختيار طبيبة", "ترسل طبيبة الأسرة التحويل مع حجزكِ", "إجراء الفحص (حوالي 15 دقيقة، يشبه مسحة عنق الرحم)", "تشرح لكِ الطبيبة النتيجة والخطوات التالية (بعد حوالي أسبوعين إذا أُخذت عيّنة)"]
     },
     gp_confirm: {
       en: ["See your family doctor for a second test", "The doctor confirms what the result means", "Agree a plan together"],
@@ -69,7 +69,7 @@
     colonoscopy: null, // uses I18N teach texts
     colposcopy: {
       en: { q: "One quick check so nothing is missed: what is the next step?", o: ["A colposcopy with a gynaecologist", "Repeat the HPV test in 5 years", "Nothing for now"], ok: "Exactly. A colposcopy looks closely at the cervix.", fix: "Not quite. The next step is a colposcopy with a gynaecologist." },
-      ar: { q: "سؤال سريع حتى لا يفوتنا شيء: ما هي الخطوة التالية؟", o: ["فحص المنظار المهبلي مع طبيبة نسائية", "إعادة فحص HPV بعد 5 سنوات", "لا شيء الآن"], ok: "بالضبط. فحص المنظار ينظر عن قرب إلى عنق الرحم.", fix: "ليس تمامًا. الخطوة التالية هي فحص المنظار مع طبيبة نسائية." }
+      ar: { q: "سؤال سريع حتى لا يفوتنا شيء: ما هي الخطوة التالية؟", o: ["تنظير عنق الرحم مع طبيبة نسائية", "إعادة فحص HPV بعد 5 سنوات", "لا شيء الآن"], ok: "بالضبط. تنظير عنق الرحم ينظر عن قرب إلى عنق الرحم.", fix: "ليس تمامًا. الخطوة التالية هي تنظير عنق الرحم مع طبيبة نسائية." }
     },
     remeasure_then_doctor_today: {
       en: { q: "To check we explained it well: what happens next?", o: ["A doctor calls me today", "I book a routine visit next month", "Nothing for now"], ok: "Exactly. Keep your phone near you. Chest pain or weakness: call 998.", fix: "Not quite. Because the reading is very high, a doctor calls you today." },
@@ -89,7 +89,7 @@
       ]
     },
     colposcopy: {
-      title: { en: "Gynaecology (colposcopy) slots in your network", ar: "مواعيد أمراض النساء (المنظار المهبلي) في شبكتك" }, why: "auto-referral for HPV 16/18",
+      title: { en: "Gynaecology (colposcopy) slots in your network", ar: "مواعيد أمراض النساء (تنظير عنق الرحم) في شبكتك" }, why: "auto-referral for HPV 16/18",
       list: [
         { id: "g1", doc: "Dr. Rana Taha", f: true, clinic: "Gynae Clinic · Khalifa City", km: 3, day: "2026-11-20", time: "11:30", wkd: false, pay: { "Government plan (demo)": 0, Basic: 120, Enhanced: 40 } },
         { id: "g2", doc: "Dr. Mariam Saeed", f: true, clinic: "Bayside Women's Clinic (demo)", km: 15, day: "2026-11-22", time: "18:00", wkd: true, pay: { "Government plan (demo)": 0, Basic: 150, Enhanced: 50 } },
@@ -193,7 +193,7 @@
   // Arabic texts are written to a woman by default; for a man, switch the common verb forms (machine draft).
   const MASC = [["افتحي", "افتح"], ["احجزي", "احجز"], ["اختاري", "اختر"], ["اسألي", "اسأل"], ["اضغطي", "اضغط"], ["ابدئي", "ابدأ"], ["رتّبي", "رتّب"], ["أحضري", "أحضر"],
     ["اتبعي", "اتبع"], ["اذهبي", "اذهب"], ["انتظري", "انتظر"], ["اقرئي", "اقرأ"], ["تحدثي", "تحدث"], ["توافقين", "توافق"], ["أرسلي", "أرسل"], ["تدفعينه", "تدفعه"],
-    ["فهمتِ", "فهمت"], ["قلقة", "قلق"], ["خائفة", "خائف"], ["مسترخية ونعسانة", "مسترخٍ ونعسان"], ["تحتاجين", "تحتاج"], ["اكتبي", "اكتب"], ["شعرتِ", "شعرت"], ["افتحيها", "افتحها"]];
+    ["فهمتِ", "فهمت"], ["قلقة", "قلق"], ["خائفة", "خائف"], ["تحتاجين", "تحتاج"], ["اكتبي", "اكتب"], ["شعرتِ", "شعرت"], ["افتحيها", "افتحها"], ["اتّبعي", "اتّبع"], ["تناولي", "تناول"], ["تأكدي", "تأكد"], ["كِ", "ك"]];
   const gx = (html, c, lang) => lang === "ar" && c.sex === "male" ? MASC.reduce((h, [f, m]) => h.split(f).join(m), html) : html;
   // Patient sees one plain sentence. Exact guideline names stay on the staff case page and the How it works page.
   const PLAIN_SRC_ONE = { en: "Based on your clinic's screening rules, which follow international medical guidelines.", ar: "بناءً على قواعد الفحص في عيادتك، وهي تتبع الإرشادات الطبية الدولية." };
@@ -435,7 +435,7 @@
     Store.log(c.id, "Safety rule", `Red topic "${r.flag.phrase}" (${k}). Fixed answer, no AI call.${c.human ? " Nurse mode was on." : ""}`, k === "HUMAN" ? "human" : "urgent");
     if (k === "HUMAN") { push(c, { t: "in", text: r.text, tag: "fixed" }); return act("nurse"); }
     const B = Store.S.F.L4.bleeding;
-    if (k === "L4" && B && B.phrases.includes(r.flag.phrase)) r.text = r.text + " " + (B.line[lang] || B.line.en);
+    if (k === "L4" && B && B.phrases.includes(r.flag.phrase)) r.text = r.text + " " + ((lang === "ar" && c.sex === "female" && B.line.ar_f) || B.line[lang] || B.line.en);
     push(c, { t: "in", text: r.text, tag: "fixed", flag: k });
     c.redFlag = { kind: k, phrase: r.flag.phrase, at: Store.now() }; c.track = "urgent";
     Store.log(c.id, "System", "Urgent task created for on-call clinician (SLA 2 h). Case moved to the top of the worklist.", "urgent");
@@ -450,7 +450,7 @@
     push(c, { t: "me", text }); Store.save();
     // Red topics are checked first, also after a nurse has taken over the chat.
     const flag = Rules.redFlag(Store.S.F, text, lang);
-    if (flag) { handleFlag(c, { flag, text: flag.answer }); Store.save(); return; }
+    if (flag) { const A = Store.S.F[flag.kind] && Store.S.F[flag.kind].answer; handleFlag(c, { flag, text: (lang === "ar" && c.sex === "female" && A && A.ar_f) || flag.answer }); Store.save(); return; }
     if (c.human) { setTimeout(() => { push(c, { t: "nurse", text: lang === "ar" ? "شكرًا، سأرد عليك خلال دقائق." : "Thank you, I'll reply in a few minutes." }); Store.save(); }, 700); return; }
     // Fixed intents that create a task for a person (not AI): "already done elsewhere" and "I don't want the test".
     const ELSE = /\b(already (had|did|done|have had)|other hospital|another hospital|another clinic|elsewhere|private (clinic|hospital)|abroad)\b|في مستشفى آخر|في مكان آخر|أجريت|عملت الفحص|سويت/i;
@@ -509,7 +509,7 @@
     const appt = Date.parse(c.slot.day + "T" + c.slot.time + ":00+04:00"), gi = pathway(c) === "colonoscopy";
     return [
       [appt - 2 * Store.DAY, "r2", gi ? (lang === "ar" ? "تذكير: موعد تنظير القولون بعد يومين. ابدئي التحضير غدًا حسب التعليمات." : "Reminder: your colonoscopy is in 2 days. Start the prep tomorrow as in the instructions.") : (lang === "ar" ? "تذكير: موعدك بعد يومين." : "Reminder: your appointment is in 2 days.")],
-      [appt - 1 * Store.DAY, "r1", gi ? (lang === "ar" ? "اليوم: طعام خفيف فقط، ثم شراب التحضير مساءً. رتّبي من يرافقك غدًا." : "Today: light food only, then the prep drink in the evening. Arrange someone to take you home tomorrow.") : (lang === "ar" ? "موعدك غدًا. أحضري الهوية." : "Your appointment is tomorrow. Bring your ID.")],
+      [appt - 1 * Store.DAY, "r1", gi ? (lang === "ar" ? "غدًا موعد تنظير القولون. اليوم، اتّبعي تعليمات المركز للأكل والشرب وتناولي شراب التحضير في الأوقات المحددة. تأكدي أن شخصًا بالغًا سيرافقكِ إلى المنزل." : "Tomorrow is your colonoscopy. Today, follow your clinic's food and drink instructions and take the prep drink at the times they gave you. Make sure an adult can take you home.") : (lang === "ar" ? "موعدك غدًا. أحضري الهوية." : "Your appointment is tomorrow. Bring your ID.")],
       [appt - 3 * 3600000, "r0", lang === "ar" ? "موعدك اليوم الساعة " + c.slot.time + ". هل تحتاجين مساعدة في الوصول؟" : "Your appointment is today at " + c.slot.time + ". Need help getting there?"]
     ].map(([at, k, text]) => ({ at, k, text }));
   }
@@ -524,7 +524,7 @@
     if (pathway(c) === "colonoscopy") return t.steps;
     return (n && (n[lang] || n.en)) || (lang === "ar" ? ["راجع طبيب الأسرة", "اتفقا معًا على الخطوة التالية"] : ["See your family doctor", "Agree the next step together"]);
   }
-  const stripCmp = (s) => String(s || "").replace(/^\s*(Compared with|مقارنة\s*بـ?)\s*:\s*/i, "");
+  const stripCmp = (s) => String(s || "").replace(/^\s*(Compared with|مقارنة\s*بـ?)\s*:\s*/i, "").replace(/^[\s—–-]*$/, "");
 
   // ---------- app tabs ----------
   function resultTab(c, lang) {
@@ -576,7 +576,7 @@
     const r = c.result;
     if (!value || !r.ruleText) {
       const cat = { positive: lang === "ar" ? "إيجابي" : "positive", positive_16_18: lang === "ar" ? "16/18 إيجابي" : "16/18 positive", negative: lang === "ar" ? "سلبي" : "negative" }[r.category] || r.category;
-      const nx = { colonoscopy: lang === "ar" ? "تنظير القولون" : "colonoscopy", colposcopy: lang === "ar" ? "المنظار المهبلي" : "colposcopy" }[r.next];
+      const nx = { colonoscopy: lang === "ar" ? "تنظير القولون" : "colonoscopy", colposcopy: lang === "ar" ? "تنظير عنق الرحم" : "colposcopy" }[r.next];
       const win = r.referralWorkdays ? (lang === "ar" ? ` · تحويل خلال ${r.referralWorkdays} يوم عمل، والتنظير خلال ${r.careWorkdays} يوم عمل من التحويل` : ` · referral within ${r.referralWorkdays} working days, colonoscopy within ${r.careWorkdays} working days of it`) : r.windowDays ? (lang === "ar" ? ` خلال ${r.windowDays} يومًا` : ` within ${r.windowDays} days`) : "";
       return `${r.test} ${cat} ${lang === "ar" ? "←" : "→"} ${r.level}${nx ? " · " + nx + win : ""} (${lang === "ar" ? "القواعد" : "rules"} v${r.rulesVersion})`;
     }

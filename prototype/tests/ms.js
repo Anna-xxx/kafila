@@ -10,7 +10,7 @@ await p.click('[data-act=lock]').catch(()=>{});await p.click('[data-act=openapp]
 t=await ph();ok('Mariam AR meaning + compared',/فيروس الورم الحليمي/.test(t)&&/مقارنة بـ: فحص HPV سلبي/.test(t));await p.locator('.phone').screenshot({path:'mariam.png'});
 await p.evaluate(()=>Patient.send('هل يمكنني رؤية طبيبة؟'));await p.waitForTimeout(600);t=await ph();ok('Mariam FAQ female doctor (HPV-specific)',/4 أسابيع/.test(t));
 await p.evaluate(()=>Patient.send('من زوجي؟'));await p.waitForTimeout(600);t=await ph();ok('Mariam partner FAQ',/لا تعني أن أحدًا كان غير مخلص/.test(t));
-await p.evaluate(()=>Patient.tourGo('C-1049',{tab:'book',filters:{female:true}}));await p.waitForTimeout(300);t=await ph();ok('colposcopy slots female',/المنظار المهبلي/.test(t));
+await p.evaluate(()=>Patient.tourGo('C-1049',{tab:'book',filters:{female:true}}));await p.waitForTimeout(300);t=await ph();ok('colposcopy slots female',/تنظير عنق الرحم/.test(t));
 // Salem
 await p.selectOption('#persona','C-1050');await p.waitForTimeout(300);await p.click('[data-plang=en]');await p.waitForTimeout(200);
 await p.click('[data-act=lock]').catch(()=>{});await p.click('[data-act=openapp]');await p.waitForTimeout(1400);await p.click('[data-act=consent]');await p.click('[data-act=signin]');await p.waitForTimeout(400);

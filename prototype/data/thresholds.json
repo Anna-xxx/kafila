@@ -6,12 +6,12 @@
   "zones": {
     "green": {
       "en": "Routine",
-      "ar": "روتيني",
+      "ar": "متابعة اعتيادية",
       "meaning": "Normal or low-risk result. Next screening by reminder."
     },
     "yellow": {
       "en": "See a doctor",
-      "ar": "راجع الطبيب",
+      "ar": "يلزم مراجعة الطبيب",
       "meaning": "Follow-up needed. Book a planned visit."
     },
     "red": {

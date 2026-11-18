@@ -17,9 +17,10 @@
   async function ask(q, c, lang) {
     const { T, F, C, data } = Store.S;
     const flag = Rules.redFlag(F, q, lang);
-    if (flag) return { kind: "flag", flag, text: flag.answer, noAI: true };
+    const fem = lang === "ar" && c.sex === "female";
+    if (flag) { const A = F[flag.kind] && F[flag.kind].answer; return { kind: "flag", flag, text: (fem && A && A.ar_f) || flag.answer, noAI: true }; }
     const faq = matchFaq(C, c.result.test, q);
-    const prepared = { kind: "answer", text: faq[lang] || faq.en, c: (faq.c && (faq.c[lang] || faq.c.en)) || "", src: faq.src.map((s) => C.sources[s]).filter(Boolean), via: "prepared", faqId: faq.id };
+    const prepared = { kind: "answer", text: (fem && faq.ar_f) || faq[lang] || faq.en, c: (faq.c && (faq.c[lang] || faq.c.en)) || "", src: faq.src.map((s) => C.sources[s]).filter(Boolean), via: "prepared", faqId: faq.id };
     if (!data.aiUrl) return prepared;
     try {
       const ctx = { result: { test: c.result.test, zone: c.result.zone, level: c.result.level, next: c.result.next, windowDays: c.result.windowDays, compare: c.result.compare, source: c.result.source },
