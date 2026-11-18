@@ -318,7 +318,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
 .totop{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));z-index:20;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:var(--amber);color:#1a1206;font:700 20px/44px system-ui,sans-serif;text-align:center;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:opacity .2s}
 .totop.show{opacity:1;pointer-events:auto}
 @media print{.totop{display:none}}
-.archhero h1{max-width:20ch}.archhero .lede{max-width:75ch;margin-top:22px}.archhero .cta{margin-top:22px}.cmp td.q.n{width:3.5em}.cmp.int td.q{width:auto}
+.archhero h1{max-width:20ch}.archhero .lede{max-width:75ch;margin-top:22px}.archhero .lede+.lede{margin-top:10px}.archhero .cta{margin-top:22px}.cmp td.q.n{width:3.5em}.cmp.int td.q{width:auto}
 .vf{font-size:12px;color:var(--ink-3);white-space:nowrap}
 .rules6{grid-template-columns:repeat(3,minmax(0,1fr))}@media(max-width:860px){.rules6{grid-template-columns:1fr}}
 .checklist{margin:24px 0 10px;padding-left:20px;display:grid;gap:10px;max-width:75ch;color:var(--ink-2)}
@@ -342,7 +342,9 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
   <div class="wrap">
     <p class="eyebrow">Kafila <span lang="ar" dir="rtl">قافلة</span> · Architecture</p>
     <h1>Built around existing care systems. <em>Designed to close the gaps between them.</em></h1>
-    <p class="lede">Hospitals in Abu Dhabi already pass lab results between their systems, and to Malaffi, as standard messages. In a pilot, the partner clinic asks its IT team to send Kafila a copy of each positive screening result, together with the patient's phone number, language, family doctor and insurance plan. Kafila then opens a case with a named owner and a deadline, messages the patient from the clinic's own verified WhatsApp number, and helps her book. In a later stage, once the clinic record is connected, Kafila also writes the referral, the booking and the closure note back into it. Nothing is replaced. A first pilot can start with one protected file of positive stool tests a day and coordinator-assisted booking; deeper links to the clinic record, Malaffi, insurers and Sahatna are added as interfaces and approvals become available.</p>
+    <p class="lede">Kafila works alongside existing clinical systems rather than replacing them.</p>
+    <p class="lede">A first pilot can start with a secure daily file of positive screening results and coordinator-assisted booking. Kafila tracks each case, assigns responsibility, monitors deadlines and records the follow-up outcome.</p>
+    <p class="lede">Deeper links with the clinic's medical record, Malaffi, insurers and Sahatna can be added once the interfaces and approvals are in place.</p>
     <div class="cta"><a class="btn line" href="index.html">← Back to the presentation</a><a class="btn line" href="prototype/" target="_blank" rel="noopener">Open the prototype</a></div>
   </div>
 </section>
@@ -353,11 +355,11 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
     <h2>What runs today, <em>and what changes in a pilot.</em></h2>
     <div class="where" style="margin-top:28px">
       <div><span class="tag built">The demo today</span><h3>One browser, invented data</h3><p>Everything runs in one browser. The "lab" is a file of 220 invented results. The patient tab and the clinic tab share the browser's storage, so a tap on her phone shows up at once for Noura. WhatsApp, SMS, booking and insurance are drawn. The only server is our Cloudflare Worker for the AI chat: Gemini through the Worker, and prepared answers whenever AI is off.</p></div>
-      <div><span class="tag prop">The pilot</span><h3>Connected to the clinic's systems</h3><p>Results arrive from the lab, patient details come from the clinic record, updates go back to it. Real WhatsApp, SMS and calls through licensed providers. Storage, AI and speech hosted in the UAE.</p></div>
-      <div><span class="tag built">The same in both</span><h3>The same safety principles</h3><p>The rules table, the red-flag list, the approved answer library and the safety tests carry into the pilot. A real deployment adds secure hosting, sign-in, audit trails, integration monitoring and clinical validation by the partner.</p></div>
+      <div><span class="tag prop">The pilot</span><h3>Connected to the clinic's systems</h3><p>Results arrive from the lab and patient details come from the clinic record. Updates go back to it once the record is connected. Real WhatsApp, SMS and calls through licensed providers. Storage, AI and speech hosted in the UAE.</p></div>
+      <div><span class="tag built">The same in both</span><h3>The same safety principles</h3><p>The rules table, the red-flag list, the prepared answer library (pending clinical review) and the safety tests carry into the pilot. A real deployment adds secure hosting, sign-in, audit trails, integration monitoring and clinical validation by the partner.</p></div>
     </div>
     <figure class="datafig">
-      <p>The prototype as built: a static site, the rules table, the approved texts and one small server for AI.</p>
+      <p>The prototype as built: a static site, the rules table, the prepared texts and one small server for AI.</p>
       <button class="shot" type="button" data-full="img/arch-prototype.webp"><img src="img/arch-prototype.webp" alt="Prototype architecture, 18 Nov: static site with patient and staff screens, rules table, red flags, duty roster, content library, browser storage, and a Cloudflare Worker for AI that is off until the key is entered" width="2560" height="1484"></button>
     </figure>
   </div>
@@ -423,10 +425,10 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
     <h2>Six rules <em>built into the design.</em></h2>
     <div class="where rules6" style="margin-top:28px">
       <div><h3>Rules set urgency</h3><p>Zone, deadline, red flags, escalation and closure come from a versioned rules table. No AI output can change them. AI may flag a concern for a person to review; only the rules and authorised clinicians set urgency.</p></div>
-      <div><h3>Works without AI</h3><p>Every AI call has a prepared, approved fallback. The pilot can run with AI switched off.</p></div>
+      <div><h3>Works without AI</h3><p>Every AI call has a prepared fallback answer. The pilot can run with AI switched off.</p></div>
       <div><h3>An owner at every step</h3><p>Every positive result is one case with a named owner and a deadline on each step, until a clinician closes it with evidence. If an expected event does not arrive (no reply, no booking, no report), the case goes to the top of a list.</p></div>
       <div><h3>No health words in messages</h3><p>WhatsApp and SMS messages, urgent ones included, say only that her clinic needs to reach her, plus a link. The result appears only after an identity check. Consent, opt-outs and every contact attempt are logged.</p></div>
-      <div><h3>Minimum data to AI</h3><p>The model never gets name, Emirates ID, phone, address or record number. Red-flag questions never reach it.</p></div>
+      <div><h3>Minimum data to AI</h3><p>Kafila does not send her name, Emirates ID, phone, address or record number to the model. She could still type personal details into a free question, so the pilot adds a filter that removes them first. Red-flag questions never reach the AI.</p></div>
       <div><h3>Designed to stay in the UAE</h3><p>Hosting, database, backups, logs, AI and speech, as the health-data law requires. The whole chain, including message providers and support access, is checked before real patients.</p></div>
     </div>
     <figure class="datafig">
@@ -441,7 +443,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
     <p class="eyebrow"><b>05</b>AI</p>
     <h2>Which AI, <em>and where it runs.</em></h2>
     <div class="where" style="margin-top:28px">
-      <div><span class="tag built">Demo</span><h3>Gemini through our Worker</h3><p>The patient AI chat can call Gemini through our Cloudflare Worker. The code is ready, but AI is off until the key is entered, so today prepared answers from the approved library reply. This is acceptable only because all data is invented.</p></div>
+      <div><span class="tag built">Demo</span><h3>Gemini through our Worker</h3><p>The patient AI chat can call Gemini through our Cloudflare Worker. The code is ready, but AI is off until the key is entered, so today prepared answers from the library reply. This is acceptable only because all data is invented.</p></div>
       <div><span class="tag prop">Pilot</span><h3>A model hosted in the UAE</h3><p>An in-region model with no training on our data and no retention: a large cloud provider's model in a UAE region, or an Arabic-first model such as Jais or Falcon. The model is chosen with the partner and tested on our 50-question safety set.</p></div>
       <div><span class="tag prop">Pilot</span><h3>Drafts for staff</h3><p>Case summary and referral letter drafts, built from case fields. Every draft is checked by code, marked "AI draft · check before use", and a person accepts, edits or ignores it. In the demo these drafts are templates.</p></div>
     </div>
