@@ -5,7 +5,7 @@ window.I18N = {
     app: {
       waHello: "Hello {name}. {doctor}’s team has sent you a secure message. Please open it using the link below.",
       waUrgent: "Hello {name}. This is {clinic}. A doctor needs to speak with you today. {doctor} will call you {deadline} from {clinicPhone}. Open the secure link to pick a time. If you feel very unwell, call 998 now.",
-      openResult: "Open your result", secureLink: "kafila.demo · secure, no download",
+      openResult: "Open the message", secureLink: "kafila.demo · secure, no download",
       signinTitle: "Sign in", otpSent: "We sent a 4-digit code to your phone ending in ••42 (demo code is filled in).",
       continue: "Continue", nationalId: "Sign in with national ID (pilot)", consentLabel: "I agree",
       tabs: { result: "Result", assistant: "Assistant", book: "Book", mycase: "My case" },
@@ -111,7 +111,7 @@ window.I18N = {
     app: {
       waHello: "مرحبًا {name}. أرسل لك فريق {doctor} رسالة آمنة. يُرجى فتحها عبر الرابط أدناه.",
       waUrgent: "مرحبًا {name}. معك {clinic}. يحتاج طبيب إلى التحدث معك اليوم. سيتصل بك {doctor} {deadline} من الرقم {clinicPhone}. افتح الرابط الآمن لاختيار وقت. إذا شعرت بتوعّك شديد، يُرجى الاتصال بالرقم 998 فورًا.",
-      openResult: "افتحي نتيجتك", secureLink: "kafila.demo · آمن، بدون تحميل",
+      openResult: "افتحي الرسالة", secureLink: "kafila.demo · آمن، بدون تحميل",
       signinTitle: "تسجيل الدخول", otpSent: "أرسلنا رمزًا من 4 أرقام إلى هاتفك المنتهي بـ ••42 (الرمز التجريبي مُدخل).",
       continue: "متابعة", nationalId: "الدخول بالهوية الوطنية (في التجربة)", consentLabel: "أوافق",
       tabs: { result: "النتيجة", assistant: "المساعد", book: "الحجز", mycase: "حالتي" },
