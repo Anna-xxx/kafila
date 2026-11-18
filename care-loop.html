@@ -100,6 +100,7 @@ button:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
 .wrow { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) minmax(0, 1fr); gap: 10px; }
 .wbox { border-radius: 14px; padding: 14px 16px; display: grid; gap: 8px; align-content: start; }
 .wbox.w { background: var(--warn-bg); border: 1px dashed var(--warn); } .wbox.r { background: var(--red-bg); border: 1px solid var(--red); }
+.wbox.l { background: var(--card); border: 1px solid var(--line); }
 .wbox h3 { margin: 0; font-size: 15px; } .wbox.w h3 { color: var(--warn); } .wbox.r h3 { color: var(--red); }
 .wbox ul { margin: 0; padding-left: 18px; display: grid; gap: 3px; font-size: 14px; color: var(--ink-2); }
 .wbox ul b { color: var(--ink); }
@@ -144,7 +145,7 @@ button:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
   <div class="whole" id="whole" hidden>
     <div class="wtrack" id="wtrack"></div>
     <div class="wrow">
-      <div class="wbox"><h3>Programme lead, every day</h3><p id="wlead"></p></div>
+      <div class="wbox l"><h3>Programme lead, every day</h3><p id="wlead"></p></div>
       <div class="wbox w"><h3>If something goes wrong</h3><ul id="wexc"></ul></div>
       <div class="wbox r"><h3>Emergency, at any moment</h3><p>She writes “chest pain” or “a lot of blood”: a fixed “call 998” screen, no AI. Her doctor is alerted and calls the same day.</p></div>
     </div>
