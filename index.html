@@ -345,7 +345,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
       <div class="stats">
         <div class="stat"><b>47 of 100</b><span>people with a positive stool test had no colonoscopy within a year</span><small>952 of 2,018 · US community clinics · O’Connor 2020</small></div>
         <div class="stat"><b>Almost 2×</b><span>the odds of finding advanced-stage cancer when the colonoscopy comes 10–12 months after the test, and about 3× after a year, compared with 8–30 days</span><small>70,124 patients · Kaiser Permanente · Corley 2017, JAMA</small></div>
-        <div class="stat"><b>+13 points</b><span>more people completed the colonoscopy when a navigator phoned them, explained it and helped them book: 55.1% vs 42.1% without one</span><small>PRECISE randomised trial · Coronado 2025</small></div>
+        <div class="stat"><b>55% vs 42%</b><span>completed the colonoscopy when a navigator phoned them, explained it and helped them book, compared with no navigator: 13 percentage points more</span><small>PRECISE randomised trial · Coronado 2025</small></div>
       </div>
       <div class="motto"><span>Rules set urgency and deadlines</span><span>AI explains</span><span>Clinicians decide and sign</span></div>
       <div class="cta">
@@ -638,7 +638,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
       </div>
       <div class="north">
         <p class="big">Pilot target: <em>+15 points</em> in follow-up completed in time</p>
-        <p class="note">Compared with the partner's own previous 12 months. A working assumption to agree with the partner. For scale: patient navigation added 13 points in the PRECISE trial.</p>
+        <p class="note">Compared with the partner's own previous 12 months. A working assumption to agree with the partner. For scale: patient navigation added 13 percentage points in the PRECISE trial.</p>
         <div class="chips"><span>Days to notification, booking, visit</span><span>Overdue and unassigned cases</span><span>Treatment started</span><span>"I understood" and "I felt guided"</span><span>Gaps by language, nationality, insurance</span></div>
       </div>
     </div>
@@ -651,7 +651,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
       <div><span class="tag built">Health system</span><h3>Screening that pays off</h3><ul>
         <li>Tests already paid for lead to care, instead of stopping at a result.</li>
         <li>The programme lead sees who is lost and why: by language, district, insurance.</li>
-        <li>More people reach the procedure without hiring a navigator for every case. Navigation added 13 points in PRECISE (55.1% vs 42.1%).</li>
+        <li>More people reach the procedure without hiring a navigator for every case. Navigation added 13 percentage points in PRECISE (55.1% vs 42.1%).</li>
         <li>Safe by design: rules set urgency and deadlines, clinicians decide, AI explains, every step is logged.</li></ul></div>
       <div><span class="tag built">Economy</span><h3>Cheaper care, fuller clinics</h3><ul>
         <li>Early-stage treatment is shorter and cheaper than late-stage treatment. The UAE figure is measured in the pilot.</li>
@@ -732,7 +732,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
   }
   const P = [
     { pt: true, name: "Fatima", role: "Patient", f: { skin: "#c48d63", head: "scarf", scarf: "#5a2f55", top: "#3b3f4a", extra: "phone" }, w: `Why: the loop exists for her. She has to understand the result and feel guided, not just be told (Brief R3).`, d: "52, Khalifa City, reads Arabic. Understands her result and books the next test.", can: "Asks · chooses a slot · asks for a nurse" },
-    { name: "Noura", role: "Coordinator", f: { skin: "#d9a77f", head: "scarf", scarf: "#2d3e6b", top: "#1f7a6d", extra: "headset" }, w: `Why: someone must own the case between result and booking, or nobody notices she never booked. Navigators raised colonoscopy completion by 13 points in PRECISE (Brief R2).`, d: "Owns the case until Fatima is booked, then hands it to Dr. Hessa and keeps watching the dates. Calls and books when a message is not enough.", can: "Assigns · calls · books · changes owner" },
+    { name: "Noura", role: "Coordinator", f: { skin: "#d9a77f", head: "scarf", scarf: "#2d3e6b", top: "#1f7a6d", extra: "headset" }, w: `Why: someone must own the case between result and booking, or nobody notices she never booked. Navigators raised colonoscopy completion by 13 percentage points in PRECISE (Brief R2).`, d: "Owns the case until Fatima is booked, then hands it to Dr. Hessa and keeps watching the dates. Calls and books when a message is not enough.", can: "Assigns · calls · books · changes owner" },
     { name: "Dr. Hessa", role: "Family doctor", f: { skin: "#e2b893", head: "scarf", scarf: "#4f6a8f", top: "coat", extra: "steth" }, w: `Why: only a clinician may refer, sign and close. The brief asks for closure with evidence or an authorised human decision, and she knows the patient (Brief R5).`, d: "Clinical owner. Sends the referral, reads the report, closes the case.", can: "Refers · asks the specialist · signs · closes" },
     { name: "Dr. Omar", role: "Gastroenterologist", f: { skin: "#9c6b4a", head: "hair", hair: "#1f1a17", top: "coat", extra: "beard" }, w: `Why: the colonoscopy is done in another clinic. Referrals get lost between providers: in one US study 38.9% never got an appointment date (Patel 2018). Accept or reject closes that gap (Brief R4).`, d: "Accepts the referral or rejects it with a reason. Sends the report back.", can: "Accepts · rejects · records outcome" },
     { name: "Dr. Khalid", role: "Programme lead", f: { skin: "#b07b56", head: "ghutra", top: "#f4f4f1", extra: "beard" }, w: `Why: someone must see the whole programme and step in before a deadline runs out, and know where and why people drop out (Brief R5, R6).`, d: "Sees every case at 75% of its window and who is lost, and why.", can: "Watches · escalates · changes owner" },
