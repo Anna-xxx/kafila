@@ -1,4 +1,4 @@
-/* ScreenPath. Card rules adapted from Sputnik 2.0 pravilo.md (radius 16, 1px border, no glow, 16 gap),
+/* ScreenPath. Card rules (radius 16, 1px border, no glow, 16 gap),
    light clinical palette instead of the space one. */
 :root {
   --bg: #f4f6f5; --surface: #ffffff; --surface-2: #eef2f1; --line: #d7dfdc; --ink: #14211d; --ink-2: #4b5a55; --ink-3: #7a8883;

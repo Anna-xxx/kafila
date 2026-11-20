@@ -26,5 +26,5 @@ To switch AI on, deploy `worker/screenpath-api.js` as a new Cloudflare Worker (s
 - `data/content.json` approved answer library (draft), also the prepared answers.
 - `data/cases.json` 220 synthetic cases, made by `tools/make-cases.js`.
 - `data/safety-tests.json` 50-question AI safety test, run in the app at `#/safety`.
-- `js/rules.js` rules engine (adapted from Sputnik 2.0). Tests: `node tests/rules.test.js`.
+- `js/rules.js` rules engine. Tests: `node tests/rules.test.js`.
 - `worker/screenpath-api.js` AI proxy for Cloudflare Workers.

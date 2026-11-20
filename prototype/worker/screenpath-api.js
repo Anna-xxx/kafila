@@ -1,5 +1,5 @@
-// screenpath-api: AI proxy for ScreenPath on Cloudflare Workers. New Worker, separate from Sputnik (do not reuse sputnik-api).
-// Based on Sputnik 2.0 sputnik-api.js: same idea (keys only in Worker secrets, model fallback list, prepared answer if AI fails),
+// screenpath-api: AI proxy for ScreenPath on Cloudflare Workers.
+// Same idea as an earlier project (keys only in Worker secrets, model fallback list, prepared answer if AI fails),
 // space parts removed (voice, DONKI, mission room, camera).
 // Routes: POST /ai, POST /tts (Gemini voice), GET / (status), GET /check (is the Gemini key valid, key never shown).
 // Secrets (Anna enters them in Cloudflare → Settings → Variables and Secrets): GEMINI_API_KEY (new key for this project).

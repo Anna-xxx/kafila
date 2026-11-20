@@ -1,4 +1,4 @@
-// ScreenPath rules engine. Adapted from Sputnik 2.0 rules.js.
+// ScreenPath rules engine.
 // The zone and level come from data/thresholds.json, never from AI. AI only explains.
 // Uncertainty goes up, never down. Red flags beat results.
 (function (root) {
