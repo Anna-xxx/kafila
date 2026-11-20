@@ -15,16 +15,16 @@ if(w===1280){
  await p.evaluate(()=>{Store.reset();Patient.tourGo('C-1042',{tab:'result'})});await p.waitForTimeout(400);
  const prim=await p.locator('.phone .btn.primary.block').allInnerTexts();ok('one green button = Book my colonoscopy '+prim,prim.length===1&&/Book my colonoscopy/.test(prim[0]));
  ok('secondary I have a question + Not now',/I have a question/.test(await p.locator('.phone [data-act=askq]').innerText())&&await p.locator('.phone [data-act=notnow]').count()===1);
- await p.click('.steps .book-w');await p.waitForTimeout(300);ok('Book word opens Book tab',await p.evaluate(()=>Store.byId('C-1042').ptab==='book'));
+ await p.click('.steps .st-a');await p.waitForTimeout(300);ok('Book word opens Book tab',await p.evaluate(()=>Store.byId('C-1042').ptab==='book'));
  // nurse in hours
  await p.evaluate(()=>{Store.reset();Patient.tourGo('C-1042',{tab:'assistant'})});await p.waitForTimeout(300);
  await p.click('.phone [data-act=nurse]');await p.waitForTimeout(300);let n=await p.locator('.phone').innerText();ok('nurse joins + sim note',/Nurse Layla/.test(n)&&/replies are simulated/.test(n));
  await p.evaluate(()=>Patient.send('can you call me'));await p.waitForTimeout(1000);n=await p.locator('.phone').innerText();ok('nurse call offer',/When suits you/.test(n)&&await p.locator('[data-act=ncall]').count()===1);
- await p.click('[data-act=nlater]');await p.waitForTimeout(300);n=await p.locator('.phone').innerText();ok('later today confirm + log',/before 17:00/.test(n)&&await p.evaluate(()=>Store.S.data.log.some(l=>/Nurse callback: today/.test(l.what))));
+ await p.click('[data-act=nlater]');await p.waitForTimeout(300);n=await p.locator('.phone').innerText();ok('call me later confirm + log',/A nurse will call you back on this number/.test(n)&&!/17:00|2 hours/.test(n)&&await p.evaluate(()=>Store.S.data.log.some(l=>/Call me later/.test(l.what))));
  await p.evaluate(()=>Patient.send('I am worried'));await p.waitForTimeout(1000);n=await p.locator('.phone').innerText();ok('nurse other text',/I've read your message/.test(n)&&!/few minutes/.test(n));
  // night
  await p.evaluate(()=>{Store.reset();Store.S.data.clockDays=0.5;Store.save();Patient.tourGo('C-1042',{tab:'assistant'})});await p.waitForTimeout(300);
- await p.click('.phone [data-act=nurse]');await p.waitForTimeout(300);n=await p.locator('.phone').innerText();ok('night: no nurse joins',/answer from 08:00 to 20:00/.test(n)&&!/Nurse Layla joined/.test(n)&&await p.locator('[data-act=nightcall]').count()===1);
+ await p.click('.phone [data-act=nurse]');await p.waitForTimeout(300);n=await p.locator('.phone').innerText();ok('night: no nurse joins',/line is closed now/.test(n)&&!/08:00/.test(n)&&!/Nurse Layla joined/.test(n)&&await p.locator('[data-act=nightcall]').count()===1);
  await p.click('[data-act=nightcall]');await p.waitForTimeout(300);ok('night callback logged',await p.evaluate(()=>Store.S.data.log.some(l=>/after 08:00/.test(l.what))));
  await p.screenshot({path:'v42-night.png'});
  // AR male nurse text

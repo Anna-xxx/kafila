@@ -642,3 +642,10 @@ main > .dt-line, #view > .dt-line { margin: 0 0 12px; padding: 8px 12px; backgro
 .call .c-acts { display: flex; flex-direction: column; gap: 8px; margin: 14px 12px 0; }
 .phone .toast.in-phone { position: absolute; left: 14px; right: 14px; bottom: 88px; transform: none; inset-inline-start: 14px; z-index: 70; text-align: center; }
 .phone { position: relative; }
+
+/* v47: "What happens next": one action and one "What is…? ▾" line per step (Anna, 20 Nov) */
+.steps li > .st-x { grid-column: 2; margin-top: -2px; }
+.steps .st-a { min-height: 32px; padding: 0; font-weight: 700; font-size: 14px; }
+.steps .gl-q { display: block; font: inherit; font-size: 13.5px; color: var(--brand); background: none; border: 0; padding: 4px 0; min-height: 32px; cursor: pointer; text-align: start; touch-action: manipulation; }
+.steps .gl-q:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.steps .gl-box { margin: 2px 0 4px; padding: 8px 10px; border-radius: 10px; background: var(--brand-soft); color: var(--ink); }

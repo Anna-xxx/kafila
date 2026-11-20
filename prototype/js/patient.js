@@ -148,8 +148,8 @@
     : fill(I18N[lang].callScript, { name: first(c), clinic: clinicOf(c, lang) });
   // Nurse call-back text follows the same nurse-hours rule as the chat (demo values to agree with the pilot clinic).
   const cbText = (lang) => nurseHours()
-    ? (lang === "ar" ? "ستتصل بكِ الممرضة ليلى على هذا الرقم اليوم خلال ساعتين. في الحالات الطارئة اتصلي بالرقم 998." : "Nurse Layla will call you on this number today, within 2 hours. In an emergency, call 998.")
-    : (lang === "ar" ? "تجيب الممرضات من 08:00 إلى 20:00. ستتصل بكِ الممرضة ليلى بعد الساعة 08:00. في الحالات الطارئة اتصلي بالرقم 998." : "Our nurses answer from 08:00 to 20:00. Nurse Layla will call you after 08:00. In an emergency, call 998.");
+    ? (lang === "ar" ? "ستتصل بكِ ممرضة من مركزكِ الصحي على هذا الرقم. في الحالات الطارئة اتصلي بالرقم 998." : "A nurse from your health centre will call you back on this number. In an emergency, call 998.")
+    : (lang === "ar" ? "خط الممرضات مغلق الآن. ستتصل بكِ ممرضة عندما يفتح. في الحالات الطارئة اتصلي بالرقم 998." : "Our nurses' line is closed now. A nurse will call you back when it opens. In an emergency, call 998.");
   // "Choose a patient" in the panel next to the phone (Anna, 20 Nov).
   const PICK = [["C-1042", "Fatima", "Answers and books a colonoscopy"], ["C-1043", "Rajesh", "Urgent result: a doctor calls today"], ["C-1045", "Ahmed", "Does not answer: the clinic keeps trying"],
     // Mariam and Salem stay in the worklist; the chooser shows 4 stories (Anna, 20 Nov).
@@ -274,9 +274,9 @@
       c.waReply = "canttalk"; c.cantTalk = true; c.callback = new Date(Store.now()).toISOString(); c.humanDone = false;
       Store.log(c.id, "Patient", `Tapped "I can't talk today" in WhatsApp. Case stays urgent; duty doctor (${doctorOf(c, "en")}) told to try again today. 998 line shown.`, "urgent");
     }
-    if (a === "waNurse") { if (!c.callback) { c.callback = new Date(Store.now()).toISOString(); Store.log(c.id, "Patient", "Asked for a nurse from the first WhatsApp message. Nurse call-back requested (clinic target: within 2 hours in nurse hours).", "human"); } }
+    if (a === "waNurse") { if (!c.callback) { c.callback = new Date(Store.now()).toISOString(); Store.log(c.id, "Patient", "Asked for a nurse from the first WhatsApp message. Nurse call-back requested (target: within 2 hours in nurse hours, demo value, to agree with the clinic).", "human"); } }
     if (a === "key") {
-      if (arg === 2) { act("callEnd"); if (!c.callback) { c.callback = new Date(Store.now()).toISOString(); } Store.log(c.id, "Patient", "Pressed 2 on the automated call: nurse call-back requested (clinic target: within 2 hours in nurse hours).", "human"); toast(cbText(lang)); return; }
+      if (arg === 2) { act("callEnd"); if (!c.callback) { c.callback = new Date(Store.now()).toISOString(); } Store.log(c.id, "Patient", "Pressed 2 on the automated call: nurse call-back requested (target: within 2 hours in nurse hours, demo value, to agree with the clinic).", "human"); toast(cbText(lang)); return; }
       if (arg === 1) { Agent.speak(lang === "ar" ? "يرجى إدخال تاريخ ميلادك. بعد ذلك ستسمع أن لديك نتيجة تحتاج زيارة متابعة، وكيف تحجز." : "Please enter your date of birth. Then you will hear that your result needs a follow-up visit, and how to book.", lang); Store.log(c.id, "Patient", "Pressed 1 on the automated call: identity check, then result summary.", "channel"); return; }
     }
     if (a === "home") { u.sheet = null; c.pscreen = "home"; }
@@ -332,7 +332,7 @@
       push(c, { t: "me", text: me });
       const reply = a === "callok" ? (lang === "ar" ? "شكرًا. أبقِ هاتفك قريبًا. إذا شعرت بأنك أسوأ قبل الاتصال، اتصل بالرقم 998." : "Thank you. Keep your phone near you. If you feel worse before the call, call 998.")
         : a === "callwin" ? (lang === "ar" ? `تم. موعد اتصال ${w.short.ar}: اليوم ${winTime(w, lang)}. إذا شعرت بأنك أسوأ قبل ذلك، اتصل بالرقم 998.` : `Done. ${w.short.en} will call you today ${winTime(w, lang)}. If you feel worse before then, call 998.`)
-        : (lang === "ar" ? "ستتصل بك المنسقة خلال 15 دقيقة لتأكيد الرقم." : "The coordinator will call you within 15 minutes to confirm the number.");
+        : (lang === "ar" ? "ستتصل بك المنسقة لتأكيد الرقم." : "The coordinator will call you to confirm the number.");
       push(c, { t: "in", text: reply, tag: "prepared" });
       Store.log(c.id, "Patient", a === "callok" ? "Confirmed available for the doctor's call today." : a === "callwin" ? "Booked the doctor's call: " + w.doc + ", " + fmtTime(w.start) + "–" + fmtTime(w.end) + " today (duty roster, inside the rule deadline " + fmtTime(callBy(c).ms) + ")." : "Asked to be called on another number. Coordinator task, SLA 15 min.", a === "callok" ? "info" : "human");
       if (a === "callwin") Store.bookCall(c, w);
@@ -381,7 +381,7 @@
       const sel = ch[i].sel; ch.splice(i, 1);
       push(c, { t: "me", text: sel.length ? sel.map((k) => T.barriers[k]).join(" · ") : T.barriers.none });
       sel.forEach((k) => push(c, { t: "in", text: fill(T.barrierReply[k], { ins: insName(c, lang) }), tag: "prepared" }));
-      c.barriers = sel; u.filters = { female: sel.includes("gender"), weekend: sel.includes("time"), near: sel.includes("transport") };
+      c.barriers = sel; u.filters = { female: sel.includes("gender"), evening: sel.includes("time"), weekend: sel.includes("time"), near: sel.includes("transport") };
       Store.log(c.id, "Patient", "Barriers: " + (sel.join(", ") || "none"), "info");
       if (sel.includes("notnow")) {
         if (!c.callback || c.humanDone) { c.callback = new Date(Store.now()).toISOString(); c.humanDone = false; }
@@ -431,25 +431,25 @@
       tab(c, "assistant");
       if (!c.human && !nurseHours()) {
         // Out of hours (demo clock): nobody joins. The request becomes a callback task for 08:00 (Anna, 20 Nov: "what if it is night").
-        clearQr(c); push(c, { t: "in", tag: "centre", text: ar ? "تجيب الممرضات من 08:00 إلى 20:00. رسالتكِ محفوظة وستردّ ممرضة بعد الساعة 08:00. في الحالات الطارئة اتصلي بالرقم 998." : "Our nurses answer from 08:00 to 20:00. Your message is saved and a nurse will reply after 08:00. In an emergency, call 998." });
+        clearQr(c); push(c, { t: "in", tag: "centre", text: ar ? "خط الممرضات مغلق الآن. رسالتكِ محفوظة وستردّ ممرضة عندما يفتح. في الحالات الطارئة اتصلي بالرقم 998." : "Our nurses' line is closed now. Your message is saved and a nurse will reply when it opens. In an emergency, call 998." });
         push(c, { t: "qr", opts: [["nightcall", ar ? "اتصلوا بي صباحًا" : "Call me in the morning"], ["nightwrite", ar ? "سأكتب سؤالي الآن" : "I'll write my question now"]] });
         if (!c.callback || c.humanDone) { c.callback = new Date(Store.now()).toISOString(); c.humanDone = false; }
         Store.log(c.id, "Patient", "Asked for a nurse out of hours. Callback task for the coordinator, due 08:00.", "human");
       } else if (!c.human) {
         clearQr(c); push(c, { t: "sys", key: "nurseJoin" }); push(c, { t: "nurse", text: fill(T.nurseMsg, { name: first(c) }) });
-        push(c, { t: "sys", text: ar ? "في هذا العرض ردود الممرضة محاكاة. تجيب الممرضات من 08:00 إلى 20:00 (ساعات تجريبية)." : "In this demo the nurse's replies are simulated. Nurses answer 08:00–20:00 (demo hours)." });
+        push(c, { t: "sys", text: ar ? "في هذا العرض ردود الممرضة محاكاة." : "In this demo the nurse's replies are simulated." });
         Store.log(c.id, "Patient", "Asked for a nurse → handed to Nurse Layla (human). AI paused; red-topic rules stay on. Nurse task, SLA 2 h.", "human");
         c.human = true; c.humanDone = false; c.humanAt = new Date(Store.now()).toISOString();
       }
     }
     if (["ncall", "nlater", "nwrite", "nightcall", "nightwrite"].includes(a)) {
-      const L = { ncall: ["Call me now", "أريد مكالمة الآن", "I'm calling you now.", "سأتصل بكِ الآن."], nlater: ["Later today", "لاحقًا اليوم", "I'll call you today before 17:00.", "سأتصل بكِ اليوم قبل الساعة 17:00."],
-        nwrite: ["Keep writing here", "سأكتب هنا", "Fine, write to me here.", "حسنًا، اكتبي لي هنا."], nightcall: ["Call me in the morning", "اتصلوا بي صباحًا", "A nurse will call you after 08:00.", "ستتصل بكِ ممرضة بعد الساعة 08:00."],
-        nightwrite: ["I'll write my question now", "سأكتب سؤالي الآن", "Write your question below. A nurse will read it after 08:00.", "اكتبي سؤالكِ أدناه. ستقرؤه ممرضة بعد الساعة 08:00."] }[a];
+      const L = { ncall: ["Call me now", "أريد مكالمة الآن", "I'm calling you now.", "سأتصل بكِ الآن."], nlater: ["Call me later", "اتصلوا بي لاحقًا", "A nurse will call you back on this number.", "ستتصل بكِ ممرضة على هذا الرقم."],
+        nwrite: ["Keep writing here", "سأكتب هنا", "Fine, write to me here.", "حسنًا، اكتبي لي هنا."], nightcall: ["Call me in the morning", "اتصلوا بي صباحًا", "A nurse will call you back when the line opens.", "ستتصل بكِ ممرضة عندما يفتح الخط."],
+        nightwrite: ["I'll write my question now", "سأكتب سؤالي الآن", "Write your question below. A nurse will read it when the line opens.", "اكتبي سؤالكِ أدناه. ستقرؤه ممرضة عندما يفتح الخط."] }[a];
       clearQr(c); push(c, { t: "me", text: ar ? L[1] : L[0] });
       push(c, a.startsWith("night") ? { t: "in", tag: "centre", text: ar ? L[3] : L[2] } : { t: "nurse", text: ar ? L[3] : L[2] });
       if (a !== "nwrite" && a !== "nightwrite") { if (!c.callback || c.humanDone) { c.callback = new Date(Store.now()).toISOString(); c.humanDone = false; }
-        Store.log(c.id, "Nurse Layla", a === "ncall" ? "Nurse callback: calling now." : a === "nlater" ? "Nurse callback: today before 17:00." : "Nurse callback after 08:00 (out of hours).", "human"); }
+        Store.log(c.id, "Nurse Layla", a === "ncall" ? "Nurse callback: calling now." : a === "nlater" ? "Nurse callback: patient chose \"Call me later\" (target: within 2 hours in nurse hours, demo value, to agree with the clinic)." : "Nurse callback after 08:00 (out of hours).", "human"); }
     }
     if (a === "askq") {
       // "I have a question": Chat with this pathway's question chips. Nothing else is sent unasked.
@@ -469,7 +469,7 @@
       push(c, { t: "me", text: ar ? "ليس الآن" : "Not now" }); askBarriers(c);
     }
     if (a === "callme") {
-      if (!c.callback || c.humanDone) { c.callback = new Date(Store.now()).toISOString(); c.humanDone = false; push(c, { t: "sys", text: cbText(lang) }); Store.log(c.id, "Patient", "Nurse call-back requested (clinic target: within 2 hours in nurse hours).", "human"); }
+      if (!c.callback || c.humanDone) { c.callback = new Date(Store.now()).toISOString(); c.humanDone = false; push(c, { t: "sys", text: cbText(lang) }); Store.log(c.id, "Patient", "Nurse call-back requested (target: within 2 hours in nurse hours, demo value, to agree with the clinic).", "human"); }
       tab(c, "assistant");
     }
     if (a === "e998") { u.overlay = "emerg"; u.emergText = (Store.S.F.L4.answer || {})[lang] || ""; Store.log(c.id, "Patient", "Tapped the 998 button in the app", "urgent"); }
@@ -529,7 +529,7 @@
       setTimeout(() => { clearQr(c);
         push(c, { t: "nurse", text: call ? (ar ? "بالطبع. يمكنني الاتصال بكِ على الرقم المسجل لدينا. ما الوقت المناسب لكِ؟" : "Of course. I can call you on the number we have for you. When suits you?")
           : (ar ? `شكرًا، ${first(c)}. قرأت رسالتكِ. هل تفضلين أن أتصل بكِ، أم أجيبكِ هنا؟` : `Thank you, ${first(c)}. I've read your message. Would you like me to call you, or shall I answer here?`) });
-        push(c, { t: "qr", opts: [["ncall", ar ? "أريد مكالمة الآن" : "Call me now"], ["nlater", ar ? "لاحقًا اليوم" : "Later today"], ["nwrite", ar ? "سأكتب هنا" : "Keep writing here"]] }); Store.save(); }, 700);
+        push(c, { t: "qr", opts: [["ncall", ar ? "أريد مكالمة الآن" : "Call me now"], ["nlater", ar ? "اتصلوا بي لاحقًا" : "Call me later"], ["nwrite", ar ? "سأكتب هنا" : "Keep writing here"]] }); Store.save(); }, 700);
       return; }
     // Fixed intents that create a task for a person (not AI): "already done elsewhere" and "I don't want the test".
     const ELSE = /\b(already (had|did|done|have had)|other hospital|another hospital|another clinic|elsewhere|private (clinic|hospital)|abroad)\b|في مستشفى آخر|في مكان آخر|أجريت|عملت الفحص|سويت/i;
@@ -627,6 +627,32 @@
     const open = found.find((k) => ui().gloss === i + ":" + k);
     return bk + h + (open ? `<span class="gloss-t small">${esc(GLOSS[open].t[L])}</span>` : "");
   }
+  // "What happens next" (Anna, 20 Nov: "what are these links and why don't they work"): plain step text,
+  // at most one real action per step, and one "What is…? ▾" line under the step it belongs to.
+  const GLQ = { gi: { en: "Who is a gastroenterologist?", ar: "من هو طبيب الجهاز الهضمي؟" }, colo: { en: "What is a colonoscopy?", ar: "ما هو تنظير القولون؟" }, colp: { en: "What is a colposcopy?", ar: "ما هو تنظير عنق الرحم؟" } };
+  const GLAT = { colonoscopy: { 0: ["gi"], 2: ["colo"] }, colposcopy: { 2: ["colp"] } };
+  function stepRow(c, lang, i, s, done, by, canBook) {
+    const ar = lang === "ar", L = ar ? "ar" : "en", pw = pathway(c), sl = c.slot, w = (x) => `<span class="when">${esc(x)}</span>`;
+    const gone = ["attended", "closed"].includes(c.state), confirmed = ["booked", "attended", "closed"].includes(c.state) || (c.state === "confirmation" && pw === "gp_confirm");
+    const at = sl ? fmtDate(Date.parse(sl.day + "T" + sl.time + ":00+04:00"), lang) + " · " + sl.time : "";
+    let text = s, sub = whenFor(c, lang, i, by), act = "", keys = ((GLAT[pw] || {})[i] || []);
+    if (SLOTS[pw] && i === 0) {
+      if (sl) {
+        const what = pw === "colonoscopy" ? (ar ? "تم حجز تنظير القولون" : "Colonoscopy booked") : pw === "colposcopy" ? (ar ? "تم حجز تنظير عنق الرحم" : "Colposcopy booked") : (ar ? "تم حجز الزيارة" : "Visit booked");
+        text = what + ": " + [at, nm(sl.doc, lang), nm(sl.clinic, lang)].join(ar ? "، " : ", ");
+        sub = gone ? "<span></span>" : w(confirmed ? (ar ? "أكدت العيادة الموعد" : "Confirmed by the clinic") : (ar ? "بانتظار تأكيد العيادة" : "Waiting for the clinic to confirm"));
+        if (!gone) act = `<button class="linkbtn st-a" data-act="change">${ar ? "تغيير أو إلغاء" : "Change or cancel"}</button>`;
+        keys = [];
+      } else if (canBook) act = `<button class="linkbtn st-a" data-act="tab" data-arg="book">${ar ? "احجزي الآن ←" : "Book now →"}</button>`;
+    }
+    if (sl && i === 2 && (pw === "colonoscopy" || pw === "colposcopy")) {
+      text = (pw === "colonoscopy" ? (ar ? "إجراء تنظير القولون يوم " : "Have the colonoscopy on ") : (ar ? "إجراء تنظير عنق الرحم يوم " : "Have the colposcopy on ")) + at;
+      sub = "<span></span>";
+    }
+    const gl = keys.map((k) => { const id = i + ":" + k, on = ui().gloss === id;
+      return `<button class="gl-q" data-act="gloss" data-arg="${id}" aria-expanded="${on}">${esc(GLQ[k][L])} <span aria-hidden="true">${on ? "▴" : "▾"}</span></button>${on ? `<div class="gl-box small">${esc(GLOSS[k].t[L])}</div>` : ""}`; }).join("");
+    return `<li><span class="d ${i < done ? "on" : ""}">${i < done ? "✓" : i + 1}</span><span>${esc(text)}</span>${sub}${act || gl ? `<div class="st-x">${act}${gl}</div>` : ""}</li>`;
+  }
   const stripCmp = (s) => String(s || "").replace(/^\s*(Compared with|مقارنة\s*بـ?)\s*:\s*/i, "").replace(/^[\s—–-]*$/, "");
 
   // ---------- app tabs ----------
@@ -639,7 +665,7 @@
     const meaning = r.test === "FIT" && r.category === "positive" ? T.fitPosMeaning : M ? M[lang] || M.en : (lang === "ar" ? r.compareAr || r.compare : r.compare);
     const value = r.test === "BP" ? `${c.test.sys}/${c.test.dia} mmHg` : r.test === "HBA1C" ? `${c.test.value}%` : "";
     const steps = nextSteps(c, lang), canBook = !!slotsFor(c) && !c.rejected;
-    const done = { referral: 1, booked: 1, attended: 3, closed: 4 }[c.state] ?? 0;
+    const done = Math.max({ referral: 1, booked: 1, attended: 3, closed: 4 }[c.state] ?? 0, c.slot ? 1 : 0);
     const zoneWord = callToday ? (lang === "ar" ? "يحتاج رعاية اليوم" : "Needs care today") : T.zone[r.zone] || r.zone;
     // Urgent BP card is written so it does not frighten (BA rewrite, wording waits for Anna's check).
     const body = callToday
@@ -657,7 +683,7 @@
         <div class="why-row">${lang === "ar" ? "حُدِّد وفق قواعد برنامج الفحص، وليس بالذكاء الاصطناعي." : "Decided by the screening programme's rules, not by AI."}</div></div></div>
       ${canBook ? `<div class="res-acts">${actions}</div>` : ""}
       <div class="acard"><b>${esc(T.nextTitle)}</b>
-        <ol class="steps">${steps.map((s, i) => `<li><span class="d ${i < done ? "on" : ""}">${i < done ? "✓" : i + 1}</span><span>${glossify(s, lang, i, canBook)}</span>${whenFor(c, lang, i, by)}</li>`).join("")}</ol>
+        <ol class="steps">${steps.map((s, i) => stepRow(c, lang, i, s, done, by, canBook)).join("")}</ol>
         ${callToday ? `<details class="srcs howto"><summary>${lang === "ar" ? "كيف أقيس؟" : "How to measure"}</summary>
           <ol class="small" style="margin:4px 0 0;padding-inline-start:18px">${(lang === "ar" ? ["ادخل الحمّام أولًا إذا احتجت. اجلس 5 دقائق، الظهر مسنود، القدمان على الأرض، الساقان غير متقاطعتين.", "ضع الكُمّ على أعلى ذراعك مباشرة على الجلد، فوق المرفق بإصبعين تقريبًا. أرح ذراعك على طاولة بحيث يكون الكُمّ بمستوى القلب (منتصف الصدر).", "ابقَ ساكنًا، دون كلام أو استخدام الهاتف. خذ قراءتين بفارق دقيقة، على الذراع نفسها.", "اكتب القراءتين والوقت لتخبر الطبيب بهما.", "إذا شربت قهوة أو شايًا ثقيلًا أو دخّنت أو مارست رياضة خلال آخر 30 دقيقة، قِس على أي حال وأخبر الطبيب.", "حتى لو كانت الأرقام أقل، انتظر اتصال الطبيب."] : ["Use the toilet first if you need to. Sit for 5 minutes, back supported, feet flat on the floor, legs uncrossed.", "Put the cuff on your bare upper arm, about 2 fingers above the elbow. Rest your arm on a table so the cuff is at heart level (middle of your chest).", "Stay still, no talking or using your phone. Take two readings, one minute apart, on the same arm.", "Write down both readings and the time, to tell the doctor.", "If you had coffee, strong tea, a cigarette or exercise in the last 30 minutes, measure anyway and tell the doctor.", "Even if the numbers are lower, keep the doctor's call."]).map((x) => `<li>${esc(x)}</li>`).join("")}</ol>
           <div class="small" style="margin-top:4px">${lang === "ar" ? "لا يوجد جهاز؟ لا داعي للبحث عن جهاز. سيقرر الطبيب إن كان يلزم القياس مرة أخرى وأين." : "No monitor? You don't need to find one. The doctor will decide if and where to measure again."}</div></details>
@@ -713,7 +739,8 @@
     if (c.slot) return apptCard(c, lang);
     if (c.rejected) return returnedCard(c, lang);
     const fcb = Store.fitClocks(c), by = fcb ? fcb.careBy : c.result.windowDays ? Date.parse(c.history[0].at) + c.result.windowDays * Store.DAY : null;
-    let list = P.list.filter((s) => (!f.female || s.f) && (!f.weekend || s.wkd)).sort((a, b) => (a.day + a.time).localeCompare(b.day + b.time));
+    const isEve = (s) => s.time >= "17:00", isWkd = (s) => [0, 6].includes(new Date(s.day + "T12:00:00+04:00").getUTCDay());
+    let list = P.list.filter((s) => (!f.female || s.f) && (!(f.evening || f.weekend) || (f.evening && isEve(s)) || (f.weekend && isWkd(s)))).sort((a, b) => (a.day + a.time).localeCompare(b.day + b.time));
     if (f.near) list = list.slice().sort((a, b) => a.km - b.km);
     // Book tab in plain words (Anna, 20 Nov: "не очевидный дизайн"): a header, one line, labelled filters, a button on every time.
     const head = (T.bookHead && T.bookHead[pathway(c)]) || P.title[lang] || P.title.en;
