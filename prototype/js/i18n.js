@@ -3,13 +3,13 @@ window.I18N = {
   en: {
     dir: "ltr",
     app: {
-      waHello: "Hello {name}. {doctor}’s team has sent you a secure message. Please open it using the link below.",
-      waUrgent: "Hello {name}. This is {clinic}. A doctor needs to speak with you today. {doctor} will call you {deadline} from {clinicPhone}. Open the secure link to pick a time. If you feel very unwell, call 998 now.",
+      waHello: "Hello {name}. This is {clinic}. {doctor} has an important message for you. Please open it today using the secure link below. Questions? Tap Talk to a nurse.",
+      waUrgent: "Hello {name}. This is {clinic}. A doctor needs to speak with you today. {doctor} will call you {deadline} from {clinicPhone}. Open the secure link to pick a time. In an emergency, call 998.",
       openResult: "Open the message", secureLink: "kafila.demo · secure, no download",
       signinTitle: "Sign in", otpSent: "We sent a 4-digit code to your phone ending in ••42 (demo code is filled in).",
       continue: "Continue", nationalId: "Sign in with national ID (pilot)", consentLabel: "I agree",
       tabs: { result: "Result", assistant: "Chat", book: "Book", mycase: "My case" },
-      hello: "Hello, {name}", askTitle: "Questions about your result?", askSub: "Chat with your health centre", askSubNurse: "Chat with Nurse Layla",
+      hello: "Hello, {name}", askTitle: "Chat", askSub: "with your health centre", askSubNurse: "with Nurse Layla",
       bookTitle: "Choose a time", bookBy: "Book by {date}", mycaseTitle: "My case", stepOf: "Step {n} of 6",
       nursePill: "Nurse", emergPill: "998",
       understood: "I understand. Continue", bookMain: "Book now",
@@ -109,13 +109,13 @@ window.I18N = {
   ar: {
     dir: "rtl",
     app: {
-      waHello: "مرحبًا {name}. أرسل لك فريق {doctor} رسالة آمنة. يُرجى فتحها عبر الرابط أدناه.",
-      waUrgent: "مرحبًا {name}. معك {clinic}. يحتاج طبيب إلى التحدث معك اليوم. سيتصل بك {doctor} {deadline} من الرقم {clinicPhone}. افتح الرابط الآمن لاختيار وقت. إذا شعرت بتوعّك شديد، يُرجى الاتصال بالرقم 998 فورًا.",
+      waHello: "مرحبًا {name}. معك {clinic}. لديك رسالة مهمة من {doctor}. يُرجى فتحها اليوم عبر الرابط الآمن أدناه. للاستفسار اضغط \"التحدث مع ممرضة\".",
+      waUrgent: "مرحبًا {name}. معك {clinic}. يحتاج طبيب إلى التحدث معك اليوم. سيتصل بك {doctor} {deadline} من الرقم {clinicPhone}. افتح الرابط الآمن لاختيار وقت. في الحالات الطارئة اتصل بالرقم 998.",
       openResult: "افتحي الرسالة", secureLink: "kafila.demo · آمن، بدون تحميل",
       signinTitle: "تسجيل الدخول", otpSent: "أرسلنا رمزًا من 4 أرقام إلى هاتفك المنتهي بـ ••42 (الرمز التجريبي مُدخل).",
       continue: "متابعة", nationalId: "الدخول بالهوية الوطنية (في التجربة)", consentLabel: "أوافق",
       tabs: { result: "النتيجة", assistant: "المحادثة", book: "الحجز", mycase: "حالتي" },
-      hello: "مرحبًا، {name}", askTitle: "هل لديكِ أسئلة عن نتيجتكِ؟", askSub: "محادثة مع مركزك الصحي", askSubNurse: "محادثة مع الممرضة ليلى",
+      hello: "مرحبًا، {name}", askTitle: "المحادثة", askSub: "مع مركزك الصحي", askSubNurse: "مع الممرضة ليلى",
       bookTitle: "اختاري موعدًا", bookBy: "احجزي قبل {date}", mycaseTitle: "حالتي", stepOf: "الخطوة {n} من 6",
       nursePill: "ممرضة", emergPill: "998",
       understood: "فهمت، متابعة", bookMain: "احجزي الآن",

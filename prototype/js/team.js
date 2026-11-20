@@ -187,7 +187,7 @@
     root.innerHTML = `<div class="card wl"><div class="row" style="justify-content:space-between;align-items:baseline"><h2 style="margin:0">Actionable results</h2>
       <span class="tiny">Abu Dhabi screening programme · synthetic data · ${Store.S.data.cases.length} cases</span></div>
       <p class="small" style="margin:6px 0 4px"><b>${esc(intro)}</b>${role === "lead" ? ` <a href="#/dashboard">Open the Dashboard →</a>` : ""}</p>
-      <p class="muted tiny" style="margin:0 0 10px">Switch person with the “Viewing” button at the top. “All cases” shows everything.</p>
+      <p class="muted tiny" style="margin:0 0 10px">Switch role with the buttons at the top. “All cases” shows everything.</p>
       ${role === "gp" && tab === "mine" ? gpCalls() : ""}
       <div class="tabs" role="tablist">${MAIN.map(([k, l]) => `<button role="tab" aria-selected="${k === tab}" class="${k === tab ? "on" : ""}" data-tab="${k}">${l}<span class="n">${filtered(k).length}</span></button>`).join("")}
         <label class="tiny" style="margin-inline-start:auto;display:flex;align-items:center;gap:6px">More <select id="more"><option value="">—</option>${MORE.map(([k, l]) => `<option value="${k}" ${k === tab ? "selected" : ""}>${l} (${filtered(k).length})</option>`).join("")}</select></label></div>

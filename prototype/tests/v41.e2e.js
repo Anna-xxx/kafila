@@ -13,13 +13,10 @@ await p.click('#tourBtn');await p.click('#tour [data-t=close]');ok(w+' × closes
 await p.reload();await p.waitForTimeout(500);ok(w+' reload keeps closed',!(await p.locator('#tour').count()));
 await p.goto(U+'?tour=1');await p.waitForTimeout(600);ok(w+' ?tour=1 opens step 1',await p.isVisible('#tour')&&/1\. Fatima gets a message/.test(await p.locator('#tour').innerText()));
 await p.screenshot({path:'v41-tour-'+w+'.png'});
-await p.click('#startBtn');await p.waitForTimeout(200);const mt=await p.locator('#entry').innerText();
-ok(w+' menu groups',/Patients/i.test(mt)&&/Care team/i.test(mt)&&!/Also in Arabic|3-minute tour/.test(mt)&&(await p.locator('#entry .entry-b').count())===10&&/Fatima, later/.test(mt));
-await p.screenshot({path:'v41-menu-'+w+'.png'});
-await p.mouse.click(10,vp.height-10);await p.waitForTimeout(150);ok(w+' outside click closes',!(await p.locator('#entry').count()));
-await p.click('#startBtn');await p.keyboard.press('Escape');ok(w+' Esc closes',!(await p.locator('#entry').count()));
-await p.click('#startBtn');await p.click('#entry [data-e="5"]');await p.waitForTimeout(500);ok(w+' returned Fatima, tour closed',await p.evaluate(()=>Store.S.data.personaKey==='C-1042:returned')&&!(await p.locator('#tour').count()));
-await p.click('#startBtn');await p.click('#entry [data-e="0"]');await p.waitForTimeout(500);ok(w+' Fatima restarts after Fatima, later',await p.evaluate(()=>!Store.byId('C-1042').rejected&&Store.S.data.personaKey==='C-1042'));
+const mt=await p.locator('#people').innerText();
+ok(w+' role row',(await p.locator('#people .pp').count())===5&&/Patient/.test(mt)&&/Coordinator · Noura/.test(mt)&&(await p.locator('.pick-p').count())===6&&/Fatima, later/.test(await p.locator('.pick-list').innerText()));
+await p.click('[data-pick="C-1042:returned"]');await p.waitForTimeout(500);ok(w+' returned Fatima, tour closed',await p.evaluate(()=>Store.S.data.personaKey==='C-1042:returned')&&!(await p.locator('#tour').count()));
+await p.click('[data-pick="C-1042"]');await p.waitForTimeout(500);ok(w+' Fatima restarts after Fatima, later',await p.evaluate(()=>!Store.byId('C-1042').rejected&&Store.S.data.personaKey==='C-1042'));
 ok(w+' no scenario select',!(await p.locator('#persona').count()));
 await p.goto(U+'#/team');await p.evaluate(()=>localStorage.clear());await p.reload();await p.waitForTimeout(500);ok(w+' deep link team no tour',!(await p.locator('#tour,#entry').count())&&/#\/team/.test(p.url()));
 const ov=await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth);ok(w+' no h-scroll',!ov);

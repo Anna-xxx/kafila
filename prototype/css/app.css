@@ -328,7 +328,7 @@ div.sla, dd.sla { white-space: normal; }
 
 /* Real-system look: demo controls hidden until "⚙ Demo" is pressed */
 .demo-btn { height: 32px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); padding: 0 12px; font-weight: 700; font-size: 13px; cursor: pointer; color: var(--ink-2); }
-.demo-btn[aria-pressed="true"] { background: var(--brand-soft); color: var(--brand); border-color: var(--brand); }
+.demo-btn[aria-pressed="true"] { background: var(--brand-soft); color: var(--brand); border-color: var(--brand); box-shadow: inset 0 0 0 1px var(--brand); }
 body:not(.demo-on) .ctrl, body:not(.demo-on) .demo-side { display: none; }
 body:not(.demo-on) .pcols { grid-template-columns: 1fr; }
 .stage { display: flex; flex-direction: column; align-items: center; }
@@ -583,7 +583,49 @@ details.srcs { margin-top: 8px; } details.srcs summary { cursor: pointer; font-s
 @media (max-width: 600px) { .pick-menu { position: fixed; top: 56px; left: 16px; right: 16px; width: auto; } }
 .pick-g { padding: 8px 10px 2px; font-weight: 700; color: var(--ink-2); text-transform: uppercase; letter-spacing: .04em; }
 /* v41: no tab row. Top bar = logo · person menu · tour · demo tools · about menu. */
-#startBtn { max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-@media (max-width: 600px) { .top { gap: 8px; padding: 8px 12px; } .top .demo-btn { font-size: 13px; padding: 6px 10px; } #startBtn { max-width: calc(100vw - 140px); } }
+@media (max-width: 600px) { .top { gap: 8px; padding: 8px 12px; } .top .demo-btn { font-size: 13px; padding: 6px 10px; } }
 @media (max-width: 600px) { .hide-sm { display: none; } }
 #tour .t-body { min-height: 190px; } @media (max-width: 700px) { #tour .t-body { min-height: 0; } }
+/* v42: person row under the top bar (one click switches; filled chip = whose screen). */
+.people { flex-basis: 100%; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; padding-top: 8px; margin-top: 2px; border-top: 1px solid var(--line); }
+.people .pp-g { font-size: 12px; font-weight: 700; color: var(--ink-3); text-transform: uppercase; letter-spacing: .04em; margin-inline-end: 2px; white-space: nowrap; }
+.people .pp-div { width: 1px; align-self: stretch; background: var(--line); margin: 0 6px; }
+.people .pp { height: 30px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; font-size: 13.5px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+.people .pp:hover { border-color: var(--brand); }
+.people .pp[aria-pressed="true"] { background: var(--brand); border-color: var(--brand); color: #fff; }
+.people .pp:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+@media (max-width: 1100px) { .people { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: thin; padding-bottom: 4px; } }
+@media (max-width: 700px) { .people { margin: 2px -12px 0; padding: 8px 12px 4px; width: calc(100% + 24px); } }
+/* v42: role row = 5 chips; patient chooser + demo time in the panel next to the phone. */
+.dt-line { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 13.5px; }
+main > .dt-line, #view > .dt-line { margin: 0 0 12px; padding: 8px 12px; background: var(--surface-2); border: 1px solid var(--line); border-radius: 10px; }
+.pick-list { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.pick-p { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; text-align: start; padding: 8px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--ink); font: inherit; cursor: pointer; }
+.pick-p:hover { border-color: var(--brand); }
+.pick-p[aria-pressed="true"] { background: var(--brand); border-color: var(--brand); color: #fff; }
+.pick-p[aria-pressed="true"] .tiny { color: #fff; opacity: .9; }
+@media (max-width: 520px) { .pick-list { grid-template-columns: 1fr; } }
+.book-w { font: inherit; font-weight: 700; color: var(--brand); background: none; border: 0; padding: 0; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.book-w:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.gloss-w { touch-action: manipulation; }
+.cols > * { min-width: 0; }
+.demo-side .row { flex-wrap: wrap; }
+.demo-side .btn { white-space: normal; text-align: start; max-width: 100%; height: auto; min-height: 32px; }
+/* v42: the Chat tab is part of the clinic's web app, not a messenger (Anna, 20 Nov). WhatsApp look stays on the first screen only. */
+.phone.real.scr-app .bub { background: var(--surface); border: 1px solid var(--line); box-shadow: none; border-radius: 12px; }
+.phone.real.scr-app .bub.me { background: var(--brand-soft); border-color: transparent; color: var(--ink); }
+.phone.real.scr-app .bub.tail::before { display: none; }
+.phone.real.scr-app .bub .tick { display: none; }
+.phone.real.scr-app .wa-input { background: var(--surface); border-top: 1px solid var(--line); gap: 8px; }
+.phone.real.scr-app .wa-input input { border-radius: 10px; height: 44px; }
+.phone.real.scr-app .wa-input button { border-radius: 10px; background: var(--surface); color: var(--brand); border: 1px solid var(--line); width: 44px; }
+.phone.real.scr-app .wa-input button.send-txt { width: auto; padding: 0 14px; background: var(--brand); color: #fff; border-color: var(--brand); font-weight: 700; font-size: 14px; }
+.phone.real.scr-app .wa-input button.rec { background: var(--red); color: #fff; }
+.bub .meta.mline { justify-content: flex-start; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+.bub .meta.mline .msp { flex: 1; }
+.bub .meta.mline .listen.lbl { min-height: 28px; margin: 0; font-size: 12px; padding: 0 4px; }
+.bub .meta.mline .ok-tag, .bub .meta.mline .ai-tag { margin: 0; }
+.phone.real.scr-app .ascroll { padding: 12px 12px 28px; scroll-padding-bottom: 28px; }
+.phone.real.scr-app .ascroll > .sys, .phone.real.scr-app .ascroll > .qr { align-self: stretch; margin-inline: 0; }
+.phone.real.scr-app .ah b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ctrl { display: none !important; } /* BA 20 Nov: old demo bar, replaced by the panel */
