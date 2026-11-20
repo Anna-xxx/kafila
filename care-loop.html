@@ -37,7 +37,7 @@ button:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
 .node.past b { color: var(--ink); }
 .node.now .av { border-color: var(--green); transform: scale(1.18); box-shadow: 0 0 0 6px var(--green-2); }
 .node.now b { color: var(--green); font-weight: 700; }
-.node.future .av { opacity: .5; }
+.node.future .av { opacity: .78; }
 .node.w .av { border-color: #6b4f22; } .node.w.now .av, .node.w.past .av { border-color: var(--warn); } .node.w.now b { color: var(--warn); } .node.w.now .av { box-shadow: 0 0 0 6px var(--warn-bg); }
 .node.r .av { border-color: #6b2b26; } .node.r.now .av, .node.r.past .av { border-color: var(--red); } .node.r.now b { color: var(--red); } .node.r.now .av { box-shadow: 0 0 0 6px var(--red-bg); }
 .node.w svg.i { stroke: var(--warn); } .node.r svg.i { stroke: var(--red); }
@@ -136,6 +136,11 @@ button:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
 .btn.line:hover { border-color: var(--teal); }
 .top .btn { min-height: 38px; padding: 0 16px; font-size: 14px; }
 @media (max-width: 860px) { .top nav { display: none; } .top .btn { margin-left: auto; } }
+.menubtn { display: none; }
+@media (max-width: 860px) { .menubtn { display: inline-flex; align-items: center; white-space: nowrap; margin-left: auto; min-height: 38px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--ink); font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; } .top .btn { margin-left: 8px; } .top nav.open { display: flex; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; gap: 14px; padding: 14px 20px 18px; background: var(--night); border-bottom: 1px solid var(--line); } .top nav.open .navsep { width: 100%; height: 1px; } }
+@media (max-width: 420px) { .top .topin, .top .wrap { gap: 10px; } .top .btn { padding: 0 12px; margin-left: 6px; } .menubtn { padding: 0 10px; } }
+@media (max-width: 360px) { .top .topin, .top .wrap { gap: 8px; } .top .btn { padding: 0 10px; font-size: 13px; } .menubtn { padding: 0 8px; font-size: 13px; } }
+
 
 .top .topin { max-width: 1120px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
 .top nav a.on { color: var(--ink); }
@@ -146,20 +151,21 @@ button:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
 <header class="top">
   <div class="topin">
     <a class="logo" href="index.html"><i class="mk"><svg width="28" height="28" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" aria-hidden="true"><g id="mark"><path d="M75.61 21.01 A42 42 0 0 1 92.26 33.10" fill="none" stroke="#69c5b3" stroke-width="10" stroke-linecap="round"/><path d="M101.91 62.80 A42 42 0 0 1 95.55 82.37" fill="none" stroke="#7fb1e1" stroke-width="10" stroke-linecap="round"/><path d="M70.29 100.72 A42 42 0 0 1 49.71 100.72" fill="none" stroke="#f5c873" stroke-width="10" stroke-linecap="round"/><path d="M24.45 82.37 A42 42 0 0 1 18.09 62.80" fill="none" stroke="#f3a473" stroke-width="10" stroke-linecap="round"/><path d="M27.74 33.10 A42 42 0 0 1 44.39 21.01" fill="none" stroke="#8cd1a1" stroke-width="10" stroke-linecap="round"/><circle cx="60.00" cy="18.00" r="11.5" fill="#3fb59d"/><circle cx="99.94" cy="47.02" r="11.5" fill="#5b9bd8"/><circle cx="84.69" cy="93.98" r="11.5" fill="#f2b84b"/><circle cx="35.31" cy="93.98" r="11.5" fill="#f08a4b"/><circle cx="20.06" cy="47.02" r="11.5" fill="#6cc486"/></g></svg></i>Kafila <span lang="ar" dir="rtl" style="opacity:.7;font-weight:500">قافلة</span></a>
-    <nav aria-label="Sections">
+    <nav id="sitenav" aria-label="Sections">
       <a href="index.html#what">Five steps</a><a href="index.html#why">The gap</a><a href="index.html#who">People</a><a href="index.html#how">Fatima's case</a><a href="index.html#safety">Urgent cases</a><a href="index.html#ai">AI</a><a href="index.html#pilot">Impact</a><span class="navsep" aria-hidden="true"></span><a href="care-loop.html" class="on" aria-current="page">Step by step</a><a href="architecture.html">Architecture</a>
     </nav>
+    <button class="menubtn" id="menubtn" aria-expanded="false" aria-controls="sitenav">Menu</button>
     <a class="btn solid" href="prototype/" target="_blank" rel="noopener">Prototype</a>
   </div>
 </header>
 <div class="wrap">
   <div class="eyebrow">Kafila · Fatima’s case, step by step</div>
   <h1>One result. <span>Six steps, each with a responsible person.</span></h1>
-  <p class="lead">Follow Fatima, 52, through six steps, from her positive stool test to the colonoscopy report that closes her case. See who is responsible, what happens next and how Kafila handles delays. On the right, not numbered as steps: who watches the whole programme, what happens if something goes wrong, and the emergency rule. Fatima is a composite persona; all people and clinics are fictional.</p>
+  <p class="lead">Follow Fatima, 52, through six steps, from her positive stool test to the colonoscopy report that closes her case. See who is responsible, what happens next and how Kafila handles delays. After the six steps, three more scenes: the daily programme review, what happens if something goes wrong, and the emergency rule. Fatima is a composite persona; all people and clinics are fictional.</p>
 
   <div class="trackbox" id="trackbox"><div class="track" id="track" role="tablist" aria-label="Steps"></div></div>
 
-  <section class="stage" id="stage" aria-live="polite">
+  <section class="stage" id="stage" role="tabpanel" aria-live="polite">
     <div class="who"><div class="big" id="sBig"></div><b id="sWho"></b><span id="sRole"></span></div>
     <div class="body">
       <span class="stepno" id="sNo"></span>
@@ -174,9 +180,9 @@ button:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
   <div class="whole" id="whole" hidden>
     <div class="wtrack" id="wtrack"></div>
     <div class="wrow">
-      <div class="wbox l"><h3>Programme lead, every day</h3><p id="wlead"></p></div>
+      <div class="wbox l"><h3>Daily programme review</h3><p id="wlead"></p></div>
       <div class="wbox w"><h3>If something goes wrong</h3><ul id="wexc"></ul></div>
-      <div class="wbox r"><h3>Emergency, at any moment</h3><p>She writes “chest pain” or “a lot of blood”: a fixed “call 998” screen, no AI. Her doctor is alerted and calls the same day.</p></div>
+      <div class="wbox r"><h3>Emergency, at any moment</h3><p>First: “Call 998 now for an ambulance”, a fixed screen, no AI. Separately: her care team is alerted and a doctor calls her the same day. The 998 button is on every screen of her app.</p></div>
     </div>
   </div>
 
@@ -189,9 +195,9 @@ button:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
   </div>
 
   <div class="principles">
-    <div><b>Rules decide. AI explains. People sign.</b>A rules table sets the deadlines. AI answers questions from prepared texts (pending clinical review). Only clinicians accept, sign or close.</div>
-    <div><b>A responsible person and a deadline at every step</b>Late, unanswered and rejected cases go to the top of the coordinator's list.</div>
-    <div><b>Closed only with evidence</b>A report, a health-record entry or a signed reason. Never by AI.</div>
+    <div><b>Rules decide. AI explains. People sign.</b>A rules table sets the deadlines. AI answers patient questions from prepared texts (pending clinical review) and, in the pilot, drafts referrals for a doctor to check. Only clinicians accept, sign or close.</div>
+    <div><b>A responsible person and a deadline at every step</b>Late, unanswered, declined and urgent cases go to the top of the coordinator's list.</div>
+    <div><b>Closed only with evidence</b>The colonoscopy report, or a reason signed by the doctor if it did not happen. Never by AI.</div>
   </div>
   <p class="foot">Prototype with synthetic data. People and clinic names are fictional. Pilot: positive stool test → colonoscopy, one Abu Dhabi provider network, 12 weeks.</p>
 </div>
@@ -233,20 +239,20 @@ button:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
   };
 
   const S = [
-    { pic: ico("lab"), tag: "Result", short: "Result arrives", who: "Lab and rules table", role: "system event: opens the case and gives it to Noura", title: "The result arrives", what: "A positive stool test (FIT) comes from the lab. Kafila opens one case for it. A rules table sets two deadlines from the UAE national guideline: referral within 15 working days, colonoscopy within 31 working days after it.", when: "Day 0", why: "Today a result can sit in a system with nobody responsible for the next step.", req: "Brief R1 · one case from the moment the result is issued" },
-    { pic: face(F.noura), tag: "Noura", short: "Noura takes the case", who: "Noura", role: "coordinator", title: "Noura takes the case", what: "Noura becomes responsible for the case. Her list shows only the cases that need a person: late, unanswered, rejected or urgent.", when: "Day 0", why: "Someone is responsible at every moment. Coordinators can prioritise the cases that need attention.", req: "Brief R2 · a named responsible person and a deadline for each step" },
-    { pic: face(F.fatima), tag: "Fatima", short: "Fatima understands and picks a time", who: "Fatima", role: "patient, 52", title: "Fatima understands her result and picks a time", what: "A WhatsApp from her own clinic, in her language. Her result in plain words, what happens next and by when. She picks a Saturday slot with a female doctor, covered by her plan. The slot is held until the clinic accepts the referral.", when: "Day 0–2", why: "People drop out when they are scared or can't find a slot that fits their life.", helps: [["AI chat", "\"Is it cancer? Does it hurt? Who pays?\" Answers from prepared texts, day or night. No diagnosis", ""], ["Nurse Layla", "calls her if she wants to talk to a nurse", "person"]], req: "Brief R3 · her language, understanding checked" },
-    { pic: face(F.hessa), tag: "Dr. Hessa", short: "Dr. Hessa refers", who: "Dr. Hessa", role: "family doctor", title: "Dr. Hessa sends the referral", what: "Kafila prepares the referral letter from the case (a template in the demo, an AI draft in the pilot). Dr. Hessa checks it and signs. If she has a question first, she asks the specialist in writing.", when: "Day 2–5", why: "The clinic receives a structured referral, with fewer missing details and less back-and-forth.", helps: [["Draft letter", "she checks and signs", ""], ["Ask the specialist", "she writes Dr. Omar a question inside the case, no calls or fax", "person"]], req: "Brief R4 · hand-off between clinics" },
-    { pic: face(F.omar), tag: "Dr. Omar", short: "The clinic accepts and does the colonoscopy", who: "Dr. Omar", role: "gastroenterologist, receiving clinic", title: "The clinic accepts and does the colonoscopy", what: "Dr. Omar accepts the referral for his clinic, or says no with a reason. The colonoscopy is done there by the female doctor Fatima chose, and the report goes back to Dr. Hessa.", when: "Within 31 working days of referral", why: "Referrals can be delayed or lost in hand-offs between providers. Here the hand-off is confirmed.", req: "Brief R4 · the receiving clinic accepts" },
-    { pic: face(F.hessa), tag: "Closed", short: "Dr. Hessa closes with the report", who: "Dr. Hessa", role: "family doctor", title: "Dr. Hessa closes the case", what: "She goes through the report with Fatima and closes the case with evidence: the report or a signed reason. The AI cannot close a case.", when: "On report", why: "Without evidence nobody knows whether care happened.", req: "Brief R5 · closed only with evidence" },
-    { pic: face(F.khalid), tag: "Dr. Khalid", short: "Dr. Khalid sees the programme", who: "Dr. Khalid", role: "programme lead", title: "Dr. Khalid sees the whole programme", what: "His dashboard shows who is late, who is lost and why, and the gaps by language and insurance. When three quarters of a deadline has passed, a late case comes to him.", when: "Every day", why: "The programme can fix causes, not just single cases.", req: "Brief R6 · closure and impact measures" },
-    { pic: ico("warn"), tag: "If it goes wrong", kind: "w", who: "Noura and Dr. Hessa", role: "act on it", title: "If something goes wrong", what: "Each problem has a rule and a person who acts.", minis: [["No reply", "SMS on day 2 and 4, a call on day 5, then Noura calls, then a letter"], ["Clinic says no", "It gives a reason. Dr. Hessa picks another clinic within 2 days"], ["Missed the visit", "Noura offers a new slot within 24 hours. A second time, Dr. Hessa calls"], ["Running late", "When 75% of the time for a step has passed, the case is escalated to Dr. Khalid"]], when: "Any time", why: "Silence and missed hand-offs are how people get lost.", req: "Brief R2 · timely progression" },
-    { pic: ico("sos"), tag: "Emergency", kind: "r", who: "No AI", role: "fixed safety rule", title: "Emergency, at any moment", what: "If Fatima writes “chest pain” or “a lot of blood”, she sees a fixed screen: call 998. No AI answers. Her doctor is alerted and calls her the same day.", when: "At any moment", why: "Danger words in Arabic and English are checked before any AI answer.", req: "Brief R5 · safe escalation" }
+    { pic: ico("lab"), tag: "Result", short: "Result arrives", who: "Lab and rules table", role: "system event: opens the case and gives it to Noura", title: "The result arrives", what: "A positive stool test (FIT) comes from the lab. Kafila opens one case for it. A rules table sets two deadlines from the UAE national guideline (MOHAP 2022): refer for colonoscopy within 15 working days of the result, and do the colonoscopy within 31 working days of the referral.", when: "Day 0", why: "Today a result can sit in a system with nobody responsible for the next step.", req: "Brief R1 · one case from the moment the result is issued" },
+    { pic: face(F.noura), tag: "Noura", short: "Noura takes the case", who: "Noura", role: "coordinator", title: "Noura takes the case", what: "Noura becomes responsible for the case. She sees all her cases; the ones that need a person (late, unanswered, declined or urgent) go to the top of her list.", when: "Day 0", why: "Someone is responsible at every moment. Coordinators can prioritise the cases that need attention.", req: "Brief R2 · a named responsible person and a deadline for each step" },
+    { pic: face(F.fatima), tag: "Fatima", short: "Fatima reads her result and chooses a time", who: "Fatima", role: "patient, 52", title: "Fatima reads her result and chooses a time", what: "Her clinic sends a WhatsApp notification in her language. She opens a secure link and reads her result in plain words: what happens next and by when. She chooses a Saturday time with a female doctor; the app shows what her plan usually covers. The time is held, not yet confirmed, until the clinic accepts the referral.", when: "Day 0–2", why: "People drop out when they are scared or can't find a slot that fits their life.", helps: [["AI chat", "\"Is it cancer? Does it hurt? Who pays?\" Answers from prepared texts, day or night. No diagnosis", ""], ["Nurse Layla", "calls her if she wants to talk to a nurse", "person"]], req: "Brief R3 · her language, understanding checked" },
+    { pic: face(F.hessa), tag: "Dr. Hessa", short: "Dr. Hessa refers", who: "Dr. Hessa", role: "family doctor", title: "Dr. Hessa sends the referral", what: "In the demo, Kafila fills a referral template from the case. In the pilot, AI drafts the referral. Dr. Hessa reviews and signs it. She can message the specialist within the case.", when: "Day 2–5", why: "The clinic receives a structured referral, with fewer missing details and less back-and-forth.", helps: [["Draft referral", "she reviews and signs", ""], ["Message the specialist", "a question to Dr. Omar inside the case", "person"]], req: "Brief R4 · hand-off between clinics" },
+    { pic: face(F.omar), tag: "Dr. Omar", short: "The clinic accepts the referral and does the colonoscopy", who: "Dr. Omar", role: "gastroenterologist, receiving clinic", title: "The clinic accepts the referral and does the colonoscopy", what: "Dr. Omar reviews the referral for his clinic and accepts it, or declines with a reason. Once accepted, Fatima's appointment is confirmed. The female doctor she chose performs the colonoscopy, and the report goes back to Dr. Hessa. If the clinic declines, Dr. Hessa picks another clinic within 2 working days and Fatima chooses a new time.", when: "Within 31 working days of referral", why: "Referrals can be delayed or lost in hand-offs between providers. Here the hand-off is confirmed.", req: "Brief R4 · the receiving clinic accepts" },
+    { pic: face(F.hessa), tag: "Closed", short: "Dr. Hessa closes with the report", who: "Dr. Hessa", role: "family doctor", title: "Dr. Hessa closes the case", what: "After reviewing the report with Fatima, Dr. Hessa records the outcome: colonoscopy done, report received, and any follow-up she arranges. If the colonoscopy did not happen, for example because Fatima declined, she closes the case with a reason she signs. The AI cannot close a case.", when: "After the report", why: "Without a recorded outcome nobody knows whether care happened.", req: "Brief R5 · closed only with evidence" },
+    { pic: face(F.khalid), tag: "Dr. Khalid", short: "Dr. Khalid sees the programme", who: "Dr. Khalid", role: "programme lead", title: "Dr. Khalid sees the whole programme", what: "His dashboard shows which cases have stalled and why, and the gaps by language and insurance. When 75% of the time for any open step has passed, Kafila alerts him.", when: "Every day", why: "The programme can fix causes, not just single cases.", req: "Brief R6 · closure and impact measures" },
+    { pic: ico("warn"), tag: "If it goes wrong", kind: "w", who: "Noura and Dr. Hessa", role: "act on it", title: "If something goes wrong", what: "Each problem has a rule and a person who acts.", minis: [["No reply", "Counting from the first message: an SMS on day 2 and day 4, an automated call on day 5. Then Noura calls her, then the clinic sends a letter"], ["Clinic says no", "The clinic gives a reason. Dr. Hessa picks another clinic within 2 working days"], ["Missed the visit", "Noura offers a new time within 24 hours. If Fatima misses a second appointment, Dr. Hessa calls her"], ["Running late", "When 75% of the time for an open step has passed, Kafila alerts Dr. Khalid. After the deadline the case is marked overdue"]], when: "Any time", why: "Silence and missed hand-offs are how people get lost.", req: "Brief R2 · timely progression" },
+    { pic: ico("sos"), tag: "Emergency", kind: "r", who: "No AI", role: "fixed safety rule", title: "Emergency, at any moment", what: "If Fatima writes “chest pain” or “a lot of blood”, a fixed screen appears at once: “Call 998 now for an ambulance.” No AI answers. Separately, her care team is alerted and a doctor calls her the same day. The 998 button is on every screen of her app, so she never depends on the words being recognised.", when: "At any moment", why: "Danger words in Arabic and English are checked before any AI answer.", req: "Brief R5 · safe escalation" }
   ];
 
   const $ = (id) => document.getElementById(id);
   const track = $("track");
-  track.innerHTML = S.map((s, i) => (i === 6 ? '<span class="sep" aria-hidden="true"></span>' : "") + `<button class="node ${s.kind || ""}" role="tab" data-i="${i}" aria-label="${i < 6 ? "Step " + (i + 1) + ": " : ""}${s.title}"><span class="av">${s.pic}</span><b>${s.tag}</b></button>`).join("");
+  track.innerHTML = S.map((s, i) => (i === 6 ? '<span class="sep" aria-hidden="true"></span>' : "") + `<button class="node ${s.kind || ""}" role="tab" aria-controls="stage" data-i="${i}" aria-label="${i < 6 ? "Step " + (i + 1) + ": " : ""}${s.title}"><span class="av">${s.pic}</span><b>${s.tag}</b></button>`).join("");
   const nodes = [...track.querySelectorAll(".node")];
 
   let cur = 0, timer = null;
@@ -262,31 +268,40 @@ button:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
     $("sExtra").innerHTML = extra;
     $("sFacts").innerHTML = `<div class="f-when"><small>When</small>${s.when}</div><div class="f-why"><small>Why it matters</small>${s.why}</div>`;
     $("sReq").textContent = s.req;
-    nodes.forEach((n, i) => { n.classList.toggle("past", i < cur); n.classList.toggle("now", i === cur); n.classList.toggle("future", i > cur); n.setAttribute("aria-selected", String(i === cur)); });
+    nodes.forEach((n, i) => { n.classList.toggle("past", i < cur); n.classList.toggle("now", i === cur); n.classList.toggle("future", i > cur); n.setAttribute("aria-selected", String(i === cur)); n.tabIndex = i === cur ? 0 : -1; });
     $("prev").disabled = cur === 0;
-    $("next").textContent = cur === S.length - 1 ? "See the whole loop ›" : "Next ›";
+    const atEnd = cur === 5 || cur === S.length - 1;
+    $("next").textContent = atEnd ? "See the whole loop ›" : "Next ›";
+    $("toggle").hidden = atEnd;
     const n = nodes[cur], box = $("trackbox");
     if (box.scrollWidth > box.clientWidth) box.scrollTo({ left: n.offsetLeft - box.clientWidth / 2 + n.offsetWidth / 2, behavior: "smooth" });
   }
   function showWhole(on) {
     $("whole").hidden = !on; $("stage").hidden = on; $("trackbox").hidden = on;
-    $("toggle").textContent = on ? "Back to the steps" : "See the whole loop";
+    $("toggle").textContent = on ? "Back to the steps" : "See the whole loop"; if (on) $("toggle").hidden = false;
     $("prev").hidden = on; $("next").hidden = on; $("play").hidden = on;
     if (!on) render();
   }
+  function toView(el) { const r = el.getBoundingClientRect(), top = 76; if (r.top < top || r.top > innerHeight * 0.5) scrollTo({ top: scrollY + r.top - top, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); }
   function stopPlay() { clearInterval(timer); timer = null; $("play").textContent = "▶ Play"; }
-  $("next").onclick = () => { $("next").classList.remove("pulse"); stopPlay(); if (cur === S.length - 1) return showWhole(true); cur++; render(); };
-  $("prev").onclick = () => { stopPlay(); if (cur > 0) { cur--; render(); } };
+  $("next").onclick = () => { $("next").classList.remove("pulse"); stopPlay(); if (cur === 5 || cur === S.length - 1) { showWhole(true); return toView($("whole")); } cur++; render(); toView($("stage")); };
+  $("prev").onclick = () => { stopPlay(); if (cur > 0) { cur--; render(); toView($("stage")); } };
   $("play").onclick = () => {
     $("next").classList.remove("pulse");
     if (timer) return stopPlay();
-    if (cur === S.length - 1) { cur = 0; render(); }
+    if (cur >= 5) { cur = 0; render(); }
     $("play").textContent = "❚❚ Pause";
-    timer = setInterval(() => { if (cur >= S.length - 1) return stopPlay(); cur++; render(); }, 6000);
+    timer = setInterval(() => { if (cur >= 5) { stopPlay(); $("play").textContent = "↺ Replay"; return; } cur++; render(); }, 7000);
   };
-  $("toggle").onclick = () => { stopPlay(); showWhole($("whole").hidden); };
+  $("toggle").onclick = () => { stopPlay(); const on = $("whole").hidden; showWhole(on); toView(on ? $("whole") : $("stage")); };
   track.addEventListener("click", (e) => { const b = e.target.closest(".node"); if (!b) return; stopPlay(); $("next").classList.remove("pulse"); cur = +b.dataset.i; render(); });
-  addEventListener("keydown", (e) => { if (!$("whole").hidden) return; if (e.key === "ArrowRight") $("next").click(); if (e.key === "ArrowLeft") $("prev").click(); });
+  track.addEventListener("keydown", (e) => {
+    const n0 = e.target.closest(".node"), base = n0 ? +n0.dataset.i : cur;
+    const k = { ArrowRight: base + 1, ArrowLeft: base - 1, Home: 0, End: S.length - 1 }[e.key];
+    if (k === undefined) return; e.preventDefault(); e.stopPropagation(); stopPlay();
+    cur = Math.max(0, Math.min(S.length - 1, k)); render(); nodes[cur].focus();
+  });
+  addEventListener("keydown", (e) => { if (!$("whole").hidden || e.target.closest && e.target.closest(".track")) return; if (e.key === "ArrowRight" && cur < S.length - 1 && cur !== 5) $("next").click(); if (e.key === "ArrowLeft") $("prev").click(); });
 
   // Whole loop view: the seven steps with one line each, then the two safety boxes.
   $("wtrack").innerHTML = S.slice(0, 6).map((s, i) => `<div class="wn"><span class="k">${i + 1}</span><span class="av">${s.pic}</span><b>${s.short}</b><em>${s.when}</em></div>`).join("");
@@ -295,4 +310,5 @@ button:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
   if (location.hash === "#whole") showWhole(true); else render();
 })();
 </script>
+<script>(function(){var b=document.getElementById("menubtn"),n=document.querySelector(".top nav");if(!b||!n)return;b.onclick=function(){var o=n.classList.toggle("open");b.setAttribute("aria-expanded",String(o));b.textContent=o?"Close ✕":"Menu";};n.addEventListener("click",function(e){if(e.target.closest("a")){n.classList.remove("open");b.setAttribute("aria-expanded","false");b.textContent="Menu";}});})();</script>
 </body></html>

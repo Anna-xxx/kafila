@@ -61,6 +61,11 @@ img { max-width: 100%; display: block; }
 .btn.line:hover { border-color: var(--teal); }
 .top .btn { min-height: 38px; padding: 0 16px; font-size: 14px; }
 @media (max-width: 860px) { .top nav { display: none; } .top .btn { margin-left: auto; } }
+.menubtn { display: none; }
+@media (max-width: 860px) { .menubtn { display: inline-flex; align-items: center; white-space: nowrap; margin-left: auto; min-height: 38px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--ink); font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; } .top .btn { margin-left: 8px; } .top nav.open { display: flex; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; gap: 14px; padding: 14px 20px 18px; background: var(--night); border-bottom: 1px solid var(--line); } .top nav.open .navsep { width: 100%; height: 1px; } }
+@media (max-width: 420px) { .top .topin, .top .wrap { gap: 10px; } .top .btn { padding: 0 12px; margin-left: 6px; } .menubtn { padding: 0 10px; } }
+@media (max-width: 360px) { .top .topin, .top .wrap { gap: 8px; } .top .btn { padding: 0 10px; font-size: 13px; } .menubtn { padding: 0 8px; font-size: 13px; } }
+
 
 /* shared type */
 .eyebrow { font: 500 12.5px/1.4 var(--mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); }
@@ -323,9 +328,10 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
 <header class="top">
   <div class="wrap">
     <a class="logo" href="#top"><i class="mk"><svg width="28" height="28" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" aria-hidden="true"><g id="mark"><path d="M75.61 21.01 A42 42 0 0 1 92.26 33.10" fill="none" stroke="#69c5b3" stroke-width="10" stroke-linecap="round"/><path d="M101.91 62.80 A42 42 0 0 1 95.55 82.37" fill="none" stroke="#7fb1e1" stroke-width="10" stroke-linecap="round"/><path d="M70.29 100.72 A42 42 0 0 1 49.71 100.72" fill="none" stroke="#f5c873" stroke-width="10" stroke-linecap="round"/><path d="M24.45 82.37 A42 42 0 0 1 18.09 62.80" fill="none" stroke="#f3a473" stroke-width="10" stroke-linecap="round"/><path d="M27.74 33.10 A42 42 0 0 1 44.39 21.01" fill="none" stroke="#8cd1a1" stroke-width="10" stroke-linecap="round"/><circle cx="60.00" cy="18.00" r="11.5" fill="#3fb59d"/><circle cx="99.94" cy="47.02" r="11.5" fill="#5b9bd8"/><circle cx="84.69" cy="93.98" r="11.5" fill="#f2b84b"/><circle cx="35.31" cy="93.98" r="11.5" fill="#f08a4b"/><circle cx="20.06" cy="47.02" r="11.5" fill="#6cc486"/></g></svg></i>Kafila <span lang="ar" dir="rtl" style="opacity:.7;font-weight:500">قافلة</span></a>
-    <nav aria-label="Sections">
+    <nav id="sitenav" aria-label="Sections">
       <a href="#what">Five steps</a><a href="#why">The gap</a><a href="#who">People</a><a href="#how">Fatima's case</a><a href="#safety">Urgent cases</a><a href="#ai">AI</a><a href="#pilot">Impact</a><span class="navsep" aria-hidden="true"></span><a href="care-loop.html">Step by step</a><a href="architecture.html">Architecture</a>
     </nav>
+    <button class="menubtn" id="menubtn" aria-expanded="false" aria-controls="sitenav">Menu</button>
     <a class="btn solid" href="prototype/" target="_blank" rel="noopener">Prototype</a>
   </div>
 </header>
@@ -807,3 +813,4 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
 </script>
 <a id="totop" class="totop" href="#top" aria-label="Back to top" title="Back to top">↑</a>
 <script>(function(){var b=document.getElementById("totop");if(!b)return;function f(){b.classList.toggle("show",window.scrollY>600)}addEventListener("scroll",f,{passive:true});f();b.addEventListener("click",function(e){e.preventDefault();scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"})})})();</script>
+<script>(function(){var b=document.getElementById("menubtn"),n=document.querySelector(".top nav");if(!b||!n)return;b.onclick=function(){var o=n.classList.toggle("open");b.setAttribute("aria-expanded",String(o));b.textContent=o?"Close ✕":"Menu";};n.addEventListener("click",function(e){if(e.target.closest("a")){n.classList.remove("open");b.setAttribute("aria-expanded","false");b.textContent="Menu";}});})();</script>
