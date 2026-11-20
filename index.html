@@ -90,6 +90,7 @@ section { padding-block: 96px; border-top: 1px solid var(--line); position: rela
 .motto { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 0; cursor: default; }
 .motto span { font: 500 13px/1.3 var(--mono); color: var(--ink-2); letter-spacing: .02em; }
 .motto span + span::before { content: "·"; margin: 0 12px; color: var(--teal); }
+.tryit { margin: 0; font-size: 14.5px; color: var(--ink-2); max-width: 62ch; } .tryit b { color: var(--ink); }
 .cta { display: flex; flex-wrap: wrap; gap: 12px; }
 
 /* hero visual: the loop with five ADPHC steps around a phone */
@@ -344,7 +345,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
       </ul>
             <p class="herofoot"><b>Sahatna helps patients reach care. Kafila makes sure the next step actually happens:</b> every case has a coordinator, a deadline from the national guideline and a verified outcome.</p>
       <div class="stats">
-        <div class="stat"><b>47 of 100</b><span>people with a positive stool test had no colonoscopy within a year</span><small>952 of 2,018 · US community clinics · O’Connor 2020</small></div>
+        <div class="stat"><b>Only 30.5%</b><span>of Emirati adults with a positive stool test had the follow-up colonoscopy in SEHA clinics, Abu Dhabi</span><small>436 of 1,369 · 2015–2016, older data · Almansoori 2021, BMC Cancer</small></div>
         <div class="stat"><b>Almost 2×</b><span>the odds of finding advanced-stage cancer when the colonoscopy comes 10–12 months after the test, and about 3× after a year, compared with 8–30 days</span><small>70,124 patients · Kaiser Permanente · Corley 2017, JAMA</small></div>
         <div class="stat"><b>55% vs 42%</b><span>completed the colonoscopy when a navigator phoned them, explained it and helped them book, compared with no navigator: 13 percentage points more</span><small>PRECISE randomised trial · Coronado 2025</small></div>
       </div>
@@ -354,6 +355,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
         <a class="btn line" href="prototype/" target="_blank" rel="noopener">Open the prototype</a>
         <a class="btn line" href="care-loop.html" target="_blank" rel="noopener">Step by step: who does what</a>
       </div>
+      <p class="tryit"><b>Try it in 3 minutes:</b> open the prototype and press <b>▶ 3-minute tour</b>. Six guided steps: Fatima’s message and result, booking, the clinic accepting the referral, Rajesh’s red-flag message, closing the case and the dashboard.</p>
     </div>
     <div class="herovis">
     <div class="loopviz" aria-label="The Kafila loop: record, prioritise, refer, navigate, track">
@@ -684,7 +686,6 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
     <div>
       <h3>Sources</h3>
       <ol>
-        <li>O’Connor EA et al. Sci Rep 2020;10:2441: follow-up colonoscopy after abnormal FIT in US community clinics (952 of 2,018 not followed up within 12 months).</li>
         <li>Almansoori A et al. BMC Cancer 2021: colorectal cancer screening in SEHA ambulatory clinics, Abu Dhabi, 2015–2016 (30.5% follow-up colonoscopy after a positive FIT/gFOBT).</li>
         <li>Coronado GD et al. PRECISE randomised trial, Ann Intern Med 2025: patient navigation vs usual care after abnormal FIT (55.1% vs 42.1%).</li>
         <li>Patel MP et al. J Gen Intern Med 2018;33(5):715–721, “Closing the referral loop”: 38.9% of specialist referrals never got an appointment date.</li>
