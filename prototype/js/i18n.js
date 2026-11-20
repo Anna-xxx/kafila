@@ -102,7 +102,7 @@ window.I18N = {
     smsFrom: "AD-HEALTH",
     sms: "You have a new message from {clinic}. Please open WhatsApp or call 800-xxxx. Reply STOP to opt out. (demo)",
     callFrom: "Family Health Centre (automated call)",
-    callScript: "Hello, this is an automated call from the Family Health Centre for {name}. You have a screening result that needs a follow-up visit. Press 1 to hear it after confirming your date of birth, press 2 to talk to a nurse.",
+    callScript: "Hello, this is an automated call from {clinic} for {name}. Your doctor has an important message for you. Press 1 to hear how to open it, press 2 to talk to a nurse.",
     accept: "Answer", decline: "Decline",
     tsDay: "Day {d}"
   },
@@ -207,7 +207,7 @@ window.I18N = {
     smsFrom: "AD-HEALTH",
     sms: "لديك رسالة جديدة من {clinic}. يُرجى فتح واتساب أو الاتصال بالرقم 800-xxxx. لإيقاف الرسائل أرسل STOP. (عرض تجريبي)",
     callFrom: "مركز صحة الأسرة (اتصال آلي)",
-    callScript: "مرحبًا، هذا اتصال آلي من مركز صحة الأسرة إلى {name}. لديك نتيجة فحص تحتاج إلى زيارة متابعة. اضغطي 1 لسماعها بعد تأكيد تاريخ الميلاد، أو 2 للتحدث مع ممرضة.",
+    callScript: "مرحبًا، هذا اتصال آلي من {clinic} إلى {name}. لديكِ رسالة مهمة من طبيبكِ. اضغطي 1 لتعرفي كيف تفتحينها، أو 2 للتحدث مع ممرضة.",
     accept: "رد", decline: "رفض",
     tsDay: "اليوم {d}"
   }

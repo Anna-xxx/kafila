@@ -633,3 +633,12 @@ main > .dt-line, #view > .dt-line { margin: 0 0 12px; padding: 8px 12px; backgro
 @media (max-width: 600px) { .top .lang-sw button { padding: 0 8px; font-size: 12.5px; } }
 .site-link{margin-left:12px;font-size:13px;font-weight:600;color:var(--ink-2,#3d4a46);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:6px 12px;white-space:nowrap}.site-link:hover{background:var(--surface-2)}@media(max-width:520px){.site-link{margin-left:6px;padding:5px 9px;font-size:12px}}
 .res-acts { margin: 10px 0; display: flex; flex-direction: column; gap: 6px; } .res-acts .btn.block { margin: 0; }
+/* v45: incoming call: clinic name on one or two balanced lines, caller line under it, buttons inside the frame. */
+.call .who { font-size: 20px; line-height: 1.25; font-weight: 700; text-wrap: balance; max-width: 92%; margin: 6px auto 0; }
+.call .c-meta { font-size: 13px; opacity: .75; margin-top: 4px; }
+.call .c-av { margin-top: 16px; width: 72px; height: 72px; }
+.overlay.call { padding-bottom: 44px; }
+.call .tr { font-size: 14px; line-height: 1.45; margin: 14px 8px 0; }
+.call .c-acts { display: flex; flex-direction: column; gap: 8px; margin: 14px 12px 0; }
+.phone .toast.in-phone { position: absolute; left: 14px; right: 14px; bottom: 88px; transform: none; inset-inline-start: 14px; z-index: 70; text-align: center; }
+.phone { position: relative; }

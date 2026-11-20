@@ -142,6 +142,10 @@
   const ic = (n, cls = "") => `<svg class="ic ${cls}" viewBox="0 0 24 24" aria-hidden="true"><path d="${P[n]}"/></svg>`;
   // Nurse hours on the demo clock (UAE time). 08:00–20:00 is a demo value to agree with the partner.
   const nurseHours = () => { const h = new Date(Store.now() + 4 * 3600000).getUTCHours(); return h >= 8 && h < 20; };
+  // What the caller says. Neutral until identity is confirmed: no result, no symptoms (BA, 20 Nov).
+  const callText = (c, lang) => ui().callKind === "coord"
+    ? (lang === "ar" ? `مرحبًا ${first(c)}، معكِ نورة من ${clinicOf(c, lang)}. لديكِ رسالة مهمة من ${doctorOf(c, lang)}. هل أساعدكِ على فتحها أو حجز موعد؟` : `Hello ${first(c)}, this is Noura from ${clinicOf(c, lang)}. ${doctorOf(c, lang)} has an important message for you. Can I help you open it or book a time?`).replace(/\.\./g, ".")
+    : fill(I18N[lang].callScript, { name: first(c), clinic: clinicOf(c, lang) });
   // Nurse call-back text follows the same nurse-hours rule as the chat (demo values to agree with the pilot clinic).
   const cbText = (lang) => nurseHours()
     ? (lang === "ar" ? "ستتصل بكِ الممرضة ليلى على هذا الرقم اليوم خلال ساعتين. في الحالات الطارئة اتصلي بالرقم 998." : "Nurse Layla will call you on this number today, within 2 hours. In an emergency, call 998.")
@@ -261,7 +265,7 @@
       const el = document.createElement("a"); el.href = URL.createObjectURL(new Blob([ics], { type: "text/calendar" })); el.download = "appointment.ics"; el.click();
       Store.log(c.id, "Patient", "Added appointment to phone calendar", "info"); return;
     }
-    if (a === "change") { if (!c.callback || c.humanDone) { c.callback = new Date(Store.now()).toISOString(); c.humanDone = false; } Store.log(c.id, "Patient", "Asked to change or cancel the appointment. Task for coordinator, SLA 1 working day.", "human"); toast(lang === "ar" ? "طلبك أُرسل. ستتصل بك المنسقة." : "Request sent. The coordinator will call you."); }
+    if (a === "change") { if (!c.callback || c.humanDone) { c.callback = new Date(Store.now()).toISOString(); c.humanDone = false; } Store.log(c.id, "Patient", "Asked to change or cancel the appointment. Task for coordinator, SLA 1 working day.", "human"); c.changeReq = true; toast(lang === "ar" ? "طلبك أُرسل. ستتصل بك المنسقة." : "Request sent. The coordinator will call you."); }
     if (a === "waCallNow" && !c.waReply) {
       c.waReply = "callnow"; c.callNow = true; c.callback = new Date(Store.now()).toISOString(); c.humanDone = false;
       Store.log(c.id, "Patient", `Tapped "Call me now" in WhatsApp. Call-back task for the duty doctor (${doctorOf(c, "en")}), before ${callByText(c, "en").replace(/^today, before /, "")}.`, "urgent");
@@ -471,8 +475,16 @@
     if (a === "e998") { u.overlay = "emerg"; u.emergText = (Store.S.F.L4.answer || {})[lang] || ""; Store.log(c.id, "Patient", "Tapped the 998 button in the app", "urgent"); }
     if (a === "face") { const q = String(arg)[0], v = +String(arg)[1]; c.feedback = { ...(c.feedback || {}), [q]: v }; Store.log(c.id, "Patient", `Feedback ${q === "a" ? "clear explanation" : "felt guided"}: ${v} of 3`, "info"); }
     if (a === "emergClose") u.overlay = null;
-    if (a === "callEnd") { if ("speechSynthesis" in window) speechSynthesis.cancel(); u.overlay = null; }
-    if (a === "callAnswer") { u.callAnswered = true; Agent.speak(gx(fill(T.callScript, { name: first(c) }), c, lang), lang); Store.log(c.id, "System", "Automated call answered (simulated). Script read aloud.", "channel");
+    if (a === "callEnd") { if ("speechSynthesis" in window) speechSynthesis.cancel();
+      if (u.callKind === "coord" && !u.callAnswered) { Store.log(c.id, "Coordinator · Noura A.", "Called patient: no answer. Letter sent to home address. Escalation per overdue ladder.", "channel"); c.attempts = (c.attempts || []).concat([{ day: Store.S.data.clockDays, channel: "Letter", ok: false }]); c.missedCall = true; }
+      u.overlay = null; u.callKind = null; }
+    if (a === "coordBook" || a === "coordLater") {
+      if ("speechSynthesis" in window) speechSynthesis.cancel(); u.overlay = null; u.callKind = null;
+      c.attempts = (c.attempts || []).concat([{ day: Store.S.data.clockDays, channel: "Coordinator call", ok: true }]);
+      if (a === "coordBook") { if (!c.waRead) { c.waRead = true; if (c.state === "assigned") Store.move(c, "notified", "Coordinator · Noura A.", "reached by phone"); } if (!c.consent) signIn(c, "one-time code"); c.pscreen = "app"; tab(c, slotsFor(c) ? "book" : "result"); Store.log(c.id, "Coordinator · Noura A.", "Reached the patient by phone. Booking with the patient now.", "human"); }
+      else { if (!c.callback || c.humanDone) { c.callback = new Date(Store.now()).toISOString(); c.humanDone = false; } Store.log(c.id, "Coordinator · Noura A.", "Reached the patient by phone. Patient asked to be called later: callback task.", "human"); toast(ar ? "ستتصل بكِ نورة لاحقًا." : "Noura will call you later."); }
+    }
+    if (a === "callAnswer") { u.callAnswered = true; Agent.speak(gx(callText(c, lang), c, lang), lang); Store.log(c.id, "System", "Automated call answered (simulated). Script read aloud.", "channel");
       const last = (c.attempts || []).filter((x) => x.channel === "Automated call").pop();
       if (last) last.ok = true; else c.attempts = (c.attempts || []).concat([{ day: Store.S.data.clockDays, channel: "Automated call", ok: true }]); }
     if (a === "smsClose") u.overlay = null;
@@ -561,12 +573,9 @@
     d.clockDays = Math.max(d.clockDays, plan[0]);
     c.attempts = (c.attempts || []).concat([{ day: plan[0], channel: plan[1], ok: false }]);
     Store.log(c.id, step === "coord" ? "Coordinator · Noura A." : "System", `${plan[1]} on day ${plan[0]} (simulated, no real number)`, "channel");
-    u.overlay = step.startsWith("sms") ? "sms" : step === "call5" ? "call" : null;
+    // Every rung is visible on the phone; the coordinator's call rings like the automated one (Anna, 20 Nov: "не работает").
+    u.overlay = step.startsWith("sms") ? "sms" : "call"; u.callKind = step === "coord" ? "coord" : "auto";
     u.callAnswered = false;
-    if (step === "coord") {
-      Store.log(c.id, "Coordinator · Noura A.", "Called patient: no answer. Letter sent to home address. Escalation per overdue ladder.", "channel");
-      c.attempts = c.attempts.concat([{ day: plan[0], channel: "Letter", ok: false }]);
-    }
     Store.save();
   }
 
@@ -730,7 +739,7 @@
     return `<div class="acard"><div class="small">${esc(t.apptCard)}</div><b>${esc(fmtDate(Date.parse(c.slot.day + "T" + c.slot.time + ":00+04:00"), lang))} · <bdi>${esc(c.slot.time)}</bdi></b><div>${docLine(c.slot, lang)}</div>
       <div class="tiny">${esc(nm(c.slot.clinic, lang))} · ${c.slot.km} ${lang === "ar" ? "كم" : "km"}</div>
       <div class="small" style="margin-top:4px">${confirmed ? "✓ " + (lang === "ar" ? "مؤكد" : "Confirmed") : ic("clock") + " " + (lang === "ar" ? "تؤكد العيادة عادةً خلال يوم عمل واحد. سنراسلك." : "The clinic usually confirms within 1 working day. We'll message you.")}</div>
-      <div class="row" style="margin-top:8px"><button class="btn sm" data-act="ics">${ic("cal")} ${lang === "ar" ? "أضف إلى التقويم" : "Add to calendar"}</button><button class="btn sm" data-act="change">${lang === "ar" ? "تغيير أو إلغاء" : "Change or cancel"}</button></div>
+      <div class="row" style="margin-top:8px"><button class="btn sm" data-act="ics">${ic("cal")} ${lang === "ar" ? "أضف إلى التقويم" : "Add to calendar"}</button><button class="btn sm" data-act="change">${lang === "ar" ? "تغيير أو إلغاء" : "Change or cancel"}</button></div>${c.changeReq ? `<div class="small" style="margin-top:6px">${ic("clock")} ${lang === "ar" ? "طُلب التغيير · ستتصل بكِ المنسقة خلال يوم عمل واحد" : "Change requested · the coordinator will call you within 1 working day"}</div>` : ""}
       ${pathway(c) === "colonoscopy" ? `<div class="small" style="margin-top:8px">${esc(I18N[lang].medsCheck)}</div><div class="small" style="margin-top:8px"><b>${esc(t.prepTitle)}</b></div><ol class="small" style="margin:4px 0 0;padding-inline-start:18px">${t.prepSteps.map((s) => `<li>${esc(s)}</li>`).join("")}</ol><div class="small" style="margin-top:4px">${esc(t.prepAsk)} <button class="btn sm" data-act="nurse">${lang === "ar" ? "التحدث مع الممرضة ليلى" : "Talk to Nurse Layla"}</button></div>` : ""}</div>`;
   }
   function mycaseTab(c, lang) {
@@ -790,11 +799,13 @@
       <button class="notif slide-in" data-act="smsClose"><span class="n-ic sms">${ic("sms")}</span><span class="n-body"><span class="app"><span>Messages · ${esc(T.smsFrom)}</span><span>${lang === "ar" ? "الآن" : "now"}</span></span>${esc(fill(T.sms, { clinic: clinicOf(c, lang) }))}</span></button>
       <div class="lk-bottom"><span>${ic("phone")}</span><span class="lk-fp">${ic("fp")}</span><span>${ic("camera")}</span></div></div>`;
     if (o === "call") {
-      const ans = ui().callAnswered;
-      return `<div class="overlay call${pop}"><div class="c-sub" ${ans ? 'id="ctimer"' : ""}>${ans ? "00:00" : lang === "ar" ? "مكالمة واردة…" : "incoming call…"}</div><div class="who">${esc(T.callFrom)}</div><div class="c-av">${ic("cross")}</div>
-      ${ans ? `<div class="tr">${esc(fill(T.callScript, { name: first(c) }))}</div>
-      <div class="keys">${[["1", lang === "ar" ? "سماع النتيجة" : "Hear result"], ["2", lang === "ar" ? "ممرضة" : "Nurse"]].map(([k, l]) => `<button data-act="key" data-arg="${k}"><b>${k}</b><small>${l}</small></button>`).join("")}<button class="tgl" aria-pressed="false" onclick="this.setAttribute('aria-pressed', this.getAttribute('aria-pressed') !== 'true')"><b>🔈</b><small>${lang === "ar" ? "مكبر" : "Speaker"}</small></button></div>` : ""}
-      <div class="btns"><span><button class="c-end" data-act="callEnd" aria-label="${esc(T.decline)}">${ic("end")}</button><small>${esc(ans ? (lang === "ar" ? "إنهاء المكالمة" : "End call") : T.decline)}</small></span>${ans ? "" : `<span><button class="c-ok" data-act="callAnswer" aria-label="${esc(T.accept)}">${ic("phone")}</button><small>${esc(T.accept)}</small></span>`}</div></div>`;
+      const ans = ui().callAnswered, coord = ui().callKind === "coord", ar = lang === "ar";
+      return `<div class="overlay call${pop}"><div class="c-sub" ${ans ? 'id="ctimer"' : ""}>${ans ? "00:00" : ar ? "مكالمة واردة" : "Incoming call"}</div><div class="who">${esc(clinicOf(c, lang))}</div>
+      <div class="c-meta">${coord ? (ar ? "نورة · منسقة الرعاية" : "Noura · care coordinator") : (ar ? "اتصال آلي" : "Automated call")} · <bdi>${esc(CLINIC_PHONE)}</bdi> ${ar ? "(رقم تجريبي)" : "(demo number)"}</div><div class="c-av">${ic(coord ? "person" : "cross")}</div>
+      ${ans ? `<div class="tr">${esc(callText(c, lang))}</div>
+      ${coord ? `<div class="c-acts"><button class="btn primary block" data-act="coordBook">${ar ? "احجزي مع نورة الآن" : "Book with Noura now"}</button><button class="btn block" data-act="coordLater">${ar ? "اتصلي بي لاحقًا" : "Call me later"}</button></div>`
+        : `<div class="keys">${[["1", ar ? "كيف أفتحها" : "How to open it"], ["2", ar ? "ممرضة" : "Nurse"]].map(([k, l]) => `<button data-act="key" data-arg="${k}"><b>${k}</b><small>${l}</small></button>`).join("")}</div>`}` : ""}
+      <div class="btns"><span><button class="c-end" data-act="callEnd" aria-label="${esc(T.decline)}">${ic("end")}</button><small>${esc(ans ? (ar ? "إنهاء المكالمة" : "End call") : T.decline)}</small></span>${ans ? "" : `<span><button class="c-ok" data-act="callAnswer" aria-label="${esc(T.accept)}">${ic("phone")}</button><small>${esc(T.accept)}</small></span>`}</div></div>`;
     }
     if (o === "emerg") return `<div class="overlay emerg${pop}" role="alertdialog" aria-labelledby="em-t"><div style="font-size:48px">⚠</div><h2 id="em-t">${esc(T.emergencyTitle)}</h2><p>${esc(ui().emergText || "")}</p>
       <a href="tel:998">${ic("phone")} 998</a><p class="small">${esc(T.emergNote)}</p><button class="btn" data-act="emergClose">${esc(T.emergencyClose)}</button></div>`;
@@ -947,6 +958,7 @@
     root.querySelectorAll("[data-act]").forEach((b) => (b.onclick = () => { const v = b.dataset.arg; act(b.dataset.act, v === undefined || v === "" || isNaN(+v) ? v : +v); }));
     root.querySelectorAll("[data-plang]").forEach((b) => (b.onclick = () => { d.lang = b.dataset.plang; Store.save(); }));
     root.querySelectorAll("[data-try]").forEach((b) => (b.onclick = () => send(b.dataset.try)));
+    if (snack) showSnack();
     root.querySelectorAll("[data-pick]").forEach((b) => (b.onclick = async () => { const k = b.dataset.pick; if (window.Tour) Tour.close(); await pickPersona(k); render(root); }));
     root.querySelectorAll("[data-lad]").forEach((b) => (b.onclick = () => ladder(b.dataset.lad)));
     // AI voice gets only prepared texts with the patient's name taken out; the 998 and nurse texts use the browser voice.
@@ -957,7 +969,14 @@
       if (!ok) toast("No voice in this browser");
     }));
   }
-  function toast(s) { const el = document.createElement("div"); el.className = "toast"; el.textContent = s; document.body.appendChild(el); setTimeout(() => el.remove(), 2600); }
+  // Messages for the patient appear inside the phone, above the tab bar (Anna, 20 Nov: "why do you show it outside the app").
+  // Shown after the phone re-renders; re-attached on later renders until it expires.
+  let snack = null;
+  function toast(s) { snack = { s, until: Date.now() + 4000 }; setTimeout(showSnack, 60); }
+  function showSnack() { const ph = document.querySelector(".phone"); if (!snack || Date.now() > snack.until) { snack = null; return; }
+    if (ph && ph.querySelector(".toast.in-phone")) return;
+    const el = document.createElement("div"); el.className = ph ? "toast in-phone" : "toast"; el.setAttribute("role", "status"); el.textContent = snack.s; (ph || document.body).appendChild(el);
+    setTimeout(() => { el.remove(); if (snack && Date.now() > snack.until) snack = null; }, Math.max(0, snack.until - Date.now())); }
   // Judge's tour: open a persona on a given screen, signed in, as a real patient would get there.
   function tourGo(id, o) {
     const d = Store.S.data, u = ui(); d.persona = id; const c = persona();
