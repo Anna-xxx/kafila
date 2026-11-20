@@ -1,23 +1,23 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Fatima’s case, step by step · Kafila</title><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20120%20120%22%20width%3D%22120%22%20height%3D%22120%22%20role%3D%22img%22%20aria-label%3D%22Kafila%22%3E%3Cg%20transform%3D%22translate%2860%2060%29%20scale%281.1%29%20translate%28-60%20-60%29%22%3E%3Cg%20id%3D%22mark%22%3E%3Cpath%20d%3D%22M75.19%2022.99%20A40%2040%200%200%201%2090.50%2034.12%22%20fill%3D%22none%22%20stroke%3D%22%23448c80%22%20stroke-width%3D%2213%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M99.89%2063.01%20A40%2040%200%200%201%2094.04%2081.01%22%20fill%3D%22none%22%20stroke%3D%22%235082af%22%20stroke-width%3D%2213%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M69.47%2098.86%20A40%2040%200%200%201%2050.53%2098.86%22%20fill%3D%22none%22%20stroke%3D%22%23e7b956%22%20stroke-width%3D%2213%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M25.96%2081.01%20A40%2040%200%200%201%2020.11%2063.01%22%20fill%3D%22none%22%20stroke%3D%22%23e1885a%22%20stroke-width%3D%2213%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M29.50%2034.12%20A40%2040%200%200%201%2044.81%2022.99%22%20fill%3D%22none%22%20stroke%3D%22%2369b37e%22%20stroke-width%3D%2213%22%20stroke-linecap%3D%22round%22/%3E%3Ccircle%20cx%3D%2260.00%22%20cy%3D%2220.00%22%20r%3D%2213%22%20fill%3D%22%230f6b5c%22/%3E%3Ccircle%20cx%3D%2298.04%22%20cy%3D%2247.64%22%20r%3D%2213%22%20fill%3D%22%231f5f99%22/%3E%3Ccircle%20cx%3D%2283.51%22%20cy%3D%2292.36%22%20r%3D%2213%22%20fill%3D%22%23e0a526%22/%3E%3Ccircle%20cx%3D%2236.49%22%20cy%3D%2292.36%22%20r%3D%2213%22%20fill%3D%22%23d9662b%22/%3E%3Ccircle%20cx%3D%2221.96%22%20cy%3D%2247.64%22%20r%3D%2213%22%20fill%3D%22%233f9e5a%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Noto+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
 <style>
 /* Layout: one step at a time. A track of people across the top (where we are), one large card below (what happens now),
    Back / Next under the card. A final "whole loop" view shows every step with a one-line caption. Light only, by request. */
 :root {
-  --bg: #f2f6f4; --card: #ffffff; --ink: #14211d; --ink-2: #4c5c57; --line: #cfdcd6;
-  --green: #17663a; --green-2: #e1efe7; --tile: #1c2b27; --warn: #a85c12; --warn-bg: #fbf1e6;
-  --red: #b3261e; --red-bg: #fbe9e7; --face-bg: #d6e6de; --sand: #f4efe4; --sand-ink: #6b5a2e;
+  --bg: #06110f; --card: #0b1c18; --ink: #eaf2ef; --ink-2: #b0c3bd; --line: #1f3a33;
+  --green: #46c2a8; --green-2: #12352d; --tile: #10261f; --warn: #f2b65e; --warn-bg: #3a2a12;
+  --red: #ef6a5f; --red-bg: #3a1714; --face-bg: #10261f; --sand: #2a2314; --sand-ink: #f2b65e;
   --f-text: "Noto Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --f-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
-  color-scheme: light;
+  color-scheme: dark;
 }
 * { box-sizing: border-box; }
 body { background: var(--bg); color: var(--ink); font-family: var(--f-text); font-size: 16px; line-height: 1.5; }
 .wrap { max-width: 1120px; margin: 0 auto; padding-block: 28px 44px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 22px; }
 .eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .12em; color: var(--green); text-transform: uppercase; }
 h1 { margin: 0; font-size: clamp(26px, 3.4vw, 36px); line-height: 1.15; text-wrap: balance; }
-h1 span { color: var(--green); }
+h1, .body h2 { font-family: "Space Grotesk", var(--f-text); letter-spacing: -0.01em; } h1 span { color: #f2b65e; }
 .lead { margin: 0; color: var(--ink-2); font-size: 17px; }
 button { font: inherit; cursor: pointer; }
 button:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
@@ -38,8 +38,8 @@ button:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
 .node.now .av { border-color: var(--green); transform: scale(1.18); box-shadow: 0 0 0 6px var(--green-2); }
 .node.now b { color: var(--green); font-weight: 700; }
 .node.future .av { opacity: .5; }
-.node.w .av { border-color: #e2c39c; } .node.w.now .av, .node.w.past .av { border-color: var(--warn); } .node.w.now b { color: var(--warn); } .node.w.now .av { box-shadow: 0 0 0 6px var(--warn-bg); }
-.node.r .av { border-color: #eab3ae; } .node.r.now .av, .node.r.past .av { border-color: var(--red); } .node.r.now b { color: var(--red); } .node.r.now .av { box-shadow: 0 0 0 6px var(--red-bg); }
+.node.w .av { border-color: #6b4f22; } .node.w.now .av, .node.w.past .av { border-color: var(--warn); } .node.w.now b { color: var(--warn); } .node.w.now .av { box-shadow: 0 0 0 6px var(--warn-bg); }
+.node.r .av { border-color: #6b2b26; } .node.r.now .av, .node.r.past .av { border-color: var(--red); } .node.r.now b { color: var(--red); } .node.r.now .av { box-shadow: 0 0 0 6px var(--red-bg); }
 .node.w svg.i { stroke: var(--warn); } .node.r svg.i { stroke: var(--red); }
 
 /* step card */
@@ -68,7 +68,7 @@ button:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
 .helps .chip { display: inline-flex; align-items: center; gap: 6px; border: 1.5px dashed var(--green); background: var(--green-2); border-radius: 99px; padding: 4px 12px; }
 .helps .chip.person { border-style: solid; background: var(--card); }
 .minis { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-.minis div { background: var(--warn-bg); border: 1px solid #ecd2b3; border-radius: 12px; padding: 10px 14px; display: grid; gap: 2px; }
+.minis div { background: var(--warn-bg); border: 1px solid #5a4320; border-radius: 12px; padding: 10px 14px; display: grid; gap: 2px; }
 .minis b { color: var(--warn); font-size: 16px; } .minis span { font-size: 14.5px; color: var(--ink-2); }
 .req { font-size: 12.5px; color: var(--ink-2); }
 @media (max-width: 720px) { .stage { grid-template-columns: 1fr; padding: 20px; gap: 16px; } .who { grid-template-columns: auto 1fr; justify-items: start; text-align: start; align-items: center; } .who .big { width: 84px; height: 84px; grid-row: span 2; } .who .big svg.f { width: 82px; height: 82px; margin-top: 10px; } .minis { grid-template-columns: 1fr; } }
@@ -76,7 +76,7 @@ button:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
 /* controls */
 .ctrl { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .ctrl button { min-height: 46px; border-radius: 99px; padding: 0 22px; border: 1.5px solid var(--line); background: var(--card); color: var(--ink); font-weight: 600; }
-.ctrl .next { background: var(--green); color: #fff; border-color: var(--green); font-size: 17px; padding: 0 30px; }
+.ctrl .next { background: var(--green); color: #06110f; border-color: var(--green); font-size: 17px; padding: 0 30px; }
 .ctrl .next.pulse { animation: pulse 1.8s ease-in-out infinite; }
 @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(23, 102, 58, .35); } 50% { box-shadow: 0 0 0 10px rgba(23, 102, 58, 0); } }
 @media (prefers-reduced-motion: reduce) { .ctrl .next.pulse { animation: none; } .node .av { transition: none; } }
@@ -113,8 +113,8 @@ button:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
 @media (max-width: 760px) { .principles { grid-template-columns: 1fr; } }
 .foot { font-size: 13px; color: var(--ink-2); margin: 0; }
 
-.topbar { display: flex; align-items: center; gap: 12px 18px; flex-wrap: wrap; font-size: 15px; }
-.topbar a { color: var(--green); font-weight: 600; text-decoration: none; }
+.topbar { display: flex; align-items: center; gap: 12px 20px; flex-wrap: wrap; font-size: 15px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.topbar a { color: var(--ink-2); font-weight: 500; text-decoration: none; } .topbar a.back { color: var(--ink); font-weight: 600; border: 1.5px solid var(--line); border-radius: 999px; padding: 7px 16px; } .topbar a.back:hover { border-color: var(--green); text-decoration: none; } .topbar a.proto { background: #f2b65e; color: #1d1405; font-weight: 600; border-radius: 999px; padding: 8px 16px; } .topbar a.proto:hover { text-decoration: none; background: #f6c47b; }
 .topbar a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .topbar .home { display: inline-flex; align-items: center; gap: 8px; color: var(--ink); }
 .topbar .sp { flex: 1; }
@@ -122,7 +122,7 @@ button:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
 <style>body{margin:0}[hidden]{display:none!important}</style></head><body>
 
 
-<div class="wrap" style="padding-bottom:0"><nav class="topbar" aria-label="Site"><a class="home" href="index.html"><i class="mk"><svg width="28" height="28" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" aria-hidden="true"><g id="mark"><path d="M75.61 21.01 A42 42 0 0 1 92.26 33.10" fill="none" stroke="#69c5b3" stroke-width="10" stroke-linecap="round"/><path d="M101.91 62.80 A42 42 0 0 1 95.55 82.37" fill="none" stroke="#7fb1e1" stroke-width="10" stroke-linecap="round"/><path d="M70.29 100.72 A42 42 0 0 1 49.71 100.72" fill="none" stroke="#f5c873" stroke-width="10" stroke-linecap="round"/><path d="M24.45 82.37 A42 42 0 0 1 18.09 62.80" fill="none" stroke="#f3a473" stroke-width="10" stroke-linecap="round"/><path d="M27.74 33.10 A42 42 0 0 1 44.39 21.01" fill="none" stroke="#8cd1a1" stroke-width="10" stroke-linecap="round"/><circle cx="60.00" cy="18.00" r="11.5" fill="#3fb59d"/><circle cx="99.94" cy="47.02" r="11.5" fill="#5b9bd8"/><circle cx="84.69" cy="93.98" r="11.5" fill="#f2b84b"/><circle cx="35.31" cy="93.98" r="11.5" fill="#f08a4b"/><circle cx="20.06" cy="47.02" r="11.5" fill="#6cc486"/></g></svg></i>Kafila</a><span class="sp"></span><a href="index.html#how">Fatima's case with screenshots</a><a href="architecture.html">Architecture</a><a href="prototype/" target="_blank" rel="noopener">Open the prototype</a></nav></div>
+<div class="wrap" style="padding-bottom:0"><nav class="topbar" aria-label="Site"><a class="home" href="index.html"><i class="mk"><svg width="28" height="28" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" aria-hidden="true"><g id="mark"><path d="M75.61 21.01 A42 42 0 0 1 92.26 33.10" fill="none" stroke="#69c5b3" stroke-width="10" stroke-linecap="round"/><path d="M101.91 62.80 A42 42 0 0 1 95.55 82.37" fill="none" stroke="#7fb1e1" stroke-width="10" stroke-linecap="round"/><path d="M70.29 100.72 A42 42 0 0 1 49.71 100.72" fill="none" stroke="#f5c873" stroke-width="10" stroke-linecap="round"/><path d="M24.45 82.37 A42 42 0 0 1 18.09 62.80" fill="none" stroke="#f3a473" stroke-width="10" stroke-linecap="round"/><path d="M27.74 33.10 A42 42 0 0 1 44.39 21.01" fill="none" stroke="#8cd1a1" stroke-width="10" stroke-linecap="round"/><circle cx="60.00" cy="18.00" r="11.5" fill="#3fb59d"/><circle cx="99.94" cy="47.02" r="11.5" fill="#5b9bd8"/><circle cx="84.69" cy="93.98" r="11.5" fill="#f2b84b"/><circle cx="35.31" cy="93.98" r="11.5" fill="#f08a4b"/><circle cx="20.06" cy="47.02" r="11.5" fill="#6cc486"/></g></svg></i>Kafila</a><span class="sp"></span><a class="back" href="index.html">← Back to the overview</a><a href="architecture.html">Architecture</a><a class="proto" href="prototype/" target="_blank" rel="noopener">Prototype</a></nav></div>
 <div class="wrap">
   <div class="eyebrow">Kafila · Fatima’s case, step by step</div>
   <h1>One result. <span>Six steps, each with a responsible person.</span></h1>
