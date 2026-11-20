@@ -438,7 +438,7 @@ R: Please accept for ${c.result.next}.${c.barriers && c.barriers.includes("gende
       modal(`<h2>Book a slot for the patient</h2><label for="sl">Slot</label><select id="sl"><option value="">Choose…</option>${list.map((x) => `<option value="${esc(x.id)}">${esc(x.day + " " + x.time + " · " + x.doc + " · " + x.clinic)}</option>`).join("")}</select>
         <p class="tiny">Agreed with the patient by phone. The patient gets the confirmation and reminders.</p>`, Object.assign((bg) => {
         const x = list.find((y) => y.id === bg.querySelector("#sl").value); const ms = Date.parse(x.day + "T" + x.time + ":00+04:00");
-        c.slot = { ...x, label: Patient.fmtDate(ms, c.lang) + " " + x.time + " · " + x.doc, labelEn: Patient.fmtDate(ms, "en") + " " + x.time + " · " + x.doc };
+        c.slot = { ...x, bookedAt: Store.now(), label: Patient.fmtDate(ms, c.lang) + " " + x.time + " · " + x.doc, labelEn: Patient.fmtDate(ms, "en") + " " + x.time + " · " + x.doc };
         Store.move(c, "booked", who, "booked by coordinator: " + c.slot.labelEn); Store.save();
       }, { valid: (bg) => !!bg.querySelector("#sl").value }));
       return;

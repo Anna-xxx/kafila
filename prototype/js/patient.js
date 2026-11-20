@@ -80,8 +80,8 @@
     colonoscopy: {
       title: { en: "Colonoscopy slot", ar: "موعد تنظير القولون" }, sub: { en: "The clinic confirms the slot and checks your medicines first.", ar: "يؤكد المركز الموعد ويراجع أدويتكِ أولًا." }, why: "auto-referral for FIT+",
       list: [
-        { id: "s1", doc: "Dr. Amna Al Mansoori", f: true, clinic: "Khalifa City GI Centre", km: 4, day: "2026-11-21", time: "10:00", wkd: true, pay: { "Government plan (demo)": 0, Basic: 150, Enhanced: 50 } },
-        { id: "s2", doc: "Dr. Omar Khalil", f: false, clinic: "Khalifa City GI Centre", km: 4, day: "2026-11-19", time: "09:30", wkd: false, pay: { "Government plan (demo)": 0, Basic: 150, Enhanced: 50 } },
+        { id: "s1", doc: "Dr. Amna Al Mansoori", f: true, clinic: "Khalifa City GI Centre", km: 4, day: "2026-11-28", time: "10:00", wkd: true, pay: { "Government plan (demo)": 0, Basic: 150, Enhanced: 50 } },
+        { id: "s2", doc: "Dr. Omar Khalil", f: false, clinic: "Khalifa City GI Centre", km: 4, day: "2026-11-23", time: "09:30", wkd: false, pay: { "Government plan (demo)": 0, Basic: 150, Enhanced: 50 } },
         { id: "s3", doc: "Dr. Leena Haddad", f: true, clinic: "Mussafah Day Clinic (demo)", km: 11, day: "2026-11-24", time: "18:30", wkd: true, pay: { "Government plan (demo)": 0, Basic: 100, Enhanced: 30 } },
         { id: "s4", doc: "Dr. Rami Saleh", f: false, clinic: "Al Reem GI Centre", km: 19, day: "2026-11-23", time: "19:00", wkd: true, pay: { "Government plan (demo)": 0, Basic: 200, Enhanced: 80 } },
         { id: "s5", doc: "Dr. Sara Nabil", f: true, clinic: "Al Reem GI Centre", km: 19, day: "2026-11-26", time: "11:00", wkd: false, pay: { "Government plan (demo)": 0, Basic: 200, Enhanced: 80 } }
@@ -404,7 +404,7 @@
       const P = slotsFor(c), s = P && P.list.find((x) => x.id === u.sheet);
       if (!s) { u.sheet = null; Store.save(); return; }
       const ms = Date.parse(s.day + "T" + s.time + ":00+04:00");
-      c.slot = { ...s, label: fmtDate(ms, lang) + " " + s.time + " · " + s.doc, labelEn: fmtDate(ms, "en") + " " + s.time + " · " + s.doc };
+      c.slot = { ...s, bookedAt: Store.now(), label: fmtDate(ms, lang) + " " + s.time + " · " + s.doc, labelEn: fmtDate(ms, "en") + " " + s.time + " · " + s.doc };
       if (P.gpVisit) {
         // A GP visit with the repeat test is booked directly: no referral, confirmed at once.
         if (OPEN.includes(c.state)) { c.teachBack = c.teachBack || "skipped"; Store.move(c, "acknowledged", "Patient", "acknowledged"); }
@@ -589,7 +589,7 @@
         : [appt - 2 * Store.DAY, "r2", lang === "ar" ? "تذكير: موعدك بعد يومين." : "Reminder: your appointment is in 2 days."],
       [appt - 1 * Store.DAY, "r1", gi ? (lang === "ar" ? "غدًا موعد تنظير القولون. اليوم، ابدئي شراب التحضير في الوقت الذي حدده المركز، كما أخبركِ المركز. تأكدي أن شخصًا بالغًا سيرافقكِ إلى المنزل." : "Tomorrow is your colonoscopy. Today, start the prep drink at the time the clinic gave you, as your clinic told you. Make sure an adult can take you home.") : (lang === "ar" ? "موعدك غدًا. أحضري الهوية." : "Your appointment is tomorrow. Bring your ID.")],
       [appt - 3 * 3600000, "r0", lang === "ar" ? "موعدك اليوم الساعة " + c.slot.time + ". هل تحتاجين مساعدة في الوصول؟" : "Your appointment is today at " + c.slot.time + ". Need help getting there?"]
-    ].map(([at, k, text]) => ({ at, k, text }));
+    ].map(([at, k, text]) => ({ at, k, text })).filter((r) => !c.slot.bookedAt || r.at > c.slot.bookedAt); // a reminder due before the booking was never sent (BA, 20 Nov)
   }
   function deliverDue(c) {
     if (!c.slot || !(["booked", "attended", "closed"].includes(c.state) || (c.state === "confirmation" && pathway(c) === "gp_confirm"))) return;
@@ -747,7 +747,7 @@
     const map = { issued: 0, assigned: 0, notified: 0, acknowledged: 1, confirmation: 1, referral: 2, booked: 3, attended: 4, closed: 5 }, cur = map[c.state];
     const todoKey = c.state === "confirmation" ? "acknowledged" : OPEN.includes(c.state) ? "notified" : c.state;
     const todo = c.rejected && !c.slot ? (lang === "ar" ? "لا شيء الآن. يختار طبيبك عيادة أخرى وسنراسلك." : "Nothing for now. Your doctor is choosing another clinic; we will message you.") : !slotsFor(c) && todoKey === "acknowledged" ? t.urgentTitle : t.todo[todoKey];
-    const all = reminders(c, lang), sent = all.filter((r) => (c.sent || []).includes(r.k)), planned = all.filter((r) => !(c.sent || []).includes(r.k));
+    const all = reminders(c, lang), sent = all.filter((r) => (c.sent || []).includes(r.k)), planned = all.filter((r) => !(c.sent || []).includes(r.k) && r.at > Store.now());
     const isDone = (i) => i < cur || c.state === "closed";
     // Before the clinic accepts, the time is only held: no green tick yet (BA F9).
     const held = c.slot && c.state === "referral";
