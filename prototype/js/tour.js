@@ -32,7 +32,7 @@
   ];
 
   // Each step shows its own screen as soon as it becomes active (BA, 20 Nov: Next moved only the card, not the screen).
-  async function show() { const s = STEPS[st.step]; if (s.btn.length !== 1) return; const en = document.getElementById("entry"); if (en) en.remove(); await s.run[0](); }
+  async function show() { const s = STEPS[st.step]; const en = document.getElementById("entry"); if (en) en.remove(); await s.run[0](); }
   function render() {
     let el = document.getElementById("tour");
     const btn = document.getElementById("tourBtn");
