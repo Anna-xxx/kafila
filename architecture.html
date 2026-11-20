@@ -152,6 +152,9 @@ button.node:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px;
 .cmp td.q { background: transparent; color: var(--ink); font-weight: 600; padding-left: 0; width: 26%; }
 .cmp td.us { background: var(--teal-soft); color: var(--ink); }
 .tablebox { overflow-x: auto; margin-inline: -6px; }
+.where.two { grid-template-columns: repeat(2, minmax(0, 1fr)); } @media (max-width: 860px) { .where.two { grid-template-columns: 1fr; } }
+.scrollhint { display: none; font-size: 13px; color: var(--ink-3); margin: 18px 0 -14px; } @media (max-width: 760px) { .scrollhint { display: block; } }
+.fullsize { font-size: 14px; color: var(--ink-2); justify-self: start; } .fullsize:hover { color: var(--ink); }
 .bigfig { display: flex; gap: 18px; align-items: baseline; border-top: 1px solid var(--line); padding-top: 18px; }
 .bigfig b { font: 700 40px/1 var(--display); color: var(--amber); white-space: nowrap; }
 
@@ -361,13 +364,14 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
     <p class="eyebrow"><b>01</b>Demo and pilot</p>
     <h2>What runs today, <em>and what changes in a pilot.</em></h2>
     <div class="where" style="margin-top:28px">
-      <div><span class="tag built">The demo today</span><h3>One browser, invented data</h3><p>Everything runs in one browser. The "lab" is a file of 220 invented results. The patient tab and the clinic tab share the browser's storage, so a tap on her phone shows up at once for Noura. WhatsApp, SMS, booking and insurance are drawn. The only server is our Cloudflare Worker for the AI chat: Gemini through the Worker, and prepared answers whenever AI is off.</p></div>
-      <div><span class="tag prop">The pilot</span><h3>Connected to the clinic's systems</h3><p>Results arrive from the lab and patient details come from the clinic record. Updates go back to it once the record is connected. Real WhatsApp, SMS and calls through licensed providers. Storage, AI and speech hosted in the UAE.</p></div>
+      <div><span class="tag built">The demo today</span><h3>One browser, invented data</h3><p>Everything runs in one browser. The "lab" is a file of 222 invented cases (6 demo patients). The patient tab and the clinic tab share the browser's storage, so a tap on her phone shows up at once for Noura. WhatsApp and SMS delivery, appointment booking and insurance checks are simulated. The public demo needs no server: prepared answers reply. Live AI (Gemini through our Cloudflare Worker) is optional and off in the public demo.</p></div>
+      <div><span class="tag prop">The pilot</span><h3>Connected to the clinic's systems</h3><p>Results arrive from the lab and patient details come from the clinic record. Updates go back to it once the record is connected. Real WhatsApp, SMS and calls through licensed providers. UAE-hosted application and health-data stores are the target design; message channels, metadata, logs and support access are checked before real patients.</p></div>
       <div><span class="tag built">The same in both</span><h3>The same safety principles</h3><p>The rules table, the red-flag list, the prepared answer library (pending clinical review) and the safety tests carry into the pilot. A real deployment adds secure hosting, sign-in, audit trails, integration monitoring and clinical validation by the partner.</p></div>
     </div>
     <figure class="datafig">
       <p>The prototype as built: a static site, the rules table, the prepared texts and one small server for AI.</p>
-      <button class="shot" type="button" data-full="img/arch-prototype.webp"><img src="img/arch-prototype.webp" alt="Prototype architecture, 18 Nov: static site with patient and staff screens, rules table, red flags, duty roster, content library, browser storage, and a Cloudflare Worker for AI that is off until the key is entered" width="2560" height="1484"></button>
+      <button class="shot" type="button" data-full="img/arch-prototype.webp"><img src="img/arch-prototype.webp" alt="Prototype architecture, v40, 20 Nov: static site with patient and staff screens, rules table, red flags, duty roster, content library, browser storage, and a Cloudflare Worker for AI that is off until the key is entered" width="2560" height="1484"></button>
+      <a class="fullsize" href="img/arch-prototype.webp" target="_blank" rel="noopener">Open full size ↗</a>
     </figure>
   </div>
 </section>
@@ -376,6 +380,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
   <div class="wrap">
     <p class="eyebrow"><b>02</b>How it connects</p>
     <h2>Seven steps to connect <em>one clinic group.</em></h2>
+    <p class="scrollhint" aria-hidden="true">Scroll sideways →</p>
     <div class="tablebox" style="margin-top:24px">
       <table class="cmp">
         <thead><tr><th>Step</th><th>What happens</th><th>Who does it</th><th class="us">Standard</th></tr></thead>
@@ -383,17 +388,22 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
           <tr><td class="q">1. Agreement</td><td>The provider network signs a data-sharing agreement and names a clinical lead</td><td>Partner + Kafila</td><td class="us">Contract, ADHICS</td></tr>
           <tr><td class="q">2. Results in</td><td>The clinic's IT team adds one rule to its integration engine: send a copy of every positive screening result to Kafila. To start, a protected file once a day is enough</td><td>Partner IT</td><td class="us">HL7 v2, or secure file (SFTP)</td></tr>
           <tr><td class="q">3. Patient details in</td><td>Kafila reads only what it needs: mobile number, preferred language, family doctor and clinic, insurance plan</td><td>Partner IT</td><td class="us">FHIR / HL7</td></tr>
-          <tr><td class="q">4. Updates back</td><td>The referral, "appointment booked" and the clinician's closure note go back into the record. Clinicians see Kafila as a worklist next to their own system</td><td>Kafila</td><td class="us">FHIR</td></tr>
+          <tr><td class="q">4. Updates back</td><td>Back into the record: the referral, its status, the appointment and the clinician's closure note. Clinicians see Kafila as a worklist next to their own system</td><td>Kafila</td><td class="us">FHIR, for example ServiceRequest, Task, Appointment (from I3), DiagnosticReport</td></tr>
           <tr><td class="q">5. Messages to the patient</td><td>WhatsApp from the clinic's verified business number, SMS through a UAE-licensed operator, calls through a local telecom provider. No medical words, only a link</td><td>Kafila + providers</td><td class="us">WhatsApp Business Platform, TDRA rules</td></tr>
           <tr><td class="q">6. Done elsewhere</td><td>Through the partner's official connection, Kafila can see in Malaffi that the colonoscopy was done at another clinic, and the case can close with that evidence</td><td>Partner + DoH</td><td class="us">Malaffi interface <span class="vf">· with partner</span></td></tr>
-          <tr><td class="q">7. Storage</td><td>Everything is stored and processed on servers in the UAE</td><td>Kafila</td><td class="us">Federal Law No. 2 of 2019</td></tr>
+          <tr><td class="q">7. Storage</td><td>Health data is stored and processed in the UAE (target design). Medical records are kept at least 25 years; other data per the agreed policy. Message channels, logs and support access are checked with the partner</td><td>Kafila + partner</td><td class="us">Federal Law No. 2 of 2019 (Art. 20: 25 years)</td></tr>
         </tbody>
       </table>
     </div>
-    <p class="note" style="margin-top:14px">What the partner's IT team has to do: one outbound rule in the integration engine (or a daily file), one read / write connection to the record, and staff sign-in through the clinic's own login. No new hardware. The pilot can start with steps 1–3, 5 and 7; updates back to the record (step 4) follow once it is connected. A daily file is enough for positive stool tests only. Urgent results, like a blood pressure of 185/115, need a same-day feed and a clinician on call; without that they stay out of the live pilot.</p>
+    <p class="note" style="margin-top:14px">What the partner's IT team has to do: one outbound rule in the integration engine (or a daily file), one read / write connection to the record, and staff sign-in through the clinic's own login. No new hardware. The pilot can start with steps 1–3, 5 and 7; updates back to the record (step 4) follow once it is connected. A daily file is enough for positive stool tests only. Urgent results, like a blood pressure of 185/115, need a same-day feed and a clinician on call; without that they stay out of the first pilot. If a patient in the stool-test pilot writes a danger sign, Kafila shows "Call 998 now" with no AI and alerts the coordinator or the doctor on call during clinic hours; the out-of-hours route is agreed with the partner before go-live.</p>
+    <div class="where two" style="margin-top:24px">
+      <div><span class="tag prop">Start</span><h3>The daily file (v0)</h3><p>Sent by the lab or screening programme at an agreed time each day. Each row: result ID, patient ID, test, result, result date and import time, contact details, language, family doctor. A correction is a new row with the same result ID; duplicates are merged. Every import returns an accepted / rejected report to a named contact at the partner. The deadline clock starts at the result date, not the import time.</p></div>
+      <div><span class="tag prop">Start</span><h3>Closing a case before the record is connected</h3><p>The assigned clinician checks the colonoscopy report in the partner's record and enters its reference in Kafila. A case without a confirmed report stays on the list.</p></div>
+    </div>
     <figure class="datafig">
       <p>Where Kafila learns which clinic each patient belongs to, which language to write in, which appointments fit them and what their plan pays for.</p>
       <button class="shot" type="button" data-full="img/data-sources.webp"><img src="img/data-sources.webp" alt="Diagram: laboratory, clinic health record, appointment system and insurer feed Kafila; Fatima gets a WhatsApp from her clinic, in her language"></button>
+      <a class="fullsize" href="img/data-sources.webp" target="_blank" rel="noopener">Open full size ↗</a>
     </figure>
   </div>
 </section>
@@ -402,16 +412,18 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
   <div class="wrap">
     <p class="eyebrow"><b>03</b>Pilot architecture</p>
     <h2>The Abu Dhabi pilot, <em>component by component.</em></h2>
-    <p class="lede" style="margin-top:14px">Everything with health data runs in a UAE cloud region, with a second UAE region for backup. Examples of technology are assumptions to agree with the partner.</p>
+    <p class="lede" style="margin-top:14px">Target design after v1 and Scale. The first pilot uses only the parts marked Start in the table below. Health data is designed to stay in a UAE cloud region, with a second UAE region for backup. Examples of technology are assumptions to agree with the partner.</p>
     <figure class="datafig">
       <button class="shot" type="button" data-full="img/arch-pilot.webp"><img src="img/arch-pilot.webp" alt="Pilot architecture: users, channels and identity, UAE cloud region with edge, application services, integration, AI zone, data stores and operations; partner systems lab, EMR, scheduling and duty roster, Malaffi, insurer, Sahatna" width="2880" height="1800"></button>
+      <a class="fullsize" href="img/arch-pilot.webp" target="_blank" rel="noopener">Open full size ↗</a>
     </figure>
+    <p class="scrollhint" aria-hidden="true">Scroll sideways →</p>
     <div class="tablebox" style="margin-top:28px">
       <table class="cmp int">
         <thead><tr><th>#</th><th>System</th><th>What flows</th><th>Standard</th><th class="us">When</th></tr></thead>
         <tbody>
           <tr><td class="q n">I1</td><td>Lab / screening programme</td><td>Positive results in</td><td>Daily secure file, then HL7 v2 or FHIR</td><td class="us">Start → v1</td></tr>
-          <tr><td class="q n">I2</td><td>Clinic health record (EMR)</td><td>In: contact, language, doctor. Out: referral, closure note</td><td>FHIR R4, or HL7 v2</td><td class="us">v1</td></tr>
+          <tr><td class="q n">I2</td><td>Clinic health record (EMR)</td><td>In: contact, language, doctor. Out: referral and its status, closure note</td><td>FHIR R4, or HL7 v2</td><td class="us">Start: contact details in the daily file → v1</td></tr>
           <tr><td class="q n">I3</td><td>Appointment system</td><td>In: free slots. Out: booking</td><td>Partner API or FHIR; coordinator books at the start</td><td class="us">Start → v1</td></tr>
           <tr><td class="q n">I4</td><td>Malaffi</td><td>Evidence that the test was done elsewhere</td><td>Malaffi specs <span class="vf">· with partner</span></td><td class="us">Scale</td></tr>
           <tr><td class="q n">I5</td><td>WhatsApp Business</td><td>Notice + link out; replies and read receipts in</td><td>Official business provider</td><td class="us">Start</td></tr>
@@ -419,7 +431,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
           <tr><td class="q n">I7</td><td>Voice call</td><td>Automated call in Arabic or English, "press 1 for a nurse"</td><td>UAE telecom provider</td><td class="us">Start</td></tr>
           <tr><td class="q n">I8</td><td>Insurer</td><td>Is the colonoscopy covered for this plan</td><td>Insurer or eClaim channel <span class="vf">· with partner</span></td><td class="us">v1</td></tr>
           <tr><td class="q n">I9</td><td>Clinic login</td><td>Staff sign-in</td><td>OIDC / SAML</td><td class="us">Start</td></tr>
-          <tr><td class="q n">I10</td><td>Sahatna</td><td>Patient side as a module inside the app</td><td>Sahatna partner interface <span class="vf">· with partner</span></td><td class="us">Scale</td></tr>
+          <tr><td class="q n">I10</td><td>Sahatna</td><td>Patient side alongside the app (to agree with the programme)</td><td>Sahatna partner interface <span class="vf">· with partner</span></td><td class="us">Scale</td></tr>
         </tbody>
       </table>
     </div>
@@ -435,12 +447,13 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
       <div><h3>Works without AI</h3><p>Every AI call has a prepared fallback answer. The pilot can run with AI switched off.</p></div>
       <div><h3>A responsible person at every step</h3><p>Every positive result is one case with a named responsible person and a deadline on each step, until a clinician closes it with evidence. If an expected event does not arrive (no reply, no booking, no report), the case goes to the top of a list.</p></div>
       <div><h3>No health words in messages</h3><p>WhatsApp and SMS messages, urgent ones included, say only that the patient's clinic needs to reach them, plus a link. The result appears only after an identity check. Consent, opt-outs and every contact attempt are logged.</p></div>
-      <div><h3>Minimum data to AI</h3><p>Kafila does not send the patient's name, Emirates ID, phone, address or record number to the model. A patient could still type personal details into a free question, so the pilot adds a filter that removes them first. Red-flag questions never reach the AI.</p></div>
-      <div><h3>Designed to stay in the UAE</h3><p>Hosting, database, backups, logs, AI and speech, as the health-data law requires. The whole chain, including message providers and support access, is checked before real patients.</p></div>
+      <div><h3>Minimum data to AI</h3><p>Kafila does not send the patient's name, Emirates ID, phone, address or record number to the model. A patient could still type personal details into a free question, so the pilot adds a filter that removes them first; if a question cannot be made safe, the prepared answer is shown instead. Red-flag questions never reach the AI.</p></div>
+      <div><h3>Designed to stay in the UAE</h3><p>UAE-hosted application and health-data stores are the target design, as the health-data law requires. Message channels, metadata, logs and support access are checked before real patients.</p></div>
     </div>
     <figure class="datafig">
-      <p>Security zones: what data may cross each line. The database has no route to the internet; the AI zone sees de-identified context only.</p>
+      <p>Target controls. Security zones: what data may cross each line. The database has no route to the internet; the AI zone sees only minimised case context. ADHICS V2 mapping and provider approval are pending; the provider partner is the accountable entity.</p>
       <button class="shot" type="button" data-full="img/arch-zones.webp"><img src="img/arch-zones.webp" alt="Security zones Z0 internet to Z5 operations, with the AI zone receiving only minimised case context" width="2200" height="1280"></button>
+      <a class="fullsize" href="img/arch-zones.webp" target="_blank" rel="noopener">Open full size ↗</a>
     </figure>
   </div>
 </section>
@@ -450,13 +463,15 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
     <p class="eyebrow"><b>05</b>AI</p>
     <h2>Which AI, <em>and where it runs.</em></h2>
     <div class="where" style="margin-top:28px">
-      <div><span class="tag built">Demo</span><h3>Gemini through our Worker</h3><p>The patient AI chat can call Gemini through our Cloudflare Worker. The code is ready, but AI is off until the key is entered, so today prepared answers from the library reply. This is acceptable only because all data is invented.</p></div>
-      <div><span class="tag prop">Pilot</span><h3>A model hosted in the UAE</h3><p>An in-region model with no training on our data and no retention: a large cloud provider's model in a UAE region, or an Arabic-first model such as Jais or Falcon. The model is chosen with the partner and tested on our 50-question safety set.</p></div>
+      <div><span class="tag built">Demo</span><h3>Gemini through our Worker</h3><p>The patient AI chat can call Gemini through our Cloudflare Worker. The code is ready, but AI is off until the key is entered, so today prepared answers from the library reply (prepared texts · clinical review pending). This is acceptable only because all data is invented.</p></div>
+      <div><span class="tag prop">Pilot</span><h3>A model hosted in the UAE</h3><p>An in-region model. No training on our data and no retention are requirements for the chosen provider. Options: a large cloud provider's model in a UAE region, or an Arabic-first model such as Jais or Falcon. The model is chosen with the partner and tested on our 50-question safety set.</p></div>
       <div><span class="tag prop">Pilot</span><h3>Drafts for staff</h3><p>Case summary and referral letter drafts, built from case fields. Every draft is checked by code, marked "AI draft · check before use", and a person accepts, edits or ignores it. In the demo these drafts are templates.</p></div>
     </div>
+    <p class="lede" style="margin-top:28px">Three modes for every patient question. 1) A danger sign gets a fixed answer, with no AI. 2) A known question gets a prepared answer from the library. 3) Any other question goes to the AI with minimised context only (test, zone, next step, deadline, prepared texts; no name, ID, phone, address or record number). Its answer is checked by code, and the prepared answer is the fallback.</p>
     <figure class="datafig">
       <p>How a staff draft is made and checked before anyone sees it.</p>
-      <button class="shot" type="button" data-full="img/arch-staffai.webp"><img src="img/arch-staffai.webp" alt="Staff AI flow: de-identified case fields, prompt template, model, code checks, fallback template, accept edit or ignore logged" width="2600" height="1120"></button>
+      <button class="shot" type="button" data-full="img/arch-staffai.webp"><img src="img/arch-staffai.webp" alt="Staff AI flow: minimised case fields, prompt template, model, code checks, fallback template, accept edit or ignore logged" width="2600" height="1120"></button>
+      <a class="fullsize" href="img/arch-staffai.webp" target="_blank" rel="noopener">Open full size ↗</a>
     </figure>
   </div>
 </section>
@@ -465,7 +480,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
 <footer>
   <div class="wrap">
     <p class="disc">Arranged with the pilot partner and DoH, not needed to start: Malaffi access, insurer eligibility checks, the in-UAE AI model, ADHICS control mapping, the Sahatna interface.</p>
-    <p class="disc">Source: Kafila architecture document v0.7 (18 Nov 2026). Technology examples are assumptions to agree with the pilot partner. All people, results, clinics and insurance plans in the demo are synthetic. Not a medical device. Not affiliated with or endorsed by DoH Abu Dhabi or ADPHC. Logo: concept AI-generated, redrawn as vector.</p>
+    <p class="disc">Source: Kafila architecture document v0.7 (18 Nov 2026). Technology examples are assumptions to agree with the pilot partner. All people, results, clinics and insurance plans in the demo are synthetic. Prototype for demonstration only. Not for clinical use. Not registered as a medical device; classification will be checked before any pilot. WhatsApp, Sahatna, Malaffi, UAE PASS, Thiqa, Daman and SEHA are names of their owners. Kafila is an independent concept and is not affiliated with or endorsed by them, DoH Abu Dhabi or ADPHC. Logo: concept AI-generated, redrawn as vector.</p>
   </div>
 </footer>
 <div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Enlarged diagram">
@@ -476,7 +491,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
 (function(){const lb=document.getElementById("lb"),lbImg=document.getElementById("lbImg"),lbClose=document.getElementById("lbClose");let opener=null;
 document.querySelectorAll(".shot").forEach(b=>b.addEventListener("click",()=>{opener=b;lbImg.src=b.dataset.full;lbImg.alt=b.querySelector("img").alt;lb.hidden=false;lbClose.focus();}));
 function closeLb(){lb.hidden=true;if(opener)opener.focus();}
-lbClose.addEventListener("click",closeLb);lb.addEventListener("click",e=>{if(e.target===lb)closeLb();});addEventListener("keydown",e=>{if(e.key==="Escape"&&!lb.hidden)closeLb();});})();
+lbClose.addEventListener("click",closeLb);lb.addEventListener("click",e=>{if(e.target===lb)closeLb();});addEventListener("keydown",e=>{if(lb.hidden)return;if(e.key==="Escape")closeLb();else if(e.key==="Tab"){e.preventDefault();lbClose.focus();}});})();
 </script>
 <a id="totop" class="totop" href="#top" aria-label="Back to top" title="Back to top">↑</a>
 <script>(function(){var b=document.getElementById("totop");if(!b)return;function f(){b.classList.toggle("show",window.scrollY>600)}addEventListener("scroll",f,{passive:true});f();b.addEventListener("click",function(e){e.preventDefault();scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"})})})();</script>

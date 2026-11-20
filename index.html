@@ -713,7 +713,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
     <div>
       <h3>About this prototype</h3>
       <p>Built during the Future Health Digital Innovation Challenge by a solo founder with medical education, working with a team of AI roles: developer, tester, business analyst, architect, designer, medical reviewer, writer.</p>
-      <p class="disc" id="fn-demo">Concept and demonstration prototype. All people, results, clinics and insurance plans are synthetic. Clinical logic follows published guidelines and is pending review by a licensed clinician. Messages, booking and integrations are simulated. Not for clinical use and not registered as a medical device. Not affiliated with or endorsed by DoH Abu Dhabi or ADPHC. Logo: concept AI-generated, redrawn as vector.</p>
+      <p class="disc" id="fn-demo">Concept and demonstration prototype. All people, results, clinics and insurance plans are synthetic. Clinical logic follows published guidelines and is pending review by a licensed clinician. Messages, booking and integrations are simulated. Not for clinical use. Not registered as a medical device; classification will be checked before any pilot. Messenger screens are simulated and not affiliated with WhatsApp or Meta. WhatsApp, Sahatna, Malaffi, UAE PASS, Thiqa, Daman and SEHA are names of their owners. Kafila is an independent concept and is not affiliated with or endorsed by them, DoH Abu Dhabi or ADPHC. Logo: concept AI-generated, redrawn as vector.</p>
     </div>
   </div>
 </footer>
@@ -812,7 +812,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
   function closeLb() { lb.hidden = true; if (opener) opener.focus(); }
   lbClose.addEventListener("click", closeLb);
   lb.addEventListener("click", (e) => { if (e.target === lb) closeLb(); });
-  addEventListener("keydown", (e) => { if (e.key === "Escape" && !lb.hidden) closeLb(); });
+  addEventListener("keydown", (e) => { if (lb.hidden) return; if (e.key === "Escape") closeLb(); else if (e.key === "Tab") { e.preventDefault(); lbClose.focus(); } });
 })();
 </script>
 <a id="totop" class="totop" href="#top" aria-label="Back to top" title="Back to top">↑</a>
