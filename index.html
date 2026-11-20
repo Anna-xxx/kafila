@@ -327,13 +327,13 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
 
 <aside class="progress" aria-hidden="true" id="progress">
   <svg viewBox="0 0 54 54"><circle class="bg" cx="27" cy="27" r="23"/><circle class="fg" cx="27" cy="27" r="23" id="pfg"/><circle class="ok" cx="27" cy="27" r="9"/></svg>
-  <div class="lbl">Case state<b id="plbl">Result issued</b></div>
+  <div class="lbl">You are here<b id="plbl">Start</b></div>
 </aside>
 
 <main id="top">
 
 <!-- HERO -->
-<section class="hero" data-state="Result issued">
+<section class="hero" data-state="Start">
   <div class="wrap split">
     <div class="stack">
       <p class="eyebrow">Kafila <span lang="ar" dir="rtl">قافلة</span> · a screening-to-care accountability platform · Future Health Challenge 05</p>
@@ -378,7 +378,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
 </section>
 
 <!-- 01 WHAT -->
-<section id="what" data-state="Responsible person assigned">
+<section id="what" data-state="01 Five steps">
   <div class="wrap">
     <div class="split">
       <div class="stack">
@@ -402,7 +402,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
 </section>
 
 <!-- 02 WHY -->
-<section id="why" data-state="Patient notified">
+<section id="why" data-state="02 The gap">
   <div class="wrap split">
     <div class="stack">
       <p class="eyebrow"><b>02</b>The gap</p>
@@ -426,7 +426,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
 </section>
 
 <!-- 03 WHERE -->
-<section id="where" data-state="Patient understood">
+<section id="where" data-state="03 Where it runs">
   <div class="wrap">
     <div class="split">
       <div class="stack">
@@ -454,7 +454,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
 </section>
 
 <!-- 04 WHO -->
-<section id="who" data-state="Referral sent">
+<section id="who" data-state="04 People">
   <div class="wrap">
     <div class="split">
       <div class="stack">
@@ -471,7 +471,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
 </section>
 
 <!-- 05 HOW -->
-<section id="how" data-state="Booked">
+<section id="how" data-state="05 Fatima's case">
   <div class="wrap">
     <div class="split">
       <div class="stack">
@@ -577,7 +577,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
 </section>
 
 <!-- 06 URGENT -->
-<section id="safety" class="urgent" data-state="Seen by specialist">
+<section id="safety" class="urgent" data-state="06 Urgent cases">
   <div class="wrap split">
     <div class="stack">
       <p class="eyebrow"><b>06</b>Urgent cases</p>
@@ -598,7 +598,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
 </section>
 
 <!-- AI -->
-<section id="ai" data-state="Report received">
+<section id="ai" data-state="AI inside Kafila">
   <div class="wrap split">
     <div class="stack">
       <p class="eyebrow">AI inside Kafila</p>
@@ -630,7 +630,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
 </section>
 
 <!-- 07 PILOT -->
-<section id="pilot" data-state="Closed with evidence">
+<section id="pilot" data-state="07 Impact and pilot">
   <div class="wrap">
     <div class="split">
       <div class="stack">
@@ -774,7 +774,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
     show(document.getElementById("beat-result"));
   }));
 
-  // Loop ring on the right: fills with scroll, shows the case state of the section in view.
+  // Loop ring on the right: fills with scroll, shows the section in view.
   const fg = document.getElementById("pfg"), lbl = document.getElementById("plbl"), pr = document.getElementById("progress");
   const secs = [...document.querySelectorAll("section[data-state]")];
   const L = 2 * Math.PI * 23;
@@ -784,7 +784,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
     fg.style.strokeDashoffset = String(L * (1 - k));
     let cur = secs[0];
     secs.forEach((s) => { if (s.getBoundingClientRect().top < innerHeight * 0.5) cur = s; });
-    lbl.textContent = k > 0.985 ? "Loop closed" : cur.dataset.state;
+    lbl.textContent = cur.dataset.state;
     pr.classList.toggle("done", k > 0.985);
   }
   fg.style.strokeDasharray = String(L);
