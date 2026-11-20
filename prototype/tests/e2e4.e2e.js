@@ -40,12 +40,12 @@ const { chromium } = require('playwright');
   ok('BUG-04 Rajesh no slots', (await ph().locator('.slot').count()) === 0);
   await ph().locator('.tabbar [data-arg=assistant]').click();
   await p.fill('#msg', 'what is the weather'); await p.press('#msg', 'Enter'); await p.waitForTimeout(400);
-  const last = await ph().locator('.bub').last().innerText(); ok('BUG-05 weather → fallback', /can.t answer|لا أستطيع الإجابة/i.test(last));
+  const last = await ph().locator('.bub').last().innerText(); ok('BUG-05 weather → fallback', /checked answer|إجابة موثّقة/i.test(last));
   // BUG-09 Rajesh Arabic
-  await p.selectOption('#lang', 'ar').catch(()=>{}); await p.waitForTimeout(200);
+  await p.evaluate(([i,v])=>{const s=document.querySelector('#'+i);s.value=v;s.dispatchEvent(new Event('change'))},['lang','ar']).catch(()=>{}); await p.waitForTimeout(200);
   await ph().locator('.tabbar button').first().click(); await p.waitForTimeout(150); await shot('n11-rajesh-ar');
   ok('BUG-09 AR steps', /استرح/.test(await ph().innerText()));
-  await p.selectOption('#lang', 'en').catch(()=>{});
+  await p.evaluate(([i,v])=>{const s=document.querySelector('#'+i);s.value=v;s.dispatchEvent(new Event('change'))},['lang','en']).catch(()=>{});
   // BUG-02 Ahmed ladder
   await p.selectOption('#persona', 'C-1045'); await p.waitForTimeout(200);
   await p.click('[data-lad=sms2]'); await p.waitForTimeout(200); await shot('n12-sms');

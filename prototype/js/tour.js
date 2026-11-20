@@ -10,24 +10,24 @@
   const setLang = () => { Store.S.data.lang = st.lang; };
 
   const STEPS = [
-    { en: ["Fatima gets a message from her clinic", "Her stool test (FIT) is positive. Her health centre sends a discreet WhatsApp-style message with a secure link. Tap the notification, then sign in: the demo code is already filled in.", "R3 · suitable channel, the clinic is named, a nurse is one tap away"],
-      ar: ["تصل رسالة إلى فاطمة من عيادتها", "نتيجة فحص البراز (FIT) إيجابية. يرسل مركزها الصحي رسالة سرية بأسلوب واتساب مع رابط آمن. اضغط على الإشعار، ثم سجّل الدخول: الرمز التجريبي مُدخل.", "R3 · قناة مناسبة، اسم العيادة ظاهر، الممرضة على بعد ضغطة"],
+    { en: ["Fatima gets a message", "Fatima, 52, had a stool test for bowel cancer. It found blood. Her clinic sends her a short message. Press Show me, then tap the message and open the link.", "R3 · the right channel, the clinic's name, a nurse one tap away"],
+      ar: ["تصل رسالة إلى فاطمة", "فاطمة، 52 عامًا، أجرت فحص براز للكشف عن سرطان الأمعاء، ووجد الفحص دمًا. ترسل لها عيادتها رسالة قصيرة. اضغط «أرني»، ثم اضغط على الرسالة وافتح الرابط.", "R3 · القناة المناسبة، اسم العيادة، الممرضة على بعد ضغطة"],
       btn: [["Show me", "أرني"]], run: [() => { Store.reset(); setLang(); Patient.tourGo("C-1042", { lock: true }); go("#/patient"); }] },
-    { en: ["Her result and what happens next", "Plain words, a zone set by the rules table (not by AI), and dated next steps. Try the assistant: ask “Is it cancer?”.", "R3 · clear information, urgency and next steps; understanding is checked"],
-      ar: ["نتيجتها وما سيحدث بعد ذلك", "كلمات بسيطة، ومستوى تحدده جداول القواعد (وليس الذكاء الاصطناعي)، وخطوات تالية بتواريخ. جرّب المساعد: اسأل «هل هو سرطان؟».", "R3 · معلومات واضحة عن الأهمية والخطوات التالية، مع التأكد من الفهم"],
+    { en: ["She reads her result", "Plain words: what was found, that it is not a diagnosis, and what to do next by which date. Ask the assistant a question, for example “Is it cancer?”.", "R3 · clear result, urgency and next steps"],
+      ar: ["تقرأ نتيجتها", "كلمات بسيطة: ماذا وُجد، وأن النتيجة ليست تشخيصًا، وما الخطوة التالية وموعدها. اسأل المساعد سؤالًا، مثلًا «هل هو سرطان؟».", "R3 · نتيجة واضحة، ومدى الأهمية، والخطوات التالية"],
       btn: [["Show me", "أرني"]], run: [() => { setLang(); Patient.tourGo("C-1042", { tab: "result" }); go("#/patient"); }] },
-    { en: ["Booking that fits her life", "Filters for a female doctor, evening or Saturday, and the nearest site. Each slot shows what her plan covers. Pick a slot and confirm: the referral goes with the booking.", "R3, R4 · barriers removed; referral packet sent with the booking"],
-      ar: ["حجز يناسب حياتها", "مرشحات لطبيبة، ومساءً أو يوم السبت، وأقرب موقع. كل موعد يُظهر ما تغطيه خطتها. اختر موعدًا وأكّده: يُرسل التحويل مع الحجز.", "R3، R4 · إزالة العوائق؛ يُرسل ملف التحويل مع الحجز"],
+    { en: ["She books a colonoscopy", "She chooses a female doctor and a time that suits her. Each time shows what her insurance pays. Pick a time: the clinic gets her referral with it.", "R3, R4 · fewer barriers; referral sent with the booking"],
+      ar: ["تحجز تنظير القولون", "تختار طبيبة ووقتًا يناسبها. يُظهر كل موعد ما يدفعه تأمينها. اختر موعدًا: يصل تحويلها إلى العيادة مع الحجز.", "R3، R4 · عوائق أقل؛ يُرسل التحويل مع الحجز"],
       btn: [["Show me", "أرني"]], run: [() => { setLang(); Patient.tourGo("C-1042", { tab: "book", filters: { female: true } }); go("#/patient"); }] },
-    { en: ["The care team: one case, one coordinator", "Fatima's case: a responsible person and a deadline for every step, the timeline, the audit log and the referral packet. You are the specialist now: accept the referral.", "R1, R2, R4 · end-to-end view, SLAs, referral acceptance"],
-      ar: ["فريق الرعاية: حالة واحدة، مسؤول واحد", "حالة فاطمة: مسؤول وموعد نهائي لكل خطوة، والخط الزمني، وسجل التدقيق، وملف التحويل. أنت الآن الطبيب المختص: اقبل التحويل.", "R1، R2، R4 · رؤية كاملة، مواعيد الخدمة، قبول التحويل"],
+    { en: ["The clinic sees her case", "This is the care team's screen. One page shows who is responsible for each step and by when. Dr. Omar, the specialist, accepts her referral here.", "R1, R2, R4 · one view of the case, deadlines, referral accepted"],
+      ar: ["العيادة ترى حالتها", "هذه شاشة فريق الرعاية. صفحة واحدة تُظهر من المسؤول عن كل خطوة وموعدها. يقبل د. عمر، الطبيب المختص، تحويلها هنا.", "R1، R2، R4 · رؤية واحدة للحالة، المواعيد النهائية، قبول التحويل"],
       btn: [["Show me", "أرني"]], run: [async () => { setLang(); Patient.tourGo("C-1042", { tab: "book" }); await Patient.tourBook(); go("#/case/C-1042", "specialist"); }] },
-    { en: ["Rajesh: a red flag skips the AI", "Rajesh writes “I have chest pain”. A fixed 998 screen appears with no AI call, and an urgent task goes to the on-call clinician. Close it to see his urgent card: a doctor calls today.", "R5 · urgent cases reach qualified staff fast"],
-      ar: ["راجيش: علامة خطر تتجاوز الذكاء الاصطناعي", "يكتب راجيش «عندي ألم في الصدر». تظهر شاشة 998 ثابتة دون استدعاء الذكاء الاصطناعي، وتُرسل مهمة عاجلة إلى الطبيب المناوب. أغلقها لترى بطاقته العاجلة: يتصل به طبيب اليوم.", "R5 · الحالات العاجلة تصل بسرعة إلى الكادر المؤهل"],
+    { en: ["Rajesh needs help now", "Another patient, Rajesh, writes “I have chest pain”. Kafila does not ask the AI: it shows “Call 998” at once and alerts a doctor. Press “I am safe now” to continue.", "R5 · urgent cases reach staff fast"],
+      ar: ["راجيش يحتاج إلى مساعدة الآن", "مريض آخر، راجيش، يكتب «عندي ألم في الصدر». لا تسأل قافلة الذكاء الاصطناعي: تُظهر «اتصل بالرقم 998» فورًا وتنبّه طبيبًا. اضغط «أنا بأمان الآن» للمتابعة.", "R5 · الحالات العاجلة تصل بسرعة إلى الكادر الطبي"],
       btn: [["Show me", "أرني"]], run: [async () => { setLang(); Patient.tourGo("C-1043", { tab: "assistant" }); go("#/patient"); await Patient.send(st.lang === "ar" ? "عندي ألم في الصدر" : "I have chest pain"); }] },
-    { en: ["Close with evidence, then measure", "You are the family doctor: record the same-day call, then close the case. The reason comes from the outcome and needs your signature. The dashboard shows the funnel, time to care, treatment started and patient understanding. Negative path: Ahmed never replied, so see the channel ladder and his overdue case.", "R5, R6 · documented closure and impact measures"],
-      ar: ["الإغلاق بدليل، ثم القياس", "أنتِ طبيبة الأسرة: سجّلي اتصال اليوم نفسه، ثم أغلقي الحالة. يأتي السبب من النتيجة ويحتاج إلى توقيعكِ. تعرض لوحة المؤشرات مسار الحالات، والوقت حتى الرعاية، وبدء العلاج، وفهم المريض. مسار سلبي: أحمد لم يرد أبدًا، فشاهدي سلّم القنوات وحالته المتأخرة.", "R5، R6 · إغلاق موثّق ومقاييس الأثر"],
-      btn: [["Open the case", "افتح الحالة"], ["Open dashboard", "افتح لوحة المؤشرات"], ["Ahmed: no reply", "أحمد: لا رد"]], run: [() => go("#/case/C-1043", "gp"), () => go("#/dashboard"), () => go("#/case/C-1045", "coordinator")] }
+    { en: ["The doctor closes the case", "Dr. Hessa, the family doctor, records the outcome of her call and Rajesh's plan (follow-up visit booked), then closes the urgent step with that reason. Then open the dashboard to see how many patients reached care. Ahmed has not answered any message: see who follows up.", "R5, R6 · case closed with a reason; results measured"],
+      ar: ["الطبيبة تغلق الحالة", "تسجّل د. حصة، طبيبة الأسرة، نتيجة اتصالها وخطة راجيش (موعد متابعة محجوز)، ثم تغلق الخطوة العاجلة مع ذكر السبب. ثم افتح لوحة المؤشرات لترى كم مريضًا وصل إلى الرعاية. أحمد لم يرد على أي رسالة: شاهد من يتابع حالته.", "R5، R6 · إغلاق الحالة مع السبب؛ قياس النتائج"],
+      btn: [["Rajesh's case", "حالة راجيش"], ["Dashboard", "لوحة المؤشرات"], ["Ahmed's case", "حالة أحمد"]], run: [() => go("#/case/C-1043", "gp"), () => go("#/dashboard"), () => go("#/case/C-1045", "coordinator")] }
   ];
 
   function render() {
@@ -58,7 +58,7 @@
       if (t === "prev") st.step = Math.max(0, st.step - 1);
       if (t === "next") st.step = Math.min(STEPS.length - 1, st.step + 1);
       save(); render();
-      if (t === "run") { await s.run[i](); if (window.matchMedia("(max-width: 700px)").matches) { st.min = true; save(); render(); } }
+      if (t === "run") { const en = document.getElementById("entry"); if (en) en.remove(); try { localStorage.setItem("kafila-entry", "1"); } catch (e) {} await s.run[i](); if (window.matchMedia("(max-width: 700px)").matches) { st.min = true; save(); render(); } }
     }));
   }
   // Staff screens opened directly start with the tour collapsed, so it doesn't cover the table (BA part B).

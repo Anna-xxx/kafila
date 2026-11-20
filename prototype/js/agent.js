@@ -12,6 +12,10 @@
       if (!/[a-z]/.test(k)) return s.includes(k);
       return new RegExp("(^|[^\\p{L}])" + k.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "u").test(s);
     };
+    // Greetings match only when the whole message is a greeting ("hi" inside "this" does not count).
+    const bare = s.replace(/[\s.,!?؟،:;~\-]+/g, " ").trim();
+    const g = C.faq.find((f) => f.id === "greeting");
+    if (g && (g.whole || []).some((w) => norm(w) === bare)) return g;
     return list.find((f) => f.match.some(hit)) || C.faq.find((f) => f.id === "fallback");
   }
   async function ask(q, c, lang) {
@@ -20,7 +24,9 @@
     const fem = lang === "ar" && c.sex === "female";
     if (flag) { const A = F[flag.kind] && F[flag.kind].answer; return { kind: "flag", flag, text: (fem && A && A.ar_f) || flag.answer, noAI: true }; }
     const faq = matchFaq(C, c.result.test, q);
-    const prepared = { kind: "answer", text: (fem && faq.ar_f) || faq[lang] || faq.en, c: (faq.c && (faq.c[lang] || faq.c.en)) || "", src: faq.src.map((s) => C.sources[s]).filter(Boolean), via: "prepared", faqId: faq.id };
+    // The fallback names the topic of this patient's pathway (colonoscopy for FIT, colposcopy for HPV, else the next steps).
+    const topic = (t) => faq.id !== "fallback" || c.result.test === "FIT" ? t : c.result.test === "HPV" ? t.replace("the colonoscopy", "the colposcopy").replace("وتنظير القولون", "وتنظير عنق الرحم") : t.replace(", the colonoscopy and booking", " and the next steps").replace("وتنظير القولون والحجز", "والخطوات التالية");
+    const prepared = { kind: "answer", text: topic((fem && faq.ar_f) || faq[lang] || faq.en), c: (faq.c && (faq.c[lang] || faq.c.en)) || "", src: faq.src.map((s) => C.sources[s]).filter(Boolean), via: "prepared", faqId: faq.id };
     if (!data.aiUrl) return prepared;
     try {
       const ctx = { result: { test: c.result.test, zone: c.result.zone, level: c.result.level, next: c.result.next, windowDays: c.result.windowDays, compare: c.result.compare, source: c.result.source },

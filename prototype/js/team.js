@@ -225,7 +225,7 @@
     a.push(["econsult", "E-consult (clinician to clinician)", role === "gp" || role === "specialist"]);
     a.push(["fhir", "Export FHIR (JSON)", true]);
     return `<div class="row">${a.map(([k, l, ok]) => `<button class="btn sm ${k === "accept" || k === "assign" ? "primary" : ""}" data-do="${k}" ${ok ? "" : "disabled title=\"Switch role to do this\""}>${esc(l)}</button>`).join("")}</div>
-      <p class="tiny">Acting as: ${esc(ROLES[role])}. The AI assistant cannot assign, accept, reject or close.</p>`;
+      <p class="tiny">Acting as: ${esc(ROLES[role].replace(/\.$/, ""))}. The AI assistant cannot assign, accept, reject or close.</p>`;
   }
   const NEXT_ACTIONS = ["Assign an owner", "Doctor calls patient today and records the call (urgent track)", "Re-route referral within 2 working days", "Try the next channel (SMS / automated call)", "Coordinator call, then letter", "Send referral", "Chase referral acceptance", "Check prep and reminders", "Review report and close with evidence", "Programme lead review (≥75% of window)", "No action: case closed", "Book the slot: referral accepted", "GP visit or repeat test, then record it", "Close with the recorded outcome"];
   function suggest(c, s) {
@@ -292,12 +292,12 @@
     const d = (ms) => new Date(ms).toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "Asia/Dubai" });
     const u = urgentDue(c), row = (label, ms, done, extra) => `<div>${label}: <b>${typeof ms === "string" ? esc(ms) : d(ms)}</b>${done ? " ✓" : ms !== null && typeof ms === "number" && Store.now() > ms ? ` <span class="sla late">late</span>` : ""}${extra ? ` <span class="tiny">${extra}</span>` : ""}</div>`;
     if (s.fit) { const f = s.fit;
-      return [row("Contact by", iss + 2 * Store.DAY, has("notified"), "(2 days from result)"),
+      return [row("First message by", iss + 2 * Store.DAY, has("notified"), "(2 days from result; ✓ = message sent)"),
         row("Referral by", f.refBy, !!f.refAt, "(15 working days from result, national guideline)"),
         row("Colonoscopy by", f.careBy, !!f.careAt || c.state === "closed", f.projected ? "(31 working days from referral; date shown if the referral is sent on its last day)" : "(31 working days from referral; a returned referral does not restart it)")].join(""); }
     return [row("Contact by", u ? u.text.replace(/ ·.*/, "") : iss + 2 * Store.DAY, has("notified") && (!u || c.callOutcome), u ? "(doctor's call, rules)" : "(2 days from result)"),
-      c.result.windowDays ? row("Booked by", iss + c.result.windowDays * Store.DAY, has("booked") || !!c.slot, `(${c.result.windowDays} days, rules table)`) : "",
-      row("Care by (pilot target)", iss + s.win * Store.DAY, ["attended", "closed"].includes(c.state), `(${s.win} days${s.hard ? "; hard limit " + s.hard : ""})`)].join("");
+      c.result.windowDays ? row("Booked by", iss + c.result.windowDays * Store.DAY, has("booked") || !!c.slot, `(${c.result.windowDays} ${c.result.windowDays === 1 ? "day" : "days"}, rules table)`) : "",
+      row("Care by (pilot target)", iss + s.win * Store.DAY, ["attended", "closed"].includes(c.state), `(${s.win} ${s.win === 1 ? "day" : "days"}${s.hard ? "; hard limit " + s.hard : ""})`)].join("");
   }
   function sbar(c) {
     return `S: ${c.name}, ${c.age} ${c.sex}, ${c.result.test} ${c.result.category || ""} on ${new Date(Date.parse(c.history[0].at)).toLocaleDateString("en-GB")}. Rules level ${c.result.level}.

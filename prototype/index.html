@@ -26,14 +26,13 @@
   </nav>
   <span class="sp"></span>
   <span class="demo-pill">Pilot preview · synthetic data</span>
-  <span class="scr-wrap"><button id="screenChip" class="demo-btn scr-chip" aria-haspopup="true" aria-expanded="false" title="Change whose screen you see"></button><div id="screenMenu" class="scr-menu" role="menu" hidden></div></span>
-  <button id="startBtn" class="demo-btn" title="Choose how to look at Kafila">Start</button>
-  <button id="tourBtn" class="demo-btn" aria-pressed="true" title="Open the 3-minute tour">▶ Tour</button>
-  <button id="demoBtn" class="demo-btn" aria-pressed="false" title="Show demo controls">⚙ Demo</button>
+  <button id="startBtn" class="demo-btn" title="Choose whose screen you see">Choose a person</button>
+  <button id="tourBtn" class="demo-btn primary-btn" aria-pressed="true" title="Open the 3-minute tour">▶ 3-minute tour</button>
+  <button id="demoBtn" class="demo-btn" aria-pressed="false" title="Show demo controls">⚙ Demo tools</button>
 </header>
 <div class="ctrl" aria-label="Demo controls">
-  <label for="role">Show the screen of</label>
-  <select id="role">
+  <label for="role" hidden>Show the screen of</label>
+  <select id="role" hidden>
     <option value="patient">Fatima's phone (patient)</option>
     <option value="coordinator">Noura · coordinator</option>
     <option value="gp">Dr. Hessa · family doctor</option>
@@ -41,10 +40,10 @@
     <option value="clinlead">Dr. Mona · clinical lead</option>
     <option value="lead">Dr. Khalid · programme lead</option>
   </select>
-  <label for="lang" class="pt-only">Patient language</label>
-  <select id="lang" class="pt-only" aria-describedby="langHint" title="Changes the patient's phone screens. Staff screens stay in English."><option value="ar">العربية</option><option value="en">English</option></select>
-  <span class="tiny pt-only" id="langHint">(patient phone only)</span>
-  <span>Demo clock: <span class="clock" id="clock"></span></span>
+  <label for="lang" hidden>Patient language</label>
+  <select id="lang" hidden aria-describedby="langHint" title="Changes the patient's phone screens. Staff screens stay in English."><option value="ar">العربية</option><option value="en">English</option></select>
+  <span class="tiny" id="langHint" hidden>(patient phone only)</span>
+  <span>Move time forward to see reminders and deadlines: <b>Now:</b> <span class="clock" id="clock"></span></span>
   <button id="ff1">+1 day</button><button id="ff7">+7 days</button>
   <button id="reset" title="Start the demo again">Reset demo</button>
 </div>

@@ -109,7 +109,7 @@
     colonoscopy: { en: ["Is it cancer?", "Can I just repeat the test?", "What happens in a colonoscopy?", "Is it covered?"], ar: ["هل هو سرطان؟", "هل يمكنني إعادة الاختبار؟", "ماذا يحدث في تنظير القولون؟", "هل يغطيه التأمين؟"] },
     colposcopy: { en: ["Can I see a female doctor?", "Is it covered?", "Can I just wait?"], ar: ["هل يمكنني رؤية طبيبة؟", "هل يغطيه التأمين؟", "هل يمكنني الانتظار؟"] },
     remeasure_then_doctor_today: { en: ["When will the doctor call?", "Should I take a pill?", "Is it covered?"], ar: ["متى سيتصل الطبيب؟", "هل آخذ حبة دواء؟", "هل يغطيه التأمين؟"] },
-    safety: { en: ["I'm scared", "I'm bleeding a lot", "chest pain"], ar: ["أنا خائفة", "ألم في الصدر"] }
+    safety: { en: ["I'm scared", "I'm bleeding a lot", "Chest pain"], ar: ["أنا خائفة", "ألم في الصدر"] }
   };
   // Material-style icons (inline SVG) so the phone has no emoji.
   const P = {
@@ -192,7 +192,7 @@
   // Arabic texts are written to a woman by default; for a man, switch the common verb forms (machine draft).
   const MASC = [["افتحي", "افتح"], ["احجزي", "احجز"], ["اختاري", "اختر"], ["اسألي", "اسأل"], ["اضغطي", "اضغط"], ["ابدئي", "ابدأ"], ["رتّبي", "رتّب"], ["أحضري", "أحضر"],
     ["اتبعي", "اتبع"], ["اذهبي", "اذهب"], ["انتظري", "انتظر"], ["اقرئي", "اقرأ"], ["تحدثي", "تحدث"], ["توافقين", "توافق"], ["أرسلي", "أرسل"], ["تدفعينه", "تدفعه"],
-    ["فهمتِ", "فهمت"], ["قلقة", "قلق"], ["خائفة", "خائف"], ["تحتاجين", "تحتاج"], ["اكتبي", "اكتب"], ["شعرتِ", "شعرت"], ["افتحيها", "افتحها"], ["اتّبعي", "اتّبع"], ["تناولي", "تناول"], ["تأكدي", "تأكد"], ["اتصلي", "اتصل"],
+    ["فهمتِ", "فهمت"], ["قلقة", "قلق"], ["خائفة", "خائف"], ["تحتاجين", "تحتاج"], ["اكتبي", "اكتب"], ["شعرتِ", "شعرت"], ["افتحيها", "افتحها"], ["اتّبعي", "اتّبع"], ["تناولي", "تناول"], ["تأكدي", "تأكد"], ["اتصلي", "اتصل"], ["خطّطي", "خطّط"], ["أنتِ الآن تتحدثين", "أنت الآن تتحدث"],
     ["أخبريها", "أخبرها"], ["كنتِ", "كنت"], ["تتناولين", "تتناول"], ["توقفي", "توقف"], ["تغيّريه", "تغيّره"], ["ستحصلين", "ستحصل"], ["تقودي", "تقُد"], ["تحدّثي", "تحدّث"], ["تشعرين", "تشعر"], ["تريدين", "تريد"], ["كِ", "ك"]];
   const MALE_GP = /Yousef|Omar|Khalid|Faisal|Rami|Sami/;
   const GPM = [["تراجع طبيبة الأسرة", "يراجع طبيب الأسرة"], ["ترسل طبيبة الأسرة", "يرسل طبيب الأسرة"], ["أرسلت طبيبة الأسرة", "أرسل طبيب الأسرة"], ["طبيبة الأسرة", "طبيب الأسرة"]];
@@ -227,6 +227,7 @@
 
   async function act(a, arg) {
     const c = persona(), T = L(), t = T.app, lang = langOf(c), u = ui();
+    if (a === "gloss") { u.gloss = u.gloss === arg ? null : arg; Store.save(); return; }
     if (a === "lock") {
       c.pscreen = "wa";
       if (!c.waRead) {
@@ -478,7 +479,7 @@
       Store.log(c.id, "Assistant (prepared)", "Answered from booked slot: " + text.slice(0, 60), "ai"); Store.save(); return;
     }
     push(c, { t: "typing" }); Store.save();
-    const r = await Agent.ask(text, c, lang);
+    const r = await Agent.ask(text, c, lang); if (r.text) r.text = fill(r.text, { name: first(c) });
     const ch = chat(c), i = ch.findIndex((m) => m.t === "typing"); if (i >= 0) ch.splice(i, 1);
     if (r.kind === "flag") handleFlag(c, r);
     else {
@@ -530,6 +531,22 @@
     if (pathway(c) === "colonoscopy") return t.steps;
     return (n && (n[lang] || n.en)) || (lang === "ar" ? ["راجع طبيب الأسرة", "اتفقا معًا على الخطوة التالية"] : ["See your family doctor", "Agree the next step together"]);
   }
+  // Tappable medical words in "What happens next" (Anna, 20 Nov). Plain one-line explanations; Anna checks the wording.
+  const GLOSS = {
+    gi: { en: ["gastroenterologist"], ar: ["طبيب الجهاز الهضمي"], t: { en: "A doctor who specialises in the stomach and bowel.", ar: "طبيب متخصص في المعدة والأمعاء." } },
+    colo: { en: ["colonoscopy"], ar: ["تنظير القولون"], t: { en: "A doctor looks inside your large bowel with a thin, flexible tube with a small camera. The test itself usually takes 20 to 45 minutes. Plan to spend a few hours at the clinic in total. Small growths can often be removed during the same test.", ar: "ينظر الطبيب داخل الأمعاء الغليظة بأنبوب رفيع ومرن فيه كاميرا صغيرة. يستغرق الفحص نفسه عادةً من 20 إلى 45 دقيقة. خطّطي لقضاء بضع ساعات في المركز. يمكن غالبًا إزالة الزوائد الصغيرة أثناء الفحص نفسه." } },
+    colp: { en: ["colposcopy"], ar: ["تنظير عنق الرحم"], t: { en: "A doctor looks closely at your cervix with a magnifier. It takes about 15 minutes and is similar to a smear test.", ar: "تنظر الطبيبة عن قرب إلى عنق الرحم بعدسة مكبّرة. يستغرق حوالي 15 دقيقة، ويشبه مسحة عنق الرحم." } }
+  };
+  function glossify(s, lang, i) {
+    const L = lang === "ar" ? "ar" : "en", found = [];
+    let h = esc(s);
+    for (const [k, g] of Object.entries(GLOSS)) for (const w of g[L]) {
+      const re = new RegExp(L === "en" ? "\\b(" + w + ")\\b" : "(" + w + ")", "i");
+      if (re.test(h) && !found.includes(k)) { found.push(k); h = h.replace(re, (m) => `<button class="gloss-w" data-act="gloss" data-arg="${i}:${k}" aria-expanded="${ui().gloss === i + ":" + k}">${m}</button>`); }
+    }
+    const open = found.find((k) => ui().gloss === i + ":" + k);
+    return h + (open ? `<span class="gloss-t small">${esc(GLOSS[open].t[L])}</span>` : "");
+  }
   const stripCmp = (s) => String(s || "").replace(/^\s*(Compared with|مقارنة\s*بـ?)\s*:\s*/i, "").replace(/^[\s—–-]*$/, "");
 
   // ---------- app tabs ----------
@@ -556,7 +573,7 @@
         <div><div class="small">${esc(testName)}</div><b>${esc(zoneWord)}</b>${body}
         <div class="why-row">${lang === "ar" ? "حُدِّد وفق قواعد برنامج الفحص، وليس بالذكاء الاصطناعي." : "Decided by the screening programme's rules, not by AI."}</div></div></div>
       <div class="acard"><b>${esc(T.nextTitle)}</b>
-        <ol class="steps">${steps.map((s, i) => `<li><span class="d ${i < done ? "on" : ""}">${i < done ? "✓" : i + 1}</span><span>${esc(s)}</span>${whenFor(c, lang, i, by)}</li>`).join("")}</ol>
+        <ol class="steps">${steps.map((s, i) => `<li><span class="d ${i < done ? "on" : ""}">${i < done ? "✓" : i + 1}</span><span>${glossify(s, lang, i)}</span>${whenFor(c, lang, i, by)}</li>`).join("")}</ol>
         ${callToday ? `<details class="srcs howto"><summary>${lang === "ar" ? "كيف أقيس؟" : "How to measure"}</summary>
           <ol class="small" style="margin:4px 0 0;padding-inline-start:18px">${(lang === "ar" ? ["ادخل الحمّام أولًا إذا احتجت. اجلس 5 دقائق، الظهر مسنود، القدمان على الأرض، الساقان غير متقاطعتين.", "ضع الكُمّ على أعلى ذراعك مباشرة على الجلد، فوق المرفق بإصبعين تقريبًا. أرح ذراعك على طاولة بحيث يكون الكُمّ بمستوى القلب (منتصف الصدر).", "ابقَ ساكنًا، دون كلام أو استخدام الهاتف. خذ قراءتين بفارق دقيقة، على الذراع نفسها.", "اكتب القراءتين والوقت لتخبر الطبيب بهما.", "إذا شربت قهوة أو شايًا ثقيلًا أو دخّنت أو مارست رياضة خلال آخر 30 دقيقة، قِس على أي حال وأخبر الطبيب.", "حتى لو كانت الأرقام أقل، انتظر اتصال الطبيب."] : ["Use the toilet first if you need to. Sit for 5 minutes, back supported, feet flat on the floor, legs uncrossed.", "Put the cuff on your bare upper arm, about 2 fingers above the elbow. Rest your arm on a table so the cuff is at heart level (middle of your chest).", "Stay still, no talking or using your phone. Take two readings, one minute apart, on the same arm.", "Write down both readings and the time, to tell the doctor.", "If you had coffee, strong tea, a cigarette or exercise in the last 30 minutes, measure anyway and tell the doctor.", "Even if the numbers are lower, keep the doctor's call."]).map((x) => `<li>${esc(x)}</li>`).join("")}</ol>
           <div class="small" style="margin-top:4px">${lang === "ar" ? "لا يوجد جهاز؟ لا داعي للبحث عن جهاز. سيقرر الطبيب إن كان يلزم القياس مرة أخرى وأين." : "No monitor? You don't need to find one. The doctor will decide if and where to measure again."}</div></details>
@@ -575,7 +592,7 @@
     const T = I18N[lang], w = (x) => `<span class="when">${esc(x)}</span>`;
     if (c.result.next === "remeasure_then_doctor_today") return i === 0 ? w(callByText(c, lang)) : i === 1 ? w(lang === "ar" ? "الآن" : "now") : "<span></span>";
     const fc = Store.fitClocks(c);
-    if (fc) return i === 0 ? w(fill(T.refBy, { date: fmtDate(fc.refBy, lang) })) : i === 2 ? w(fill(T.colBy, { date: fmtDate(fc.careBy, lang) })) : "<span></span>";
+    if (fc) return i === 0 ? w(fill(T.refBy, { date: fmtDate(fc.refBy, lang) })) : i === 2 ? w(fill(fc.projected ? T.colByLatest : T.colBy, { date: fmtDate(fc.careBy, lang) })) : "<span></span>";
     return i === 0 && by ? w(fill(T.byDate, { date: fmtDate(by, lang) })) : "<span></span>";
   }
   // "Why this zone" names the rule row the number was compared with, not the advice again.
@@ -615,12 +632,15 @@
     const fcb = Store.fitClocks(c), by = fcb ? fcb.careBy : c.result.windowDays ? Date.parse(c.history[0].at) + c.result.windowDays * Store.DAY : null;
     let list = P.list.filter((s) => (!f.female || s.f) && (!f.weekend || s.wkd)).sort((a, b) => (a.day + a.time).localeCompare(b.day + b.time));
     if (f.near) list = list.slice().sort((a, b) => a.km - b.km);
-    return `<div class="acard"><b>${esc(P.title[lang] || P.title.en)}</b>${P.sub ? `<div class="small">${esc(P.sub[lang] || P.sub.en)}</div>` : ""}${by ? `<div class="small">${esc(fill(fcb ? T.colBy : t.bookBy, { date: fmtDate(by, lang) }))}</div>` : ""}
-        <div class="row" style="margin-top:8px">${Object.entries(T.filters).map(([k, v]) => `<button class="chip ${f[k] ? "z-green" : "c-grey"}" data-act="filter" data-arg="${k}" aria-pressed="${!!f[k]}">${f[k] ? "✓ " : ""}${esc(v)}</button>`).join("")}</div></div>
+    // Book tab in plain words (Anna, 20 Nov: "не очевидный дизайн"): a header, one line, labelled filters, a button on every time.
+    const head = (T.bookHead && T.bookHead[pathway(c)]) || P.title[lang] || P.title.en;
+    return `<h3 class="book-h">${esc(head)}</h3><div class="small" style="margin:0 0 8px">${esc(by ? fill(T.anyBefore, { date: fmtDate(by, lang) }) : T.clinicConfirms)}</div>
+        <div class="row filt-row"><span class="small"><b>${esc(T.showOnly)}</b></span>${Object.entries(T.filters).map(([k, v]) => `<button class="chip filt ${f[k] ? "on" : ""}" data-act="filter" data-arg="${k}" aria-pressed="${!!f[k]}">${f[k] ? "✓ " : ""}${esc(v)}</button>`).join("")}</div>
       ${list.map((s) => `<button class="acard slot" data-act="pick" data-arg="${s.id}" style="text-align:start;cursor:pointer;width:100%;font:inherit;color:inherit">
         <b>${esc(fmtDate(Date.parse(s.day + "T" + s.time + ":00+04:00"), lang))} · ${s.time}</b>
         <div>${docLine(s, lang)}</div><div class="tiny">${esc(nm(s.clinic, lang))} · ${s.km} ${lang === "ar" ? "كم" : "km"}</div>
-        <div class="tiny">✓ ${esc(fill(T.covered, { ins: insName(c, lang) }))} · ${esc(fill(T.pay, { n: s.pay[c.insurance] ?? 0 }))}</div></button>`).join("")}
+        <div class="tiny">${(s.pay[c.insurance] ?? 0) === 0 ? "✓ " + esc(fill(T.free, { ins: insName(c, lang) })) : esc(fill(T.covered, { ins: insName(c, lang) })) + " · " + esc(fill(T.pay, { n: s.pay[c.insurance] }))}</div>
+        <span class="btn primary block choose">${esc(T.chooseTime)}</span></button>`).join("")}
       <button class="acard slot nofit" data-act="callme"><b>${lang === "ar" ? "لا يناسبني أي موعد" : "None of these fit"}</b><div class="small">${lang === "ar" ? "اطلب اتصالًا، وستجد المنسقة موعدًا معك." : "Ask for a call. The coordinator finds a time with you."}</div></button>
       <div class="tiny">${esc(T.slotsNote)}</div>`;
   }
@@ -637,7 +657,7 @@
       <div class="tiny">${esc(nm(c.slot.clinic, lang))} · ${c.slot.km} ${lang === "ar" ? "كم" : "km"}</div>
       <div class="small" style="margin-top:4px">${confirmed ? "✓ " + (lang === "ar" ? "مؤكد" : "Confirmed") : ic("clock") + " " + (lang === "ar" ? "تؤكد العيادة عادةً خلال يوم عمل واحد. سنراسلك." : "The clinic usually confirms within 1 working day. We'll message you.")}</div>
       <div class="row" style="margin-top:8px"><button class="btn sm" data-act="ics">${ic("cal")} ${lang === "ar" ? "أضف إلى التقويم" : "Add to calendar"}</button><button class="btn sm" data-act="change">${lang === "ar" ? "تغيير أو إلغاء" : "Change or cancel"}</button></div>
-      ${pathway(c) === "colonoscopy" ? `<div class="small" style="margin-top:8px"><b>${esc(t.prepTitle)}</b></div><ol class="small" style="margin:4px 0 0;padding-inline-start:18px">${t.prepSteps.map((s) => `<li>${esc(s)}</li>`).join("")}</ol><div class="small" style="margin-top:4px">${esc(t.prepAsk)} <button class="btn sm" data-act="nurse">${lang === "ar" ? "التحدث مع الممرضة ليلى" : "Talk to Nurse Layla"}</button></div>` : ""}</div>`;
+      ${pathway(c) === "colonoscopy" ? `<div class="small" style="margin-top:8px">${esc(I18N[lang].medsCheck)}</div><div class="small" style="margin-top:8px"><b>${esc(t.prepTitle)}</b></div><ol class="small" style="margin:4px 0 0;padding-inline-start:18px">${t.prepSteps.map((s) => `<li>${esc(s)}</li>`).join("")}</ol><div class="small" style="margin-top:4px">${esc(t.prepAsk)} <button class="btn sm" data-act="nurse">${lang === "ar" ? "التحدث مع الممرضة ليلى" : "Talk to Nurse Layla"}</button></div>` : ""}</div>`;
   }
   function mycaseTab(c, lang) {
     const T = I18N[lang], t = T.app;
@@ -649,11 +669,10 @@
     // Before the clinic accepts, the time is only held: no green tick yet (BA F9).
     const held = c.slot && c.state === "referral";
     const booked = c.slot && (["referral", "booked"].includes(c.state) || (c.state === "confirmation" && pathway(c) === "gp_confirm")) ? `<div class="acard ${held ? "" : "booked-banner"}"><b>${held ? ic("clock") + " " + (lang === "ar" ? "الموعد محجوز مؤقتًا" : "Time held") : "✓ " + (lang === "ar" ? "تم حجز موعدك" : "Booked")}: <bdi>${esc(fmtDate(Date.parse(c.slot.day + "T" + c.slot.time + ":00+04:00"), lang))} · ${esc(c.slot.time)}</bdi></b><div class="small">${docLine(c.slot, lang)} · ${esc(nm(c.slot.clinic, lang))}</div><div class="small">${c.state === "booked" || c.state === "confirmation" ? (lang === "ar" ? "أكدت العيادة الموعد." : "The clinic confirmed it.") : (lang === "ar" ? "بانتظار تأكيد العيادة (عادةً خلال يوم عمل واحد). سنراسلك." : "Waiting for the clinic to confirm (usually 1 working day). We'll message you.")}</div></div>` : "";
-    return `${booked}${c.rejected && !c.slot ? returnedCard(c, lang) : ""}${outcomeCard(c, lang)}<div class="acard"><div class="small">${esc(fill(t.stepOf, { n: cur + 1 }))}</div>
-        <div class="track" style="margin:6px 0">${T.trackSteps.map((_, i) => `<span class="${isDone(i) ? "on" : i === cur ? "cur" : ""}"></span>`).join("")}</div>
-        <div class="small"><b>${esc(t.nowWith)}:</b> ${c.slot && ["referral", "booked", "attended"].includes(c.state) ? `${docLine(c.slot, lang)} · ${esc(nm(c.slot.clinic, lang))}` : esc(nm(c.owner || "—", lang))}</div>
-        <div class="small"><b>${esc(t.youDo)}:</b> ${esc(todo)}</div></div>
-      <div class="acard"><b>${esc(T.trackTitle)}</b><p class="tiny muted">${esc(T.trackSame || "")}</p><ol class="timeline">${T.trackSteps.map((st, i) => `<li><span class="dot ${isDone(i) ? "done" : i === cur ? "now" : ""}">${isDone(i) ? "✓" : i + 1}</span><div>${esc(st)}</div></li>`).join("")}</ol></div>
+    return `${booked}${c.rejected && !c.slot ? returnedCard(c, lang) : ""}${outcomeCard(c, lang)}<div class="acard">
+        <div class="small"><b>${esc(T.contactNow)}:</b> ${c.slot && ["referral", "booked", "attended"].includes(c.state) ? `${docLine(c.slot, lang)} · ${esc(nm(c.slot.clinic, lang))}` : /Noura/.test(c.owner || "") ? esc(lang === "ar" ? "نورة، منسقة الرعاية في مركزك" : "Noura, care coordinator at your centre") : esc(nm(c.owner || "—", lang))}</div>
+        ${todoKey === "notified" && !c.rejected ? `<button class="btn primary block" style="margin-top:8px" data-act="tab" data-arg="result">${esc(T.nextFor)}: ${esc(todo.charAt(0).toLowerCase() + todo.slice(1))} →</button>` : `<div class="small"><b>${esc(T.nextFor)}:</b> ${esc(todo)}</div>`}</div>
+      <div class="acard"><b>${esc(T.trackTitle)}</b><ol class="timeline">${T.trackSteps.map((st, i) => `<li><span class="dot ${isDone(i) ? "done" : i === cur ? "now" : ""}">${isDone(i) ? "✓" : i + 1}</span><div>${esc(st)}</div></li>`).join("")}</ol></div>
       ${c.slot ? apptCard(c, lang) : ""}
       <div class="acard"><b>${esc(t.reminders)}</b>${sent.length || planned.length ? sent.map((r) => `<div class="small" style="margin-top:6px">${ic("clock")} ${esc(r.text)}</div>`).join("") + planned.map((r) => `<div class="small muted" style="margin-top:6px">${ic("clock")} ${esc(fmtDate(r.at, lang))} ${fmtTime(r.at)} · ${lang === "ar" ? "مخطط" : "planned"}</div>`).join("") : `<div class="small muted">${c.slot ? (pathway(c) === "colonoscopy" ? (lang === "ar" ? "لا توجد تذكيرات بعد. تبدأ قبل موعدكِ بثلاثة أيام." : "No reminders yet. They start 3 days before your appointment.") : lang === "ar" ? "لا توجد تذكيرات بعد. ستصلك قبل موعدك بيومين." : "No reminders yet. They start 2 days before your appointment.") : (lang === "ar" ? "لا توجد تذكيرات بعد. سنضيفها عند الحجز." : "No reminders yet. We'll add them when you book.")}</div>`}</div>
       <div class="row"><button class="btn sm" data-act="nurse">${esc(T.nurse)}</button><button class="btn sm" data-act="callme">${esc(T.callMe)}</button></div>
@@ -668,8 +687,8 @@
     if (m.t === "qr") return `<div class="qr">${m.opts.map(([a, label, arg]) => `<button data-act="${a}" data-arg="${arg ?? ""}">${esc(label)}</button>`).join("")}</div>`;
     if (m.t === "multi") return `<div class="qr">${Object.entries(T.barriers).map(([k, v]) => `<button data-act="bar" data-arg="${k}" aria-pressed="${m.sel.includes(k)}" style="${m.sel.includes(k) ? "background:var(--brand-soft)" : ""}">${m.sel.includes(k) ? "✓ " : ""}${esc(v)}</button>`).join("")}<button data-act="barDone" style="background:var(--brand);color:#fff">${esc(T.barrierDone)}</button></div>`;
     const body = m.key ? fill(T[m.key], { clinic: clinicOf(c, lang), gp: nm(c.gp || "Dr. Hessa M.", lang), name: first(c) }) : (lang === "ar" && m.textAr) || m.text;
-    const who = m.t === "nurse" ? nm("Nurse Layla", lang) + " · " + clinicOf(c, lang) : clinicOf(c, lang);
-    const tag = m.tag === "ai" ? T.ai : m.tag === "prepared" ? (lang === "ar" ? "إجابة جاهزة من مركزك" : "Prepared answer from your centre") : m.tag === "fixed" ? (lang === "ar" ? "قاعدة سلامة · بدون ذكاء اصطناعي" : "Safety rule · no AI") : "";
+    const who = m.t === "nurse" ? (lang === "ar" ? "الممرضة ليلى · من فريق مركزك" : "Nurse Layla · a person at your centre") : clinicOf(c, lang);
+    const tag = m.tag === "ai" ? T.ai : m.tag === "prepared" ? (lang === "ar" ? "إجابة تلقائية · أعدّها مركزك" : "Automatic answer · prepared by your centre") : m.tag === "fixed" ? (lang === "ar" ? "قاعدة سلامة · بدون ذكاء اصطناعي" : "Safety rule · no AI") : "";
     const cmp = stripCmp(m.c);
     return `<div class="bub"><div class="who">${esc(who)}</div>${esc(body)}
       ${cmp ? `<div class="cmp">${esc(T.compared)}: ${esc(cmp)}</div>` : ""}
@@ -795,7 +814,7 @@
     const icons = { result: ic("doc"), assistant: ic("chat"), book: ic("cal"), mycase: ic("pin") };
     const fade = lastTab !== tb && lastScreen === "app" ? "fade" : "";
     return shell(c, lang, "app", "dark", `${c.installed ? "" : `<div class="chrome" dir="ltr"><span class="ch-home">${ic("lock")}</span><span class="ch-url">kafila.demo</span><span class="ch-tabs">1</span><span class="ch-more">⋮</span></div>`}
-      <div class="ah"><div><span class="tiny">${esc(tb === "assistant" ? t.askSub : clinicOf(c, lang))}</span><b>${esc(title)}</b></div>
+      <div class="ah"><div><span class="tiny">${esc(tb === "assistant" ? (c.human && !c.humanDone ? t.askSubNurse : t.askSub) : clinicOf(c, lang))}</span><b>${esc(title)}</b></div>
         <div class="ah-act"><button class="pill-n" data-act="nurse">${ic("person")}${esc(t.nursePill)}</button><button class="pill-e ${c.result.zone === "red" || c.redFlag ? "solid" : ""}" data-act="e998">${ic("phone")}${esc(t.emergPill)}</button></div></div>
       <div class="ascroll ${fade}" id="wa">${body}</div>
       ${tb === "assistant" ? `<form class="wa-input" id="f"><input id="msg" autocomplete="off" placeholder="${esc(T.placeholder)}" aria-label="${esc(T.placeholder)}"><button type="button" id="mic" aria-label="Voice">${ic("mic")}</button><button type="submit" aria-label="Send">${ic("send")}</button></form>` : ""}
@@ -806,7 +825,9 @@
   function render(root) {
     const d = Store.S.data, c = persona(); deliverDue(c);
     const lang = langOf(c), T = I18N[lang];
-    const tryQ = [...((TRY[pathway(c)] || TRY.colonoscopy)[lang] || []), ...TRY.safety[lang]];
+    const tryQ = [...((TRY[pathway(c)] || TRY.colonoscopy)[lang] || []), ...TRY.safety[lang].filter((q) => /scared|خائفة/.test(q))], tryRed = TRY.safety[lang].filter((q) => !/scared|خائفة/.test(q));
+    // One person picker: the select follows whoever the phone shows (Anna, 20 Nov: pickers disagreed).
+    const selKey = PERSONAS.some((x) => x.key === d.personaKey && x.id === d.persona) ? d.personaKey : (PERSONAS.find((x) => x.id === d.persona) || PERSONAS[0]).key;
     root.innerHTML = `<div class="cols pcols">
       <div class="stage">
         ${(() => { const pk = PERSONAS.find((x) => x.key === (d.personaKey || d.persona)) || PERSONAS.find((x) => x.id === c.id); const he = c.sex === "female" ? ["Her", "her"] : ["His", "him"];
@@ -816,22 +837,23 @@
         <p class="sim-note">${lang === "ar" ? "محاكاة. لا تُرسل أي رسائل إلى أرقام حقيقية. بيانات اصطناعية." : "Simulation. Nothing is sent to real numbers. Synthetic data."}</p>
       </div>
       <div class="demo-side">
-        <div class="card"><h2>Demo controls</h2>
-          <div class="row" style="margin-bottom:8px"><label class="tiny" for="persona">Patient</label>
-          <select id="persona" class="btn sm">${PERSONAS.map((x) => `<option value="${x.key}" ${x.key === (d.personaKey || d.persona) ? "selected" : ""}>${esc(x.label)}</option>`).join("")}</select></div>
-          <p class="muted small">The health centre sends a WhatsApp message with a secure link. The patient signs in with a one-time code and gives consent, then uses the Kafila web app (no download). The AI assistant says it is AI. A nurse and 998 are one tap away. Nothing is sent to real numbers.</p>
-          <h3>Try</h3>
+        <div class="card"><h2>Demo tools: try it yourself</h2>
+          <div class="row" style="margin-bottom:8px"><label class="tiny" for="persona">Scenario:</label>
+          <select id="persona" class="btn sm">${PERSONAS.map((x) => `<option value="${x.key}" ${x.key === selKey ? "selected" : ""}>${esc(x.label)}</option>`).join("")}</select></div>
+          <p class="muted small">Everything here is simulated. Nothing is sent to real phones.</p>
+          <h3>Ask a question as the patient (tap one):</h3>
           <div class="row">${tryQ.map((q) => `<button class="btn sm" data-try="${esc(q)}">${esc(q)}</button>`).join("")}</div>
-          <h3>Channel ladder if no reply</h3>
-          <p class="tiny">WhatsApp → SMS day 2 → SMS day 4 → automated call day 5 → coordinator call → letter. Each attempt appears on the case timeline.</p>
-          <div class="row"><button class="btn sm" data-lad="sms2">SMS · day 2</button><button class="btn sm" data-lad="sms4">SMS · day 4</button><button class="btn sm" data-lad="call5">Automated call · day 5</button><button class="btn sm" data-lad="coord">Coordinator call</button></div>
-          <h3>AI</h3>
-          <p class="tiny">${d.aiUrl ? "AI on: " + esc(d.aiUrl) : "AI off: prepared answers from the approved library. Add ?ai=https://&lt;worker&gt;.workers.dev to the address to switch AI on."}</p>
+          <h3>See what happens with a danger sign:</h3>
+          <div class="row">${tryRed.map((q) => `<button class="btn sm" data-try="${esc(q)}">${esc(q)}</button>`).join("")}</div>
+          <h3>If the patient doesn't answer</h3>
+          <p class="tiny">Tap to jump ahead and see the next reminder. Each one appears in the case history.</p>
+          <div class="row"><button class="btn sm" data-lad="sms2">Day 2: SMS</button><button class="btn sm" data-lad="sms4">Day 4: second SMS</button><button class="btn sm" data-lad="call5">Day 5: automatic call</button><button class="btn sm" data-lad="coord">Coordinator calls</button></div>
+          <p class="tiny">${d.aiUrl ? "AI on for this demo." : "AI is off in this public demo: answers come from a prepared library (pending clinical review)."}</p>
         </div>
-        <div class="card"><h2>Case ${esc(c.id)}</h2>
-          <div class="row"><span class="chip z-${c.result.zone}">${esc(c.result.level)} · ${esc(I18N.en.zone[c.result.zone])}</span><span class="chip c-grey">${esc(Store.STATE_NAMES[c.state])}</span>${c.redFlag ? `<span class="chip z-red">Red flag: ${esc(c.redFlag.phrase)}</span>` : ""}</div>
-          <p class="small muted">Open the care-team view in another tab to see every step appear live.</p>
-          <a class="btn sm" href="#/case/${esc(c.id)}">Open case in care-team view</a>
+        <div class="card"><h2>What the care team sees now</h2>
+          <div class="row"><span class="chip z-${c.result.zone}">${esc(I18N.en.zone[c.result.zone])}</span><span class="chip c-grey">${esc(Store.STATE_NAMES[c.state] === "Acknowledged and understood" ? "Result read and understood" : Store.STATE_NAMES[c.state])}</span>${c.redFlag ? `<span class="chip z-red">Red flag: ${esc(c.redFlag.phrase)}</span>` : ""}</div>
+          <p class="small muted">Everything the patient does appears there.</p>
+          <a class="btn sm" href="#/case/${esc(c.id)}">Open the care team's view</a>
         </div>
       </div></div>`;
     const sc = root.querySelector("#wa"); if (sc && c.ptab === "assistant") sc.scrollTop = sc.scrollHeight;

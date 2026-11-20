@@ -1,3 +1,8 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Kafila по-русски</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20120%20120%22%20width%3D%22120%22%20height%3D%22120%22%20role%3D%22img%22%20aria-label%3D%22Kafila%22%3E%3Cg%20transform%3D%22translate%2860%2060%29%20scale%281.1%29%20translate%28-60%20-60%29%22%3E%3Cg%20id%3D%22mark%22%3E%3Cpath%20d%3D%22M75.19%2022.99%20A40%2040%200%200%201%2090.50%2034.12%22%20fill%3D%22none%22%20stroke%3D%22%23448c80%22%20stroke-width%3D%2213%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M99.89%2063.01%20A40%2040%200%200%201%2094.04%2081.01%22%20fill%3D%22none%22%20stroke%3D%22%235082af%22%20stroke-width%3D%2213%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M69.47%2098.86%20A40%2040%200%200%201%2050.53%2098.86%22%20fill%3D%22none%22%20stroke%3D%22%23e7b956%22%20stroke-width%3D%2213%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M25.96%2081.01%20A40%2040%200%200%201%2020.11%2063.01%22%20fill%3D%22none%22%20stroke%3D%22%23e1885a%22%20stroke-width%3D%2213%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M29.50%2034.12%20A40%2040%200%200%201%2044.81%2022.99%22%20fill%3D%22none%22%20stroke%3D%22%2369b37e%22%20stroke-width%3D%2213%22%20stroke-linecap%3D%22round%22/%3E%3Ccircle%20cx%3D%2260.00%22%20cy%3D%2220.00%22%20r%3D%2213%22%20fill%3D%22%230f6b5c%22/%3E%3Ccircle%20cx%3D%2298.04%22%20cy%3D%2247.64%22%20r%3D%2213%22%20fill%3D%22%231f5f99%22/%3E%3Ccircle%20cx%3D%2283.51%22%20cy%3D%2292.36%22%20r%3D%2213%22%20fill%3D%22%23e0a526%22/%3E%3Ccircle%20cx%3D%2236.49%22%20cy%3D%2292.36%22%20r%3D%2213%22%20fill%3D%22%23d9662b%22/%3E%3Ccircle%20cx%3D%2221.96%22%20cy%3D%2247.64%22%20r%3D%2213%22%20fill%3D%22%233f9e5a%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E">
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -56,6 +61,11 @@ img { max-width: 100%; display: block; }
 .btn.line:hover { border-color: var(--teal); }
 .top .btn { min-height: 38px; padding: 0 16px; font-size: 14px; }
 @media (max-width: 860px) { .top nav { display: none; } .top .btn { margin-left: auto; } }
+.menubtn { display: none; }
+@media (max-width: 860px) { .menubtn { display: inline-flex; align-items: center; white-space: nowrap; margin-left: auto; min-height: 38px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--ink); font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; } .top .btn { margin-left: 8px; } .top nav.open { display: flex; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; gap: 14px; padding: 14px 20px 18px; background: var(--night); border-bottom: 1px solid var(--line); } .top nav.open .navsep { width: 100%; height: 1px; } }
+@media (max-width: 420px) { .top .topin, .top .wrap { gap: 10px; } .top .btn { padding: 0 12px; margin-left: 6px; } .menubtn { padding: 0 10px; } }
+@media (max-width: 360px) { .top .topin, .top .wrap { gap: 8px; } .top .btn { padding: 0 10px; font-size: 13px; } .menubtn { padding: 0 8px; font-size: 13px; } }
+
 
 /* shared type */
 .eyebrow { font: 500 12.5px/1.4 var(--mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); }
@@ -90,7 +100,7 @@ section { padding-block: 96px; border-top: 1px solid var(--line); position: rela
 .motto { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 0; cursor: default; }
 .motto span { font: 500 13px/1.3 var(--mono); color: var(--ink-2); letter-spacing: .02em; }
 .motto span + span::before { content: "·"; margin: 0 12px; color: var(--teal); }
-.tryit { margin: 0; font-size: 14.5px; color: var(--ink-2); max-width: 62ch; } .tryit b { color: var(--ink); }
+.tryit { margin: 0; font-size: 14.5px; color: var(--ink-2); max-width: 62ch; } .tryit b { color: var(--ink); } .tryit a { color: var(--teal); text-decoration: underline; text-underline-offset: 3px; }
 .cta { display: flex; flex-wrap: wrap; gap: 12px; }
 
 /* hero visual: the loop with five ADPHC steps around a phone */
@@ -258,7 +268,7 @@ button.node:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px;
 .who-does b { font: 600 16px/1.2 var(--display); }
 .who-does small { font-size: 13px; color: var(--ink-2); line-height: 1.45; }
 @media (max-width: 560px) { .who-does { grid-template-columns: 1fr; } }
-.tests { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.tests { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 .tests div { border-top: 2px solid var(--teal); padding-top: 10px; }
 .tests b { display: block; font: 700 28px/1 var(--display); font-variant-numeric: tabular-nums; }
 .tests span { font-size: 13px; color: var(--ink-2); line-height: 1.4; display: block; margin-top: 4px; }
@@ -284,8 +294,9 @@ button.node:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px;
 
 /* footer */
 footer { border-top: 1px solid var(--line); padding-block: 56px 72px; }
-footer .cols { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 40px; }
+footer .cols { display: grid; grid-template-columns: 1fr; gap: 24px; } footer .cols > div { max-width: 80ch; } footer .cols > div:first-child { order: 2; }
 footer h3 { font: 500 12px/1.3 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 12px; }
+footer details > summary { cursor: pointer; list-style: none; font: 500 12px/1.3 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 12px; } footer details > summary::-webkit-details-marker { display: none; } footer details > summary::before { content: "▸ "; color: var(--teal); } footer details[open] > summary::before { content: "▾ "; } footer details > summary:hover { color: var(--ink); }
 footer ol { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 13.5px; color: var(--ink-2); }
 footer p { font-size: 14px; color: var(--ink-2); }
 footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
@@ -319,16 +330,17 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
 <header class="top">
   <div class="wrap">
     <a class="logo" href="#top"><i class="mk"><svg width="28" height="28" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" aria-hidden="true"><g id="mark"><path d="M75.61 21.01 A42 42 0 0 1 92.26 33.10" fill="none" stroke="#69c5b3" stroke-width="10" stroke-linecap="round"/><path d="M101.91 62.80 A42 42 0 0 1 95.55 82.37" fill="none" stroke="#7fb1e1" stroke-width="10" stroke-linecap="round"/><path d="M70.29 100.72 A42 42 0 0 1 49.71 100.72" fill="none" stroke="#f5c873" stroke-width="10" stroke-linecap="round"/><path d="M24.45 82.37 A42 42 0 0 1 18.09 62.80" fill="none" stroke="#f3a473" stroke-width="10" stroke-linecap="round"/><path d="M27.74 33.10 A42 42 0 0 1 44.39 21.01" fill="none" stroke="#8cd1a1" stroke-width="10" stroke-linecap="round"/><circle cx="60.00" cy="18.00" r="11.5" fill="#3fb59d"/><circle cx="99.94" cy="47.02" r="11.5" fill="#5b9bd8"/><circle cx="84.69" cy="93.98" r="11.5" fill="#f2b84b"/><circle cx="35.31" cy="93.98" r="11.5" fill="#f08a4b"/><circle cx="20.06" cy="47.02" r="11.5" fill="#6cc486"/></g></svg></i>Kafila <span lang="ar" dir="rtl" style="opacity:.7;font-weight:500">قافلة</span></a>
-    <nav aria-label="Разделы">
-      <a href="#what">Пять шагов</a><a href="#why">Разрыв</a><a href="#who">Люди</a><a href="#how">Путь Фатимы</a><a href="#safety">Срочные случаи</a><a href="#ai">ИИ</a><a href="#pilot">Польза</a><span class="navsep" aria-hidden="true"></span><a href="care-loop.html" target="_blank" rel="noopener">По шагам</a><a href="architecture.html">Архитектура</a>
+    <nav id="sitenav" aria-label="Разделы">
+      <a href="#what">Пять шагов</a><a href="#why">Разрыв</a><a href="#who">Люди</a><a href="#how">Путь Фатимы</a><a href="#safety">Срочные случаи</a><a href="#ai">ИИ</a><a href="#pilot">Польза</a><span class="navsep" aria-hidden="true"></span><a href="care-loop.html">По шагам</a><a href="architecture.html">Архитектура</a>
     </nav>
+    <button class="menubtn" id="menubtn" aria-expanded="false" aria-controls="sitenav">Меню</button>
     <a class="btn solid" href="prototype/" target="_blank" rel="noopener">Прототип</a>
   </div>
 </header>
 
 <aside class="progress" aria-hidden="true" id="progress">
   <svg viewBox="0 0 54 54"><circle class="bg" cx="27" cy="27" r="23"/><circle class="fg" cx="27" cy="27" r="23" id="pfg"/><circle class="ok" cx="27" cy="27" r="9"/></svg>
-  <div class="lbl">Статус случая<b id="plbl">Результат выдан</b></div>
+  <div class="lbl"><b id="plbl">Начало</b></div>
 </aside>
 
 <main id="top">
@@ -336,7 +348,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
 <p class="rubanner">Русская версия для проверки. Жюри получает английскую.</p>
 
 <!-- HERO -->
-<section class="hero" data-state="Результат выдан">
+<section class="hero" data-state="Начало">
   <div class="wrap split">
     <div class="stack">
       <p class="eyebrow">Kafila <span lang="ar" dir="rtl">قافلة</span> · платформа ответственности от скрининга до лечения · Future Health Challenge 05</p>
@@ -350,7 +362,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
       </ul>
       <p class="herofoot"><b>Sahatna, приложение здравоохранения Абу-Даби, помогает пациенту попасть к врачу. Kafila следит, чтобы следующий шаг действительно случился:</b> у каждого случая есть конкретный ответственный, срок по национальной рекомендации и подтверждённый исход.</p>
       <div class="stats">
-        <div class="stat"><b>Только 30,5%</b><span>взрослых граждан ОАЭ с положительным тестом кала прошли контрольную колоноскопию в клиниках SEHA, Абу-Даби</span><small>436 из 1 369 · 2015–2016, старые данные · Almansoori 2021, BMC Cancer</small></div>
+        <div class="stat"><b>Только 30,5%</b><span>взрослых граждан ОАЭ с положительным тестом кала прошли контрольную колоноскопию в клиниках SEHA, Абу-Даби</span><small>колоноскопию сделали 436 человек · 2015–2016, старые данные · Almansoori 2021, BMC Cancer</small></div>
         <div class="stat"><b>Почти 2×</b><span>выше шансы обнаружить запущенный рак, если колоноскопия через 10–12 месяцев после теста, и около 3× — если больше чем через год, по сравнению с 8–30 днями</span><small>70 124 пациента · Kaiser Permanente · Corley 2017, JAMA</small></div>
         <div class="stat"><b>55% против 42%</b><span>прошли колоноскопию, когда им звонил навигатор, объяснял и помогал записаться, по сравнению с теми, у кого навигатора не было: на 13 процентных пунктов больше</span><small>рандомизированное исследование PRECISE · Coronado 2025</small></div>
       </div>
@@ -358,9 +370,9 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
       <div class="cta">
         <a class="btn solid" href="#how">Пройти путь Фатимы</a>
         <a class="btn line" href="prototype/" target="_blank" rel="noopener">Открыть прототип</a>
-        <a class="btn line" href="care-loop.html" target="_blank" rel="noopener">По шагам: кто что делает</a>
+        <a class="btn line" href="care-loop.html">По шагам: кто что делает</a>
       </div>
-      <p class="tryit"><b>Проверить за 3 минуты:</b> откройте прототип и нажмите <b>▶ 3-minute tour</b>. Шесть шагов с подсказками: сообщение и результат Фатимы, запись, клиника принимает направление, тревожное сообщение Раджеша, закрытие случая и панель руководителя.</p>
+      <p class="tryit"><b>Посмотрите Kafila в деле — всего за 3 минуты.</b> <a href="prototype/" target="_blank" rel="noopener">Откройте прототип</a> и выберите <b>▶ 3-minute tour</b>. Шесть сцен: результат Фатимы, запись на приём, клиника принимает направление, экстренный сигнал Раджеша, закрытие случая врачом с подтверждением и панель программы.</p>
     </div>
     <div class="herovis">
     <div class="loopviz" aria-label="Цикл Kafila: записать, определить срочность, направить, сопроводить, отследить">
@@ -382,7 +394,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
 </section>
 
 <!-- 01 WHAT -->
-<section id="what" data-state="Назначен ответственный">
+<section id="what" data-state="01 Пять шагов">
   <div class="wrap">
     <div class="split">
       <div class="stack">
@@ -390,8 +402,8 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
         <h2>Больше, чем напоминание. <em>Один случай, доведённый до результата.</em></h2>
       </div>
       <div class="stack">
-        <p class="lede">Kafila превращает каждый результат в один случай, который проходит пять шагов: записать, определить срочность, направить, сопроводить, отследить. На каждом шаге за него отвечает конкретный человек, а часы показывают, когда шаг просрочен.</p>
-        <p class="pull">У каждого значимого результата есть следующий шаг, ответственная команда и подтверждённый итог.</p>
+        <p class="lede">Kafila превращает каждый значимый результат скрининга в случай, за которым можно следить. Координатор ведёт весь путь пациента, а у каждого шага есть ответственный и срок.</p>
+        <p class="pull">Если шаг пропущен или задерживается, Kafila отмечает его, чтобы им занялись.</p>
         <p class="src">Пять шагов совпадают с путём, который Abu Dhabi Public Health Centre описал для Challenge 05 (вебинар конкурса, 29 окт. 2026, пересказ).</p>
       </div>
     </div>
@@ -400,19 +412,19 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
       <div><span class="n">2 · Срочность</span><h3>Срочность задают правила</h3><p>Клинические правила задают приоритет и сроки. ИИ не может их изменить.</p><span class="adphc">Клинические правила с версиями</span></div>
       <div><span class="n">3 · Направить</span><h3>Направление проверено</h3><p>Врач проверяет и подписывает направление. Принимающая клиника принимает его или возвращает с причиной.</p><span class="adphc">Направление, одобренное врачом</span></div>
       <div><span class="n">4 · Сопроводить</span><h3>Пациенту помогают</h3><p>Понятная информация, помощь с записью и связь с медсестрой облегчают следующий шаг.</p><span class="adphc">Арабский и английский</span></div>
-      <div><span class="n">5 · Отследить</span><h3>Итог подтверждён</h3><p>Пропущенный шаг запускает действие. Врач записывает итог с подтверждением.</p><span class="adphc">Без автоматического закрытия</span></div>
+      <div><span class="n">5 · Отследить</span><h3>Итог записан</h3><p>Kafila отслеживает ход и предупреждает о задержках. Врач подтверждает выполненную помощь или записывает другой итог с причиной.</p><span class="adphc">Закрывает только врач</span></div>
     </div>
   </div>
 </section>
 
 <!-- 02 WHY -->
-<section id="why" data-state="Пациентка уведомлена">
+<section id="why" data-state="02 Разрыв">
   <div class="wrap split">
     <div class="stack">
       <p class="eyebrow"><b>02</b>Разрыв</p>
       <h2>Слишком много пациентов теряются <em>между скринингом и следующим шагом.</em></h2>
-      <p class="lede">Скрининг находит проблему. Потом результат может лежать в системе, где неясно, кто отвечает за следующий шаг. Человеку бывает страшно, он не понимает, что это значит, или не может найти удобное время, и пропущенный шаг может остаться незамеченным.</p>
-      <div class="gapcard"><span class="k">Разрыв · Абу-Даби</span><b>Только 30,5%</b><h3>прошли контрольную колоноскопию после положительного теста кала.</h3><p>Исследование среди взрослых граждан ОАЭ в клиниках первичной помощи SEHA в Абу-Даби (2015–2016) показало большой разрыв между скринингом и дальнейшей помощью: колоноскопию сделали 436 человек, не сделали 933. Kafila измеряет сегодняшний разрыв и помогает его закрыть.</p><span class="src">Almansoori et al., BMC Cancer, 2021 · Старые данные, не сегодняшняя цифра по Абу-Даби</span></div>
+      <p class="lede">Скрининг находит людей, которым нужна дальнейшая помощь. Между результатом, направлением и приёмом может не быть ясного ответственного, и пациенты теряются. Многие к тому же боятся, не понимают, что значит результат, или не могут найти удобное время.</p>
+      <div class="gapcard"><span class="k">Разрыв · Абу-Даби</span><b>Только 30,5%</b><h3>прошли контрольную колоноскопию после положительного теста кала.</h3><p>Исследование среди взрослых граждан ОАЭ в клиниках первичной помощи SEHA в Абу-Даби (2015–2016) показало большой разрыв между скринингом и дальнейшей помощью: колоноскопию после положительного теста сделали только 436 человек. Kafila измеряет сегодняшний разрыв и помогает его закрыть.</p><span class="src">Almansoori et al., BMC Cancer, 2021 · Старые данные, не сегодняшняя цифра по Абу-Даби</span></div>
     </div>
     <div class="tablebox">
       <table class="cmp">
@@ -430,7 +442,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
 </section>
 
 <!-- 03 WHERE -->
-<section id="where" data-state="Пациентка поняла">
+<section id="where" data-state="03 Где это работает">
   <div class="wrap">
     <div class="split">
       <div class="stack">
@@ -438,7 +450,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
         <h2>В телефоне пациента. На компьютерах клиники. <em>Рассчитано на связь с Malaffi, Sahatna и системами самой клиники.</em></h2>
       </div>
       <div class="stack">
-        <p class="lede">Никаких новых устройств и скачиваний. Пациентка открывает защищённую ссылку из сообщения, команда работает в любом браузере. В пилоте результаты приходят из систем клиники. Когда медкарта клиники подключена, итог записывается и обратно в карту пациента. Часть для пациента может работать и внутри Sahatna, приложения здоровья Абу-Даби, как предложили организаторы.</p>
+        <p class="lede">Ничего не нужно скачивать: пациент открывает защищённую ссылку из сообщения, команда работает в любом браузере. В демо только синтетические данные. Пилот можно начать с защищённого ежедневного файла с результатами и записи через координатора. Запись итога обратно в медкарту, Malaffi и модуль в Sahatna, как предлагали организаторы, подключаются после соглашений с партнёрами и согласований.</p>
         <p class="note">Сообщения, запись, страховка и интеграции в демо симулированы. Метки ниже показывают, что построено, а что предлагается.</p>
       </div>
     </div>
@@ -458,7 +470,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
 </section>
 
 <!-- 04 WHO -->
-<section id="who" data-state="Направление отправлено">
+<section id="who" data-state="04 Люди">
   <div class="wrap">
     <div class="split">
       <div class="stack">
@@ -467,7 +479,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
       </div>
       <div class="stack">
         <p class="lede">У каждого случая есть координатор. За каждый этап отвечает конкретный человек, и для него установлен срок. Kafila отслеживает выполнение и предупреждает о задержках.</p>
-        <a class="btn line" style="justify-self:start" href="care-loop.html" target="_blank" rel="noopener">Путь Фатимы по шагам: кто что делает и когда</a>
+        <a class="btn line" style="justify-self:start" href="care-loop.html">Путь Фатимы по шагам: кто что делает и когда</a>
       </div>
     </div>
     <div class="people" id="people"></div>
@@ -475,7 +487,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
 </section>
 
 <!-- 05 HOW -->
-<section id="how" data-state="Записана">
+<section id="how" data-state="05 Путь Фатимы">
   <div class="wrap">
     <div class="split">
       <div class="stack">
@@ -581,7 +593,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
 </section>
 
 <!-- 06 URGENT -->
-<section id="safety" class="urgent" data-state="Осмотрена специалистом">
+<section id="safety" class="urgent" data-state="06 Срочные случаи">
   <div class="wrap split">
     <div class="stack">
       <p class="eyebrow"><b>06</b>Срочные случаи</p>
@@ -602,40 +614,37 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
 </section>
 
 <!-- AI -->
-<section id="ai" data-state="Заключение получено">
+<section id="ai" data-state="ИИ в Kafila">
   <div class="wrap split">
     <div class="stack">
       <p class="eyebrow">ИИ внутри Kafila</p>
-      <h2>ИИ объясняет и готовит черновики, <em>внутри правил, которые задают врачи.</em></h2>
+      <h2>Решают клинические правила. <em>ИИ помогает объяснить.</em></h2>
       <ul class="stack" style="margin:0;padding-left:20px;gap:8px;color:var(--ink-2)">
-        <li><b>В демо:</b> отвечает на вопросы пациентки на арабском или английском, текстом или голосом, по подготовленным текстам (ещё ждут клинической проверки).</li>
-        <li><b>В пилоте:</b> переписывает для врача сводку и направление простыми словами. Сейчас эти черновики собираются из полей случая.</li>
-        <li><b>В пилоте:</b> разбирает, что пишет пациентка, на препятствия (страх, деньги, время…) и предлагает следующее действие из фиксированного списка. Человек нажимает, чтобы принять.</li>
+        <li><b>Сегодня · прототип:</b> Пациент получает подготовленные ответы на арабском или английском, текстом или голосом. Дополнительно ИИ может помочь объяснить эту информацию. Клиническая проверка ещё впереди.</li>
+        <li><b>План · пилот:</b> ИИ помогает со сводкой случая, черновиком направления и поиском барьеров к помощи. Медицинские решения и документы проверяют и утверждают врачи.</li>
+        <li><b>ИИ не обязателен:</b> Если ИИ недоступен, подготовленные ответы сохраняют путь пациента.</li>
       </ul>
-      <p class="pull">Зону задают правила. ИИ её объясняет. Подписывает человек.</p>
-      <p class="note">Если ИИ выключен или сломался, работают заранее подготовленные ответы, и цикл не останавливается.</p>
     </div>
     <div class="panel">
-      <h3>Кто что делает</h3>
+      <h3>Чёткие роли</h3>
       <div class="who-does">
         <div class="r"><b>Правила</b><small>Зона, срок, срочность, опасные симптомы, кто просрочил. Таблица с версиями, у каждой строки есть источник.</small></div>
-        <div class="a"><b>ИИ</b><small>Ответы пациентке простыми словами; в пилоте ещё черновики для персонала. На каждом черновике метка «проверьте перед использованием»: человек читает его, прежде чем что-то отправится.</small></div>
+        <div class="a"><b>ИИ</b><small>Объясняет пациенту; готовит черновики для персонала. Человек проверяет каждый черновик, прежде чем его отправить.</small></div>
         <div class="h"><b>Люди</b><small>Принимают или отклоняют направления, подписывают письма, закрывают случаи. Каждое действие записывается.</small></div>
       </div>
       <h3>Чего ИИ делать нельзя</h3>
-      <div class="chips no"><span>Ставить диагноз</span><span>Называть лекарства и дозы</span><span>Задавать зону или срок</span><span>Снижать срочность</span><span>Закрывать случай</span><span>Отправлять медицинское сообщение без человека</span></div>
+      <div class="chips no"><span>Ставить диагноз</span><span>Называть лекарства или дозы</span><span>Задавать или снижать срочность</span><span>Менять сроки</span><span>Закрывать случаи</span><span>Отправлять неутверждённые медицинские указания</span></div>
       <h3>Проверено 17 нояб. 2026</h3>
       <div class="tests">
         <div><b>35 / 35</b><span>тестов движка правил пройдено</span></div>
         <div><b>50 / 50</b><span>вопросов безопасности ИИ пройдено на подготовленных ответах. Прогон на живой модели впереди</span></div>
-        <div><b>0</b><span>случаев, которые может закрыть ИИ: такой кнопки у него просто нет</span></div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- 07 PILOT -->
-<section id="pilot" data-state="Закрыт с подтверждением">
+<section id="pilot" data-state="07 Польза и пилот">
   <div class="wrap">
     <div class="split">
       <div class="stack">
@@ -689,7 +698,8 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
 <footer>
   <div class="wrap cols">
     <div>
-      <h3>Источники</h3>
+      <details>
+      <summary>Источники (7)</summary>
       <ol>
         <li>Almansoori A et al. BMC Cancer 2021: скрининг колоректального рака в амбулаторных клиниках SEHA, Абу-Даби, 2015–2016 (30,5% сделали колоноскопию после положительного FIT/gFOBT).</li>
         <li>Coronado GD et al. Рандомизированное исследование PRECISE, Ann Intern Med 2025: навигация пациентов против обычного ведения после положительного FIT (55,1% против 42,1%).</li>
@@ -699,6 +709,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
         <li>USPSTF 2021, Colorectal Cancer: Screening.</li>
         <li>ADPHC, вебинар Population Health Challenge, 29 окт. 2026.</li>
       </ol>
+      </details>
     </div>
     <div>
       <h3>Об этом прототипе</h3>
@@ -736,11 +747,11 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
     return `<span class="face"><svg viewBox="0 0 48 48" aria-hidden="true">${s.join("")}</svg></span>`;
   }
   const P = [
-    { pt: true, name: "Фатима", role: "Пациентка", f: { skin: "#c48d63", head: "scarf", scarf: "#5a2f55", top: "#3b3f4a", extra: "phone" }, w: `Зачем: весь цикл ради неё. Ей нужно понять результат и чувствовать, что её ведут, а не просто сообщили (требование R3).`, d: "52 года, Халифа-Сити, читает по-арабски. Понимает свой результат и записывается на следующее обследование.", can: "Спрашивает · выбирает окно · зовёт медсестру" },
-    { name: "Нура", role: "Координатор", f: { skin: "#d9a77f", head: "scarf", scarf: "#2d3e6b", top: "#1f7a6d", extra: "headset" }, w: `Зачем: между результатом и записью кто-то должен отвечать за случай, иначе никто не заметит, что она не записалась. Навигаторы дали +13 процентных пунктов к колоноскопиям в PRECISE (требование R2).`, d: "Отвечает за случай, пока Фатима не записана, потом передаёт его доктору Хессе и продолжает следить за сроками. Звонит и записывает, когда сообщения мало.", can: "Назначает · звонит · записывает · меняет ответственного" },
-    { name: "Доктор Хесса", role: "Семейный врач", f: { skin: "#e2b893", head: "scarf", scarf: "#4f6a8f", top: "coat", extra: "steth" }, w: `Зачем: направлять, подписывать и закрывать может только врач. Конкурс требует закрытия с подтверждением или решением уполномоченного человека, и она знает пациентку (требование R5).`, d: "Клинический ответственный. Отправляет направление, читает заключение, закрывает случай.", can: "Направляет · спрашивает специалиста · подписывает · закрывает" },
-    { name: "Доктор Омар", role: "Гастроэнтеролог", f: { skin: "#9c6b4a", head: "hair", hair: "#1f1a17", top: "coat", extra: "beard" }, w: `Зачем: колоноскопию делают в другой клинике. Направления теряются между клиниками: в одном исследовании в США 38,9% так и не получили дату приёма (Patel 2018). «Принять или отклонить» закрывает эту дыру (требование R4).`, d: "Принимает направление или отклоняет его с причиной. Отправляет заключение обратно.", can: "Принимает · отклоняет · записывает итог" },
-    { name: "Доктор Халид", role: "Руководитель программы", f: { skin: "#b07b56", head: "ghutra", top: "#f4f4f1", extra: "beard" }, w: `Зачем: кто-то должен видеть всю программу и вмешаться до того, как истечёт срок, а также знать, где и почему люди выпадают (требования R5, R6).`, d: "Видит каждый случай на 75% срока, а также кто потерялся и почему.", can: "Следит · поднимает выше · меняет ответственного" },
+    { pt: true, name: "Фатима", role: "Пациентка", f: { skin: "#c48d63", head: "scarf", scarf: "#5a2f55", top: "#3b3f4a", extra: "phone" }, w: `Зачем: ей нужно понять результат и чувствовать, что её ведут (требование R3).`, d: "52 года, Халифа-Сити, читает по-арабски. Понимает свой результат и записывается на следующее обследование.", can: "Спрашивает · выбирает окно · зовёт медсестру" },
+    { name: "Нура", role: "Координатор", f: { skin: "#d9a77f", head: "scarf", scarf: "#2d3e6b", top: "#1f7a6d", extra: "headset" }, w: `Зачем: без неё пропущенную запись никто не заметит. Навигаторы дали +13 процентных пунктов (PRECISE, требование R2).`, d: "Ведёт случай от результата до закрытия. Звонит и помогает записаться, когда сообщения мало, и подгоняет любой просроченный шаг.", can: "Звонит · записывает · подгоняет просроченные шаги" },
+    { name: "Доктор Хесса", role: "Семейный врач", f: { skin: "#e2b893", head: "scarf", scarf: "#4f6a8f", top: "coat", extra: "steth" }, w: `Зачем: направлять, подписывать и закрывать случай может только врач (требование R5).`, d: "Клинический ответственный. Отправляет направление, читает заключение, закрывает случай.", can: "Направляет · спрашивает специалиста · подписывает · закрывает" },
+    { name: "Доктор Омар", role: "Гастроэнтеролог", f: { skin: "#9c6b4a", head: "hair", hair: "#1f1a17", top: "coat", extra: "beard" }, w: `Зачем: направления теряются между клиниками; в одном исследовании в США 38,9% так и не получили дату приёма (Patel 2018, требование R4).`, d: "Принимает направление или отклоняет его с причиной. Отправляет заключение обратно.", can: "Принимает · отклоняет · записывает итог" },
+    { name: "Доктор Халид", role: "Руководитель программы", f: { skin: "#b07b56", head: "ghutra", top: "#f4f4f1", extra: "beard" }, w: `Зачем: кто-то должен видеть всю программу и вмешаться до того, как истечёт срок (требования R5, R6).`, d: "Видит каждый случай на 75% срока, а также кто потерялся и почему.", can: "Следит · поднимает выше · меняет ответственного" },
   ];
   const box = document.getElementById("people");
   if (box) box.innerHTML = P.map((p) => `<div class="person${p.pt ? " pt" : ""}">${face(p.f)}<span class="role">${p.role}</span><h3>${p.name}</h3><p>${p.d}</p><span class="can">${p.can}</span><p class="pwhy">${p.w}</p></div>`).join("");
@@ -787,7 +798,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
     fg.style.strokeDashoffset = String(L * (1 - k));
     let cur = secs[0];
     secs.forEach((s) => { if (s.getBoundingClientRect().top < innerHeight * 0.5) cur = s; });
-    lbl.textContent = k > 0.985 ? "Цикл замкнут" : cur.dataset.state;
+    lbl.textContent = cur.dataset.state;
     pr.classList.toggle("done", k > 0.985);
   }
   fg.style.strokeDasharray = String(L);
@@ -807,3 +818,4 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
 </script>
 <a id="totop" class="totop" href="#top" aria-label="Наверх" title="Наверх">↑</a>
 <script>(function(){var b=document.getElementById("totop");if(!b)return;function f(){b.classList.toggle("show",window.scrollY>600)}addEventListener("scroll",f,{passive:true});f();b.addEventListener("click",function(e){e.preventDefault();scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"})})})();</script>
+<script>(function(){var b=document.getElementById("menubtn"),n=document.querySelector(".top nav");if(!b||!n)return;b.onclick=function(){var o=n.classList.toggle("open");b.setAttribute("aria-expanded",String(o));b.textContent=o?"Закрыть ✕":"Меню";};n.addEventListener("click",function(e){if(e.target.closest("a")){n.classList.remove("open");b.setAttribute("aria-expanded","false");b.textContent="Меню";}});})();</script>

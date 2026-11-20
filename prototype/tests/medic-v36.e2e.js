@@ -35,7 +35,7 @@ await p.locator('[data-act="teach"]').nth(1).click();await p.waitForTimeout(300)
 ok('F6 repeat reply',/a second normal result would not cancel the first one/.test(t));
 ok('F6 buttons',/Talk to Nurse Layla/.test(t)&&/I understand, let.s book/.test(t));
 await p.click('[data-act="tab"][data-arg="book"]');await p.waitForTimeout(200);t=await p.locator('.phone').innerText();
-ok('F8 slot label + sub-line',/Colonoscopy slot/.test(t)&&/checks your medicines first/.test(t)&&!/Gastroenterology slots/.test(t));
+ok('Book header + line + button',/Choose a time for your colonoscopy/.test(t)&&/Any time before/.test(t)&&/Choose this time/.test(t)&&/Free with your/.test(t)&&/Show only:/.test(t));
 await p.evaluate(()=>Patient.tourBook());await p.waitForTimeout(300);
 const rem=await p.evaluate(()=>{const c=Store.byId('C-1042');c.state='booked';Store.save();return JSON.stringify(c.slot)});
 await p.click('[data-act="tab"][data-arg="mycase"]').catch(()=>{});await p.waitForTimeout(300);t=await p.locator('.phone').innerText();

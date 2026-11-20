@@ -191,7 +191,7 @@
           "category": "severe",
           "level": "L3",
           "next": "remeasure_then_doctor_today",
-          "compare": "180/120 or higher is severely high. Rest 5 minutes and measure again.",
+          "compare": "Top number 180 or more, or bottom number 120 or more, is severely high. Rest 5 minutes and measure again.",
           "compare_ar": "180/120 أو أكثر مرتفع جدًا. استرح 5 دقائق ثم قِس مرة أخرى."
         },
         {

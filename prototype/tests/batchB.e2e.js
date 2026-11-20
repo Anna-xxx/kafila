@@ -2,14 +2,14 @@ const {chromium}=require('playwright');const U='http://localhost:8765/';
 (async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:1280,height:1000}});const errs=[];p.on('pageerror',e=>errs.push(e.message));
 const ok=(n,c)=>console.log((c?'PASS ':'FAIL ')+n);
 await p.goto(U+'#/team');await p.evaluate(()=>{localStorage.clear();localStorage.setItem('kafila-entry','1');localStorage.setItem('screenpath-tour','{"open":false}');localStorage.setItem('screenpath-demo-ui','1')});await p.reload();await p.waitForTimeout(600);
-const role=async r=>{await p.selectOption('#role',r);await p.waitForTimeout(300)};
+const role=async r=>{await p.evaluate(([i,v])=>{const s=document.querySelector('#'+i);s.value=v;s.dispatchEvent(new Event('change'))},['role',r]);await p.waitForTimeout(300)};
 // B1 dashboard
 await role('lead');await p.goto(U+'#/dashboard');await p.waitForTimeout(500);let t=await p.locator('#view').innerText();
 ok('B1 headline',/Follow-up completed in time/.test(t));ok('B1 closed without care card',/Closed without care/.test(t));ok('B1 funnel ends Follow-up completed',/Follow-up completed/.test(t));
 // B2 declined -> pending second signature
 const id=await p.evaluate(()=>{const c=Store.S.data.cases.find(c=>!['closed'].includes(c.state)&&c.state!=='issued'&&c.owner);c.humanDone=true;Store.save();return c.id});
 await role('gp');await p.goto(U+'#/case/'+id);await p.waitForTimeout(400);
-t=await p.locator('#view').innerText();ok('B4 three clocks',/Contact by/.test(t)&&/Booked by/.test(t)&&/Care by \(pilot target\)/.test(t));
+t=await p.locator('#view').innerText();ok('B4 three clocks',/First message by/.test(t)&&/Referral by/.test(t)&&/Colonoscopy by/.test(t));
 await p.click('[data-do=close]');await p.waitForTimeout(200);
 await p.selectOption('#rc','declined');await p.fill('#ev','Patient said no on call');await p.check('#sig');await p.click('[data-ok]');await p.waitForTimeout(300);
 let c=await p.evaluate(i=>{const c=Store.byId(i);return {st:c.state,pc:!!c.pendingClose}},id);ok('B2 declined not closed, pending: '+c.st,c.st!=='closed'&&c.pc);
@@ -29,5 +29,5 @@ c=await p.evaluate(i=>{const c=Store.byId(i);return {o:c.owner,h:!!c.handover}},
 // B4 late wording
 await p.goto(U+'#/team');await p.waitForTimeout(400);t=await p.locator('#view').innerText();ok('B4 no "case overdue" wording',!/case overdue/i.test(t));
 // B5 patient
-await p.goto(U+'#/patient');await p.waitForTimeout(400);await p.evaluate(()=>Patient.tourGo('C-1042',{tab:'mycase'}));await p.waitForTimeout(400);t=await p.locator('.phone').innerText();ok('B5 line',/same steps your care team sees|نفس الخطوات/.test(t));
+await p.goto(U+'#/patient');await p.waitForTimeout(400);await p.evaluate(()=>Patient.tourGo('C-1042',{tab:'mycase'}));await p.waitForTimeout(400);t=await p.locator('.phone').innerText();ok('B5 meta line dropped, contact + next shown',!/same steps your care team sees/.test(t)&&/Your contact now/.test(t)&&/Next for you/.test(t));
 console.log('errors',errs);await b.close()})();

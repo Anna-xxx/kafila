@@ -96,12 +96,13 @@
       "src": [
         "S4"
       ],
-      "en": "A colonoscopy is a look inside the large bowel with a thin, flexible camera. It takes about 30 to 60 minutes. You are usually offered medicine to help you relax, and your clinic will explain the comfort and sedation options before the procedure. If polyps are found, they can usually be removed during the same test.",
-      "ar": "تنظير القولون فحص لداخل الأمعاء الغليظة بكاميرا رفيعة ومرنة. يستغرق حوالي 30 إلى 60 دقيقة. عادةً يُعرض دواء يساعد على الاسترخاء، وسيشرح المركز خيارات الراحة والتهدئة قبل الفحص. إذا وُجدت زوائد (سلائل)، يمكن عادةً إزالتها خلال الفحص نفسه.",
+      "en": "A colonoscopy is a look inside the large bowel with a thin, flexible camera. The test itself usually takes 20 to 45 minutes. Plan to spend a few hours at the clinic in total. You are usually offered medicine to help you relax, and your clinic will explain the comfort and sedation options before the procedure. If polyps are found, they can usually be removed during the same test.",
+      "ar": "تنظير القولون فحص لداخل الأمعاء الغليظة بكاميرا رفيعة ومرنة. يستغرق الفحص نفسه عادةً من 20 إلى 45 دقيقة. خطّط لقضاء بضع ساعات في المركز. عادةً يُعرض دواء يساعد على الاسترخاء، وسيشرح المركز خيارات الراحة والتهدئة قبل الفحص. إذا وُجدت زوائد (سلائل)، يمكن عادةً إزالتها خلال الفحص نفسه.",
       "c": {
         "en": "Compared with: standard patient information on colonoscopy.",
         "ar": "مقارنة بـ: معلومات المرضى المعتادة عن تنظير القولون."
-      }
+      },
+      "ar_f": "تنظير القولون فحص لداخل الأمعاء الغليظة بكاميرا رفيعة ومرنة. يستغرق الفحص نفسه عادةً من 20 إلى 45 دقيقة. خطّطي لقضاء بضع ساعات في المركز. عادةً يُعرض دواء يساعد على الاسترخاء، وسيشرح المركز خيارات الراحة والتهدئة قبل الفحص. إذا وُجدت زوائد (سلائل)، يمكن عادةً إزالتها خلال الفحص نفسه."
     },
     {
       "id": "colonoscopy_prep",
@@ -456,17 +457,40 @@
       "ar_f": "لا أستطيع أن أوصي بأدوية أو جرعات. يرجى سؤال طبيبكِ أو الصيدلي. يمكنني مساعدتكِ في حجز موعد."
     },
     {
+      "id": "greeting",
+      "test": "*",
+      "match": [],
+      "whole": [
+        "hi",
+        "hello",
+        "hey",
+        "good morning",
+        "good evening",
+        "salam",
+        "salaam",
+        "مرحبا",
+        "مرحبًا",
+        "السلام عليكم",
+        "أهلا",
+        "أهلًا",
+        "اهلا",
+        "صباح الخير",
+        "مساء الخير"
+      ],
+      "src": [],
+      "en": "Hello {name}. I can explain your result and help you book. You can ask, for example: “What does my result mean?”, “Is it cancer?” or “How do I prepare?”.",
+      "ar": "مرحبًا {name}. يمكنني شرح نتيجتك ومساعدتك في الحجز. يمكنك أن تسأل مثلًا: «ماذا تعني نتيجتي؟» أو «هل هو سرطان؟» أو «كيف أستعد؟».",
+      "ar_f": "مرحبًا {name}. يمكنني شرح نتيجتكِ ومساعدتكِ في الحجز. يمكنكِ أن تسألي مثلًا: «ماذا تعني نتيجتي؟» أو «هل هو سرطان؟» أو «كيف أستعد؟».",
+      "draft": "BA draft 20 Nov, pending Anna's review"
+    },
+    {
       "id": "fallback",
       "test": "*",
       "match": [],
       "src": [],
-      "en": "I can't answer that safely. Your next step stays the same: follow the steps on your result card. You can also ask the care team.",
-      "ar": "لا أستطيع الإجابة عن ذلك بأمان. خطوتك التالية تبقى كما هي: اتبع الخطوات الظاهرة في بطاقة نتيجتك. يمكنك أيضًا سؤال فريق الرعاية.",
-      "c": {
-        "en": "Compared with: your result card.",
-        "ar": "مقارنة بـ: بطاقة نتيجتك."
-      },
-      "ar_f": "لا أستطيع الإجابة عن ذلك بأمان. خطوتكِ التالية تبقى كما هي: اتبعي الخطوات الظاهرة في بطاقة نتيجتكِ. يمكنكِ أيضًا سؤال فريق الرعاية."
+      "en": "I don't have a checked answer to that. I can help with your result, the colonoscopy and booking. For anything else, tap Nurse to talk to a person.",
+      "ar": "ليست لدي إجابة موثّقة عن ذلك. يمكنني المساعدة في نتيجتك وتنظير القولون والحجز. لأي شيء آخر، اضغط على «الممرضة» للتحدث مع شخص.",
+      "ar_f": "ليست لدي إجابة موثّقة عن ذلك. يمكنني المساعدة في نتيجتكِ وتنظير القولون والحجز. لأي شيء آخر، اضغطي على «الممرضة» للتحدث مع شخص."
     }
   ],
   "_gender": "ar = masculine/neutral; ar_f = feminine form, shown to female patients when present. Wording is the same, only grammatical gender differs."

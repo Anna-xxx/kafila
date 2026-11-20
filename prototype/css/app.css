@@ -560,3 +560,16 @@ details.srcs { margin-top: 8px; } details.srcs summary { cursor: pointer; font-s
 .p-lang { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; background: var(--surface); }
 .p-lang button { border: 0; background: none; padding: 6px 14px; min-height: 32px; font: inherit; font-size: 13px; cursor: pointer; color: var(--ink-2); }
 .p-lang button[aria-pressed="true"] { background: var(--brand); color: #fff; font-weight: 700; }
+
+/* Tappable medical words (Anna, 20 Nov) */
+.gloss-w { font: inherit; color: inherit; background: none; border: 0; padding: 0; text-decoration: underline dotted; text-underline-offset: 3px; cursor: pointer; }
+.gloss-w:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.gloss-t { display: block; margin-top: 4px; color: var(--ink-2); }
+.demo-btn.primary-btn { background: var(--brand); color: #fff; border-color: var(--brand); }
+.demo-btn.primary-btn[aria-pressed="true"] { background: var(--brand); color: #fff; }
+.scr-line { margin: 0 0 10px; padding: 6px 12px; border-radius: 10px; background: var(--brand-soft); color: var(--ink); font-weight: 600; }
+.book-h { margin: 4px 0 2px; font-size: 17px; }
+.filt-row { align-items: center; gap: 6px; margin-bottom: 8px; }
+.chip.filt { background: var(--surface); border: 1.5px solid var(--line); color: var(--ink); cursor: pointer; min-height: 32px; }
+.chip.filt.on { background: var(--brand-soft); border-color: var(--brand); color: var(--brand); }
+.slot .choose { display: flex; align-items: center; justify-content: center; min-height: 48px; margin-top: 8px; }

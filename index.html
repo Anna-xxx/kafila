@@ -100,6 +100,7 @@ section { padding-block: 96px; border-top: 1px solid var(--line); position: rela
 .motto { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 0; cursor: default; }
 .motto span { font: 500 13px/1.3 var(--mono); color: var(--ink-2); letter-spacing: .02em; }
 .motto span + span::before { content: "·"; margin: 0 12px; color: var(--teal); }
+.protolabel { margin: 0; font: 600 12px/1.4 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--teal); }
 .tryit { margin: 0; font-size: 14.5px; color: var(--ink-2); max-width: 62ch; } .tryit b { color: var(--ink); } .tryit a { color: var(--teal); text-decoration: underline; text-underline-offset: 3px; }
 .cta { display: flex; flex-wrap: wrap; gap: 12px; }
 
@@ -246,6 +247,7 @@ button.node:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px;
 .tl { display: grid; gap: 14px; }
 .tl > div { display: grid; grid-template-columns: 92px 1fr; gap: 14px; align-items: baseline; }
 .tl .when { font: 500 13px/1.3 var(--mono); color: var(--red); }
+.tl > .tl-red { margin-top: 10px; padding-top: 14px; border-top: 1px dashed color-mix(in srgb, var(--red) 55%, transparent); }
 .tl p { color: var(--ink-2); font-size: 15.5px; }
 .tl p b { color: var(--ink); }
 .duo { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
@@ -348,26 +350,28 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
   <div class="wrap split">
     <div class="stack">
       <p class="eyebrow">Kafila <span lang="ar" dir="rtl">قافلة</span> · a screening-to-care accountability platform · Future Health Challenge 05</p>
-      <h1>An abnormal result. <em>A clear path to care.</em></h1><p class="lede">A patient's stool test is positive. With Kafila:</p>
+      <h1>An abnormal result. <em>A clear path to care.</em></h1>
+      <p class="herofoot"><b>Kafila helps care teams follow up after a positive screening test.</b> Each case has a coordinator, a deadline and a documented outcome.</p>
+      <p class="protolabel">Interactive prototype · synthetic data</p>
+      <div class="cta">
+        <a class="btn solid" href="prototype/" target="_blank" rel="noopener">▶ Start the 3-minute tour</a>
+        <a class="btn line" href="#how">Follow Fatima's case</a>
+        <a class="btn line" href="care-loop.html">Step by step: who does what</a>
+      </div>
+      <p class="tryit">The prototype opens with a choice of people. Select <b>▶ 3-minute tour</b>: six scenes, from Fatima’s result to the programme dashboard.</p>
+      <p class="lede">A patient's stool test is positive. With Kafila:</p>
       <ul class="herolist">
-        <li><b>The patient understands.</b> Their clinic sends a secure message the same day and explains the result in their language. They can ask questions at any time.</li>
-        <li><b>The appointment fits the patient.</b> For example, a female doctor, a weekend slot, covered by their plan.</li>
+        <li><b>The patient understands.</b> Their clinic sends a secure message and explains the result in their language. They can ask questions at any time.</li>
+        <li><b>The appointment fits the patient.</b> For example, a female doctor or a weekend slot, with the cost shown before booking.</li>
         <li><b>No one is forgotten.</b> If the patient does not reply: an SMS, then a call, then the coordinator phones.</li>
         <li><b>Someone is responsible.</b> A coordinator follows the case, and each step has a named person, until a doctor closes it with the report.</li>
       </ul>
-            <p class="herofoot"><b>Sahatna, Abu Dhabi's health app, helps patients reach care. Kafila makes sure the next step actually happens:</b> every case has a coordinator, a deadline from the national guideline and a verified outcome.</p>
       <div class="stats">
-        <div class="stat"><b>Only 30.5%</b><span>of Emirati adults with a positive stool test had the follow-up colonoscopy in SEHA clinics, Abu Dhabi</span><small>436 people had it · 2015–2016, older data · Almansoori 2021, BMC Cancer</small></div>
-        <div class="stat"><b>Almost 2×</b><span>the odds of finding advanced-stage cancer when the colonoscopy comes 10–12 months after the test, and about 3× after a year, compared with 8–30 days</span><small>70,124 patients · Kaiser Permanente · Corley 2017, JAMA</small></div>
-        <div class="stat"><b>55% vs 42%</b><span>completed the colonoscopy when a navigator phoned them, explained it and helped them book, compared with no navigator: 13 percentage points more</span><small>PRECISE randomised trial · Coronado 2025</small></div>
+        <div class="stat"><b>Only 30.5%</b><span>of Emirati adults with a positive stool test had a follow-up colonoscopy in SEHA clinics, Abu Dhabi</span><small>436 of 1,429 people · 2015–2016, older data · Almansoori 2021, BMC Cancer</small></div>
+        <div class="stat"><b>Almost 2×</b><span>the odds of advanced-stage cancer were associated with a colonoscopy 10–12 months after the test, and about 3× after a year, compared with 8–30 days</span><small>70,124 patients · Kaiser Permanente · Corley 2017, JAMA</small></div>
+        <div class="stat"><b>55% vs 42%</b><span>completed a colonoscopy within 12 months when a navigator phoned them, explained it and helped them book, compared with usual care</span><small>PRECISE randomised trial, USA · Coronado 2025</small></div>
       </div>
       <div class="motto"><span>Rules set urgency and deadlines</span><span>AI explains</span><span>Clinicians decide and sign</span></div>
-      <div class="cta">
-        <a class="btn solid" href="#how">Follow Fatima's case</a>
-        <a class="btn line" href="prototype/" target="_blank" rel="noopener">Open the prototype</a>
-        <a class="btn line" href="care-loop.html">Step by step: who does what</a>
-      </div>
-      <p class="tryit"><b>See Kafila in action — in just 3 minutes.</b> <a href="prototype/" target="_blank" rel="noopener">Open the prototype</a> and select <b>▶ 3-minute tour</b>. Follow six scenes: Fatima’s result, appointment booking, referral acceptance, Rajesh’s emergency alert, clinician-verified case closure, and the programme dashboard.</p>
     </div>
     <div class="herovis">
     <div class="loopviz" aria-label="The Kafila loop: record, prioritise, refer, navigate, track">
@@ -399,7 +403,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
       <div class="stack">
         <p class="lede">Kafila turns every actionable screening result into a trackable case. A care coordinator oversees the journey, while each step has a responsible person and a deadline.</p>
         <p class="pull">When a step is missed or delayed, Kafila flags it for follow-up.</p>
-        <p class="src">The five steps match the journey the Abu Dhabi Public Health Centre set out for Challenge 05 (challenge webinar, 29 Oct 2026, paraphrased).</p>
+        <p class="src">These are Kafila's five functions, matching the journey the Abu Dhabi Public Health Centre set out for Challenge 05 (challenge webinar, 29 Oct 2026, paraphrased). They are not a strict order: patient support can start before the referral. Fatima's case below shows the real order of one case in six steps.</p>
       </div>
     </div>
     <div class="steps5">
@@ -419,7 +423,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
       <p class="eyebrow"><b>02</b>The gap</p>
       <h2>Too many patients are lost <em>between screening and follow-up.</em></h2>
       <p class="lede">Screening finds people who need further care. Between the result, the referral and the appointment, no one may be clearly responsible, and patients get missed. Many are also scared, unsure what the result means, or unable to find a time that works.</p>
-      <div class="gapcard"><span class="k">The gap · Abu Dhabi</span><b>Only 30.5%</b><h3>completed a follow-up colonoscopy after a positive stool test.</h3><p>A study of Emirati adults at SEHA primary care clinics in Abu Dhabi (2015–2016) found a major gap between screening and follow-up care: only 436 people with a positive test had the colonoscopy. Kafila measures today's gap and helps close it.</p><span class="src">Almansoori et al., BMC Cancer, 2021 · Historical data, not the current Abu Dhabi rate</span></div>
+      <div class="gapcard"><span class="k">The gap · Abu Dhabi</span><b>Only 30.5%</b><h3>had a follow-up colonoscopy after a positive stool test.</h3><p>A study of Emirati adults at SEHA primary care clinics in Abu Dhabi (2015–2016) found a major gap between screening and follow-up care: 436 of 1,429 people with a positive test had a follow-up colonoscopy. Kafila measures today's gap and helps close it.</p><span class="src">Almansoori et al., BMC Cancer, 2021 · Historical data, not the current Abu Dhabi rate</span></div>
     </div>
     <div class="tablebox">
       <table class="cmp">
@@ -489,7 +493,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
         <p class="eyebrow"><b>05</b>Fatima's case</p>
         <h2>Meet Fatima, 52. <em>Day 0.</em></h2>
       </div>
-      <p class="lede">Her stool test (FIT) is positive. Deadlines follow the UAE national guideline: referral within 15 working days, colonoscopy within 31 working days after the referral. The pilot agrees the final values with the clinical partner. These are real screens from the prototype, with synthetic data.</p>
+      <p class="lede">Her stool test (FIT) is positive. The UAE national guideline (MOHAP 2022, §12.5.2) asks for referral within 15 working days of a positive FIT. Its quality indicator (Appendix 2) is colonoscopy within 31 working days of the referral; Kafila uses it as the proposed pilot target. The pilot agrees the final values with the clinical partner. These are real screens from the prototype, with synthetic data.</p>
     </div>
     <div class="story">
       <div class="beats" id="beats">
@@ -595,10 +599,10 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
       <h2>When it is urgent, <em>Kafila does not wait for AI.</em></h2>
       <p class="lede">Rajesh, 45, works shifts. His blood pressure at screening is 185/115. Normal is below 120/80.</p>
       <div class="tl">
-        <div><span class="when">09:00</span><p><b>Rules mark it urgent.</b> He sees "Needs care today: a doctor will call you before 13:00", in the call window he chose.</p></div>
-        <div><span class="when">09:04</span><p><b>He types "chest pain".</b> A fixed screen says call 998 now. The phrase list is checked before any AI, in Arabic and English. His care team is alerted.</p></div>
+        <div><span class="when">09:00</span><p><b>Urgent result: rules mark it urgent.</b> He sees "Needs care today: a doctor will call you before 13:00", in the call window he chose.</p></div>
         <div><span class="when">+30 min</span><p><b>No answer to the doctor's call?</b> Retry, then an SMS with the clinic's number.</p></div>
         <div><span class="when">Same day</span><p><b>Still nobody reached after 3 tries:</b> the clinical lead gets the case today.</p></div>
+        <div class="tl-red"><span class="when">Any time</span><p><b>A separate path: he types "chest pain".</b> A fixed screen says "Call 998 now". No AI answers; the phrase list is checked first, in Arabic and English. His care team is alerted too.</p></div>
       </div>
     </div>
     <div class="duo">
@@ -632,7 +636,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
       <h3>Tested, 18 Nov 2026</h3>
       <div class="tests">
         <div><b>35 / 35</b><span>rules engine tests passed</span></div>
-        <div><b>50 / 50</b><span>AI safety questions passed with prepared answers. Live-model run pending</span></div>
+        <div><b>50 / 50</b><span>prepared-answer safety checks passed. Live-model testing pending. Clinical review pending</span></div>
       </div>
     </div>
   </div>
@@ -645,11 +649,11 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
       <div class="stack">
         <p class="eyebrow"><b>07</b>Impact and pilot</p>
         <h2>One number to judge us by: <em>follow-up completed in time.</em></h2>
-        <p class="lede">People whose next clinical step was done and confirmed within the agreed window, divided by all actionable results in the same period. Compared with the partner's previous 12 months. "Declined", "lost to follow-up" and "moved away" are shown separately and never count as success.</p>
+        <p class="lede">For the stool-test pilot: positive results followed by a confirmed colonoscopy within the agreed window, divided by all positive results old enough to have reached that window. The same rule is applied to the partner's previous 12 months. "Declined", "lost to follow-up" and "moved away" are shown separately and never count as success.</p>
       </div>
       <div class="north">
         <p class="big">Pilot target: <em>+15 percentage points</em> in follow-up completed in time</p>
-        <p class="note">Compared with the partner's own previous 12 months. A working assumption to agree with the partner. For scale: patient navigation added 13 percentage points in the PRECISE trial.</p>
+        <p class="note">Compared with the partner's own previous 12 months. A hypothesis to agree with the partner, not a result. For scale only: in the PRECISE trial (USA, colonoscopy within 12 months, a different setting) patient navigation added 13 percentage points.</p>
         <div class="chips"><span>Days to notification, booking, visit</span><span>Overdue and unassigned cases</span><span>Treatment started</span><span>"I understood" and "I felt guided"</span><span>Gaps by language, nationality, insurance</span></div>
       </div>
     </div>
@@ -696,9 +700,9 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
       <details>
       <summary>Sources (7)</summary>
       <ol>
-        <li>Almansoori A et al. BMC Cancer 2021: colorectal cancer screening in SEHA ambulatory clinics, Abu Dhabi, 2015–2016 (30.5% follow-up colonoscopy after a positive FIT/gFOBT).</li>
+        <li>Almansoori A et al. BMC Cancer 2021: colorectal cancer screening in SEHA ambulatory clinics, Abu Dhabi, 2015–2016 (436 of 1,429 people, 30.5%, had a follow-up colonoscopy after a positive FIT/gFOBT).</li>
         <li>Coronado GD et al. PRECISE randomised trial, Ann Intern Med 2025: patient navigation vs usual care after abnormal FIT (55.1% vs 42.1%).</li>
-        <li>Patel MP et al. J Gen Intern Med 2018;33(5):715–721, “Closing the referral loop”: 38.9% of specialist referrals never got an appointment date.</li>
+        <li>Patel MP et al. J Gen Intern Med 2018;33(5):715–721, “Closing the referral loop”: 38.9% of specialist referrals had no documented appointment date, in one US health system.</li>
         <li>American Cancer Society. Survival rates for colorectal cancer: colon cancer 5-year relative survival by SEER stage, people diagnosed 2014–2020 (localised 91%, regional 74%, distant 13%). cancer.org.</li>
         <li>Corley DA et al. JAMA 2017;317(16):1631–1641: time to colonoscopy after positive FIT and risk of cancer and advanced-stage disease (10–12 months vs 8–30 days).</li>
         <li>USPSTF 2021, Colorectal Cancer: Screening.</li>
@@ -745,7 +749,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
     { pt: true, name: "Fatima", role: "Patient", f: { skin: "#c48d63", head: "scarf", scarf: "#5a2f55", top: "#3b3f4a", extra: "phone" }, w: `Why: she must understand her result and feel guided (Brief R3).`, d: "52, Khalifa City, reads Arabic. Understands her result and books the next test.", can: "Asks · chooses a slot · asks for a nurse" },
     { name: "Noura", role: "Coordinator", f: { skin: "#d9a77f", head: "scarf", scarf: "#2d3e6b", top: "#1f7a6d", extra: "headset" }, w: `Why: without her, a missed booking goes unnoticed. Navigation added 13 percentage points (PRECISE, Brief R2).`, d: "Follows the case from result to closure. Calls and helps book when a message is not enough, and chases any step that is late.", can: "Calls · books · chases late steps" },
     { name: "Dr. Hessa", role: "Family doctor", f: { skin: "#e2b893", head: "scarf", scarf: "#4f6a8f", top: "coat", extra: "steth" }, w: `Why: only a clinician may refer, sign and close the case (Brief R5).`, d: "Clinically responsible. Sends the referral, reads the report, closes the case.", can: "Refers · asks the specialist · signs · closes" },
-    { name: "Dr. Omar", role: "Gastroenterologist", f: { skin: "#9c6b4a", head: "hair", hair: "#1f1a17", top: "coat", extra: "beard" }, w: `Why: referrals get lost between clinics; 38.9% never got a date in one US study (Patel 2018, Brief R4).`, d: "Accepts the referral or rejects it with a reason. Sends the report back.", can: "Accepts · rejects · records outcome" },
+    { name: "Dr. Omar", role: "Gastroenterologist", f: { skin: "#9c6b4a", head: "hair", hair: "#1f1a17", top: "coat", extra: "beard" }, w: `Why: referrals get lost between clinics; 38.9% had no documented appointment date in one US health system (Patel 2018, Brief R4).`, d: "Accepts the referral or rejects it with a reason. Sends the report back.", can: "Accepts · rejects · records outcome" },
     { name: "Dr. Khalid", role: "Programme lead", f: { skin: "#b07b56", head: "ghutra", top: "#f4f4f1", extra: "beard" }, w: `Why: someone must see the whole programme and act before deadlines pass (Brief R5, R6).`, d: "Gets every case that has used 75% of its time, and sees who is lost and why.", can: "Watches · escalates · reassigns the case" },
   ];
   const box = document.getElementById("people");
@@ -756,7 +760,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
   const heroImg = document.querySelector(".loopviz .phone img"), chip = document.querySelector(".casechip");
   document.querySelectorAll("button.node").forEach((n) => n.addEventListener("click", () => {
     document.querySelectorAll("button.node").forEach((x) => { x.classList.toggle("on", x === n); x.setAttribute("aria-pressed", String(x === n)); });
-    heroImg.style.opacity = 0; setTimeout(() => { heroImg.src = n.dataset.img; heroImg.style.opacity = 1; }, 150);
+    heroImg.style.opacity = 0; setTimeout(() => { heroImg.src = n.dataset.img; heroImg.alt = "Prototype screen: " + n.dataset.cap; heroImg.style.opacity = 1; }, 150);
     chip.innerHTML = "<b>" + n.querySelector("i").textContent + " · " + n.querySelector("b").textContent + "</b><br>" + n.dataset.cap;
   }));
 
