@@ -7,7 +7,7 @@
       <ol>
         <li><b>Result arrives</b> from the lab or screening programme. A <b>rules table</b> (versioned, each rule with its source) sets the zone, urgency level and deadline. The AI never sets them.</li>
         <li><b>Case opens</b> with a named owner and a deadline (SLA) for each step: assigned → notified → acknowledged → referral accepted → booked → attended → closed.</li>
-        <li><b>The health centre messages the patient</b> on WhatsApp (SMS, automated call and a coordinator call if there is no reply). An AI assistant explains the result in Arabic or English using only prepared texts (pending clinical review), checks understanding, asks about barriers and books a slot. A nurse is one tap away.</li>
+        <li><b>The health centre messages the patient</b> on WhatsApp (SMS, automated call and a coordinator call if there is no reply). An AI assistant explains the result in Arabic or English using only prepared texts (pending clinical review), answers her questions. One tap takes her from the result to booking; if she says not now, the clinic asks what is in the way. A nurse is one tap away.</li>
         <li><b>A nurse is one tap away</b>: in nurse hours (08:00–20:00, a demo value to agree with the partner) Nurse Layla takes over the chat or calls back. Outside these hours the request is saved as a callback task for 08:00; prepared answers and the 998 rule keep working.</li>
         <li><b>Red topics skip the AI</b>: phrases like “chest pain” or “bleeding a lot” get a fixed “Call 998” answer and an urgent clinician task.</li>
         <li><b>Care team works the exceptions</b>: overdue, unassigned, rejected and urgent cases. Specialists accept or reject referrals with a reason. A clinician closes the case only with evidence or a signed reason code.</li>
@@ -97,7 +97,7 @@
   // The demo panel is always shown next to the phone (Anna, 20 Nov: choose the role on top, the patient inside).
   document.body.classList.add("demo-on");
   // "Demo time" line: in the patient panel and at the top of care-team screens. One click handler for both.
-  window.demoTime = () => `<div class="dt-line"><span><b>Demo time:</b> ${new Date(Store.now()).toLocaleString("en-GB", { weekday: "short", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit", timeZone: "Asia/Dubai" })}</span><button class="btn sm" data-dt="1">+1 day</button><button class="btn sm" data-dt="7">+7 days</button><button class="btn sm" data-dt="reset" title="Start the demo again">Reset demo</button></div>`;
+  window.demoTime = () => `<div class="dt-line"><span><b>Today in the demo:</b> ${new Date(Store.now()).toLocaleString("en-GB", { weekday: "short", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit", timeZone: "Asia/Dubai" })}</span><button class="btn sm" data-dt="1">+1 day</button><button class="btn sm" data-dt="7">+7 days</button><button class="btn sm" data-dt="reset" title="Start the demo again">Start again</button></div>`;
   document.addEventListener("click", (e) => { const b = e.target.closest && e.target.closest("[data-dt]"); if (!b) return;
     if (b.dataset.dt === "reset") { if ("speechSynthesis" in window) speechSynthesis.cancel(); Store.reset(); if (location.hash.startsWith("#/patient")) render(); else location.hash = "#/patient"; return; }
     Store.S.data.clockDays += +b.dataset.dt; Store.save(); });

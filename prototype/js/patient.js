@@ -113,6 +113,7 @@
   };
   // Material-style icons (inline SVG) so the phone has no emoji.
   const P = {
+    steps: "M19 3h-4.18C14.4 1.84 13.3 1 12 1s-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm-2 14l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z",
     video: "M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z",
     emoji: "M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z",
     clip: "M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z",
@@ -357,7 +358,8 @@
     }
     if (a === "book") {
       tab(c, "book");
-      if (OPEN.includes(c.state)) { c.teachBack = c.teachBack || "skipped"; Store.move(c, "acknowledged", "Patient", "acknowledged, teach-back skipped"); }
+      // One tap from result to booking (Anna, 20 Nov: "why is chat more important than Book?").
+      if (OPEN.includes(c.state)) { Store.move(c, "acknowledged", "Patient", "opened the result"); Store.log(c.id, "Patient", "Booking started.", "info"); }
     }
     if (a === "bar") {
       const q = chat(c).find((m) => m.t === "multi");
@@ -439,6 +441,23 @@
       push(c, a.startsWith("night") ? { t: "in", tag: "centre", text: ar ? L[3] : L[2] } : { t: "nurse", text: ar ? L[3] : L[2] });
       if (a !== "nwrite" && a !== "nightwrite") { if (!c.callback || c.humanDone) { c.callback = new Date(Store.now()).toISOString(); c.humanDone = false; }
         Store.log(c.id, "Nurse Layla", a === "ncall" ? "Nurse callback: calling now." : a === "nlater" ? "Nurse callback: today before 17:00." : "Nurse callback after 08:00 (out of hours).", "human"); }
+    }
+    if (a === "askq") {
+      // "I have a question": Chat with this pathway's question chips. Nothing else is sent unasked.
+      tab(c, "assistant"); clearQr(c);
+      if (OPEN.includes(c.state)) Store.move(c, "acknowledged", "Patient", "opened the result");
+      const qs = [...((TRY[pathway(c)] || TRY.colonoscopy)[lang] || [])].slice(0, 4);
+      push(c, { t: "in", tag: "centre", text: ar ? "ما سؤالكِ؟ اختاري سؤالًا أو اكتبيه أدناه." : "What would you like to ask? Pick a question or type it below." });
+      push(c, { t: "qr", opts: [...qs.map((q, i) => ["askpick", q, i]), ["book", ar ? "لا، أريد الحجز" : "No, I want to book"]] });
+    }
+    if (a === "askpick") { const qs = [...((TRY[pathway(c)] || TRY.colonoscopy)[lang] || [])]; clearQr(c); Store.save(); await send(qs[arg]); return; }
+    if (a === "notnow") {
+      // "Not now": the clinic asks what is in the way; the coordinator gets a follow-up task.
+      tab(c, "assistant"); clearQr(c);
+      if (OPEN.includes(c.state)) Store.move(c, "acknowledged", "Patient", "opened the result");
+      c.teachFlag = true; if (!c.callback || c.humanDone) { c.callback = new Date(Store.now()).toISOString(); c.humanDone = false; }
+      Store.log(c.id, "Patient", "Said not now. Coordinator follow-up within 1 working day.", "human");
+      push(c, { t: "me", text: ar ? "ليس الآن" : "Not now" }); askBarriers(c);
     }
     if (a === "callme") {
       if (!c.callback || c.humanDone) { c.callback = new Date(Store.now()).toISOString(); c.humanDone = false; push(c, { t: "sys", key: "callbackOk" }); Store.log(c.id, "Patient", "Call-back requested. Task for nurse, SLA 2 h.", "human"); }
@@ -632,7 +651,7 @@
           <div class="small">${esc((PLAIN_SRC[r.test] || PLAIN_SRC.FIT)[lang] || "")}</div>
           <div class="tiny" style="margin-top:4px">${esc(T.disclaimer)}</div></details>
         <button class="btn sm" style="margin-top:8px" data-speak="${esc(speakText)}" data-ai="1">${esc(T.listen)}</button></div>
-      ${OPEN.includes(c.state) ? (canBook ? `<button class="btn primary block" data-act="book">${esc(bookLabel(c, lang))}</button><button class="btn block" data-act="understood">${esc(lang === "ar" ? "أريد التأكد أولًا أنني فهمت" : "Check that I understood first")}</button>` : `<button class="btn primary block" data-act="understood">${esc(t.understood)}</button>`)
+      ${OPEN.includes(c.state) ? (canBook ? `<button class="btn primary block" data-act="book">${esc(bookLabel(c, lang))}</button><button class="btn block" data-act="askq">${esc(lang === "ar" ? "لديّ سؤال" : "I have a question")}</button><button class="linkbtn" style="display:block;margin:8px auto 0" data-act="notnow">${esc(lang === "ar" ? "ليس الآن" : "Not now")}</button>` : `<button class="btn primary block" data-act="understood">${esc(t.understood)}</button>`)
         : canBook && !c.slot ? `<button class="btn primary block" data-act="tab" data-arg="book">${esc(bookLabel(c, lang))}</button>` : ""}`;
   }
   function whenFor(c, lang, i, by) {
@@ -858,7 +877,7 @@
     const tb = c.ptab || "result";
     const title = { result: fill(t.hello, { name: first(c) }), assistant: t.askTitle, book: c.slot ? t.apptCard : t.bookTitle, mycase: t.mycaseTitle }[tb];
     const body = { result: resultTab, assistant: assistantTab, book: bookTab, mycase: mycaseTab }[tb](c, lang);
-    const icons = { result: ic("doc"), assistant: ic("chat"), book: ic("cal"), mycase: ic("pin") };
+    const icons = { result: ic("doc"), book: ic("cal"), assistant: ic("chat"), mycase: ic("steps") };
     const fade = lastTab !== tb && lastScreen === "app" ? "fade" : "";
     return shell(c, lang, "app", "dark", `${c.installed ? "" : `<div class="chrome" dir="ltr"><span class="ch-home">${ic("lock")}</span><span class="ch-url">kafila.demo</span><span class="ch-tabs">1</span><span class="ch-more">⋮</span></div>`}
       <div class="ah"><div><span class="tiny">${esc(tb === "assistant" ? (c.human && !c.humanDone ? t.askSubNurse : t.askSub) : clinicOf(c, lang))}</span><b>${esc(title)}</b></div>
@@ -892,7 +911,8 @@
           <h3>If the patient doesn't answer</h3>
           <p class="tiny">Tap to jump ahead and see the next reminder. Each one appears in the case history.</p>
           <div class="row"><button class="btn sm" data-lad="sms2">Day 2: SMS</button><button class="btn sm" data-lad="sms4">Day 4: second SMS</button><button class="btn sm" data-lad="call5">Day 5: automatic call</button><button class="btn sm" data-lad="coord">Coordinator calls</button></div>
-          <h3>Demo time</h3>
+          <h3>Move the days forward</h3>
+          <p class="tiny">See what the clinic does as days pass: reminders, deadlines, late cases.</p>
           ${window.demoTime ? window.demoTime() : ""}
           <p class="tiny">${d.aiUrl ? "AI on for this demo." : "Answers are prepared texts (clinical review pending)."}</p>
         </div>

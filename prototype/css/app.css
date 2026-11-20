@@ -628,4 +628,5 @@ main > .dt-line, #view > .dt-line { margin: 0 0 12px; padding: 8px 12px; backgro
 .phone.real.scr-app .ascroll { padding: 12px 12px 28px; scroll-padding-bottom: 28px; }
 .phone.real.scr-app .ascroll > .sys, .phone.real.scr-app .ascroll > .qr { align-self: stretch; margin-inline: 0; }
 .phone.real.scr-app .ah b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.ctrl { display: none !important; } /* BA 20 Nov: old demo bar, replaced by the panel */
+.ctrl { display: none !important; }
+.site-link { margin-left: 12px; font-size: 13px; font-weight: 600; color: var(--ink-2, #3d4a46); text-decoration: none; border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; white-space: nowrap; } .site-link:hover { background: var(--surface-2); } @media (max-width: 520px) { .site-link { margin-left: 6px; padding: 5px 9px; font-size: 12px; } }

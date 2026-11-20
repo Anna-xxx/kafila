@@ -55,7 +55,7 @@
     HBA1C: ["Internal Medicine Clinic (demo) · Dr. Sami N.", "Diabetes Clinic (demo) · Dr. Nadia F."]
   };
   const CLINIC_LINE = "02 000 0000 (demo)";
-  const x_reason = (c) => c.noRoster && !c.callOutcome ? "No doctor free: lead" : c.aiConcern ? "AI concern: clinician review" : c.fearCall ? "Nurse call: worried" : c.teachFlag ? "Nurse call: teach-back" : c.phonePref ? "Prefers phone call" : c.elsewhere ? "Report from elsewhere" : c.hesitant ? "Unsure about test" : (c.barriers || []).includes("notnow") ? "Unsure about test" : "Nurse callback";
+  const x_reason = (c) => c.noRoster && !c.callOutcome ? "No doctor free: lead" : c.aiConcern ? "AI concern: clinician review" : c.fearCall ? "Nurse call: worried" : c.teachFlag ? "Said not now: follow up" : c.phonePref ? "Prefers phone call" : c.elsewhere ? "Report from elsewhere" : c.hesitant ? "Unsure about test" : (c.barriers || []).includes("notnow") ? "Unsure about test" : "Nurse callback";
   // Current step in words; the referral step says whether the clinic has accepted yet.
   const tGST = (ms) => new Date(ms).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: "Asia/Dubai" });
   const callNote = (c) => c.state !== "closed" && c.callSlot && !c.callOutcome ? ` · ${c.callSlot.doc.replace(/^GP · /, "")} calls ${tGST(c.callSlot.start)}–${tGST(c.callSlot.end)}` : c.state !== "closed" && c.noRoster && !c.callOutcome ? " · no doctor free on roster: lead arranges call" : "";
@@ -250,7 +250,7 @@
     return [
       `${c.name}, ${c.age}, ${c.lang.toUpperCase()}-speaking, ${c.insurance}: ${T[c.result.test]} → next step: ${nextW(c).toLowerCase()}.`,
       `Now: ${stepNow(c)}, owner ${c.owner || "none"}, ${dd(s.days)} in step${s.overdue ? " (overdue)" : ""}; ${urgentDue(c) ? urgentDue(c).text : "guideline window: " + winText(s)}.`,
-      `Patient: teach-back ${c.teachBack || "not done"}; barriers ${b}${c.redFlag ? "; RED FLAG “" + c.redFlag.phrase + "”" : ""}.`
+      `Patient: next step ${c.teachBack ? "confirmed" : "not confirmed yet"}; barriers ${b}${c.redFlag ? "; RED FLAG “" + c.redFlag.phrase + "”" : ""}.`
     ];
   }
   // Today's duty roster for same-day calls (synthetic). Busy blocks come from data/roster.json, booked calls from patients' choices.
@@ -273,7 +273,7 @@
     const H = Object.fromEntries(c.history.map((h) => [h.state, h])), d = (iso) => new Date(typeof iso === "number" ? iso : Date.parse(iso)).toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "Asia/Dubai" });
     const out = [];
     out.push(c.consent ? "Result explained " + d(c.consent.at) : H.acknowledged ? "Result explained " + d(H.acknowledged.at) : H.notified ? "Patient notified " + d(H.notified.at) + ", result not yet opened" : "Patient not yet notified");
-    if (c.teachBack) out.push("teach-back " + c.teachBack);
+    if (c.teachBack) out.push("next step confirmed");
     const bars = c.barriers && c.barriers.length ? c.barriers : c.barrier ? [c.barrier] : [];
     out.push(bars.length ? "barriers: " + bars.map((b) => BAR_W[b] || b).join(", ") : "no barriers reported");
     if (c.fearCall || c.teachFlag || c.callback) out.push("nurse call " + (c.humanDone ? "done" : "requested, not yet done"));
@@ -330,7 +330,7 @@ R: Please accept for ${c.result.next}.${c.barriers && c.barriers.includes("gende
             <dt>Time left on this clock</dt><dd class="sla ${s.clockPct >= 75 ? "late" : ""}">${c.state === "closed" ? "closed" : winText(s)}${s.escalated ? (s.urgent ? " → escalated to the clinical lead (programme lead sees it on the dashboard)" : " → escalated to programme lead") : ""}</dd>
             <dt>Rule</dt><dd class="tiny">${esc(c.result.ruleRow || "")} · rules v${esc(c.result.rulesVersion)} · level ${esc(c.result.level)} · ${esc(c.result.ruleText || "")}</dd>
             <dt>Barriers</dt><dd>${(c.barriers && c.barriers.length ? c.barriers : c.barrier ? [c.barrier] : ["—"]).map(esc).join(", ")}</dd>
-            <dt>Teach-back</dt><dd>${esc(c.teachBack || "—")}</dd>
+            <dt>Next step</dt><dd>${c.teachBack ? "confirmed by the patient" : "—"}</dd>
             <dt>Contact attempts</dt><dd>${(c.attempts || c.retries || []).map((x) => `${esc(x.channel)} d${x.day} ${x.ok ? "✓✓" : "✗"}`).join(" · ") || "—"}</dd>
             ${isUrgentBP(c) && c.state !== "closed" ? `<dt>Doctor call</dt><dd>${c.callSlot ? `Booked: <b>${esc(c.callSlot.doc)}</b>, ${tGST(c.callSlot.start)}–${tGST(c.callSlot.end)} (duty roster)` : c.noRoster ? `<span class="chip z-red">No doctor free before the deadline</span> Clinical lead arranges the call.` : "Any free doctor on the roster"}${window.Patient && !Patient.callBy(c).late ? ` · rule deadline ${tGST(Patient.callBy(c).ms)}` : " · rule deadline: tomorrow before 10:00"}</dd>` : ""}
             ${c.callOutcome ? `<dt>Same-day call</dt><dd>${c.callOutcome.answered ? "Answered · " + esc(c.callOutcome.text) : "No answer × " + esc(c.callTries || 1)}</dd>` : ""}
@@ -638,12 +638,12 @@ R: Please accept for ${c.result.next}.${c.barriers && c.barriers.includes("gende
         ${bars(closeR, closed.length || 1)}
         <p class="tiny">From the signed closure reason code. Each closure needs a report, Malaffi record or signed note. Synthetic cohort.</p></div>
       <div class="card"><h2>Patient understanding and confidence</h2>
-        <div class="bar"><span>Understood first time (teach-back)</span><span class="tr"><span class="fl" style="width:${pct(tb.correct, tbN)}%"></span></span><span class="num">${pct(tb.correct, tbN)}%</span></div>
-        <div class="bar"><span>Understood after a short correction</span><span class="tr"><span class="fl" style="width:${pct(tb.corrected, tbN)}%"></span></span><span class="num">${pct(tb.corrected, tbN)}%</span></div>
-        <div class="bar"><span>Skipped the check</span><span class="tr"><span class="fl" style="width:${pct(tb.skipped, tbN)}%"></span></span><span class="num">${pct(tb.skipped, tbN)}%</span></div>
+        <div class="bar"><span>Patient confirmed the next step at once</span><span class="tr"><span class="fl" style="width:${pct(tb.correct, tbN)}%"></span></span><span class="num">${pct(tb.correct, tbN)}%</span></div>
+        <div class="bar"><span>Confirmed after a call</span><span class="tr"><span class="fl" style="width:${pct(tb.corrected, tbN)}%"></span></span><span class="num">${pct(tb.corrected, tbN)}%</span></div>
+        <div class="bar"><span>Booked straight from the result</span><span class="tr"><span class="fl" style="width:${pct(tb.skipped, tbN)}%"></span></span><span class="num">${pct(tb.skipped, tbN)}%</span></div>
         <div class="bar"><span>“Explained clearly” (top face)</span><span class="tr"><span class="fl" style="width:${pct(fbA, fbN)}%"></span></span><span class="num">${pct(fbA, fbN)}%</span></div>
         <div class="bar"><span>“Felt guided at each step” (top face)</span><span class="tr"><span class="fl" style="width:${pct(fbB, fbN)}%"></span></span><span class="num">${pct(fbB, fbN)}%</span></div>
-        <p class="tiny">Teach-back: n=${tbN} patients who acknowledged the result. Faces: n=${fbN} closed cases that answered the 2 questions (3-face scale). Synthetic, not measured.</p></div>
+        <p class="tiny">Next step: n=${tbN} patients who acknowledged the result. Faces: n=${fbN} closed cases that answered the 2 questions (3-face scale). Synthetic, not measured.</p></div>
       <div class="card"><h2>Reasons for delay or drop-off</h2>${bars(reasons, Object.values(reasons).reduce((a, b) => a + b, 0) || 1)}<p class="tiny">From the barrier check in the patient chat.</p></div>
       <div class="card"><h2>Completion by language</h2>${bars(by("lang"), 0, true)}<p class="tiny">Share of cases attended or closed. Equity check: gaps between groups show where to act.</p></div>
       <div class="card"><h2>Completion by insurance</h2>${bars(by("insurance"), 0, true)}<p class="tiny">Basic plans have co-pays in this synthetic model.</p></div>
