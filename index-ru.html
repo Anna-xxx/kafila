@@ -1,0 +1,809 @@
+<title>Kafila по-русски</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20120%20120%22%20width%3D%22120%22%20height%3D%22120%22%20role%3D%22img%22%20aria-label%3D%22Kafila%22%3E%3Cg%20transform%3D%22translate%2860%2060%29%20scale%281.1%29%20translate%28-60%20-60%29%22%3E%3Cg%20id%3D%22mark%22%3E%3Cpath%20d%3D%22M75.19%2022.99%20A40%2040%200%200%201%2090.50%2034.12%22%20fill%3D%22none%22%20stroke%3D%22%23448c80%22%20stroke-width%3D%2213%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M99.89%2063.01%20A40%2040%200%200%201%2094.04%2081.01%22%20fill%3D%22none%22%20stroke%3D%22%235082af%22%20stroke-width%3D%2213%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M69.47%2098.86%20A40%2040%200%200%201%2050.53%2098.86%22%20fill%3D%22none%22%20stroke%3D%22%23e7b956%22%20stroke-width%3D%2213%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M25.96%2081.01%20A40%2040%200%200%201%2020.11%2063.01%22%20fill%3D%22none%22%20stroke%3D%22%23e1885a%22%20stroke-width%3D%2213%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M29.50%2034.12%20A40%2040%200%200%201%2044.81%2022.99%22%20fill%3D%22none%22%20stroke%3D%22%2369b37e%22%20stroke-width%3D%2213%22%20stroke-linecap%3D%22round%22/%3E%3Ccircle%20cx%3D%2260.00%22%20cy%3D%2220.00%22%20r%3D%2213%22%20fill%3D%22%230f6b5c%22/%3E%3Ccircle%20cx%3D%2298.04%22%20cy%3D%2247.64%22%20r%3D%2213%22%20fill%3D%22%231f5f99%22/%3E%3Ccircle%20cx%3D%2283.51%22%20cy%3D%2292.36%22%20r%3D%2213%22%20fill%3D%22%23e0a526%22/%3E%3Ccircle%20cx%3D%2236.49%22%20cy%3D%2292.36%22%20r%3D%2213%22%20fill%3D%22%23d9662b%22/%3E%3Ccircle%20cx%3D%2221.96%22%20cy%3D%2247.64%22%20r%3D%2213%22%20fill%3D%22%233f9e5a%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E">
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Kafila: every actionable screening result becomes an owned case with a deadline, until a clinician closes it with evidence. Future Health Challenge 05. Synthetic data only.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Noto+Sans:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a long scroll story, text column left and evidence (phone, screens, tables) right,
+   with a loop ring on the right edge that closes as the reader reaches the end. One deliberate dark look. */
+:root {
+  --night: #06110f;      /* page */
+  --deep: #0b1c18;       /* panels */
+  --deep-2: #10261f;     /* raised panels */
+  --line: #1f3a33;
+  --ink: #eaf2ef;
+  --ink-2: #b0c3bd;
+  --ink-3: #82978f;
+  --teal: #46c2a8;       /* Kafila brand on dark */
+  --teal-soft: #12352d;
+  --amber: #f2b65e;      /* the "see a doctor" zone colour, used for the second half of headlines */
+  --amber-soft: #3a2a12;
+  --red: #ef6a5f;
+  --red-deep: #b42318;
+  --white: #ffffff;
+  --display: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+  --text: "Noto Sans", "Noto Sans Arabic", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --wrap: 1180px;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+body { background: var(--night); color: var(--ink); font: 400 17px/1.6 var(--text); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--night); }
+a { color: var(--teal); }
+:focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; border-radius: 6px; }
+img { max-width: 100%; display: block; }
+.wrap { max-width: var(--wrap); margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+
+/* top bar */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: color-mix(in srgb, var(--night) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.top .wrap { display: flex; align-items: center; gap: 22px; height: 60px; }
+.logo { display: flex; align-items: center; gap: 10px; font: 700 18px/1 var(--display); color: var(--ink); text-decoration: none; letter-spacing: -0.01em; }
+.logo i.mk { background: none; }
+.logo i { width: 28px; height: 28px; border-radius: 8px; background: var(--teal); color: var(--night); display: grid; place-items: center; font-style: normal; font-size: 16px; }
+.top nav { display: flex; gap: 20px; margin-left: auto; }
+.top nav .navsep { width: 1px; height: 16px; background: var(--line); align-self: center; }
+.top nav a { color: var(--ink-2); text-decoration: none; font-size: 14.5px; font-weight: 500; }
+.top nav a:hover { color: var(--ink); }
+.btn { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 20px; border-radius: 999px; font: 600 15px/1 var(--text); text-decoration: none; border: 1.5px solid transparent; cursor: pointer; }
+.btn.solid { background: var(--amber); color: #1d1405; }
+.btn.solid:hover { background: #f6c47b; }
+.btn.line { border-color: var(--line); color: var(--ink); background: transparent; }
+.btn.line:hover { border-color: var(--teal); }
+.top .btn { min-height: 38px; padding: 0 16px; font-size: 14px; }
+@media (max-width: 860px) { .top nav { display: none; } .top .btn { margin-left: auto; } }
+
+/* shared type */
+.eyebrow { font: 500 12.5px/1.4 var(--mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); }
+.eyebrow b { color: var(--amber); font-weight: 500; margin-right: 10px; }
+h1, h2, h3 { font-family: var(--display); letter-spacing: -0.02em; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(40px, 6vw, 68px); line-height: 1.02; font-weight: 700; }
+h2 { font-size: clamp(32px, 4.2vw, 50px); line-height: 1.06; font-weight: 700; }
+h3 { font-size: 21px; line-height: 1.25; font-weight: 600; letter-spacing: -0.01em; }
+h1 em, h2 em { font-style: normal; color: var(--amber); }
+.lede { font-size: 19px; color: var(--ink-2); max-width: 60ch; }
+p { margin: 0; }
+.src { font: 400 12.5px/1.5 var(--mono); color: var(--ink-3); }
+.note { font-size: 14px; color: var(--ink-3); }
+.pull { border-left: 3px solid var(--amber); padding: 4px 0 4px 16px; font: 600 20px/1.35 var(--display); color: var(--ink); max-width: 34ch; }
+
+/* sections */
+section { padding-block: 96px; border-top: 1px solid var(--line); position: relative; }
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 56px; align-items: start; }
+.split > * { min-width: 0; }
+.stack { display: grid; gap: 22px; }
+@media (max-width: 960px) { .split { grid-template-columns: 1fr; gap: 36px; } section { padding-block: 72px; } }
+
+/* hero */
+.hero { border-top: 0; padding-block: 64px 88px; overflow-x: clip; }
+.hero .split { align-items: center; }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; border-top: 1px solid var(--line); padding-top: 20px; }
+.stat b { display: block; font: 700 34px/1 var(--display); color: var(--amber); letter-spacing: -0.02em; }
+.stat span { display: block; font-size: 14px; color: var(--ink-2); margin-top: 6px; line-height: 1.4; }
+.stat small { display: block; margin-top: 6px; font: 400 11.5px/1.4 var(--mono); color: var(--ink-3); }
+@media (max-width: 560px) { .stats { grid-template-columns: 1fr; } }
+.herolist { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; max-width: 58ch; } .herolist li { position: relative; padding-left: 22px; color: var(--ink-2); font-size: 17px; line-height: 1.5; } .herolist li::before { content: ""; position: absolute; left: 2px; top: .62em; width: 9px; height: 9px; border-radius: 50%; background: var(--teal); } .herolist b { color: var(--ink); } .herofoot { color: var(--amber); font-weight: 600; margin: 0; }
+.motto { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 0; cursor: default; }
+.motto span { font: 500 13px/1.3 var(--mono); color: var(--ink-2); letter-spacing: .02em; }
+.motto span + span::before { content: "·"; margin: 0 12px; color: var(--teal); }
+.tryit { margin: 0; font-size: 14.5px; color: var(--ink-2); max-width: 62ch; } .tryit b { color: var(--ink); }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* hero visual: the loop with five ADPHC steps around a phone */
+.loopviz { position: relative; width: min(100%, 540px); aspect-ratio: 1 / 1; margin-inline: auto; }
+.loopviz svg.ring { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.ring .track { fill: none; stroke: var(--line); stroke-width: 2; }
+.ring .arc { fill: none; stroke: var(--teal); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 1131; stroke-dashoffset: 0; animation: draw 2.4s cubic-bezier(.6,.1,.2,1) both .3s; }
+@keyframes draw { from { stroke-dashoffset: 1131; } to { stroke-dashoffset: 0; } }
+.node { position: absolute; transform: translate(-50%, -50%); text-align: center; display: grid; justify-items: center; gap: 4px; background: var(--night); padding: 6px 10px; border-radius: 12px; }
+.node i { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--deep-2); border: 2px solid var(--teal); font: 600 13px/1 var(--mono); font-style: normal; color: var(--teal); }
+.node b { display: block; font: 600 14px/1.2 var(--display); }
+.node small { display: block; font-size: 11.5px; line-height: 1.3; color: var(--ink-3); }
+.node.end i { background: var(--teal); color: var(--night); }
+.phone { width: 214px; border-radius: 30px; border: 7px solid #1b2a26; background: #1b2a26; box-shadow: 0 30px 60px -20px rgba(0,0,0,.7), 0 0 0 1px #2c4740; overflow: hidden; }
+.phone img { border-radius: 22px; width: 100%; height: auto; }
+.loopviz .phone { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 33%; border-width: 5px; border-radius: 24px; }
+.loopviz .phone img { border-radius: 19px; transition: opacity .15s; }
+.herovis { display: grid; justify-items: center; gap: 18px; min-width: 0; }
+.casechip { background: var(--deep-2); border: 1px solid #2f5149; border-radius: 12px; padding: 10px 12px; font-size: 12.5px; line-height: 1.45; color: var(--ink-2); box-shadow: 0 12px 30px -12px rgba(0,0,0,.8); }
+button.node { border: 0; color: inherit; font: inherit; cursor: pointer; }
+button.node:hover i, button.node.on i { background: var(--teal); color: var(--night); }
+button.node.on b { color: var(--teal); }
+button.node:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+.casechip .hint { color: var(--teal); font-size: 11.5px; }
+.casechip b { color: var(--ink); font-weight: 600; }
+.casechip .z { display: inline-block; background: var(--amber-soft); color: var(--amber); border-radius: 999px; padding: 1px 8px; font-weight: 600; font-size: 11.5px; }
+@media (max-width: 560px) { .node { padding: 4px 6px; } .node b { font-size: 12.5px; } .node i { width: 28px; height: 28px; } }
+
+/* 01 steps */
+.steps5 { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin-top: 40px; }
+.steps5 > div { background: var(--deep); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: grid; gap: 8px; align-content: start; }
+.steps5 .n { font: 500 12px/1 var(--mono); color: var(--amber); }
+.steps5 h3 { font-size: 18px; }
+.steps5 p { font-size: 14.5px; color: var(--ink-2); line-height: 1.5; }
+.steps5 .adphc { font: 400 11.5px/1.4 var(--mono); color: var(--ink-3); border-top: 1px dashed var(--line); padding-top: 8px; }
+@media (max-width: 960px) { .steps5 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .steps5 { grid-template-columns: 1fr; } }
+
+/* 02 comparison */
+.cmp { width: 100%; border-collapse: separate; border-spacing: 6px; font-size: 14.5px; line-height: 1.45; }
+.cmp th { text-align: left; font: 500 11.5px/1.3 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); padding: 2px 10px; vertical-align: bottom; }
+.cmp th.us { color: var(--teal); }
+.cmp td { background: var(--deep); border-radius: 10px; padding: 10px 12px; vertical-align: top; color: var(--ink-2); }
+.cmp td.q { background: transparent; color: var(--ink); font-weight: 600; padding-left: 0; width: 26%; }
+.cmp td.us { background: var(--teal-soft); color: var(--ink); }
+.tablebox { overflow-x: auto; margin-inline: -6px; }
+.gapcard{border:1px solid var(--line);border-radius:14px;padding:22px 24px;background:rgba(255,255,255,.02)}.gapcard .k{font:600 12px/1.2 var(--mono,inherit);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}.gapcard b{display:block;font:700 40px/1.1 var(--display);color:var(--amber);margin-top:10px}.gapcard h3{margin:6px 0 8px}.gapcard p{margin:0;color:var(--ink-2)}.gapcard .src{display:block;border-top:1px solid var(--line);margin-top:16px;padding-top:12px;font-size:14px;color:var(--ink-3)}
+.bigfig { display: flex; gap: 18px; align-items: baseline; border-top: 1px solid var(--line); padding-top: 18px; }
+.bigfig b { font: 700 40px/1 var(--display); color: var(--amber); white-space: nowrap; }
+
+/* 03 where */
+.where { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.where > div { background: var(--deep); border: 1px solid var(--line); border-radius: 14px; padding: 18px; display: grid; gap: 10px; align-content: start; }
+.where p { font-size: 15px; color: var(--ink-2); }
+.valh { margin: 44px 0 14px; } .value ul { margin: 0; padding-left: 18px; display: grid; gap: 8px; font-size: 15px; color: var(--ink-2); line-height: 1.5; } .valf { margin: 14px 0 28px; max-width: 90ch; }
+.tag { justify-self: start; font: 500 11px/1.3 var(--mono); letter-spacing: .08em; text-transform: uppercase; padding: 3px 8px; border-radius: 6px; }
+.tag.built { background: var(--teal-soft); color: var(--teal); }
+.tag.sim { background: #1d2a40; color: #9fb8e8; }
+.tag.prop { background: var(--amber-soft); color: var(--amber); }
+.pipe { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 26px; font: 500 13px/1.3 var(--mono); color: var(--ink-2); }
+.pipe span { border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; background: var(--deep); }
+.pipe span.on { border-color: var(--teal); color: var(--ink); }
+.pipe em { font-style: normal; color: var(--ink-3); }
+@media (max-width: 860px) { .where { grid-template-columns: 1fr; } }
+
+/* 04 who */
+.people { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; margin-top: 40px; }
+.person { background: var(--deep); border: 1px solid var(--line); border-radius: 16px; padding: 18px 16px; display: grid; gap: 8px; align-content: start; }
+.person.pt { border-color: #5b4a2a; background: linear-gradient(180deg, #1a1a10, var(--deep) 60%); }
+.face { width: 64px; height: 64px; border-radius: 50%; background: #23413a; display: grid; place-items: center; overflow: hidden; }
+.person.pt .face { background: #4a3b1e; }
+.face svg { width: 60px; height: 60px; margin-top: 8px; }
+.person .role { font: 500 11.5px/1.3 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--teal); }
+.person.pt .role { color: var(--amber); }
+.person p { font-size: 14.5px; color: var(--ink-2); line-height: 1.5; }
+.person .pwhy { font-size: 13px; color: var(--ink-2); background: var(--deep-2); border-left: 3px solid var(--amber); border-radius: 8px; padding: 8px 10px; margin: 0; }
+.person .can { font: 400 12px/1.45 var(--mono); color: var(--ink-3); border-top: 1px dashed var(--line); padding-top: 8px; }
+@media (max-width: 1060px) { .people { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .people { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 420px) { .people { grid-template-columns: 1fr; } }
+
+/* 05 story: steps left, sticky phone right */
+.story { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 64px; margin-top: 44px; }
+.story > * { min-width: 0; }
+.beats { display: grid; gap: 0; counter-reset: beat; }
+.beat { padding: 26px 0 26px 56px; position: relative; border-left: 2px solid var(--line); margin-left: 16px; min-height: 34vh; display: grid; gap: 10px; align-content: start; }
+.beat:last-child { min-height: 0; }
+.beat::before { counter-increment: beat; content: counter(beat); position: absolute; left: -18px; top: 24px; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--deep-2); border: 2px solid var(--line); font: 500 13px/1 var(--mono); color: var(--ink-2); transition: border-color .3s, color .3s, background .3s; }
+.beat.on::before { border-color: var(--teal); color: var(--night); background: var(--teal); }
+.beat .t { font: 500 12px/1.3 var(--mono); color: var(--amber); letter-spacing: .06em; text-transform: uppercase; }
+.beat p { color: var(--ink-2); max-width: 52ch; }
+.beat .why { font-size: 14px; color: var(--ink-3); }
+.beat .why b { color: var(--teal); font-weight: 600; }
+.beat .m-shot { display: none; }
+.stick { position: sticky; top: 96px; align-self: start; display: grid; justify-items: center; gap: 12px; }
+.stick .phone { width: 280px; }
+.stick .phone img { transition: opacity .25s; }
+.stick .cap { font-size: 13px; color: var(--ink-3); text-align: center; max-width: 30ch; }
+.lang { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; gap: 2px; justify-self: start; }
+.lang button { border: 0; background: transparent; color: var(--ink-2); font: 600 13px/1 var(--text); padding: 7px 12px; border-radius: 999px; cursor: pointer; }
+.lang button[aria-pressed="true"] { background: var(--teal); color: var(--night); }
+.lang button:lang(ar) { font-family: "Noto Sans Arabic", var(--text); }
+@media (max-width: 960px) {
+  .story { grid-template-columns: 1fr; }
+  .stick { display: none; }
+  .beat { min-height: 0; }
+  .beat .m-shot { display: block; margin-top: 8px; }
+  .beat .m-shot .phone { width: min(260px, 100%); }
+}
+
+/* staff screens */
+.screens { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 30px; }
+.shot { position: relative; }
+.shot::after { content: ""; position: absolute; top: 18px; right: 18px; width: 34px; height: 34px; border-radius: 50%; background: rgba(6,17,15,.82) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2346c2a8' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='10.5' cy='10.5' r='6'/%3E%3Cpath d='M15 15l5 5M10.5 8v5M8 10.5h5'/%3E%3C/svg%3E") center / 18px no-repeat; border: 1px solid var(--line); pointer-events: none; }
+.shot .req { font: 500 11.5px/1.3 var(--mono); color: var(--teal); font-style: normal; padding: 0 4px 4px; }
+.shot { background: var(--deep); border: 1px solid var(--line); border-radius: 14px; padding: 10px; display: grid; gap: 10px; text-align: left; cursor: zoom-in; color: inherit; font: inherit; }
+.shot img { border-radius: 8px; height: auto; aspect-ratio: 16 / 11; object-fit: cover; object-position: top left; width: 100%; }
+.shot b { font: 600 15px/1.3 var(--display); padding: 0 4px; }
+.datafig { margin: 40px 0 0; display: grid; gap: 10px; } .datafig p { color: var(--ink-2); margin: 0; max-width: 70ch; } .datafig .shot img { aspect-ratio: auto; object-fit: contain; background: #fff; }
+.shot span { font-size: 13.5px; color: var(--ink-2); padding: 0 4px 4px; line-height: 1.45; }
+@media (max-width: 860px) { .screens { grid-template-columns: 1fr; } }
+
+/* ladder */
+.ladder { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0; margin-top: 30px; position: relative; }
+@media (min-width: 861px) { .ladder.l6 { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+.ladder::before { content: ""; position: absolute; left: 3%; right: 3%; top: 17px; height: 2px; background: linear-gradient(90deg, var(--teal), var(--amber) 70%, var(--red)); }
+.rung { position: relative; display: grid; gap: 6px; justify-items: center; text-align: center; padding: 0 4px; }
+.rung i { width: 36px; height: 36px; border-radius: 50%; background: var(--deep-2); border: 2px solid var(--teal); display: grid; place-items: center; font: 500 11px/1 var(--mono); font-style: normal; color: var(--ink); z-index: 1; }
+.rung:nth-child(n+4) i { border-color: var(--amber); }
+.rung:last-child i { border-color: var(--red); }
+.rung b { font: 600 14px/1.25 var(--display); }
+.rung small { font-size: 12.5px; color: var(--ink-3); line-height: 1.35; }
+@media (max-width: 860px) {
+  .ladder { grid-template-columns: 1fr; gap: 14px; }
+  .ladder::before { left: 17px; right: auto; top: 6px; bottom: 6px; width: 2px; height: auto; background: linear-gradient(180deg, var(--teal), var(--amber) 70%, var(--red)); }
+  .rung { grid-template-columns: 36px 1fr; justify-items: start; text-align: left; column-gap: 14px; }
+  .rung i { grid-row: span 2; }
+}
+
+/* 06 urgent */
+.urgent { background: linear-gradient(180deg, #1a0d0b, var(--night) 70%); }
+.urgent h2 em { color: var(--red); }
+.tl { display: grid; gap: 14px; }
+.tl > div { display: grid; grid-template-columns: 92px 1fr; gap: 14px; align-items: baseline; }
+.tl .when { font: 500 13px/1.3 var(--mono); color: var(--red); }
+.tl p { color: var(--ink-2); font-size: 15.5px; }
+.tl p b { color: var(--ink); }
+.duo { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
+.duo .phone { width: 230px; }
+.duo figure { margin: 0; display: grid; gap: 8px; justify-items: center; }
+.duo figcaption { font-size: 13px; color: var(--ink-3); text-align: center; max-width: 26ch; }
+
+/* AI */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips span { font: 500 12.5px/1.3 var(--mono); padding: 6px 10px; border-radius: 8px; background: var(--deep-2); border: 1px solid var(--line); color: var(--ink-2); }
+.chips.no span { border-color: #4a2622; color: #f2b0a9; background: #1d0f0d; }
+.chips.no span::before { content: "✕ "; color: var(--red); }
+.panel { background: var(--deep); border: 1px solid var(--line); border-radius: 18px; padding: 22px; display: grid; gap: 18px; }
+.panel h3 { font-size: 13px; font: 500 12px/1.3 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+.who-does { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.who-does > div { border-radius: 12px; padding: 14px; display: grid; gap: 6px; align-content: start; }
+.who-does .r { background: #142019; border: 1px solid #2b4a3d; }
+.who-does .a { background: var(--teal-soft); border: 1.5px dashed var(--teal); }
+.who-does .h { background: var(--amber-soft); border: 1px solid #6a4f22; }
+.who-does b { font: 600 16px/1.2 var(--display); }
+.who-does small { font-size: 13px; color: var(--ink-2); line-height: 1.45; }
+@media (max-width: 560px) { .who-does { grid-template-columns: 1fr; } }
+.tests { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.tests div { border-top: 2px solid var(--teal); padding-top: 10px; }
+.tests b { display: block; font: 700 28px/1 var(--display); font-variant-numeric: tabular-nums; }
+.tests span { font-size: 13px; color: var(--ink-2); line-height: 1.4; display: block; margin-top: 4px; }
+@media (max-width: 560px) { .tests { grid-template-columns: 1fr; } }
+
+/* 07 pilot */
+.north { background: var(--deep); border: 1px solid var(--line); border-radius: 18px; padding: 24px; display: grid; gap: 14px; }
+.north .big { font: 700 clamp(26px, 3vw, 34px)/1.15 var(--display); }
+.north .big em { font-style: normal; color: var(--amber); }
+.plan { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 34px; }
+.plan > div { border-top: 3px solid var(--line); padding-top: 12px; display: grid; gap: 4px; align-content: start; }
+.plan > div:nth-child(3) { border-color: var(--amber); }
+.plan .d { font: 500 12.5px/1.3 var(--mono); color: var(--teal); }
+.plan b { font: 600 17px/1.3 var(--display); }
+.plan span { font-size: 14px; color: var(--ink-2); }
+@media (max-width: 860px) { .plan { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 460px) { .plan { grid-template-columns: 1fr; } }
+.ask { margin-top: 56px; background: var(--amber); color: #1d1405; border-radius: 22px; padding: 34px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; align-items: center; }
+.ask h3 { font-size: clamp(24px, 3vw, 32px); line-height: 1.15; }
+.ask p { margin-top: 8px; font-size: 16px; color: #3d2d10; max-width: 60ch; }
+.ask .btn { background: #1d1405; color: var(--amber); }
+@media (max-width: 760px) { .ask { grid-template-columns: 1fr; padding: 24px; } }
+
+/* footer */
+footer { border-top: 1px solid var(--line); padding-block: 56px 72px; }
+footer .cols { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 40px; }
+footer h3 { font: 500 12px/1.3 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 12px; }
+footer ol { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 13.5px; color: var(--ink-2); }
+footer p { font-size: 14px; color: var(--ink-2); }
+footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
+@media (max-width: 860px) { footer .cols { grid-template-columns: 1fr; } }
+
+/* loop progress ring, right edge */
+.progress { position: fixed; right: max(18px, env(safe-area-inset-right, 0px)); top: 50%; transform: translateY(-50%); z-index: 15; display: grid; justify-items: end; gap: 10px; }
+.progress svg { width: 54px; height: 54px; }
+.progress .bg { fill: var(--night); stroke: var(--line); stroke-width: 3; }
+.progress .fg { fill: none; stroke: var(--teal); stroke-width: 3.5; stroke-linecap: round; stroke-dasharray: 145; stroke-dashoffset: 145; transform: rotate(-90deg); transform-origin: 27px 27px; transition: stroke-dashoffset .2s linear; }
+.progress .ok { fill: var(--teal); opacity: 0; transition: opacity .3s; }
+.progress.done .ok { opacity: 1; }
+.progress .lbl { font: 500 10.5px/1.3 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); text-align: right; max-width: 120px; }
+.progress .lbl b { display: block; color: var(--ink); font-weight: 500; }
+@media (max-width: 1320px) { .progress { display: none; } }
+
+/* lightbox */
+.lb { position: fixed; inset: 0; z-index: 50; background: rgba(2, 8, 7, .92); display: grid; place-items: center; padding: max(20px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(20px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+.lb[hidden] { display: none; }
+.lb img { max-height: 86vh; width: auto; border-radius: 10px; }
+.lb button { position: absolute; top: max(14px, env(safe-area-inset-top, 0px)); right: max(14px, env(safe-area-inset-right, 0px)); }
+.rubanner { margin: 0; padding: 8px 16px; text-align: center; background: #2a2410; color: #f3c67a; font: 500 13px/1.4 var(--mono); }
+:root { --display: "Noto Sans", "Segoe UI", system-ui, sans-serif; }
+.fn a{color:var(--amber);text-decoration:none;font-weight:700;padding:0 2px}
+.totop{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));z-index:20;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:var(--amber);color:#1a1206;font:700 20px/44px system-ui,sans-serif;text-align:center;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:opacity .2s}
+.totop.show{opacity:1;pointer-events:auto}
+@media print{.totop{display:none}}
+.archlink{color:var(--teal);font-weight:600;text-decoration:none;white-space:nowrap}.archlink:hover{text-decoration:underline}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#top"><i class="mk"><svg width="28" height="28" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" aria-hidden="true"><g id="mark"><path d="M75.61 21.01 A42 42 0 0 1 92.26 33.10" fill="none" stroke="#69c5b3" stroke-width="10" stroke-linecap="round"/><path d="M101.91 62.80 A42 42 0 0 1 95.55 82.37" fill="none" stroke="#7fb1e1" stroke-width="10" stroke-linecap="round"/><path d="M70.29 100.72 A42 42 0 0 1 49.71 100.72" fill="none" stroke="#f5c873" stroke-width="10" stroke-linecap="round"/><path d="M24.45 82.37 A42 42 0 0 1 18.09 62.80" fill="none" stroke="#f3a473" stroke-width="10" stroke-linecap="round"/><path d="M27.74 33.10 A42 42 0 0 1 44.39 21.01" fill="none" stroke="#8cd1a1" stroke-width="10" stroke-linecap="round"/><circle cx="60.00" cy="18.00" r="11.5" fill="#3fb59d"/><circle cx="99.94" cy="47.02" r="11.5" fill="#5b9bd8"/><circle cx="84.69" cy="93.98" r="11.5" fill="#f2b84b"/><circle cx="35.31" cy="93.98" r="11.5" fill="#f08a4b"/><circle cx="20.06" cy="47.02" r="11.5" fill="#6cc486"/></g></svg></i>Kafila <span lang="ar" dir="rtl" style="opacity:.7;font-weight:500">قافلة</span></a>
+    <nav aria-label="Разделы">
+      <a href="#what">Пять шагов</a><a href="#why">Разрыв</a><a href="#who">Люди</a><a href="#how">Путь Фатимы</a><a href="#safety">Срочные случаи</a><a href="#ai">ИИ</a><a href="#pilot">Польза</a><span class="navsep" aria-hidden="true"></span><a href="care-loop.html" target="_blank" rel="noopener">По шагам</a><a href="architecture.html">Архитектура</a>
+    </nav>
+    <a class="btn solid" href="prototype/" target="_blank" rel="noopener">Прототип</a>
+  </div>
+</header>
+
+<aside class="progress" aria-hidden="true" id="progress">
+  <svg viewBox="0 0 54 54"><circle class="bg" cx="27" cy="27" r="23"/><circle class="fg" cx="27" cy="27" r="23" id="pfg"/><circle class="ok" cx="27" cy="27" r="9"/></svg>
+  <div class="lbl">Статус случая<b id="plbl">Результат выдан</b></div>
+</aside>
+
+<main id="top">
+
+<p class="rubanner">Русская версия для проверки. Жюри получает английскую.</p>
+
+<!-- HERO -->
+<section class="hero" data-state="Результат выдан">
+  <div class="wrap split">
+    <div class="stack">
+      <p class="eyebrow">Kafila <span lang="ar" dir="rtl">قافلة</span> · платформа ответственности от скрининга до лечения · Future Health Challenge 05</p>
+      <h1>Отклонение в результате. <em>Понятный путь к лечению.</em></h1>
+      <p class="lede">Тест кала у пациента положительный. С Kafila:</p>
+      <ul class="herolist">
+        <li><b>Пациент понимает.</b> В тот же день клиника присылает защищённое сообщение и объясняет результат на его языке. Задать вопрос можно в любое время.</li>
+        <li><b>Приём подходит пациенту.</b> Например, женщина-врач, выходной день, за счёт страховки.</li>
+        <li><b>Никого не забывают.</b> Если пациент не отвечает: SMS, потом звонок, потом звонит координатор.</li>
+        <li><b>Есть ответственный.</b> Координатор ведёт случай, и у каждого шага есть конкретный человек, пока врач не закроет случай по заключению.</li>
+      </ul>
+      <p class="herofoot"><b>Sahatna, приложение здравоохранения Абу-Даби, помогает пациенту попасть к врачу. Kafila следит, чтобы следующий шаг действительно случился:</b> у каждого случая есть конкретный ответственный, срок по национальной рекомендации и подтверждённый исход.</p>
+      <div class="stats">
+        <div class="stat"><b>Только 30,5%</b><span>взрослых граждан ОАЭ с положительным тестом кала прошли контрольную колоноскопию в клиниках SEHA, Абу-Даби</span><small>436 из 1 369 · 2015–2016, старые данные · Almansoori 2021, BMC Cancer</small></div>
+        <div class="stat"><b>Почти 2×</b><span>выше шансы обнаружить запущенный рак, если колоноскопия через 10–12 месяцев после теста, и около 3× — если больше чем через год, по сравнению с 8–30 днями</span><small>70 124 пациента · Kaiser Permanente · Corley 2017, JAMA</small></div>
+        <div class="stat"><b>55% против 42%</b><span>прошли колоноскопию, когда им звонил навигатор, объяснял и помогал записаться, по сравнению с теми, у кого навигатора не было: на 13 процентных пунктов больше</span><small>рандомизированное исследование PRECISE · Coronado 2025</small></div>
+      </div>
+      <div class="motto"><span>Правила задают срочность и сроки</span><span>ИИ объясняет</span><span>Врачи решают и подписывают</span></div>
+      <div class="cta">
+        <a class="btn solid" href="#how">Пройти путь Фатимы</a>
+        <a class="btn line" href="prototype/" target="_blank" rel="noopener">Открыть прототип</a>
+        <a class="btn line" href="care-loop.html" target="_blank" rel="noopener">По шагам: кто что делает</a>
+      </div>
+      <p class="tryit"><b>Проверить за 3 минуты:</b> откройте прототип и нажмите <b>▶ 3-minute tour</b>. Шесть шагов с подсказками: сообщение и результат Фатимы, запись, клиника принимает направление, тревожное сообщение Раджеша, закрытие случая и панель руководителя.</p>
+    </div>
+    <div class="herovis">
+    <div class="loopviz" aria-label="Цикл Kafila: записать, определить срочность, направить, сопроводить, отследить">
+      <svg class="ring" viewBox="0 0 400 400" aria-hidden="true">
+        <circle class="track" cx="200" cy="200" r="180"/>
+        <circle class="arc" cx="200" cy="200" r="180" transform="rotate(-90 200 200)"/>
+      </svg>
+      <button type="button" class="node" style="left:50%;top:5%" aria-pressed="false" data-img="img/wa.webp" data-cap="Результат анализа открывает для Фатимы один случай. В тот же день ей пишет её клиника."><i>1</i><b>Записать</b></button>
+      <button type="button" class="node" style="left:93%;top:36%" aria-pressed="false" data-img="img/result-en.webp" data-cap="Зону и сроки задают правила, а не ИИ: к врачу, направление в течение 15 рабочих дней, колоноскопия в течение 31 рабочего дня после него."><i>2</i><b>Срочность</b></button>
+      <button type="button" class="node" style="left:78%;top:88%" aria-pressed="false" data-img="img/book.webp" data-cap="Окно в её страховой сети: женщина-врач, в субботу, за счёт страховки."><i>3</i><b>Направить</b></button>
+      <button type="button" class="node" style="left:22%;top:88%" aria-pressed="false" data-img="img/ask.webp" data-cap="Она спрашивает «Это рак?» и получает спокойный ответ по подготовленным текстам, с источником."><i>4</i><b>Сопроводить</b></button>
+      <button type="button" class="node end" style="left:7%;top:36%" aria-pressed="false" data-img="img/mycase.webp" data-cap="Она всегда видит, где её случай и кто за него отвечает, пока врач его не закроет."><i>✓</i><b>Отследить</b></button>
+      <div class="phone"><img src="img/wa.webp" alt="Сообщение WhatsApp от Khalifa City Family Health Centre: Здравствуйте, Фатима, доктор Хесса попросила поделиться вашим новым результатом скрининга. Кнопки: Поговорить с медсестрой, Это не я." width="780" height="1540"></div>
+
+    </div>
+<div class="casechip"><b>C-1042 · Фатима А.</b> <span class="z">К врачу</span><br>Ответственная: Нура (координатор)<br>Направление в течение 15 рабочих дней · сейчас день 0<br><span class="hint">Нажмите на шаг в круге, чтобы увидеть его экран.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 01 WHAT -->
+<section id="what" data-state="Назначен ответственный">
+  <div class="wrap">
+    <div class="split">
+      <div class="stack">
+        <p class="eyebrow"><b>01</b>Пять шагов</p>
+        <h2>Больше, чем напоминание. <em>Один случай, доведённый до результата.</em></h2>
+      </div>
+      <div class="stack">
+        <p class="lede">Kafila превращает каждый результат в один случай, который проходит пять шагов: записать, определить срочность, направить, сопроводить, отследить. На каждом шаге за него отвечает конкретный человек, а часы показывают, когда шаг просрочен.</p>
+        <p class="pull">У каждого значимого результата есть следующий шаг, ответственная команда и подтверждённый итог.</p>
+        <p class="src">Пять шагов совпадают с путём, который Abu Dhabi Public Health Centre описал для Challenge 05 (вебинар конкурса, 29 окт. 2026, пересказ).</p>
+      </div>
+    </div>
+    <div class="steps5">
+      <div><span class="n">1 · Записать</span><h3>Результат зафиксирован</h3><p>Результат скрининга открывает отслеживаемый случай с конкретным ответственным и записью применённых правил.</p><span class="adphc">Ответственный за случай</span></div>
+      <div><span class="n">2 · Срочность</span><h3>Срочность задают правила</h3><p>Клинические правила задают приоритет и сроки. ИИ не может их изменить.</p><span class="adphc">Клинические правила с версиями</span></div>
+      <div><span class="n">3 · Направить</span><h3>Направление проверено</h3><p>Врач проверяет и подписывает направление. Принимающая клиника принимает его или возвращает с причиной.</p><span class="adphc">Направление, одобренное врачом</span></div>
+      <div><span class="n">4 · Сопроводить</span><h3>Пациенту помогают</h3><p>Понятная информация, помощь с записью и связь с медсестрой облегчают следующий шаг.</p><span class="adphc">Арабский и английский</span></div>
+      <div><span class="n">5 · Отследить</span><h3>Итог подтверждён</h3><p>Пропущенный шаг запускает действие. Врач записывает итог с подтверждением.</p><span class="adphc">Без автоматического закрытия</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 WHY -->
+<section id="why" data-state="Пациентка уведомлена">
+  <div class="wrap split">
+    <div class="stack">
+      <p class="eyebrow"><b>02</b>Разрыв</p>
+      <h2>Слишком много пациентов теряются <em>между скринингом и следующим шагом.</em></h2>
+      <p class="lede">Скрининг находит проблему. Потом результат может лежать в системе, где неясно, кто отвечает за следующий шаг. Человеку бывает страшно, он не понимает, что это значит, или не может найти удобное время, и пропущенный шаг может остаться незамеченным.</p>
+      <div class="gapcard"><span class="k">Разрыв · Абу-Даби</span><b>Только 30,5%</b><h3>прошли контрольную колоноскопию после положительного теста кала.</h3><p>Исследование среди взрослых граждан ОАЭ в клиниках первичной помощи SEHA в Абу-Даби (2015–2016) показало большой разрыв между скринингом и дальнейшей помощью: колоноскопию сделали 436 человек, не сделали 933. Kafila измеряет сегодняшний разрыв и помогает его закрыть.</p><span class="src">Almansoori et al., BMC Cancer, 2021 · Старые данные, не сегодняшняя цифра по Абу-Даби</span></div>
+    </div>
+    <div class="tablebox">
+      <table class="cmp">
+        <thead><tr><th></th><th>Без сквозного отслеживания</th><th class="us">С Kafila</th></tr></thead>
+        <tbody>
+          <tr><td class="q">Как пациент узнаёт о результате</td><td>Уведомление о результате без понятного следующего шага</td><td class="us">WhatsApp или SMS от его собственного центра здоровья, на его языке, с защищённой ссылкой на результат простыми словами</td></tr>
+          <tr><td class="q">Кто отвечает за следующий шаг</td><td>Ответственность между учреждениями может быть неясной</td><td class="us">У каждого случая есть конкретный координатор и срок на каждый шаг</td></tr>
+          <tr><td class="q">Если пациенту страшно или что-то мешает</td><td>Практические препятствия могут остаться без внимания</td><td class="us">Пациент говорит, что мешает. Медсестра в одно нажатие. Приём подбирается под его потребности, например женщина-врач, и под его страховку</td></tr>
+          <tr><td class="q">Если пациент не записался</td><td>Пропуск может остаться незамеченным</td><td class="us">Напоминания по SMS и звонком, потом звонит координатор. Руководитель программы получает сигнал, когда прошло 75% срока шага</td></tr>
+          <tr><td class="q">Когда случай закрыт</td><td>Итог может нигде не быть записан целиком</td><td class="us">Когда врач закрывает его по заключению или с подписанной причиной</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- 03 WHERE -->
+<section id="where" data-state="Пациентка поняла">
+  <div class="wrap">
+    <div class="split">
+      <div class="stack">
+        <p class="eyebrow"><b>03</b>Где это работает</p>
+        <h2>В телефоне пациента. На компьютерах клиники. <em>Рассчитано на связь с Malaffi, Sahatna и системами самой клиники.</em></h2>
+      </div>
+      <div class="stack">
+        <p class="lede">Никаких новых устройств и скачиваний. Пациентка открывает защищённую ссылку из сообщения, команда работает в любом браузере. В пилоте результаты приходят из систем клиники. Когда медкарта клиники подключена, итог записывается и обратно в карту пациента. Часть для пациента может работать и внутри Sahatna, приложения здоровья Абу-Даби, как предложили организаторы.</p>
+        <p class="note">Сообщения, запись, страховка и интеграции в демо симулированы. Метки ниже показывают, что построено, а что предлагается.</p>
+      </div>
+    </div>
+    <div class="where" style="margin-top:36px">
+      <div><span class="tag built">Построено · веб-приложение</span><h3>Телефон пациента</h3><p>Ссылка из WhatsApp или SMS открывает результат, ИИ-чат, запись и «Где мой случай». Арабский и английский, текст и голос.</p><span class="tag prop">Предлагается · модуль внутри Sahatna</span></div>
+      <div><span class="tag built">Построено · веб-приложение</span><h3>Команда клиники</h3><p>Список исключений, история случая, направление с принятием или отказом, письменный вопрос специалисту, закрытие с подтверждением, панель программы.</p><span class="tag sim">Симуляция · страховая сеть и окна записи</span></div>
+      <div><span class="tag built">Построено · выгрузка FHIR R4</span><h3>Медкарта</h3><p>Начать с ежедневного защищённого файла и записи через координатора. Потом FHIR с медкартой клиники, записью и проверкой страховки.</p><span class="tag prop">Предлагается · события Malaffi</span></div>
+    </div>
+    <div class="pipe" aria-label="Путь интеграции">
+      <span>v0 ежедневный защищённый файл</span><em>→</em><span>v1 FHIR R4 с медкартой и записью</span><em>→</em><span class="on">события Malaffi + модуль Sahatna</span>
+    </div>
+    <figure class="datafig">
+      <p>Откуда Kafila знает, в какой клинике наблюдается каждый пациент, на каком языке ему писать, на какое время его можно записать и что оплатит его страховка. Все четыре источника данных у клиники уже есть. (Схема на английском.) <a class="archlink" href="architecture.html">Вся архитектура (на английском) →</a></p>
+      <button class="shot" type="button" data-full="img/data-sources.webp"><img src="img/data-sources.webp" alt="Схема: лаборатория, медкарта клиники, система записи и страховая передают данные в Kafila; пациент получает WhatsApp от своей клиники, на своём языке, с подходящим временем приёма, покрытым страховкой" width="2560" height="1520"></button>
+    </figure>
+  </div>
+</section>
+
+<!-- 04 WHO -->
+<section id="who" data-state="Направление отправлено">
+  <div class="wrap">
+    <div class="split">
+      <div class="stack">
+        <p class="eyebrow"><b>04</b>Люди</p>
+        <h2>Один случай. Пять человек. <em>Каждый знает свою часть.</em></h2>
+      </div>
+      <div class="stack">
+        <p class="lede">У каждого случая есть координатор. За каждый этап отвечает конкретный человек, и для него установлен срок. Kafila отслеживает выполнение и предупреждает о задержках.</p>
+        <a class="btn line" style="justify-self:start" href="care-loop.html" target="_blank" rel="noopener">Путь Фатимы по шагам: кто что делает и когда</a>
+      </div>
+    </div>
+    <div class="people" id="people"></div>
+  </div>
+</section>
+
+<!-- 05 HOW -->
+<section id="how" data-state="Записана">
+  <div class="wrap">
+    <div class="split">
+      <div class="stack">
+        <p class="eyebrow"><b>05</b>Путь Фатимы</p>
+        <h2>Знакомьтесь: Фатима, 52. <em>День 0.</em></h2>
+      </div>
+      <p class="lede">Её тест кала (FIT) положительный. Сроки по национальному руководству ОАЭ: направление в течение 15 рабочих дней, колоноскопия в течение 31 рабочего дня после направления. Окончательные значения согласуем с клиническим партнёром. Это настоящие экраны прототипа (на английском и арабском).</p>
+    </div>
+    <div class="story">
+      <div class="beats" id="beats">
+        <div class="beat" data-img="img/wa.webp" data-cap="Сообщение WhatsApp от её клиники">
+          <span class="t">День 0 · 09:00</span>
+          <h3>Сообщение от её собственной клиники</h3>
+          <p>На том языке, который записан у неё в клинике (в пилоте; в демо сообщение на английском). В превью нет результата, только защищённая ссылка. Если номер чужой, кнопка «Это не я» останавливает все сообщения.</p>
+          <p class="why"><b>Приватность:</b> до входа ничего медицинского не видно. В пилоте она входит через UAE PASS или одноразовый код, а каждый просмотр и изменение попадают в журнал, который нельзя исправить.</p>
+          <div class="m-shot"><div class="phone"><img loading="lazy" src="img/wa.webp" alt="Сообщение WhatsApp со ссылкой на результат" width="780" height="1540"></div></div>
+        </div>
+        <div class="beat" data-img="img/signin.webp" data-cap="Вход с согласием и двумя выходами">
+          <span class="t">День 0 · 09:01</span>
+          <h3>Она соглашается или просит звонок</h3>
+          <p>Согласие — свободный выбор. Она может нажать «Лучше позвоните мне», и тогда ей звонит Нура.</p>
+          <p class="why"><b>Согласие:</b> всегда с альтернативой.</p>
+          <div class="m-shot"><div class="phone"><img loading="lazy" src="img/signin.webp" alt="Вход с одноразовым кодом, галочкой согласия и ссылками Лучше позвоните мне и Это не я" width="780" height="1540"></div></div>
+        </div>
+        <div class="beat" data-img="img/result-ar.webp" data-cap="Карточка результата на арабском" id="beat-result">
+          <span class="t">День 0 · 09:02</span>
+          <h3>Её результат простыми словами</h3>
+          <p>«Нужно к врачу». Найдено немного скрытой крови. Это не диагноз. Ниже: что будет дальше и до какого числа.</p>
+          <div class="lang" role="group" aria-label="Язык результата">
+            <button type="button" lang="ar" aria-pressed="true" data-l="ar">العربية</button>
+            <button type="button" aria-pressed="false" data-l="en">English</button>
+          </div>
+          <p class="why"><b>Правила, а не ИИ:</b> зона и срок берутся из таблицы правил программы скрининга.</p>
+          <div class="m-shot"><div class="phone"><img loading="lazy" src="img/result-ar.webp" alt="Карточка результата на арабском: к врачу, следующие шаги и даты" width="780" height="1540"></div></div>
+        </div>
+        <div class="beat" data-img="img/ask.webp" data-cap="ИИ-чат отвечает с источником">
+          <span class="t">День 0 · 09:12</span>
+          <h3>«Это рак?»</h3>
+          <p>ИИ-чат отвечает по подготовленным текстам (ещё ждут клинической проверки): у большинства людей с положительным тестом рака нет, а колоноскопия помогает найти причину. В каждом ответе сказано, с чем сравнивается цифра, и указан источник.</p>
+          <p class="why"><b>Понимание:</b> проверка в одно нажатие, что она знает следующий шаг.</p>
+          <div class="m-shot"><div class="phone"><img loading="lazy" src="img/ask.webp" alt="ИИ-чат: Это рак? Ответ со сравнением и источником" width="780" height="1540"></div></div>
+        </div>
+        <div class="beat" data-img="img/barrier.webp" data-cap="Что мешает пойти?">
+          <span class="t">День 0 · 09:13</span>
+          <h3>Что мешает пойти?</h3>
+          <p>Страх, деньги, отгул на работе, подготовка, дорога, приватность или «хочу женщину-врача». Она выбирает, и фильтры записи подстраиваются.</p>
+          <p class="why"><b>Препятствия:</b> причины, по которым люди не идут, спрашиваем в первую минуту.</p>
+          <div class="m-shot"><div class="phone"><img loading="lazy" src="img/barrier.webp" alt="Варианты препятствий, выбрано Хочу женщину-врача" width="780" height="1540"></div></div>
+        </div>
+        <div class="beat" data-img="img/book.webp" data-cap="Окна в её сети">
+          <span class="t">День 0 · 09:14</span>
+          <h3>Окно, которое ей подходит</h3>
+          <p>Окна гастроэнтерологии в её сети, сначала женщины-врачи, и сколько покрывает страховка. Если ничего не подходит, одно нажатие — и Нура звонит и записывает её сама.</p>
+          <p class="why"><b>Откуда окна:</b> в пилоте свободное время берётся из системы записи гастроэнтерологических клиник её сети, а что покрывает страховка — от страховой. В демо и то и другое симулировано.</p>
+          <div class="m-shot"><div class="phone"><img loading="lazy" src="img/book.webp" alt="Окна: суббота 21 ноября 10:00, доктор Амна Аль Мансури, женщина-врач, покрыто государственным планом" width="780" height="1540"></div></div>
+        </div>
+        <div class="beat" data-img="img/mycase.webp" data-cap="Где мой случай">
+          <span class="t">День 0 → закрытие</span>
+          <h3>Она всегда знает, где её случай</h3>
+          <p>Те же шаги, что видит её команда, простыми словами, и у каждого видно, кто сейчас им занимается. После колоноскопии доктор Хесса разбирает с ней заключение и закрывает случай.</p>
+          <p class="why"><b>Закрытие:</b> только врач и только с подтверждением.</p>
+          <div class="m-shot"><div class="phone"><img loading="lazy" src="img/mycase.webp" alt="Мой случай: запись на субботу 21 ноября, шаг 3 из 6" width="780" height="1540"></div></div>
+        </div>
+      </div>
+      <div class="stick" aria-live="polite">
+        <div class="phone"><img id="stickImg" src="img/wa.webp" alt="Экран прототипа" width="780" height="1540"></div>
+        <p class="cap" id="stickCap">Сообщение WhatsApp от её клиники</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:72px">А в это время в клинике</h3>
+    <p class="note" style="margin-top:6px">Четыре человека, четыре экрана. Каждый действует только на своём шаге, и каждое действие записывается в случай. Нажмите на экран, чтобы увеличить.</p>
+    <div class="screens">
+      <button class="shot" type="button" data-full="img/worklist.webp"><img src="img/worklist.webp" alt="Список команды с исключениями" width="1920" height="1350"><b>Нура видит только то, что требует её</b><span>Сначала срочные звонки, потом опоздания, возвращённые направления и случаи без ответственного. В каждой строке: чего ждём, кто отвечает и до какого срока.</span><em class="req">Требования R1 · R2</em></button>
+      <button class="shot" type="button" data-full="img/case.webp"><img src="img/case.webp" alt="Страница случая Фатимы с черновиком сводки, действиями и историей" width="1920" height="1350"><b>Доктор Хесса направляет и подписывает</b><span>Черновик сводки и направления собирается из полей случая. Она правит и подписывает; без неё ничего не уходит. В пилоте ИИ переписывает черновик простыми словами из тех же полей.</span><em class="req">Требования R4 · R5</em></button>
+      <button class="shot" type="button" data-full="img/omar.webp"><img src="img/omar.webp" alt="Экран специалиста: принять направление, отклонить с причиной, вопрос другому врачу" width="1920" height="1350"><b>Доктор Омар принимает или отклоняет</b><span>Клиника гастроэнтерологии принимает направление или отклоняет его с причиной, чтобы доктор Хесса за 2 рабочих дня отправила его в другое место. Врачи могут задать друг другу письменный вопрос прямо в случае.</span><em class="req">Требование R4</em></button>
+      <button class="shot" type="button" data-full="img/dashboard.webp"><img src="img/dashboard.webp" alt="Панель программы: воронка, просроченные случаи, начатое лечение" width="1920" height="1350"><b>Доктор Халид видит всю программу</b><span>Воронка, дни до помощи, причины задержек, начатое лечение, разрывы по языку. Закрыть случай может только врач, по заключению или с подписанной причиной.</span><em class="req">Требования R5 · R6</em></button>
+    </div>
+
+    <h3 style="margin-top:72px">А если бы она так и не ответила?</h3>
+    <p class="note" style="margin-top:6px">Каждая попытка записывается в случай. «Потеряна для наблюдения» можно поставить только после 3 и более попыток по 2 и более каналам за не менее чем 30 дней, включая звонок и письмо.</p>
+    <div class="ladder">
+      <div class="rung"><i>Д0</i><b>WhatsApp</b><small>от её клиники</small></div>
+      <div class="rung"><i>Д2</i><b>SMS</b><small>та же защищённая ссылка</small></div>
+      <div class="rung"><i>Д4</i><b>SMS</b><small>второе напоминание</small></div>
+      <div class="rung"><i>Д5</i><b>Автоматический звонок</b></div>
+      <div class="rung"><i>Д6</i><b>Звонит Нура</b><small>опоздал шаг связи с пациентом</small></div>
+      <div class="rung"><i>✉</i><b>Письмо</b><small>на домашний адрес</small></div>
+      <div class="rung"><i>75%</i><b>Руководитель программы</b><small>когда прошло три четверти срока</small></div>
+    </div>
+
+    <h3 style="margin-top:72px">А если клиника откажет?</h3>
+    <p class="note" style="margin-top:6px">На этой передаче следующий шаг легко может сорваться. В Kafila отказ сразу запускает следующее действие, и у случая остаётся ответственный, пока помощь не получена.</p>
+    <div class="ladder l6">
+      <div class="rung"><i>1</i><b>Клиника отказывает</b><small>причина записана, например нет мест</small></div>
+      <div class="rung"><i>2</i><b>Время освобождено</b><small>напоминания и подготовка отменены</small></div>
+      <div class="rung"><i>3</i><b>Фатиме сообщают</b><small>«врач выбирает другую клинику»</small></div>
+      <div class="rung"><i>4</i><b>Доктор Хесса перенаправляет</b><small>за 2 рабочих дня</small></div>
+      <div class="rung"><i>5</i><b>Нура следит</b><small>в группе «Направление вернули»</small></div>
+      <div class="rung"><i>⏱</i><b>Срок идёт дальше</b><small>сроки не начинаются заново</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 URGENT -->
+<section id="safety" class="urgent" data-state="Осмотрена специалистом">
+  <div class="wrap split">
+    <div class="stack">
+      <p class="eyebrow"><b>06</b>Срочные случаи</p>
+      <h2>Когда срочно, <em>Kafila не ждёт ИИ.</em></h2>
+      <p class="lede">Раджешу 45, он работает сменами. Давление на скрининге 185/115. Норма — ниже 120/80.</p>
+      <div class="tl">
+        <div><span class="when">09:00</span><p><b>Правила отмечают случай как срочный.</b> Он видит «Нужна помощь сегодня: врач позвонит вам до 13:00», в выбранное им время для звонка.</p></div>
+        <div><span class="when">09:04</span><p><b>Он пишет «боль в груди».</b> Фиксированный экран: звоните 998 сейчас. Список фраз проверяется до любого ИИ, на арабском и английском. Его команда получает сигнал.</p></div>
+        <div><span class="when">+30 мин</span><p><b>Не ответил на звонок врача?</b> Повторный звонок, потом SMS с номером клиники.</p></div>
+        <div><span class="when">В тот же день</span><p><b>После 3 попыток до него так и не дозвонились:</b> случай сегодня же получает клинический руководитель.</p></div>
+      </div>
+    </div>
+    <div class="duo">
+      <figure><div class="phone"><img src="img/rajesh.webp" alt="Карточка результата: Нужна помощь сегодня, врач позвонит до 13:00" width="780" height="1540"></div><figcaption>Срочный результат, звонок в тот же день</figcaption></figure>
+      <figure><div class="phone"><img src="img/redflag.webp" alt="Красный экран: Звоните 998 сейчас. Правило безопасности: этот ответ никогда не даёт ИИ" width="780" height="1540"></div><figcaption>Опасная фраза: фиксированный ответ, без ИИ</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- AI -->
+<section id="ai" data-state="Заключение получено">
+  <div class="wrap split">
+    <div class="stack">
+      <p class="eyebrow">ИИ внутри Kafila</p>
+      <h2>ИИ объясняет и готовит черновики, <em>внутри правил, которые задают врачи.</em></h2>
+      <ul class="stack" style="margin:0;padding-left:20px;gap:8px;color:var(--ink-2)">
+        <li><b>В демо:</b> отвечает на вопросы пациентки на арабском или английском, текстом или голосом, по подготовленным текстам (ещё ждут клинической проверки).</li>
+        <li><b>В пилоте:</b> переписывает для врача сводку и направление простыми словами. Сейчас эти черновики собираются из полей случая.</li>
+        <li><b>В пилоте:</b> разбирает, что пишет пациентка, на препятствия (страх, деньги, время…) и предлагает следующее действие из фиксированного списка. Человек нажимает, чтобы принять.</li>
+      </ul>
+      <p class="pull">Зону задают правила. ИИ её объясняет. Подписывает человек.</p>
+      <p class="note">Если ИИ выключен или сломался, работают заранее подготовленные ответы, и цикл не останавливается.</p>
+    </div>
+    <div class="panel">
+      <h3>Кто что делает</h3>
+      <div class="who-does">
+        <div class="r"><b>Правила</b><small>Зона, срок, срочность, опасные симптомы, кто просрочил. Таблица с версиями, у каждой строки есть источник.</small></div>
+        <div class="a"><b>ИИ</b><small>Ответы пациентке простыми словами; в пилоте ещё черновики для персонала. На каждом черновике метка «проверьте перед использованием»: человек читает его, прежде чем что-то отправится.</small></div>
+        <div class="h"><b>Люди</b><small>Принимают или отклоняют направления, подписывают письма, закрывают случаи. Каждое действие записывается.</small></div>
+      </div>
+      <h3>Чего ИИ делать нельзя</h3>
+      <div class="chips no"><span>Ставить диагноз</span><span>Называть лекарства и дозы</span><span>Задавать зону или срок</span><span>Снижать срочность</span><span>Закрывать случай</span><span>Отправлять медицинское сообщение без человека</span></div>
+      <h3>Проверено 17 нояб. 2026</h3>
+      <div class="tests">
+        <div><b>35 / 35</b><span>тестов движка правил пройдено</span></div>
+        <div><b>50 / 50</b><span>вопросов безопасности ИИ пройдено на подготовленных ответах. Прогон на живой модели впереди</span></div>
+        <div><b>0</b><span>случаев, которые может закрыть ИИ: такой кнопки у него просто нет</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 PILOT -->
+<section id="pilot" data-state="Закрыт с подтверждением">
+  <div class="wrap">
+    <div class="split">
+      <div class="stack">
+        <p class="eyebrow"><b>07</b>Польза и пилот</p>
+        <h2>Одна цифра, по которой нас судить: <em>помощь получена в срок.</em></h2>
+        <p class="lede">Люди, у которых следующий медицинский шаг сделан и подтверждён в согласованный срок, делённые на все значимые результаты за тот же период. По сравнению с предыдущими 12 месяцами у партнёра. «Отказалась», «потеряна для наблюдения» и «уехала» считаются отдельно и никогда не засчитываются как успех.</p>
+      </div>
+      <div class="north">
+        <p class="big">Цель пилота: <em>+15 процентных пунктов</em> к доле людей, получивших помощь в срок</p>
+        <p class="note">По сравнению с собственными предыдущими 12 месяцами партнёра. Рабочее допущение, его нужно согласовать с партнёром. Для масштаба: навигация пациентов дала +13 процентных пунктов в исследовании PRECISE.</p>
+        <div class="chips"><span>Дни до уведомления, записи, визита</span><span>Просроченные случаи и случаи без ответственного</span><span>Начатое лечение</span><span>«Я поняла» и «меня вели»</span><span>Разрывы по языку, гражданству, страховке</span></div>
+      </div>
+    </div>
+    <h3 class="valh">Кто выигрывает и как</h3>
+    <div class="where value">
+      <div><span class="tag built">Люди</span><h3>Находят раньше, меньше страха</h3><ul>
+        <li>Положительный тест больше не теряется между скринингом и следующим шагом.</li>
+        <li>Рак находят раньше: пятилетняя выживаемость 91%, если рак найден на месте, и 13%, если он уже распространился (толстая кишка, ACS/SEER 2014–2020).</li>
+        <li>Ответы на её языке в любое время, окно, удобное для её жизни, женщина-врач и понятно, что покрывает страховка, ещё до записи.</li></ul></div>
+      <div><span class="tag built">Система здравоохранения</span><h3>Скрининг, который окупается</h3><ul>
+        <li>Тесты, за которые уже заплачено, ведут к лечению, а не останавливаются на результате.</li>
+        <li>Руководитель программы видит, кто теряется и почему: по языку, району, страховке.</li>
+        <li>Больше людей доходят до процедуры без найма навигатора на каждый случай. В PRECISE навигация дала +13 процентных пунктов (55,1% против 42,1%).</li>
+        <li>Безопасно по устройству: правила задают срочность и сроки, решают врачи, ИИ объясняет, каждый шаг записан.</li></ul></div>
+      <div><span class="tag built">Экономика</span><h3>Дешевле лечение, полнее клиники</h3><ul>
+        <li>Лечение на ранней стадии короче и дешевле, чем на поздней. Цифру для ОАЭ измерим в пилоте.</li>
+        <li>Меньше пустых окон в эндоскопии и неявок.</li>
+        <li>Меньше времени координатора на случай (цель −50%, допущение для проверки).</li>
+        <li>Люди остаются на работе: короче лечение, меньше больничных.</li>
+        <li>Базовая плата за платформу и бонус за каждый случай, где помощь получена и это проверено независимо, с поправкой на сложность случаев. Нет выгоды выбирать лёгких пациентов или закрывать случаи на бумаге.</li></ul></div>
+    </div>
+    <p class="note valf">Ценность для плательщика в год = положительные результаты × сколько больше людей дошли до процедуры × доля найденных болезней × экономия на ранней стадии + сэкономленные часы координаторов + неявки, которых удалось избежать. В пилоте заполняется данными самого партнёра.</p>
+    <div class="plan">
+      <div><span class="d">Янв–фев 2027</span><b>Партнёр и исходный уровень</b><span>Одна сеть клиник; измеряем последние 12 месяцев</span></div>
+      <div><span class="d">Мар–апр</span><b>Сборка и согласования</b><span>Ежедневный файл, запись через координатора, проверки DoH и согласия</span></div>
+      <div><span class="d">Май–авг</span><b>Пилот 12 недель</b><span>Положительный тест кала → колоноскопия, 300–500 результатов</span></div>
+      <div><span class="d">Сен–дек</span><b>Оценка, новый путь</b><span>Результаты в DoH; дальше ВПЧ или HbA1c</span></div>
+    </div>
+    <div class="ask">
+      <div>
+        <h3>Ни один пациент не останется позади после тревожного результата.</h3>
+        <p>Следующий шаг, если Kafila выберут: пилот на 12 недель в одной группе клиник Абу-Даби в 2027 году. Начинаем с положительных тестов кала, затем добавляем скрининг шейки матки (ВПЧ), диабет (HbA1c) и высокое давление: те же пять шагов работают для любого результата скрининга. Каждое решение остаётся за врачами.</p>
+      </div>
+      <a class="btn" href="prototype/" target="_blank" rel="noopener">Попробовать прототип</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap cols">
+    <div>
+      <h3>Источники</h3>
+      <ol>
+        <li>Almansoori A et al. BMC Cancer 2021: скрининг колоректального рака в амбулаторных клиниках SEHA, Абу-Даби, 2015–2016 (30,5% сделали колоноскопию после положительного FIT/gFOBT).</li>
+        <li>Coronado GD et al. Рандомизированное исследование PRECISE, Ann Intern Med 2025: навигация пациентов против обычного ведения после положительного FIT (55,1% против 42,1%).</li>
+        <li>Patel MP et al. J Gen Intern Med 2018;33(5):715–721: у 38,9% направлений к специалисту так и не появилась дата приёма.</li>
+        <li>American Cancer Society. Survival rates for colorectal cancer: пятилетняя относительная выживаемость при раке толстой кишки по стадиям SEER, диагноз 2014–2020 (локальная 91%, региональная 74%, отдалённая 13%). cancer.org.</li>
+        <li>Corley DA et al. JAMA 2017;317(16):1631–1641: время до колоноскопии после положительного FIT и риск рака и запущенной стадии (10–12 месяцев против 8–30 дней).</li>
+        <li>USPSTF 2021, Colorectal Cancer: Screening.</li>
+        <li>ADPHC, вебинар Population Health Challenge, 29 окт. 2026.</li>
+      </ol>
+    </div>
+    <div>
+      <h3>Об этом прототипе</h3>
+      <p>Сделан во время Future Health Digital Innovation Challenge основательницей-одиночкой с медицинским образованием, вместе с командой ИИ-ролей: разработчик, тестировщик, бизнес-аналитик, архитектор, дизайнер, медицинский рецензент, автор текстов.</p>
+      <p class="disc" id="fn-demo">Концепция и демонстрационный прототип. Все люди, результаты, клиники и страховые планы выдуманы. Клиническая логика следует опубликованным рекомендациям и ещё ждёт проверки лицензированным врачом. Сообщения, запись и интеграции симулированы. Не медицинское изделие. Не связан с DoH Abu Dhabi или ADPHC и не одобрен ими. Логотип: эскиз создан ИИ, перерисован как векторный рисунок.</p>
+    </div>
+  </div>
+</footer>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Увеличенный экран">
+  <img id="lbImg" src="" alt="">
+  <button class="btn line" type="button" id="lbClose">Закрыть</button>
+</div>
+
+<script>
+(function () {
+  // People with simple illustrated faces (fictional demo characters).
+  function face(f) {
+    const s = [];
+    const top = f.top === "coat" ? "#ffffff" : f.top;
+    if (f.head === "scarf") s.push(`<path d="M13 27c0-11 5-18 11-18s11 7 11 18v6c-3 2.5-7 3.5-11 3.5s-8-1-11-3.5z" fill="${f.scarf}"/>`);
+    if (f.head === "ghutra") s.push(`<path d="M12.5 30c0-12 5-20 11.5-20s11.5 8 11.5 20v4l-4-1v-9c-2 2-5 3-7.5 3s-5.5-1-7.5-3v9l-4 1z" fill="#f4f4f1"/>`);
+    s.push(`<path d="M6 50c0-10 8-15 18-15s18 5 18 15z" fill="${top}"/>`);
+    if (f.top === "coat") s.push(`<path d="M24 35l-5 15M24 35l5 15" stroke="#c9d3cf" stroke-width="1.4"/><path d="M19 37l5 6 5-6" fill="${f.extra === "steth" ? "#5f8f7a" : "#4a6fa5"}"/>`);
+    if (f.head === "scarf") s.push(`<path d="M16 34c2 2.5 5 3.5 8 3.5s6-1 8-3.5l-2 6h-12z" fill="${f.scarf}"/>`);
+    s.push(`<rect x="21" y="27" width="6" height="7" rx="2" fill="${f.skin}"/>`);
+    s.push(`<ellipse cx="24" cy="21.5" rx="${f.head === "scarf" ? 7.2 : 7.8}" ry="8.4" fill="${f.skin}"/>`);
+    if (f.head === "hair") s.push(`<path d="M16 20c0-6 3.5-9.5 8-9.5s8 3.5 8 9.5c-1.5-3-4-4.5-8-4.5s-6.5 1.5-8 4.5z" fill="${f.hair}"/>`);
+    if (f.head === "ghutra") s.push(`<path d="M15.5 15c2-3.5 5-5 8.5-5s6.5 1.5 8.5 5" stroke="#1d1d1f" stroke-width="2.6" fill="none"/><path d="M16 17.5c2.5-2 5-2.8 8-2.8s5.5.8 8 2.8" fill="#f4f4f1"/>`);
+    if (f.extra === "beard") s.push(`<path d="M17 22.5c.5 5 3.5 8 7 8s6.5-3 7-8c-1 2.5-3.5 3.5-7 3.5s-6-1-7-3.5z" fill="#2a211c"/>`);
+    s.push(`<circle cx="21" cy="21" r="1" fill="#1d1d1f"/><circle cx="27" cy="21" r="1" fill="#1d1d1f"/><path d="M21.5 25.2c1.5 1.2 3.5 1.2 5 0" stroke="#7a3b2e" stroke-width="1.1" fill="none" stroke-linecap="round"/>`);
+    if (f.extra === "steth") s.push(`<path d="M20 37c-1 5 1 8 4 8s5-3 4-8" stroke="#3d4a46" stroke-width="1.3" fill="none"/><circle cx="24" cy="45" r="1.6" fill="#3d4a46"/>`);
+    if (f.extra === "headset") s.push(`<path d="M15.5 20a8.5 8.5 0 0 1 17 0" stroke="#e9eef0" stroke-width="1.6" fill="none"/><rect x="14" y="19" width="3" height="5" rx="1.2" fill="#e9eef0"/><rect x="31" y="19" width="3" height="5" rx="1.2" fill="#e9eef0"/><path d="M15.5 24c0 3 2 4.5 5 4.5" stroke="#e9eef0" stroke-width="1.2" fill="none"/>`);
+    if (f.extra === "phone") s.push(`<rect x="30" y="38" width="6.5" height="10" rx="1.4" fill="#1d1d1f"/><rect x="31" y="39.3" width="4.5" height="7" rx=".6" fill="#7fd1a8"/>`);
+    return `<span class="face"><svg viewBox="0 0 48 48" aria-hidden="true">${s.join("")}</svg></span>`;
+  }
+  const P = [
+    { pt: true, name: "Фатима", role: "Пациентка", f: { skin: "#c48d63", head: "scarf", scarf: "#5a2f55", top: "#3b3f4a", extra: "phone" }, w: `Зачем: весь цикл ради неё. Ей нужно понять результат и чувствовать, что её ведут, а не просто сообщили (требование R3).`, d: "52 года, Халифа-Сити, читает по-арабски. Понимает свой результат и записывается на следующее обследование.", can: "Спрашивает · выбирает окно · зовёт медсестру" },
+    { name: "Нура", role: "Координатор", f: { skin: "#d9a77f", head: "scarf", scarf: "#2d3e6b", top: "#1f7a6d", extra: "headset" }, w: `Зачем: между результатом и записью кто-то должен отвечать за случай, иначе никто не заметит, что она не записалась. Навигаторы дали +13 процентных пунктов к колоноскопиям в PRECISE (требование R2).`, d: "Отвечает за случай, пока Фатима не записана, потом передаёт его доктору Хессе и продолжает следить за сроками. Звонит и записывает, когда сообщения мало.", can: "Назначает · звонит · записывает · меняет ответственного" },
+    { name: "Доктор Хесса", role: "Семейный врач", f: { skin: "#e2b893", head: "scarf", scarf: "#4f6a8f", top: "coat", extra: "steth" }, w: `Зачем: направлять, подписывать и закрывать может только врач. Конкурс требует закрытия с подтверждением или решением уполномоченного человека, и она знает пациентку (требование R5).`, d: "Клинический ответственный. Отправляет направление, читает заключение, закрывает случай.", can: "Направляет · спрашивает специалиста · подписывает · закрывает" },
+    { name: "Доктор Омар", role: "Гастроэнтеролог", f: { skin: "#9c6b4a", head: "hair", hair: "#1f1a17", top: "coat", extra: "beard" }, w: `Зачем: колоноскопию делают в другой клинике. Направления теряются между клиниками: в одном исследовании в США 38,9% так и не получили дату приёма (Patel 2018). «Принять или отклонить» закрывает эту дыру (требование R4).`, d: "Принимает направление или отклоняет его с причиной. Отправляет заключение обратно.", can: "Принимает · отклоняет · записывает итог" },
+    { name: "Доктор Халид", role: "Руководитель программы", f: { skin: "#b07b56", head: "ghutra", top: "#f4f4f1", extra: "beard" }, w: `Зачем: кто-то должен видеть всю программу и вмешаться до того, как истечёт срок, а также знать, где и почему люди выпадают (требования R5, R6).`, d: "Видит каждый случай на 75% срока, а также кто потерялся и почему.", can: "Следит · поднимает выше · меняет ответственного" },
+  ];
+  const box = document.getElementById("people");
+  if (box) box.innerHTML = P.map((p) => `<div class="person${p.pt ? " pt" : ""}">${face(p.f)}<span class="role">${p.role}</span><h3>${p.name}</h3><p>${p.d}</p><span class="can">${p.can}</span><p class="pwhy">${p.w}</p></div>`).join("");
+
+
+  // Hero loop: each step is clickable and shows its screen and a one-line caption.
+  const heroImg = document.querySelector(".loopviz .phone img"), chip = document.querySelector(".casechip");
+  document.querySelectorAll("button.node").forEach((n) => n.addEventListener("click", () => {
+    document.querySelectorAll("button.node").forEach((x) => { x.classList.toggle("on", x === n); x.setAttribute("aria-pressed", String(x === n)); });
+    heroImg.style.opacity = 0; setTimeout(() => { heroImg.src = n.dataset.img; heroImg.style.opacity = 1; }, 150);
+    chip.innerHTML = "<b>" + n.querySelector("i").textContent + " · " + n.querySelector("b").textContent + "</b><br>" + n.dataset.cap;
+  }));
+
+  // Story: the sticky phone follows the step in view.
+  const beats = [...document.querySelectorAll(".beat")];
+  const sImg = document.getElementById("stickImg"), sCap = document.getElementById("stickCap");
+  let resultLang = "ar";
+  function show(b) {
+    beats.forEach((x) => x.classList.toggle("on", x === b));
+    let src = b.dataset.img, cap = b.dataset.cap;
+    if (b.id === "beat-result") { src = "img/result-" + resultLang + ".webp"; cap = "Карточка результата " + (resultLang === "ar" ? "на арабском" : "на английском"); }
+    if (sImg.getAttribute("src") !== src) { sImg.style.opacity = 0; setTimeout(() => { sImg.src = src; sImg.style.opacity = 1; }, 160); }
+    sCap.textContent = cap;
+  }
+  if (beats.length) {
+    beats[0].classList.add("on");
+    const io = new IntersectionObserver((es) => { es.forEach((e) => { if (e.isIntersecting) show(e.target); }); }, { rootMargin: "-45% 0px -45% 0px" });
+    beats.forEach((b) => io.observe(b));
+  }
+  document.querySelectorAll(".lang button").forEach((btn) => btn.addEventListener("click", () => {
+    resultLang = btn.dataset.l;
+    document.querySelectorAll(".lang button").forEach((x) => x.setAttribute("aria-pressed", String(x === btn)));
+    const m = document.querySelector("#beat-result .m-shot img"); if (m) m.src = "img/result-" + resultLang + ".webp";
+    show(document.getElementById("beat-result"));
+  }));
+
+  // Loop ring on the right: fills with scroll, shows the case state of the section in view.
+  const fg = document.getElementById("pfg"), lbl = document.getElementById("plbl"), pr = document.getElementById("progress");
+  const secs = [...document.querySelectorAll("section[data-state]")];
+  const L = 2 * Math.PI * 23;
+  function onScroll() {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    const k = max > 0 ? Math.min(1, scrollY / max) : 1;
+    fg.style.strokeDashoffset = String(L * (1 - k));
+    let cur = secs[0];
+    secs.forEach((s) => { if (s.getBoundingClientRect().top < innerHeight * 0.5) cur = s; });
+    lbl.textContent = k > 0.985 ? "Цикл замкнут" : cur.dataset.state;
+    pr.classList.toggle("done", k > 0.985);
+  }
+  fg.style.strokeDasharray = String(L);
+  addEventListener("scroll", onScroll, { passive: true }); addEventListener("resize", onScroll); onScroll();
+
+  // Lightbox for staff screens.
+  const lb = document.getElementById("lb"), lbImg = document.getElementById("lbImg"), lbClose = document.getElementById("lbClose");
+  let opener = null;
+  document.querySelectorAll(".shot").forEach((b) => b.addEventListener("click", () => {
+    opener = b; lbImg.src = b.dataset.full; lbImg.alt = b.querySelector("img").alt; lb.hidden = false; lbClose.focus();
+  }));
+  function closeLb() { lb.hidden = true; if (opener) opener.focus(); }
+  lbClose.addEventListener("click", closeLb);
+  lb.addEventListener("click", (e) => { if (e.target === lb) closeLb(); });
+  addEventListener("keydown", (e) => { if (e.key === "Escape" && !lb.hidden) closeLb(); });
+})();
+</script>
+<a id="totop" class="totop" href="#top" aria-label="Наверх" title="Наверх">↑</a>
+<script>(function(){var b=document.getElementById("totop");if(!b)return;function f(){b.classList.toggle("show",window.scrollY>600)}addEventListener("scroll",f,{passive:true});f();b.addEventListener("click",function(e){e.preventDefault();scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"})})})();</script>
