@@ -258,7 +258,7 @@ button.node:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px;
 .who-does b { font: 600 16px/1.2 var(--display); }
 .who-does small { font-size: 13px; color: var(--ink-2); line-height: 1.45; }
 @media (max-width: 560px) { .who-does { grid-template-columns: 1fr; } }
-.tests { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.tests { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 .tests div { border-top: 2px solid var(--teal); padding-top: 10px; }
 .tests b { display: block; font: 700 28px/1 var(--display); font-variant-numeric: tabular-nums; }
 .tests span { font-size: 13px; color: var(--ink-2); line-height: 1.4; display: block; margin-top: 4px; }
@@ -614,7 +614,7 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
       <h3>Who does what</h3>
       <div class="who-does">
         <div class="r"><b>Rules</b><small>Zone, deadline, urgency, red flags, who is overdue. Versioned table with a source on every row.</small></div>
-        <div class="a"><b>AI</b><small>Plain-language answers to the patient; in the pilot also drafts for staff. Each draft is labelled "check before use": a person reads it before anything is sent.</small></div>
+        <div class="a"><b>AI</b><small>Explains to the patient; drafts for staff. A person checks every draft before it is sent.</small></div>
         <div class="h"><b>People</b><small>Accept or reject referrals, sign letters, close cases. Every action is logged.</small></div>
       </div>
       <h3>What the AI may not do</h3>
@@ -623,7 +623,6 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
       <div class="tests">
         <div><b>35 / 35</b><span>rules engine tests passed</span></div>
         <div><b>50 / 50</b><span>AI safety questions passed with prepared answers. Live-model run pending</span></div>
-        <div><b>0</b><span>cases the AI can close: the button does not exist for it</span></div>
       </div>
     </div>
   </div>
