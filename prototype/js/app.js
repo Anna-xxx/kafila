@@ -97,10 +97,11 @@
   // The demo panel is always shown next to the phone (Anna, 20 Nov: choose the role on top, the patient inside).
   document.body.classList.add("demo-on");
   // "Demo time" line: in the patient panel and at the top of care-team screens. One click handler for both.
-  window.demoTime = () => `<div class="dt-line"><span><b>Today in the demo:</b> ${new Date(Store.now()).toLocaleString("en-GB", { weekday: "short", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit", timeZone: "Asia/Dubai" })}</span><button class="btn sm" data-dt="1">+1 day</button><button class="btn sm" data-dt="7">+7 days</button><button class="btn sm" data-dt="reset" title="Start the demo again">Start again</button></div>`;
+  let dtNoteUntil = 0, dtNoteDays = 0;
+  window.demoTime = () => `<div class="dt-line"><span><b>Today in the demo:</b> ${new Date(Store.now()).toLocaleString("en-GB", { weekday: "short", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit", timeZone: "Asia/Dubai" })}</span><button class="btn sm" data-dt="1">+1 day</button><button class="btn sm" data-dt="7">+7 days</button><button class="btn sm" data-dt="reset" title="Start the demo again">Start again</button></div>${Date.now() < dtNoteUntil ? `<p class="dt-note">Moved ${dtNoteDays === 1 ? "1 day" : dtNoteDays + " days"} forward. The phone shows what the patient has by now; reminders, deadlines and late cases update in My case and on the care-team screens.</p>` : ""}`;
   document.addEventListener("click", (e) => { const b = e.target.closest && e.target.closest("[data-dt]"); if (!b) return;
     if (b.dataset.dt === "reset") { if ("speechSynthesis" in window) speechSynthesis.cancel(); Store.reset(); if (location.hash.startsWith("#/patient")) render(); else location.hash = "#/patient"; return; }
-    Store.S.data.clockDays += +b.dataset.dt; Store.save(); });
+    dtNoteDays = +b.dataset.dt; dtNoteUntil = Date.now() + 8000; Store.S.data.clockDays += +b.dataset.dt; Store.save(); });
   $("#tourBtn").onclick = () => Tour.toggle();
   // One language switch for the patient phone and the tour (Anna, 20 Nov). Care-team screens stay in English.
   const setGLang = (v) => { const d = Store.S.data; d.version = v; d.lang = v; try { sessionStorage.setItem("kafila-ver", v); } catch (e) {}

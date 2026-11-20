@@ -245,7 +245,7 @@
    "lang": "ar",
    "nationality": "Emirati",
    "insurance": "Government plan (demo)",
-   "area": "Al Ain",
+   "area": "Mussafah",
    "test": {
     "test": "FIT",
     "result": "positive"
@@ -253,7 +253,7 @@
    "state": "notified",
    "daysInState": 6,
    "gp": "Dr. Yousef T.",
-   "clinic": "Al Ain Family Health Centre",
+   "clinic": "Mussafah Family Health Centre",
    "channel": "WhatsApp",
    "retries": [
     {

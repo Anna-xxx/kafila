@@ -26,7 +26,7 @@ await p.click('[data-act="tab"][data-arg="assistant"]').catch(()=>{});await p.wa
 ok('M2 no quiz for urgent BP',await p.locator('[data-act="teach"]').count()===0);
 // SMS neutral (Ahmed ladder)
 await p.selectOption('#persona','C-1045');await p.waitForTimeout(300);await p.click('[data-lad=sms2]');await p.waitForTimeout(300);
-t=await p.locator('.phone').innerText();const sm=await p.locator('.notif').first().evaluate(e=>e.textContent);ok('SMS neutral with clinic',/You have a new message from Al Ain Family Health Centre/.test(sm)&&!/result|screening/i.test(sm));
+t=await p.locator('.phone').innerText();const sm=await p.locator('.notif').first().evaluate(e=>e.textContent);ok('SMS neutral with clinic',/You have a new message from Mussafah Family Health Centre/.test(sm)&&!/result|screening/i.test(sm));
 // FIT teach-back
 await fresh();await p.click('[data-act="lock"]').catch(()=>{});await p.click('[data-act="openapp"]');await p.waitForTimeout(1400);
 await p.click('[data-act="consent"]');await p.click('[data-act="signin"]');await p.waitForTimeout(300);

@@ -199,7 +199,7 @@
   const AR_NAME = { "Dr. Amna Al Mansoori": "د. آمنة المنصوري", "Dr. Hessa M.": "د. حصة م.", "Dr. Huda Karim": "د. هدى كريم", "Dr. Huda F.": "د. هدى ف.",
     "Dr. Khalid S.": "د. خالد س.", "Dr. Leena Haddad": "د. لينا حداد", "Dr. Leena H.": "د. لينا ح.", "Dr. Mariam Saeed": "د. مريم سعيد", "Dr. Omar Khalil": "د. عمر خليل",
     "Dr. Omar K.": "د. عمر ك.", "Dr. Rami Saleh": "د. رامي صالح", "Dr. Rana Taha": "د. رنا طه", "Dr. Rana T.": "د. رنا ط.", "Dr. Sara Nabil": "د. سارة نبيل",
-    "Dr. Faisal R.": "د. فيصل ر.", "Nurse Layla": "الممرضة ليلى", "Khalifa City Family Health Centre": "مركز مدينة خليفة لصحة الأسرة", "Al Ain Family Health Centre": "مركز العين لصحة الأسرة", "Dr. Yousef T.": "د. يوسف ت.",
+    "Dr. Faisal R.": "د. فيصل ر.", "Nurse Layla": "الممرضة ليلى", "Khalifa City Family Health Centre": "مركز مدينة خليفة لصحة الأسرة", "Mussafah Family Health Centre": "مركز مصفح لصحة الأسرة", "Dr. Yousef T.": "د. يوسف ت.",
     "Family Health Centre": "مركز صحة الأسرة", "Khalifa City GI Centre": "مركز مدينة خليفة لأمراض الجهاز الهضمي", "Al Reem GI Centre": "مركز الريم لأمراض الجهاز الهضمي",
     "GI Clinic": "عيادة الجهاز الهضمي", "Gynae Clinic": "عيادة أمراض النساء", "Mussafah Day Clinic (demo)": "عيادة مصفح النهارية", "Coordinator": "المنسقة", "Noura A.": "نورة أ.",
     "GP": "طبيبة الأسرة", "Gynae Clinic · Khalifa City": "عيادة أمراض النساء · مدينة خليفة", "Bayside Women's Clinic (demo)": "عيادة بيسايد للنساء", "Mussafah Women's Health": "صحة المرأة في مصفح", "Patient": "أنت", "Clinical lead": "الطبيبة المسؤولة", "Dr. Mona S. (duty)": "د. منى س. (مناوبة)", "Dr. Mona S.": "د. منى س.", "Dr. Hessa": "د. حصة" };
@@ -379,8 +379,8 @@
     if (a === "barDone") {
       const ch = chat(c), i = ch.findIndex((m) => m.t === "multi"); if (i < 0) return;
       const sel = ch[i].sel; ch.splice(i, 1);
-      push(c, { t: "me", text: sel.length ? sel.map((k) => T.barriers[k]).join(" · ") : T.barriers.none });
-      sel.forEach((k) => push(c, { t: "in", text: fill(T.barrierReply[k], { ins: insName(c, lang) }), tag: "prepared" }));
+      push(c, { t: "me", text: sel.length ? sel.map((k) => gsx(c, T.barriers[k])).join(" · ") : T.barriers.none });
+      sel.forEach((k) => push(c, { t: "in", text: gsx(c, fill(T.barrierReply[k], { ins: insName(c, lang) })), tag: "prepared" }));
       c.barriers = sel; u.filters = { female: sel.includes("gender"), evening: sel.includes("time"), weekend: sel.includes("time"), near: sel.includes("transport") };
       Store.log(c.id, "Patient", "Barriers: " + (sel.join(", ") || "none"), "info");
       if (sel.includes("notnow")) {
@@ -733,6 +733,10 @@
     const T = I18N[lang];
     return `<div class="chatlist">${chat(c).map((m) => bubble(m, c, lang)).join("") || `<div class="sys">${esc(T.aiNote)}</div>`}</div>`;
   }
+  // Male patients: "female doctor" choices become "male doctor" (Anna, 20 Nov).
+  function gsx(c, s) { if (!c || c.sex !== "male" || typeof s !== "string") return s;
+    return s.replace("سنعرض الطبيبات فقط.", "سنعرض الأطباء الرجال فقط.").replace("أفضّل طبيبة", "أفضّل طبيبًا").replace(/^طبيبة$/, "طبيب")
+      .replace(/female doctors/g, "male doctors").replace(/female doctor/g, "male doctor").replace(/Female doctor/g, "Male doctor"); }
   function bookTab(c, lang) {
     const T = I18N[lang], t = T.app, P = slotsFor(c), u = ui(), f = u.filters || {};
     if (!P) return `<div class="acard" ${c.result.level === "L3" ? `style="border-color:var(--red)"` : ""}><b>${esc(c.result.level === "L3" ? t.urgentTitle : t.noBook)}</b>${c.result.level === "L3" ? `<div class="small">${esc(t.urgentText)}</div>` : ""}</div>`;
@@ -740,12 +744,12 @@
     if (c.rejected) return returnedCard(c, lang);
     const fcb = Store.fitClocks(c), by = fcb ? fcb.careBy : c.result.windowDays ? Date.parse(c.history[0].at) + c.result.windowDays * Store.DAY : null;
     const isEve = (s) => s.time >= "17:00", isWkd = (s) => [0, 6].includes(new Date(s.day + "T12:00:00+04:00").getUTCDay());
-    let list = P.list.filter((s) => (!f.female || s.f) && (!(f.evening || f.weekend) || (f.evening && isEve(s)) || (f.weekend && isWkd(s)))).sort((a, b) => (a.day + a.time).localeCompare(b.day + b.time));
+    let list = P.list.filter((s) => (!f.female || (c.sex === "male" ? !s.f : s.f)) && (!(f.evening || f.weekend) || (f.evening && isEve(s)) || (f.weekend && isWkd(s)))).sort((a, b) => (a.day + a.time).localeCompare(b.day + b.time));
     if (f.near) list = list.slice().sort((a, b) => a.km - b.km);
     // Book tab in plain words (Anna, 20 Nov: "не очевидный дизайн"): a header, one line, labelled filters, a button on every time.
     const head = (T.bookHead && T.bookHead[pathway(c)]) || P.title[lang] || P.title.en;
     return `<h3 class="book-h">${esc(head)}</h3><div class="small" style="margin:0 0 8px">${esc(by ? fill(T.anyBefore, { date: fmtDate(by, lang) }) : T.clinicConfirms)}</div>
-        <div class="row filt-row"><span class="small"><b>${esc(T.showOnly)}</b></span>${Object.entries(T.filters).map(([k, v]) => `<button class="chip filt ${f[k] ? "on" : ""}" data-act="filter" data-arg="${k}" aria-pressed="${!!f[k]}">${f[k] ? "✓ " : ""}${esc(v)}</button>`).join("")}</div>
+        <div class="row filt-row"><span class="small"><b>${esc(T.showOnly)}</b></span>${Object.entries(T.filters).map(([k, v]) => `<button class="chip filt ${f[k] ? "on" : ""}" data-act="filter" data-arg="${k}" aria-pressed="${!!f[k]}">${f[k] ? "✓ " : ""}${esc(gsx(c, v))}</button>`).join("")}</div>
       ${list.map((s) => `<button class="acard slot" data-act="pick" data-arg="${s.id}" style="text-align:start;cursor:pointer;width:100%;font:inherit;color:inherit">
         <b>${esc(fmtDate(Date.parse(s.day + "T" + s.time + ":00+04:00"), lang))} · ${s.time}</b>
         <div>${docLine(s, lang)}</div><div class="tiny">${esc(nm(s.clinic, lang))} · ${s.km} ${lang === "ar" ? "كم" : "km"}</div>
@@ -795,7 +799,7 @@
     if (m.t === "typing") return `<div class="bub"><span class="muted">…</span></div>`;
     if (m.t === "card" || m.t === "slots" || m.t === "track") return ""; // items from the earlier chat-only version
     if (m.t === "qr") return `<div class="qr">${m.opts.map(([a, label, arg]) => `<button data-act="${a}" data-arg="${arg ?? ""}">${esc(label)}</button>`).join("")}</div>`;
-    if (m.t === "multi") return `<div class="qr">${Object.entries(T.barriers).map(([k, v]) => `<button data-act="bar" data-arg="${k}" aria-pressed="${m.sel.includes(k)}" style="${m.sel.includes(k) ? "background:var(--brand-soft)" : ""}">${m.sel.includes(k) ? "✓ " : ""}${esc(v)}</button>`).join("")}<button data-act="barDone" style="background:var(--brand);color:#fff">${esc(T.barrierDone)}</button></div>`;
+    if (m.t === "multi") return `<div class="qr">${Object.entries(T.barriers).map(([k, v]) => `<button data-act="bar" data-arg="${k}" aria-pressed="${m.sel.includes(k)}" style="${m.sel.includes(k) ? "background:var(--brand-soft)" : ""}">${m.sel.includes(k) ? "✓ " : ""}${esc(gsx(c, v))}</button>`).join("")}<button data-act="barDone" style="background:var(--brand);color:#fff">${esc(T.barrierDone)}</button></div>`;
     const body = m.key ? fill(T[m.key], { clinic: clinicOf(c, lang), gp: nm(c.gp || "Dr. Hessa M.", lang), name: first(c) }) : (lang === "ar" && m.textAr) || m.text;
     const who = m.t === "nurse" ? (lang === "ar" ? "الممرضة ليلى · من فريق مركزك" : "Nurse Layla · a person at your centre") : clinicOf(c, lang);
     const tag = m.tag === "ai" ? T.ai : m.tag === "prepared" ? (lang === "ar" ? "إجابة تلقائية · أعدّها مركزك" : "Automatic answer · prepared by your centre") : m.tag === "centre" ? (lang === "ar" ? "مركزك الصحي" : "Your health centre") : m.tag === "fixed" ? (lang === "ar" ? "قاعدة سلامة · بدون ذكاء اصطناعي" : "Safety rule · no AI") : "";
@@ -938,6 +942,8 @@
     const d = Store.S.data, c = persona(); deliverDue(c);
     const lang = langOf(c), T = I18N[lang];
     const tryQ = [...((TRY[pathway(c)] || TRY.colonoscopy)[lang] || []), ...TRY.safety[lang].filter((q) => /scared|خائفة/.test(q))], tryRed = TRY.safety[lang].filter((q) => !/scared|خائفة/.test(q));
+    // Keep the phone scroll position when the same screen re-renders (Anna, 20 Nov: "жму и прыгает наверх").
+    const keepScr = [...root.querySelectorAll(".phone *")].filter((e) => e.scrollTop > 0).map((e) => [e.className, e.scrollTop]);
     root.innerHTML = `<div class="cols pcols">
       <div class="stage">
         ${(() => { const pk = PERSONAS.find((x) => x.key === (d.personaKey || d.persona)) || PERSONAS.find((x) => x.id === c.id); const he = c.sex === "female" ? ["Her", "her"] : ["His", "him"];
@@ -968,6 +974,7 @@
           <a class="btn sm" href="#/case/${esc(c.id)}">Open the care team's view</a>
         </div>
       </div></div>`;
+    if (screen(c) === lastScreen && (c.ptab || "result") === lastTab && c.ptab !== "assistant") keepScr.forEach(([cls, top]) => { const el = [...root.querySelectorAll(".phone *")].find((e) => e.className === cls); if (el) el.scrollTop = top; });
     const sc = root.querySelector("#wa"); if (sc && c.ptab === "assistant") sc.scrollTop = sc.scrollHeight;
     lastScreen = screen(c); lastTab = c.ptab || "result"; lastOverlay = ui().overlay || null;
     const tm = root.querySelector("#ctimer");
