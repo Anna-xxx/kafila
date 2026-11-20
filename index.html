@@ -286,6 +286,7 @@ button.node:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px;
 footer { border-top: 1px solid var(--line); padding-block: 56px 72px; }
 footer .cols { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 40px; }
 footer h3 { font: 500 12px/1.3 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 12px; }
+footer details > summary { cursor: pointer; list-style: none; font: 500 12px/1.3 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 12px; } footer details > summary::-webkit-details-marker { display: none; } footer details > summary::before { content: "▸ "; color: var(--teal); } footer details[open] > summary::before { content: "▾ "; } footer details > summary:hover { color: var(--ink); }
 footer ol { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 13.5px; color: var(--ink-2); }
 footer p { font-size: 14px; color: var(--ink-2); }
 footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
@@ -683,7 +684,8 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
 <footer>
   <div class="wrap cols">
     <div>
-      <h3>Sources</h3>
+      <details>
+      <summary>Sources (7)</summary>
       <ol>
         <li>Almansoori A et al. BMC Cancer 2021: colorectal cancer screening in SEHA ambulatory clinics, Abu Dhabi, 2015–2016 (30.5% follow-up colonoscopy after a positive FIT/gFOBT).</li>
         <li>Coronado GD et al. PRECISE randomised trial, Ann Intern Med 2025: patient navigation vs usual care after abnormal FIT (55.1% vs 42.1%).</li>
@@ -693,11 +695,12 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
         <li>USPSTF 2021, Colorectal Cancer: Screening.</li>
         <li>ADPHC, Population Health Challenge explainer webinar, 29 Oct 2026.</li>
       </ol>
+      </details>
     </div>
     <div>
       <h3>About this prototype</h3>
       <p>Built during the Future Health Digital Innovation Challenge by a solo founder with medical education, working with a team of AI roles: developer, tester, business analyst, architect, designer, medical reviewer, writer.</p>
-      <p class="disc" id="fn-demo">Concept and demonstration prototype. All people, results, clinics and insurance plans are synthetic. Clinical logic follows published guidelines and is pending review by a licensed clinician. Messages, booking and integrations are simulated. Not a medical device. Not affiliated with or endorsed by DoH Abu Dhabi or ADPHC. Logo: concept AI-generated, redrawn as vector.</p>
+      <p class="disc" id="fn-demo">Concept and demonstration prototype. All people, results, clinics and insurance plans are synthetic. Clinical logic follows published guidelines and is pending review by a licensed clinician. Messages, booking and integrations are simulated. Not for clinical use and not registered as a medical device. Not affiliated with or endorsed by DoH Abu Dhabi or ADPHC. Logo: concept AI-generated, redrawn as vector.</p>
     </div>
   </div>
 </footer>
