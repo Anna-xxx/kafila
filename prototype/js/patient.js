@@ -332,7 +332,7 @@
       push(c, { t: "me", text: me });
       const reply = a === "callok" ? (lang === "ar" ? "شكرًا. أبقِ هاتفك قريبًا. إذا شعرت بأنك أسوأ قبل الاتصال، اتصل بالرقم 998." : "Thank you. Keep your phone near you. If you feel worse before the call, call 998.")
         : a === "callwin" ? (lang === "ar" ? `تم. موعد اتصال ${w.short.ar}: اليوم ${winTime(w, lang)}. إذا شعرت بأنك أسوأ قبل ذلك، اتصل بالرقم 998.` : `Done. ${w.short.en} will call you today ${winTime(w, lang)}. If you feel worse before then, call 998.`)
-        : (lang === "ar" ? "ستتصل بك المنسقة لتأكيد الرقم." : "The coordinator will call you to confirm the number.");
+        : (lang === "ar" ? "اكتب هنا الرقم الذي نتصل بك عليه، وسيتصل الطبيب بهذا الرقم اليوم. إذا شعرت بأنك أسوأ، اتصل بالرقم 998." : "Please type here the number we should call. The doctor will call you on that number today. If you feel worse, call 998.");
       push(c, { t: "in", text: reply, tag: "prepared" });
       Store.log(c.id, "Patient", a === "callok" ? "Confirmed available for the doctor's call today." : a === "callwin" ? "Booked the doctor's call: " + w.doc + ", " + fmtTime(w.start) + "–" + fmtTime(w.end) + " today (duty roster, inside the rule deadline " + fmtTime(callBy(c).ms) + ")." : "Asked to be called on another number. Coordinator task, SLA 15 min.", a === "callok" ? "info" : "human");
       if (a === "callwin") Store.bookCall(c, w);
