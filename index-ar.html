@@ -1,0 +1,820 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>قافلة · من الفحص إلى الرعاية</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20120%20120%22%20width%3D%22120%22%20height%3D%22120%22%20role%3D%22img%22%20aria-label%3D%22Kafila%22%3E%3Cg%20transform%3D%22translate%2860%2060%29%20scale%281.1%29%20translate%28-60%20-60%29%22%3E%3Cg%20id%3D%22mark%22%3E%3Cpath%20d%3D%22M75.19%2022.99%20A40%2040%200%200%201%2090.50%2034.12%22%20fill%3D%22none%22%20stroke%3D%22%23448c80%22%20stroke-width%3D%2213%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M99.89%2063.01%20A40%2040%200%200%201%2094.04%2081.01%22%20fill%3D%22none%22%20stroke%3D%22%235082af%22%20stroke-width%3D%2213%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M69.47%2098.86%20A40%2040%200%200%201%2050.53%2098.86%22%20fill%3D%22none%22%20stroke%3D%22%23e7b956%22%20stroke-width%3D%2213%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M25.96%2081.01%20A40%2040%200%200%201%2020.11%2063.01%22%20fill%3D%22none%22%20stroke%3D%22%23e1885a%22%20stroke-width%3D%2213%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M29.50%2034.12%20A40%2040%200%200%201%2044.81%2022.99%22%20fill%3D%22none%22%20stroke%3D%22%2369b37e%22%20stroke-width%3D%2213%22%20stroke-linecap%3D%22round%22/%3E%3Ccircle%20cx%3D%2260.00%22%20cy%3D%2220.00%22%20r%3D%2213%22%20fill%3D%22%230f6b5c%22/%3E%3Ccircle%20cx%3D%2298.04%22%20cy%3D%2247.64%22%20r%3D%2213%22%20fill%3D%22%231f5f99%22/%3E%3Ccircle%20cx%3D%2283.51%22%20cy%3D%2292.36%22%20r%3D%2213%22%20fill%3D%22%23e0a526%22/%3E%3Ccircle%20cx%3D%2236.49%22%20cy%3D%2292.36%22%20r%3D%2213%22%20fill%3D%22%23d9662b%22/%3E%3Ccircle%20cx%3D%2221.96%22%20cy%3D%2247.64%22%20r%3D%2213%22%20fill%3D%22%233f9e5a%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E">
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Kafila: every actionable screening result becomes an owned case with a deadline, until a clinician closes it with evidence. Future Health Challenge 05. Synthetic data only.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Noto+Sans:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a long scroll story, text column left and evidence (phone, screens, tables) right,
+   with a loop ring on the right edge that closes as the reader reaches the end. One deliberate dark look. */
+:root {
+  --night: #06110f;      /* page */
+  --deep: #0b1c18;       /* panels */
+  --deep-2: #10261f;     /* raised panels */
+  --line: #1f3a33;
+  --ink: #eaf2ef;
+  --ink-2: #b0c3bd;
+  --ink-3: #82978f;
+  --teal: #46c2a8;       /* Kafila brand on dark */
+  --teal-soft: #12352d;
+  --amber: #f2b65e;      /* the "see a doctor" zone colour, used for the second half of headlines */
+  --amber-soft: #3a2a12;
+  --red: #ef6a5f;
+  --red-deep: #b42318;
+  --white: #ffffff;
+  --display: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+  --text: "Noto Sans", "Noto Sans Arabic", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --wrap: 1180px;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+body { background: var(--night); color: var(--ink); font: 400 17px/1.6 var(--text); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--night); }
+a { color: var(--teal); }
+:focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; border-radius: 6px; }
+img { max-width: 100%; display: block; }
+.wrap { max-width: var(--wrap); margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+
+/* top bar */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: color-mix(in srgb, var(--night) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.top .wrap { display: flex; align-items: center; gap: 22px; height: 60px; }
+.logo { display: flex; align-items: center; gap: 10px; font: 700 18px/1 var(--display); color: var(--ink); text-decoration: none; letter-spacing: -0.01em; }
+.logo i.mk { background: none; }
+.logo i { width: 28px; height: 28px; border-radius: 8px; background: var(--teal); color: var(--night); display: grid; place-items: center; font-style: normal; font-size: 16px; }
+.top nav { display: flex; gap: 20px; margin-left: auto; }
+.top nav .navsep { width: 1px; height: 16px; background: var(--line); align-self: center; }
+.top nav a { color: var(--ink-2); text-decoration: none; font-size: 14.5px; font-weight: 500; }
+.top nav a:hover { color: var(--ink); }
+.btn { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 20px; border-radius: 999px; font: 600 15px/1 var(--text); text-decoration: none; border: 1.5px solid transparent; cursor: pointer; }
+.btn.solid { background: var(--amber); color: #1d1405; }
+.btn.solid:hover { background: #f6c47b; }
+.btn.line { border-color: var(--line); color: var(--ink); background: transparent; }
+.btn.line:hover { border-color: var(--teal); }
+.top .btn { min-height: 38px; padding: 0 16px; font-size: 14px; }
+@media (max-width: 860px) { .top nav { display: none; } .top .btn { margin-left: auto; } }
+.menubtn { display: none; }
+@media (max-width: 860px) { .menubtn { display: inline-flex; align-items: center; white-space: nowrap; margin-left: auto; min-height: 38px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--ink); font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; } .top .btn { margin-left: 8px; } .top nav.open { display: flex; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; gap: 14px; padding: 14px 20px 18px; background: var(--night); border-bottom: 1px solid var(--line); } .top nav.open .navsep { width: 100%; height: 1px; } }
+@media (max-width: 420px) { .top .topin, .top .wrap { gap: 10px; } .top .btn { padding: 0 12px; margin-left: 6px; } .menubtn { padding: 0 10px; } }
+@media (max-width: 360px) { .top .topin, .top .wrap { gap: 8px; } .top .btn { padding: 0 10px; font-size: 13px; } .menubtn { padding: 0 8px; font-size: 13px; } }
+
+
+/* shared type */
+.eyebrow { font: 500 12.5px/1.4 var(--mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); }
+.eyebrow b { color: var(--amber); font-weight: 500; margin-right: 10px; }
+h1, h2, h3 { font-family: var(--display); letter-spacing: -0.02em; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(40px, 6vw, 68px); line-height: 1.02; font-weight: 700; }
+h2 { font-size: clamp(32px, 4.2vw, 50px); line-height: 1.06; font-weight: 700; }
+h3 { font-size: 21px; line-height: 1.25; font-weight: 600; letter-spacing: -0.01em; }
+h1 em, h2 em { font-style: normal; color: var(--amber); }
+.lede { font-size: 19px; color: var(--ink-2); max-width: 60ch; }
+p { margin: 0; }
+.src { font: 400 12.5px/1.5 var(--mono); color: var(--ink-3); }
+.note { font-size: 14px; color: var(--ink-3); }
+.pull { border-left: 3px solid var(--amber); padding: 4px 0 4px 16px; font: 600 20px/1.35 var(--display); color: var(--ink); max-width: 34ch; }
+
+/* sections */
+section { padding-block: 96px; border-top: 1px solid var(--line); position: relative; }
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 56px; align-items: start; }
+.split > * { min-width: 0; }
+.stack { display: grid; gap: 22px; }
+@media (max-width: 960px) { .split { grid-template-columns: 1fr; gap: 36px; } section { padding-block: 72px; } }
+
+/* hero */
+.hero { border-top: 0; padding-block: 64px 88px; overflow-x: clip; }
+.hero .split { align-items: center; }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; border-top: 1px solid var(--line); padding-top: 20px; }
+.stat b { display: block; font: 700 34px/1 var(--display); color: var(--amber); letter-spacing: -0.02em; }
+.stat span { display: block; font-size: 14px; color: var(--ink-2); margin-top: 6px; line-height: 1.4; }
+.stat small { display: block; margin-top: 6px; font: 400 11.5px/1.4 var(--mono); color: var(--ink-3); }
+@media (max-width: 560px) { .stats { grid-template-columns: 1fr; } }
+.herolist { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; max-width: 58ch; } .herolist li { position: relative; padding-left: 22px; color: var(--ink-2); font-size: 17px; line-height: 1.5; } .herolist li::before { content: ""; position: absolute; left: 2px; top: .62em; width: 9px; height: 9px; border-radius: 50%; background: var(--teal); } .herolist b { color: var(--ink); } .herofoot { color: var(--amber); font-weight: 600; margin: 0; }
+.motto { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 0; cursor: default; }
+.motto span { font: 500 13px/1.3 var(--mono); color: var(--ink-2); letter-spacing: .02em; }
+.motto span + span::before { content: "·"; margin: 0 12px; color: var(--teal); }
+.protolabel { margin: 0; font: 600 12px/1.4 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--teal); }
+.tryit { margin: 0; font-size: 14.5px; color: var(--ink-2); max-width: 62ch; } .tryit b { color: var(--ink); } .tryit a { color: var(--teal); text-decoration: underline; text-underline-offset: 3px; }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* hero visual: the loop with five ADPHC steps around a phone */
+.loopviz { position: relative; width: min(100%, 540px); aspect-ratio: 1 / 1; margin-inline: auto; }
+.loopviz svg.ring { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.ring .track { fill: none; stroke: var(--line); stroke-width: 2; }
+.ring .arc { fill: none; stroke: var(--teal); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 1131; stroke-dashoffset: 0; animation: draw 2.4s cubic-bezier(.6,.1,.2,1) both .3s; }
+@keyframes draw { from { stroke-dashoffset: 1131; } to { stroke-dashoffset: 0; } }
+.node { position: absolute; transform: translate(-50%, -50%); text-align: center; display: grid; justify-items: center; gap: 4px; background: var(--night); padding: 6px 10px; border-radius: 12px; }
+.node i { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--deep-2); border: 2px solid var(--teal); font: 600 13px/1 var(--mono); font-style: normal; color: var(--teal); }
+.node b { display: block; font: 600 14px/1.2 var(--display); }
+.node small { display: block; font-size: 11.5px; line-height: 1.3; color: var(--ink-3); }
+.node.end i { background: var(--teal); color: var(--night); }
+.phone { width: 214px; border-radius: 30px; border: 7px solid #1b2a26; background: #1b2a26; box-shadow: 0 30px 60px -20px rgba(0,0,0,.7), 0 0 0 1px #2c4740; overflow: hidden; }
+.phone img { border-radius: 22px; width: 100%; height: auto; }
+.loopviz .phone { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 33%; border-width: 5px; border-radius: 24px; }
+.loopviz .phone img { border-radius: 19px; transition: opacity .15s; }
+.herovis { display: grid; justify-items: center; gap: 18px; min-width: 0; }
+.casechip { background: var(--deep-2); border: 1px solid #2f5149; border-radius: 12px; padding: 10px 12px; font-size: 12.5px; line-height: 1.45; color: var(--ink-2); box-shadow: 0 12px 30px -12px rgba(0,0,0,.8); }
+button.node { border: 0; color: inherit; font: inherit; cursor: pointer; }
+button.node:hover i, button.node.on i { background: var(--teal); color: var(--night); }
+button.node.on b { color: var(--teal); }
+button.node:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+.casechip .hint { color: var(--teal); font-size: 11.5px; }
+.casechip b { color: var(--ink); font-weight: 600; }
+.casechip .z { display: inline-block; background: var(--amber-soft); color: var(--amber); border-radius: 999px; padding: 1px 8px; font-weight: 600; font-size: 11.5px; }
+@media (max-width: 560px) { .node { padding: 4px 6px; } .node b { font-size: 12.5px; } .node i { width: 28px; height: 28px; } }
+
+/* 01 steps */
+.steps5 { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin-top: 40px; }
+.steps5 > div { background: var(--deep); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: grid; gap: 8px; align-content: start; }
+.steps5 .n { font: 500 12px/1 var(--mono); color: var(--amber); }
+.steps5 h3 { font-size: 18px; }
+.steps5 p { font-size: 14.5px; color: var(--ink-2); line-height: 1.5; }
+.steps5 .adphc { font: 400 11.5px/1.4 var(--mono); color: var(--ink-3); border-top: 1px dashed var(--line); padding-top: 8px; }
+@media (max-width: 960px) { .steps5 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .steps5 { grid-template-columns: 1fr; } }
+
+/* 02 comparison */
+.cmp { width: 100%; border-collapse: separate; border-spacing: 6px; font-size: 14.5px; line-height: 1.45; }
+.cmp th { text-align: left; font: 500 11.5px/1.3 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); padding: 2px 10px; vertical-align: bottom; }
+.cmp th.us { color: var(--teal); }
+.cmp td { background: var(--deep); border-radius: 10px; padding: 10px 12px; vertical-align: top; color: var(--ink-2); }
+.cmp td.q { background: transparent; color: var(--ink); font-weight: 600; padding-left: 0; width: 26%; }
+.cmp td.us { background: var(--teal-soft); color: var(--ink); }
+.tablebox { overflow-x: auto; margin-inline: -6px; }
+.gapcard{border:1px solid var(--line);border-radius:14px;padding:22px 24px;background:rgba(255,255,255,.02)}.gapcard .k{font:600 12px/1.2 var(--mono,inherit);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}.gapcard b{display:block;font:700 40px/1.1 var(--display);color:var(--amber);margin-top:10px}.gapcard h3{margin:6px 0 8px}.gapcard p{margin:0;color:var(--ink-2)}.gapcard .src{display:block;border-top:1px solid var(--line);margin-top:16px;padding-top:12px;font-size:14px;color:var(--ink-3)}
+.bigfig { display: flex; gap: 18px; align-items: baseline; border-top: 1px solid var(--line); padding-top: 18px; }
+.bigfig b { font: 700 40px/1 var(--display); color: var(--amber); white-space: nowrap; }
+
+/* 03 where */
+.where { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.where > div { background: var(--deep); border: 1px solid var(--line); border-radius: 14px; padding: 18px; display: grid; gap: 10px; align-content: start; }
+.where p { font-size: 15px; color: var(--ink-2); }
+.valh { margin: 44px 0 14px; } .value ul { margin: 0; padding-left: 18px; display: grid; gap: 8px; font-size: 15px; color: var(--ink-2); line-height: 1.5; } .valf { margin: 14px 0 28px; max-width: 90ch; }
+.tag { justify-self: start; font: 500 11px/1.3 var(--mono); letter-spacing: .08em; text-transform: uppercase; padding: 3px 8px; border-radius: 6px; }
+.tag.built { background: var(--teal-soft); color: var(--teal); }
+.tag.sim { background: #1d2a40; color: #9fb8e8; }
+.tag.prop { background: var(--amber-soft); color: var(--amber); }
+.pipe { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 26px; font: 500 13px/1.3 var(--mono); color: var(--ink-2); }
+.pipe span { border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; background: var(--deep); }
+.pipe span.on { border-color: var(--teal); color: var(--ink); }
+.pipe em { font-style: normal; color: var(--ink-3); }
+@media (max-width: 860px) { .where { grid-template-columns: 1fr; } }
+
+/* 04 who */
+.people { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; margin-top: 40px; }
+.person { background: var(--deep); border: 1px solid var(--line); border-radius: 16px; padding: 18px 16px; display: grid; gap: 8px; align-content: start; }
+.person.pt { border-color: #5b4a2a; background: linear-gradient(180deg, #1a1a10, var(--deep) 60%); }
+.face { width: 64px; height: 64px; border-radius: 50%; background: #23413a; display: grid; place-items: center; overflow: hidden; }
+.person.pt .face { background: #4a3b1e; }
+.face svg { width: 60px; height: 60px; margin-top: 8px; }
+.person .role { font: 500 11.5px/1.3 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--teal); }
+.person.pt .role { color: var(--amber); }
+.person p { font-size: 14.5px; color: var(--ink-2); line-height: 1.5; }
+.person .pwhy { font-size: 13px; color: var(--ink-2); background: var(--deep-2); border-left: 3px solid var(--amber); border-radius: 8px; padding: 8px 10px; margin: 0; }
+.person .can { font: 400 12px/1.45 var(--mono); color: var(--ink-3); border-top: 1px dashed var(--line); padding-top: 8px; }
+@media (max-width: 1060px) { .people { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .people { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 420px) { .people { grid-template-columns: 1fr; } }
+
+/* 05 story: steps left, sticky phone right */
+.story { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 64px; margin-top: 44px; }
+.story > * { min-width: 0; }
+.beats { display: grid; gap: 0; counter-reset: beat; }
+.beat { padding: 26px 0 26px 56px; position: relative; border-left: 2px solid var(--line); margin-left: 16px; min-height: 34vh; display: grid; gap: 10px; align-content: start; }
+.beat:last-child { min-height: 0; }
+.beat::before { counter-increment: beat; content: counter(beat); position: absolute; left: -18px; top: 24px; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--deep-2); border: 2px solid var(--line); font: 500 13px/1 var(--mono); color: var(--ink-2); transition: border-color .3s, color .3s, background .3s; }
+.beat.on::before { border-color: var(--teal); color: var(--night); background: var(--teal); }
+.beat .t { font: 500 12px/1.3 var(--mono); color: var(--amber); letter-spacing: .06em; text-transform: uppercase; }
+.beat p { color: var(--ink-2); max-width: 52ch; }
+.beat .why { font-size: 14px; color: var(--ink-3); }
+.beat .why b { color: var(--teal); font-weight: 600; }
+.beat .m-shot { display: none; }
+.stick { position: sticky; top: 96px; align-self: start; display: grid; justify-items: center; gap: 12px; }
+.stick .phone { width: 280px; }
+.stick .phone img { transition: opacity .25s; }
+.stick .cap { font-size: 13px; color: var(--ink-3); text-align: center; max-width: 30ch; }
+.lang { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; gap: 2px; justify-self: start; }
+.lang button { border: 0; background: transparent; color: var(--ink-2); font: 600 13px/1 var(--text); padding: 7px 12px; border-radius: 999px; cursor: pointer; }
+.lang button[aria-pressed="true"] { background: var(--teal); color: var(--night); }
+.lang button:lang(ar) { font-family: "Noto Sans Arabic", var(--text); }
+@media (max-width: 960px) {
+  .story { grid-template-columns: 1fr; }
+  .stick { display: none; }
+  .beat { min-height: 0; }
+  .beat .m-shot { display: block; margin-top: 8px; }
+  .beat .m-shot .phone { width: min(260px, 100%); }
+}
+
+/* staff screens */
+.screens { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 30px; }
+.shot { position: relative; }
+.shot::after { content: ""; position: absolute; top: 18px; right: 18px; width: 34px; height: 34px; border-radius: 50%; background: rgba(6,17,15,.82) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2346c2a8' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='10.5' cy='10.5' r='6'/%3E%3Cpath d='M15 15l5 5M10.5 8v5M8 10.5h5'/%3E%3C/svg%3E") center / 18px no-repeat; border: 1px solid var(--line); pointer-events: none; }
+.shot .req { font: 500 11.5px/1.3 var(--mono); color: var(--teal); font-style: normal; padding: 0 4px 4px; }
+.shot { background: var(--deep); border: 1px solid var(--line); border-radius: 14px; padding: 10px; display: grid; gap: 10px; text-align: left; cursor: zoom-in; color: inherit; font: inherit; }
+.shot img { border-radius: 8px; height: auto; aspect-ratio: 16 / 11; object-fit: cover; object-position: top left; width: 100%; }
+.shot b { font: 600 15px/1.3 var(--display); padding: 0 4px; }
+.datafig { margin: 40px 0 0; display: grid; gap: 10px; } .datafig p { color: var(--ink-2); margin: 0; max-width: 70ch; } .datafig .shot img { aspect-ratio: auto; object-fit: contain; background: #fff; }
+.shot span { font-size: 13.5px; color: var(--ink-2); padding: 0 4px 4px; line-height: 1.45; }
+@media (max-width: 860px) { .screens { grid-template-columns: 1fr; } }
+
+/* ladder */
+.ladder { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0; margin-top: 30px; position: relative; }
+@media (min-width: 861px) { .ladder.l6 { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+.ladder::before { content: ""; position: absolute; left: 3%; right: 3%; top: 17px; height: 2px; background: linear-gradient(90deg, var(--teal), var(--amber) 70%, var(--red)); }
+.rung { position: relative; display: grid; gap: 6px; justify-items: center; text-align: center; padding: 0 4px; }
+.rung i { width: 36px; height: 36px; border-radius: 50%; background: var(--deep-2); border: 2px solid var(--teal); display: grid; place-items: center; font: 500 11px/1 var(--mono); font-style: normal; color: var(--ink); z-index: 1; }
+.rung:nth-child(n+4) i { border-color: var(--amber); }
+.rung:last-child i { border-color: var(--red); }
+.rung b { font: 600 14px/1.25 var(--display); }
+.rung small { font-size: 12.5px; color: var(--ink-3); line-height: 1.35; }
+@media (max-width: 860px) {
+  .ladder { grid-template-columns: 1fr; gap: 14px; }
+  .ladder::before { left: 17px; right: auto; top: 6px; bottom: 6px; width: 2px; height: auto; background: linear-gradient(180deg, var(--teal), var(--amber) 70%, var(--red)); }
+  .rung { grid-template-columns: 36px 1fr; justify-items: start; text-align: left; column-gap: 14px; }
+  .rung i { grid-row: span 2; }
+}
+
+/* 06 urgent */
+.urgent { background: linear-gradient(180deg, #1a0d0b, var(--night) 70%); }
+.urgent h2 em { color: var(--red); }
+.tl { display: grid; gap: 14px; }
+.tl > div { display: grid; grid-template-columns: 92px 1fr; gap: 14px; align-items: baseline; }
+.tl .when { font: 500 13px/1.3 var(--mono); color: var(--red); }
+.tl > .tl-red { margin-top: 10px; padding-top: 14px; border-top: 1px dashed color-mix(in srgb, var(--red) 55%, transparent); }
+.tl p { color: var(--ink-2); font-size: 15.5px; }
+.tl p b { color: var(--ink); }
+.duo { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
+.duo .phone { width: 230px; }
+.duo figure { margin: 0; display: grid; gap: 8px; justify-items: center; }
+.duo figcaption { font-size: 13px; color: var(--ink-3); text-align: center; max-width: 26ch; }
+
+/* AI */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips span { font: 500 12.5px/1.3 var(--mono); padding: 6px 10px; border-radius: 8px; background: var(--deep-2); border: 1px solid var(--line); color: var(--ink-2); }
+.chips.no span { border-color: #4a2622; color: #f2b0a9; background: #1d0f0d; }
+.chips.no span::before { content: "✕ "; color: var(--red); }
+.panel { background: var(--deep); border: 1px solid var(--line); border-radius: 18px; padding: 22px; display: grid; gap: 18px; }
+.panel h3 { font-size: 13px; font: 500 12px/1.3 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+.who-does { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.who-does > div { border-radius: 12px; padding: 14px; display: grid; gap: 6px; align-content: start; }
+.who-does .r { background: #142019; border: 1px solid #2b4a3d; }
+.who-does .a { background: var(--teal-soft); border: 1.5px dashed var(--teal); }
+.who-does .h { background: var(--amber-soft); border: 1px solid #6a4f22; }
+.who-does b { font: 600 16px/1.2 var(--display); }
+.who-does small { font-size: 13px; color: var(--ink-2); line-height: 1.45; }
+@media (max-width: 560px) { .who-does { grid-template-columns: 1fr; } }
+.tests { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.tests div { border-top: 2px solid var(--teal); padding-top: 10px; }
+.tests b { display: block; font: 700 28px/1 var(--display); font-variant-numeric: tabular-nums; }
+.tests span { font-size: 13px; color: var(--ink-2); line-height: 1.4; display: block; margin-top: 4px; }
+@media (max-width: 560px) { .tests { grid-template-columns: 1fr; } }
+
+/* 07 pilot */
+.north { background: var(--deep); border: 1px solid var(--line); border-radius: 18px; padding: 24px; display: grid; gap: 14px; }
+.north .big { font: 700 clamp(26px, 3vw, 34px)/1.15 var(--display); }
+.north .big em { font-style: normal; color: var(--amber); }
+.plan { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 34px; }
+.plan > div { border-top: 3px solid var(--line); padding-top: 12px; display: grid; gap: 4px; align-content: start; }
+.plan > div:nth-child(3) { border-color: var(--amber); }
+.plan .d { font: 500 12.5px/1.3 var(--mono); color: var(--teal); }
+.plan b { font: 600 17px/1.3 var(--display); }
+.plan span { font-size: 14px; color: var(--ink-2); }
+@media (max-width: 860px) { .plan { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 460px) { .plan { grid-template-columns: 1fr; } }
+.ask { margin-top: 56px; background: var(--amber); color: #1d1405; border-radius: 22px; padding: 34px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; align-items: center; }
+.ask h3 { font-size: clamp(24px, 3vw, 32px); line-height: 1.15; }
+.ask p { margin-top: 8px; font-size: 16px; color: #3d2d10; max-width: 60ch; }
+.ask .btn { background: #1d1405; color: var(--amber); }
+@media (max-width: 760px) { .ask { grid-template-columns: 1fr; padding: 24px; } }
+
+/* footer */
+footer { border-top: 1px solid var(--line); padding-block: 56px 72px; }
+footer .cols { display: grid; grid-template-columns: 1fr; gap: 24px; } footer .cols > div { max-width: 80ch; } footer .cols > div:first-child { order: 2; }
+footer h3 { font: 500 12px/1.3 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 12px; }
+footer details > summary { cursor: pointer; list-style: none; font: 500 12px/1.3 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 12px; } footer details > summary::-webkit-details-marker { display: none; } footer details > summary::before { content: "▸ "; color: var(--teal); } footer details[open] > summary::before { content: "▾ "; } footer details > summary:hover { color: var(--ink); }
+footer ol { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 13.5px; color: var(--ink-2); }
+footer p { font-size: 14px; color: var(--ink-2); }
+footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
+@media (max-width: 860px) { footer .cols { grid-template-columns: 1fr; } }
+
+/* loop progress ring, right edge */
+.progress { position: fixed; right: max(18px, env(safe-area-inset-right, 0px)); top: 50%; transform: translateY(-50%); z-index: 15; display: grid; justify-items: end; gap: 10px; }
+.progress svg { width: 54px; height: 54px; }
+.progress .bg { fill: var(--night); stroke: var(--line); stroke-width: 3; }
+.progress .fg { fill: none; stroke: var(--teal); stroke-width: 3.5; stroke-linecap: round; stroke-dasharray: 145; stroke-dashoffset: 145; transform: rotate(-90deg); transform-origin: 27px 27px; transition: stroke-dashoffset .2s linear; }
+.progress .ok { fill: var(--teal); opacity: 0; transition: opacity .3s; }
+.progress.done .ok { opacity: 1; }
+.progress .lbl { font: 500 10.5px/1.3 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); text-align: right; max-width: 120px; }
+.progress .lbl b { display: block; color: var(--ink); font-weight: 500; }
+@media (max-width: 1320px) { .progress { display: none; } }
+
+/* lightbox */
+.lb { position: fixed; inset: 0; z-index: 50; background: rgba(2, 8, 7, .92); display: grid; place-items: center; padding: max(20px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(20px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+.lb[hidden] { display: none; }
+.lb img { max-height: 86vh; width: auto; border-radius: 10px; }
+.lb button { position: absolute; top: max(14px, env(safe-area-inset-top, 0px)); right: max(14px, env(safe-area-inset-right, 0px)); }
+.fn a{color:var(--amber);text-decoration:none;font-weight:700;padding:0 2px}
+.totop{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));z-index:20;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:var(--amber);color:#1a1206;font:700 20px/44px system-ui,sans-serif;text-align:center;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:opacity .2s}
+.totop.show{opacity:1;pointer-events:auto}
+@media print{.totop{display:none}}
+.archlink{color:var(--teal);font-weight:600;text-decoration:none;white-space:nowrap}.archlink:hover{text-decoration:underline}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#top"><i class="mk"><svg width="28" height="28" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" aria-hidden="true"><g id="mark"><path d="M75.61 21.01 A42 42 0 0 1 92.26 33.10" fill="none" stroke="#69c5b3" stroke-width="10" stroke-linecap="round"/><path d="M101.91 62.80 A42 42 0 0 1 95.55 82.37" fill="none" stroke="#7fb1e1" stroke-width="10" stroke-linecap="round"/><path d="M70.29 100.72 A42 42 0 0 1 49.71 100.72" fill="none" stroke="#f5c873" stroke-width="10" stroke-linecap="round"/><path d="M24.45 82.37 A42 42 0 0 1 18.09 62.80" fill="none" stroke="#f3a473" stroke-width="10" stroke-linecap="round"/><path d="M27.74 33.10 A42 42 0 0 1 44.39 21.01" fill="none" stroke="#8cd1a1" stroke-width="10" stroke-linecap="round"/><circle cx="60.00" cy="18.00" r="11.5" fill="#3fb59d"/><circle cx="99.94" cy="47.02" r="11.5" fill="#5b9bd8"/><circle cx="84.69" cy="93.98" r="11.5" fill="#f2b84b"/><circle cx="35.31" cy="93.98" r="11.5" fill="#f08a4b"/><circle cx="20.06" cy="47.02" r="11.5" fill="#6cc486"/></g></svg></i>Kafila <span lang="ar" dir="rtl" style="opacity:.7;font-weight:500">قافلة</span></a>
+    <nav id="sitenav" aria-label="الأقسام">
+      <a href="#what">خمس خطوات</a><a href="#why">الفجوة</a><a href="#who">الأشخاص</a><a href="#how">حالة فاطمة</a><a href="#safety">الحالات العاجلة</a><a href="#ai">الذكاء الاصطناعي</a><a href="#pilot">الأثر</a><span class="navsep" aria-hidden="true"></span><a href="care-loop.html">خطوة بخطوة</a><a href="architecture.html">البنية التقنية</a><a href="index.html" lang="en" class="langlink">English</a>
+    </nav>
+    <button class="menubtn" id="menubtn" aria-expanded="false" aria-controls="sitenav">القائمة</button>
+    <a class="btn solid" href="prototype/?lang=ar" target="_blank" rel="noopener">النموذج الأولي</a>
+  </div>
+</header>
+
+<aside class="progress" aria-hidden="true" id="progress">
+  <svg viewBox="0 0 54 54"><circle class="bg" cx="27" cy="27" r="23"/><circle class="fg" cx="27" cy="27" r="23" id="pfg"/><circle class="ok" cx="27" cy="27" r="9"/></svg>
+  <div class="lbl"><b id="plbl">البداية</b></div>
+</aside>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero" data-state="البداية">
+  <div class="wrap split">
+    <div class="stack">
+      <p class="eyebrow">Kafila <span lang="ar" dir="rtl">قافلة</span> · منصة لمتابعة المسؤولية من الفحص إلى الرعاية · تحدي المستقبل الصحي 05</p>
+      <h1>نتيجة غير طبيعية. <em>طريق واضح إلى الرعاية.</em></h1>
+      <p class="herofoot"><b>تساعد قافلة فرق الرعاية على المتابعة بعد نتيجة فحص إيجابية.</b> لكل حالة منسّق وموعد نهائي ونتيجة موثّقة.</p>
+      <p class="protolabel">نموذج أولي تفاعلي · بيانات اصطناعية</p>
+      <div class="cta">
+        <a class="btn solid" href="prototype/?lang=ar&amp;tour=1" target="_blank" rel="noopener">▶ ابدأ جولة الدقائق الثلاث</a>
+        <a class="btn line" href="#how">تابع حالة فاطمة</a>
+        <a class="btn line" href="care-loop.html">خطوة بخطوة: من يفعل ماذا</a>
+      </div>
+      <p class="tryit">تبدأ الجولة على هاتف فاطمة. اضغط <b>التالي</b> سبع مرات، من نتيجتها إلى لوحة البرنامج. ثم اختر دورًا في الأعلى، أو مريضًا آخر بجانب الهاتف.</p>
+      <p class="lede">فحص البراز لدى المريض إيجابي. مع قافلة:</p>
+      <ul class="herolist">
+        <li><b>المريض يفهم.</b> يرسل مركزه الصحي رسالة آمنة ويشرح النتيجة بلغته. ويمكنه طرح الأسئلة في أي وقت.</li>
+        <li><b>الموعد يناسب المريض.</b> مثلًا طبيبة، أو موعد في عطلة نهاية الأسبوع، مع عرض التكلفة قبل الحجز.</li>
+        <li><b>لا أحد يُنسى.</b> إذا لم يرد المريض: رسالة نصية، ثم مكالمة، ثم يتصل المنسّق.</li>
+        <li><b>هناك مسؤول.</b> يتابع منسّق الحالة، ولكل خطوة شخص مسمّى، حتى يغلقها طبيب بالتقرير.</li>
+      </ul>
+      <div class="stats">
+        <div class="stat"><b>30.5% فقط</b><span>من البالغين الإماراتيين ذوي فحص البراز الإيجابي أجروا تنظير قولون للمتابعة في عيادات صحة، أبوظبي</span><small>436 من 1,429 شخصًا · 2015–2016، بيانات قديمة · Almansoori 2021, BMC Cancer</small></div>
+        <div class="stat"><b>قرابة الضعف</b><span>احتمال السرطان المتقدم ارتبط بتنظير القولون بعد 10–12 شهرًا من الفحص، ونحو 3 أضعاف بعد سنة، مقارنة بـ 8–30 يومًا</span><small>70,124 مريضًا · Kaiser Permanente · Corley 2017, JAMA</small></div>
+        <div class="stat"><b>55% مقابل 42%</b><span>أجروا تنظير القولون خلال 12 شهرًا عندما اتصل بهم موجّه وشرح لهم وساعدهم على الحجز، مقارنة بالرعاية المعتادة</span><small>تجربة PRECISE العشوائية، الولايات المتحدة · Coronado 2025</small></div>
+      </div>
+      <div class="motto"><span>القواعد تحدد الأولوية والمواعيد النهائية</span><span>الذكاء الاصطناعي يشرح</span><span>الأطباء يقررون ويوقّعون</span></div>
+    </div>
+    <div class="herovis">
+    <div class="loopviz" aria-label="دورة قافلة: تسجيل، أولوية، إحالة، توجيه، متابعة">
+      <svg class="ring" viewBox="0 0 400 400" aria-hidden="true">
+        <circle class="track" cx="200" cy="200" r="180"/>
+        <circle class="arc" cx="200" cy="200" r="180" transform="rotate(-90 200 200)"/>
+      </svg>
+      <button type="button" class="node" style="left:50%;top:5%" aria-pressed="false" data-img="img/wa.webp" data-cap="نتيجة المختبر تفتح حالة واحدة لفاطمة. ويراسلها مركزها في اليوم نفسه."><i>1</i><b>تسجيل</b></button>
+      <button type="button" class="node" style="left:93%;top:36%" aria-pressed="false" data-img="img/result-en.webp" data-cap="القواعد، لا الذكاء الاصطناعي، تحدد المنطقة والمواعيد: راجعي طبيبًا، الإحالة خلال 15 يوم عمل، وتنظير القولون خلال 31 يوم عمل بعدها."><i>2</i><b>الأولوية</b></button>
+      <button type="button" class="node" style="left:78%;top:88%" aria-pressed="false" data-img="img/book.webp" data-cap="موعد ضمن شبكة تأمينها: طبيبة، يوم السبت، يغطيه تأمينها."><i>3</i><b>الإحالة</b></button>
+      <button type="button" class="node" style="left:22%;top:88%" aria-pressed="false" data-img="img/ask.webp" data-cap="تسأل «هل هو سرطان؟» وتتلقى جوابًا هادئًا من نصوص معدّة، مع مصدره."><i>4</i><b>التوجيه</b></button>
+      <button type="button" class="node end" style="left:7%;top:36%" aria-pressed="false" data-img="img/mycase.webp" data-cap="ترى دائمًا أين وصلت حالتها ومن المسؤول عنها، حتى يغلقها طبيب."><i>✓</i><b>المتابعة</b></button>
+      <div class="phone"><img src="img/wa.webp" alt="WhatsApp message from Khalifa City Family Health Centre: Hello Fatima, Dr. Hessa asked us to share your new screening result. Open your result. Buttons: Talk to a nurse, This is not me." width="780" height="1540"></div>
+
+    </div>
+<div class="casechip"><b>C-1042 · فاطمة أ.</b> <span class="z">راجعي طبيبًا</span><br>المسؤولة: نورة (منسّقة)<br>الإحالة خلال 15 يوم عمل · اليوم 0 الآن<br><span class="hint">اضغط على خطوة في الدورة لترى شاشتها.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 01 WHAT -->
+<section id="what" data-state="01 خمس خطوات">
+  <div class="wrap">
+    <div class="split">
+      <div class="stack">
+        <p class="eyebrow"><b>01</b>خمس خطوات</p>
+        <h2>أكثر من مجرد تذكير. <em>حالة واحدة، تُتابع حتى نتيجة.</em></h2>
+      </div>
+      <div class="stack">
+        <p class="lede">تحوّل قافلة كل نتيجة فحص تحتاج إجراءً إلى حالة قابلة للتتبع. يشرف منسّق رعاية على المسار، ولكل خطوة شخص مسؤول وموعد نهائي.</p>
+        <p class="pull">عندما تفوت خطوة أو تتأخر، تنبّه قافلة إلى متابعتها.</p>
+        <p class="src">هذه وظائف قافلة الخمس، وفق المسار الذي وضعه مركز أبوظبي للصحة العامة للتحدي 05 (ندوة التحدي، 29 أكتوبر 2026، بتصرّف). وهي ليست ترتيبًا صارمًا: قد يبدأ دعم المريض قبل الإحالة. حالة فاطمة أدناه تعرض الترتيب الفعلي لحالة واحدة في ست خطوات.</p>
+      </div>
+    </div>
+    <div class="steps5">
+      <div><span class="n">1 · تسجيل</span><h3>تسجيل النتيجة</h3><p>نتيجة الفحص تفتح حالة قابلة للتتبع مع منسّق رعاية وسجل بالقواعد المطبّقة.</p><span class="adphc">منسّق الرعاية</span></div>
+      <div><span class="n">2 · الأولوية</span><h3>الأولوية تحددها القواعد</h3><p>القواعد السريرية تحدد أولوية المتابعة ومواعيدها. ولا يستطيع الذكاء الاصطناعي تغييرها.</p><span class="adphc">قواعد سريرية بإصدارات موثّقة</span></div>
+      <div><span class="n">3 · الإحالة</span><h3>مراجعة الإحالة</h3><p>يراجع الطبيب الإحالة ويوقّعها. وتقبلها العيادة المستقبِلة أو تعيدها مع ذكر السبب.</p><span class="adphc">إحالة معتمدة من طبيب</span></div>
+      <div><span class="n">4 · التوجيه</span><h3>دعم المريض</h3><p>معلومات واضحة، ومساعدة في الحجز، وممرضة قريبة تجعل الخطوة التالية أسهل.</p><span class="adphc">العربية والإنجليزية</span></div>
+      <div><span class="n">5 · المتابعة</span><h3>توثيق النتيجة</h3><p>تتابع قافلة التقدم وتنبّه إلى التأخير. ويؤكد الطبيب اكتمال الرعاية أو يسجل نتيجة أخرى مع السبب.</p><span class="adphc">الإغلاق بيد الطبيب</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 WHY -->
+<section id="why" data-state="02 الفجوة">
+  <div class="wrap split">
+    <div class="stack">
+      <p class="eyebrow"><b>02</b>الفجوة</p>
+      <h2>مرضى كثيرون يضيعون <em>بين الفحص والمتابعة.</em></h2>
+      <p class="lede">يكشف الفحص من يحتاجون إلى رعاية إضافية. لكن بين النتيجة والإحالة والموعد قد لا يكون أحد مسؤولًا بوضوح، فيضيع المرضى. وكثيرون منهم خائفون، أو لا يعرفون معنى النتيجة، أو لا يجدون وقتًا مناسبًا.</p>
+      <div class="gapcard"><span class="k">الفجوة · أبوظبي</span><b>30.5% فقط</b><h3>أجروا تنظير قولون للمتابعة بعد فحص براز إيجابي.</h3><p>وجدت دراسة على بالغين إماراتيين في عيادات الرعاية الأولية التابعة لصحة في أبوظبي (2015–2016) فجوة كبيرة بين الفحص والمتابعة: 436 من 1,429 شخصًا بنتيجة إيجابية أجروا تنظير قولون للمتابعة. تقيس قافلة فجوة اليوم وتساعد على سدّها.</p><span class="src">Almansoori et al., BMC Cancer, 2021 · بيانات تاريخية، وليست المعدل الحالي في أبوظبي</span></div>
+    </div>
+    <div class="tablebox">
+      <table class="cmp">
+        <thead><tr><th></th><th>دون متابعة مغلقة الحلقة</th><th class="us">مع قافلة</th></tr></thead>
+        <tbody>
+          <tr><td class="q">كيف يعرف المريض</td><td>إشعار بالنتيجة دون خطوة تالية واضحة</td><td class="us">رسالة واتساب أو نصية من مركزه الصحي، بلغته، مع رابط آمن للنتيجة بكلمات بسيطة</td></tr>
+          <tr><td class="q">من المسؤول عن الخطوة التالية</td><td>قد تكون المسؤولية غير واضحة بين مقدمي الرعاية</td><td class="us">منسّق مسمّى لكل حالة، وموعد نهائي لكل خطوة</td></tr>
+          <tr><td class="q">إذا كان المريض قلقًا أو أمامه عائق عملي</td><td>قد تبقى العوائق العملية دون حل</td><td class="us">يقول المريض ما الصعب عليه. الممرضة على بُعد ضغطة. والمواعيد تناسب احتياجاته، مثل طبيبة، وتأمينه</td></tr>
+          <tr><td class="q">إذا لم يحجز المريض</td><td>قد تمر المتابعة الفائتة دون انتباه</td><td class="us">تذكيرات بالرسائل والهاتف، ثم يتصل المنسّق. ويُنبَّه مسؤول البرنامج عند مرور 75% من وقت الخطوة</td></tr>
+          <tr><td class="q">عند انتهاء الحالة</td><td>قد لا تُوثّق النتيجة في مكان واحد</td><td class="us">عندما يغلقها طبيب بالتقرير أو بسبب موقّع</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- 03 WHERE -->
+<section id="where" data-state="03 أين تعمل">
+  <div class="wrap">
+    <div class="split">
+      <div class="stack">
+        <p class="eyebrow"><b>03</b>أين تعمل</p>
+        <h2>على هاتف المريض. وعلى حواسيب العيادة. <em>مصممة للربط مع ملفي وصحتنا وأنظمة العيادة.</em></h2>
+      </div>
+      <div class="stack">
+        <p class="lede">لا تطبيق للتنزيل: يفتح المريض رابطًا آمنًا من رسالة، وتعمل فرق الرعاية في أي متصفح. العرض يستخدم بيانات اصطناعية. يمكن أن يبدأ التجريب بملف نتائج يومي آمن وحجز بمساعدة المنسّق. أما الكتابة في السجل الصحي وملفي ووحدة في صحتنا، كما اقترح المنظمون، فتأتي بعد اتفاقيات الشركاء والموافقات.</p>
+        <p class="note">الرسائل والحجز والتأمين والربط محاكاة في العرض. التسميات أدناه تبين ما هو مبني وما هو مقترح.</p>
+      </div>
+    </div>
+    <div class="where" style="margin-top:36px">
+      <div><span class="tag built">مبني · تطبيق ويب</span><h3>هاتف المريض</h3><p>رابط واتساب أو رسالة نصية يفتح النتيجة والمحادثة والحجز و«تابع رعايتي». بالعربية والإنجليزية، نصًا وصوتًا.</p><span class="tag prop">مقترح · وحدة داخل صحتنا</span></div>
+      <div><span class="tag built">مبني · تطبيق ويب</span><h3>فريق الرعاية</h3><p>قائمة الاستثناءات، الخط الزمني للحالة، الإحالة مع القبول أو الرفض، الاستشارة الإلكترونية، الإغلاق بالدليل، لوحة المؤشرات.</p><span class="tag sim">محاكاة · شبكة التأمين والمواعيد</span></div>
+      <div><span class="tag built">مبني · تصدير FHIR R4</span><h3>السجل الصحي</h3><p>البداية بملف يومي آمن وحجز عبر المنسّق. ثم FHIR مع السجل الطبي والجدولة والأهلية.</p><span class="tag prop">مقترح · أحداث ملفي</span></div>
+    </div>
+    <div class="pipe" aria-label="مسار الربط">
+      <span>v0 ملف يومي آمن</span><em>→</em><span>v1 FHIR R4 مع السجل الطبي والجدولة</span><em>→</em><span class="on">أحداث ملفي + وحدة صحتنا</span>
+    </div>
+    <figure class="datafig">
+      <p>من هنا تعرف قافلة عيادة كل مريض، واللغة التي تكتب بها، والمواعيد التي تناسبه، وما يغطيه تأمينه. والعيادة تملك المصادر الأربعة كلها. <a class="archlink" href="architecture.html">← البنية التقنية كاملة</a></p>
+      <button class="shot" type="button" data-full="img/data-sources.webp"><img src="img/data-sources.webp" alt="Diagram: laboratory, clinic health record, appointment system and insurer feed Kafila; the patient gets a WhatsApp from their clinic, in their language, with an appointment that fits them and is covered by their plan" width="2560" height="1520"></button>
+    </figure>
+  </div>
+</section>
+
+<!-- 04 WHO -->
+<section id="who" data-state="04 الأشخاص">
+  <div class="wrap">
+    <div class="split">
+      <div class="stack">
+        <p class="eyebrow"><b>04</b>الأشخاص</p>
+        <h2>حالة واحدة. خمسة أشخاص. <em>كلٌّ يعرف دوره.</em></h2>
+      </div>
+      <div class="stack">
+        <p class="lede">لكل حالة منسّق رعاية مخصص. ولكل خطوة شخص مسؤول وموعد نهائي. تتابع قافلة التقدم وتنبّه إلى التأخير.</p>
+        <a class="btn line" style="justify-self:start" href="care-loop.html">حالة فاطمة خطوة بخطوة: من يفعل ماذا، ومتى</a>
+      </div>
+    </div>
+    <div class="people" id="people"></div>
+  </div>
+</section>
+
+<!-- 05 HOW -->
+<section id="how" data-state="05 حالة فاطمة">
+  <div class="wrap">
+    <div class="split">
+      <div class="stack">
+        <p class="eyebrow"><b>05</b>حالة فاطمة</p>
+        <h2>تعرّفوا إلى فاطمة، 52 عامًا. <em>اليوم 0.</em></h2>
+      </div>
+      <p class="lede">فحص البراز (FIT) لديها إيجابي. يطلب الدليل الوطني الإماراتي (وزارة الصحة ووقاية المجتمع 2022، §12.5.2) الإحالة خلال 15 يوم عمل من النتيجة الإيجابية. ومؤشر الجودة فيه (الملحق 2) هو تنظير القولون خلال 31 يوم عمل من الإحالة، وتستخدمه قافلة هدفًا مقترحًا للتجريب. ويُتفق على القيم النهائية مع الشريك السريري. هذه شاشات حقيقية من النموذج الأولي، ببيانات اصطناعية.</p>
+    </div>
+    <div class="story">
+      <div class="beats" id="beats">
+        <div class="beat" data-img="img/wa.webp" data-cap="رسالة واتساب من عيادتها">
+          <span class="t">اليوم 0 · 09:00</span>
+          <h3>رسالة من عيادتها</h3>
+          <p>باللغة المسجلة لها في عيادتها (في التجريب؛ العرض بالإنجليزية). لا نتيجة في المعاينة، بل رابط آمن فقط. وإذا كان الرقم خطأ، فإن «هذا ليس أنا» يوقف كل الرسائل.</p>
+          <p class="why"><b>الخصوصية:</b> لا يظهر أي شيء طبي قبل تسجيل الدخول. في التجريب تدخل عبر الهوية الرقمية UAE PASS أو رمز لمرة واحدة، وكل اطلاع وتغيير يُسجل في سجل تدقيق لا يمكن تعديله.</p>
+          <div class="m-shot"><div class="phone"><img loading="lazy" src="img/wa.webp" alt="WhatsApp message with Open your result" width="780" height="1540"></div></div>
+        </div>
+        <div class="beat" data-img="img/signin.webp" data-cap="تسجيل الدخول بالموافقة وبديلين">
+          <span class="t">اليوم 0 · 09:01</span>
+          <h3>توافق، أو تطلب مكالمة</h3>
+          <p>الموافقة اختيار حر. يمكنها أن تقول «أفضّل مكالمة هاتفية» فتتصل بها نورة.</p>
+          <p class="why"><b>الموافقة:</b> دائمًا مع بديل.</p>
+          <div class="m-shot"><div class="phone"><img loading="lazy" src="img/signin.webp" alt="Sign-in with a one-time code, an I agree checkbox, and links I'd rather get a phone call and This is not me" width="780" height="1540"></div></div>
+        </div>
+        <div class="beat" data-img="img/result-ar.webp" data-cap="بطاقة النتيجة بالعربية" id="beat-result">
+          <span class="t">اليوم 0 · 09:02</span>
+          <h3>نتيجتها بكلمات بسيطة</h3>
+          <p>«راجعي طبيبًا». وُجدت كمية صغيرة من دم غير مرئي. هذا ليس تشخيصًا. وفي الأسفل: ما الخطوة التالية ومتى.</p>
+          <div class="lang" role="group" aria-label="لغة النتيجة">
+            <button type="button" lang="ar" aria-pressed="true" data-l="ar">العربية</button>
+            <button type="button" aria-pressed="false" data-l="en">English</button>
+          </div>
+          <p class="why"><b>القواعد، لا الذكاء الاصطناعي:</b> المنطقة والموعد النهائي يأتيان من جدول قواعد برنامج الفحص.</p>
+          <div class="m-shot"><div class="phone"><img loading="lazy" src="img/result-ar.webp" alt="Result card in Arabic: see a doctor, with next steps and dates" width="780" height="1540"></div></div>
+        </div>
+        <div class="beat" data-img="img/ask.webp" data-cap="المحادثة تجيب مع ذكر المصدر">
+          <span class="t">اليوم 0 · 09:12</span>
+          <h3>«هل هو سرطان؟»</h3>
+          <p>تجيب المحادثة من نصوص معدّة (بانتظار المراجعة السريرية): معظم من تكون نتيجتهم إيجابية ليس لديهم سرطان، ويمكن لتنظير القولون أن يكشف السبب. كل جواب يذكر ما يُقارن به ومصدره.</p>
+          <p class="why"><b>الفهم:</b> سؤال بضغطة واحدة للتأكد أنها تعرف الخطوة التالية.</p>
+          <div class="m-shot"><div class="phone"><img loading="lazy" src="img/ask.webp" alt="Chat: Is it cancer? Automatic answer prepared by the health centre, with comparison and source" width="780" height="1540"></div></div>
+        </div>
+        <div class="beat" data-img="img/barrier.webp" data-cap="ما الذي يصعّب الذهاب؟">
+          <span class="t">اليوم 0 · 09:13</span>
+          <h3>ما الذي يصعّب الذهاب؟</h3>
+          <p>الخوف، التكلفة، الإجازة من العمل، التحضير، المواصلات، الخصوصية، أو «أفضّل طبيبة». تضغط على أحدها، فتتبعها فلاتر الحجز.</p>
+          <p class="why"><b>العوائق:</b> أسباب عدم الذهاب، تُسأل في الدقيقة الأولى.</p>
+          <div class="m-shot"><div class="phone"><img loading="lazy" src="img/barrier.webp" alt="Barrier options with I prefer a female doctor selected" width="780" height="1540"></div></div>
+        </div>
+        <div class="beat" data-img="img/book.webp" data-cap="مواعيد ضمن شبكتها">
+          <span class="t">اليوم 0 · 09:14</span>
+          <h3>موعد يناسبها</h3>
+          <p>مواعيد الجهاز الهضمي ضمن شبكتها، الطبيبات أولًا، مع ما يغطيه تأمينها. وإذا لم يناسبها شيء، تطلب بضغطة واحدة أن تتصل بها نورة وتحجز لها.</p>
+          <p class="why"><b>من أين تأتي المواعيد:</b> في التجريب تُقرأ الأوقات المتاحة من نظام الحجز في عيادات الجهاز الهضمي ضمن شبكتها، وما يغطيه تأمينها من شركة التأمين. وفي العرض كلاهما محاكاة.</p>
+          <div class="m-shot"><div class="phone"><img loading="lazy" src="img/book.webp" alt="Slots: Tue 24 Nov 18:30 Dr. Leena Haddad, female doctor, covered by Government plan" width="780" height="1540"></div></div>
+        </div>
+        <div class="beat" data-img="img/mycase.webp" data-cap="تابع رعايتي">
+          <span class="t">اليوم 0 ← الإغلاق</span>
+          <h3>تعرف دائمًا أين وصلت حالتها</h3>
+          <p>الخطوات نفسها التي يراها فريق رعايتها، بكلمات بسيطة، ومع كل خطوة من يتولاها الآن. وبعد التنظير تراجع د. حصة التقرير معها وتغلق الحالة.</p>
+          <p class="why"><b>الإغلاق:</b> بيد طبيب فقط، وبدليل فقط.</p>
+          <div class="m-shot"><div class="phone"><img loading="lazy" src="img/mycase.webp" alt="My case: time held Tuesday 24 November, waiting for the clinic to confirm; track my care, step 3 of 6" width="780" height="1540"></div></div>
+        </div>
+      </div>
+      <div class="stick" aria-live="polite">
+        <div class="phone"><img id="stickImg" src="img/wa.webp" alt="Prototype screen" width="780" height="1540"></div>
+        <p class="cap" id="stickCap">رسالة واتساب من عيادتها</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:72px">وفي الأثناء، في العيادة</h3>
+    <p class="note" style="margin-top:6px">أربعة أشخاص، أربع شاشات. كلٌّ يعمل على خطوته فقط، وكل إجراء يُسجل في الحالة. اضغط على شاشة لتكبيرها.</p>
+    <div class="screens">
+      <button class="shot" type="button" data-full="img/worklist.webp"><img src="img/worklist.webp" alt="Care team worklist with exceptions: urgent, overdue, unassigned, rejected" width="1920" height="1350"><b>نورة ترى فقط ما يحتاجها</b><span>المكالمات العاجلة أولًا، ثم الحالات المتأخرة والمُعادة وغير المسندة. كل سطر يقول ما الذي ينتظره، ومن المسؤول، ومتى الموعد.</span><em class="req">المتطلبات R1 · R2</em></button>
+      <button class="shot" type="button" data-full="img/case.webp"><img src="img/case.webp" alt="Case page for Fatima with draft summary, actions and timeline" width="1920" height="1350"><b>د. حصة تحيل وتوقّع</b><span>مسودة ملخص وخطاب إحالة تُبنى من حقول الحالة. تعدّلها وتوقّعها، ولا يُرسل شيء دونها. في التجريب يعيد الذكاء الاصطناعي صياغة المسودة بكلمات بسيطة من الحقول نفسها.</span><em class="req">المتطلبات R4 · R5</em></button>
+      <button class="shot" type="button" data-full="img/omar.webp"><img src="img/omar.webp" alt="Specialist view: accept referral, reject with reason, e-consult" width="1920" height="1350"><b>د. عمر يقبل أو يرفض</b><span>تقبل عيادة الجهاز الهضمي الإحالة، أو ترفضها مع السبب لكي ترسلها د. حصة إلى مكان آخر خلال يومي عمل. ويستطيع الأطباء طرح سؤال مكتوب على بعضهم داخل الحالة.</span><em class="req">المتطلب R4</em></button>
+      <button class="shot" type="button" data-full="img/dashboard.webp"><img src="img/dashboard.webp" alt="Programme dashboard with funnel, overdue cases and treatment started" width="1920" height="1350"><b>د. خالد يرى البرنامج كله</b><span>مسار المرضى، أيام الوصول إلى الرعاية، أسباب التأخير، بدء العلاج، الفجوات حسب اللغة. ولا يغلق الحالة إلا طبيب، بالتقرير أو بسبب موقّع.</span><em class="req">المتطلبات R5 · R6</em></button>
+    </div>
+
+    <h3 style="margin-top:72px">وماذا لو لم ترد أبدًا؟</h3>
+    <p class="note" style="margin-top:6px">كل محاولة تُسجل في الحالة. ولا يُسمح بـ«فُقد من المتابعة» إلا بعد 3 محاولات أو أكثر عبر قناتين أو أكثر خلال 30 يومًا على الأقل، منها مكالمة وخطاب.</p>
+    <div class="ladder">
+      <div class="rung"><i>ي0</i><b>واتساب</b><small>من عيادتها</small></div>
+      <div class="rung"><i>ي2</i><b>رسالة نصية</b><small>الرابط الآمن نفسه</small></div>
+      <div class="rung"><i>ي4</i><b>رسالة نصية</b><small>تذكير ثانٍ</small></div>
+      <div class="rung"><i>ي5</i><b>مكالمة آلية</b></div>
+      <div class="rung"><i>ي6</i><b>نورة تتصل</b><small>خطوة التواصل متأخرة</small></div>
+      <div class="rung"><i>✉</i><b>خطاب</b><small>إلى عنوان منزلها</small></div>
+      <div class="rung"><i>75%</i><b>مسؤول البرنامج</b><small>عند مرور ثلاثة أرباع الوقت</small></div>
+    </div>
+
+    <h3 style="margin-top:72px">وماذا لو قالت العيادة لا؟</h3>
+    <p class="note" style="margin-top:6px">هذا التسليم نقطة حرجة قد تنقطع فيها المتابعة. في قافلة تبدأ الإحالة المرفوضة الإجراء التالي فورًا، ويبقى شخص مسؤولًا عن الحالة حتى تتم الرعاية.</p>
+    <div class="ladder l6">
+      <div class="rung"><i>1</i><b>العيادة ترفض</b><small>يُسجل السبب، مثل عدم توفر سعة</small></div>
+      <div class="rung"><i>2</i><b>تحرير الموعد</b><small>إلغاء التذكيرات والتحضير</small></div>
+      <div class="rung"><i>3</i><b>إبلاغ فاطمة</b><small>«طبيبتك تختار عيادة أخرى»</small></div>
+      <div class="rung"><i>4</i><b>د. حصة تعيد التوجيه</b><small>خلال يومي عمل</small></div>
+      <div class="rung"><i>5</i><b>نورة تتابعها</b><small>تحت «إحالة مُعادة»</small></div>
+      <div class="rung"><i>⏱</i><b>الوقت مستمر</b><small>المواعيد النهائية لا تبدأ من جديد</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 URGENT -->
+<section id="safety" class="urgent" data-state="06 الحالات العاجلة">
+  <div class="wrap split">
+    <div class="stack">
+      <p class="eyebrow"><b>06</b>الحالات العاجلة</p>
+      <h2>عندما يكون الأمر عاجلًا، <em>لا تنتظر قافلة الذكاء الاصطناعي.</em></h2>
+      <p class="lede">راجش، 45 عامًا، يعمل بنظام المناوبات. ضغط دمه في الفحص 185/115. والطبيعي أقل من 120/80.</p>
+      <div class="tl">
+        <div><span class="when">09:00</span><p><b>نتيجة عاجلة: القواعد تصنّفها عاجلة.</b> يرى «يحتاج رعاية اليوم: سيتصل بك طبيب قبل 13:00»، ضمن وقت الاتصال الذي اختاره.</p></div>
+        <div><span class="when">+30 دقيقة</span><p><b>لم يرد على مكالمة الطبيب؟</b> إعادة المحاولة، ثم رسالة نصية برقم العيادة.</p></div>
+        <div><span class="when">اليوم نفسه</span><p><b>لم يُتوصل إليه بعد 3 محاولات:</b> يتسلم المسؤول السريري الحالة اليوم.</p></div>
+        <div class="tl-red"><span class="when">في أي وقت</span><p><b>مسار منفصل: يكتب «ألم في الصدر».</b> شاشة ثابتة تقول «اتصل بـ 998 الآن». لا يجيب الذكاء الاصطناعي؛ تُفحص قائمة العبارات أولًا، بالعربية والإنجليزية. ويُنبَّه فريق رعايته أيضًا.</p></div>
+      </div>
+    </div>
+    <div class="duo">
+      <figure><div class="phone"><img src="img/rajesh.webp" alt="Result card: Needs care today, a doctor will call you before 13:00" width="780" height="1540"></div><figcaption>نتيجة عاجلة، مكالمة في اليوم نفسه</figcaption></figure>
+      <figure><div class="phone"><img src="img/redflag.webp" alt="Red screen: Call 998 now. Safety rule: this answer never comes from AI" width="780" height="1540"></div><figcaption>عبارة خطر: جواب ثابت، دون ذكاء اصطناعي</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- AI -->
+<section id="ai" data-state="الذكاء الاصطناعي في قافلة">
+  <div class="wrap split">
+    <div class="stack">
+      <p class="eyebrow">الذكاء الاصطناعي في قافلة</p>
+      <h2>القواعد السريرية تقرر. <em>الذكاء الاصطناعي يساعد في الشرح.</em></h2>
+      <ul class="stack" style="margin:0;padding-left:20px;gap:8px;color:var(--ink-2)">
+        <li><b>اليوم · النموذج الأولي:</b> يتلقى المرضى أجوبة معدّة بالعربية أو الإنجليزية، نصًا أو صوتًا. ويمكن لنموذج ذكاء اصطناعي اختياري أن يساعد في شرح هذه المعلومات. والمراجعة السريرية ما زالت قائمة.</li>
+        <li><b>مخطط · التجريب:</b> يمكن للذكاء الاصطناعي المساعدة في ملخصات الحالات ومسودات الإحالة وتحديد عوائق الرعاية. ويراجع الأطباء القرارات والوثائق الطبية ويعتمدونها.</li>
+        <li><b>الذكاء الاصطناعي اختياري:</b> إذا لم يتوفر، تُبقي الأجوبة المعدّة مسار المريض يعمل.</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3>مسؤوليات واضحة</h3>
+      <div class="who-does">
+        <div class="r"><b>القواعد</b><small>المنطقة، الموعد النهائي، الأولوية، علامات الخطر، من تأخر. جدول بإصدارات، ولكل سطر مصدر.</small></div>
+        <div class="a"><b>الذكاء الاصطناعي</b><small>يشرح للمريض ويكتب مسودات للموظفين. ويراجع شخص كل مسودة قبل إرسالها.</small></div>
+        <div class="h"><b>الأشخاص</b><small>قبول الإحالات أو رفضها، توقيع الخطابات، إغلاق الحالات. وكل إجراء يُسجل.</small></div>
+      </div>
+      <h3>ما لا يستطيعه الذكاء الاصطناعي</h3>
+      <div class="chips no"><span>التشخيص</span><span>ذكر الأدوية أو الجرعات</span><span>تحديد الأولوية أو خفضها</span><span>تغيير المواعيد النهائية</span><span>إغلاق الحالات</span><span>إرسال تعليمات سريرية غير معتمدة</span></div>
+      <h3>اختُبر في 18 نوفمبر 2026</h3>
+      <div class="tests">
+        <div><b>35 / 35</b><span>اختبارًا لمحرك القواعد نجحت</span></div>
+        <div><b>50 / 50</b><span>فحص سلامة للأجوبة المعدّة نجحت. اختبار النموذج الحي قيد الانتظار. المراجعة السريرية قيد الانتظار</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 PILOT -->
+<section id="pilot" data-state="07 الأثر والتجريب">
+  <div class="wrap">
+    <div class="split">
+      <div class="stack">
+        <p class="eyebrow"><b>07</b>الأثر والتجريب</p>
+        <h2>رقم واحد للحكم علينا: <em>المتابعة المكتملة في وقتها.</em></h2>
+        <p class="lede">في تجريب فحص البراز: النتائج الإيجابية التي تلاها تنظير قولون مؤكد ضمن المهلة المتفق عليها، مقسومة على كل النتائج الإيجابية التي بلغت تلك المهلة. وتُطبق القاعدة نفسها على الأشهر الـ12 السابقة لدى الشريك. «رفض» و«فُقد من المتابعة» و«انتقل» تُعرض منفصلة ولا تُحسب نجاحًا أبدًا.</p>
+      </div>
+      <div class="north">
+        <p class="big">هدف التجريب: <em>+15 نقطة مئوية</em> في المتابعة المكتملة في وقتها</p>
+        <p class="note">مقارنة بالأشهر الـ12 السابقة لدى الشريك نفسه. فرضية يُتفق عليها مع الشريك، لا نتيجة. وللمقارنة فقط: في تجربة PRECISE (الولايات المتحدة، تنظير خلال 12 شهرًا، بيئة مختلفة) أضاف توجيه المرضى 13 نقطة مئوية.</p>
+        <div class="chips"><span>أيام حتى الإبلاغ والحجز والزيارة</span><span>الحالات المتأخرة وغير المسندة</span><span>بدء العلاج</span><span>«فهمت» و«شعرت بالتوجيه»</span><span>الفجوات حسب اللغة والجنسية والتأمين</span></div>
+      </div>
+    </div>
+    <h3 class="valh">من يستفيد، وكيف</h3>
+    <div class="where value">
+      <div><span class="tag built">الأشخاص</span><h3>اكتشاف أبكر، وخوف أقل</h3><ul>
+        <li>لم تعد النتيجة الإيجابية تضيع بين الفحص والمتابعة.</li>
+        <li>اكتشاف السرطان مبكرًا: البقاء 5 سنوات 91% عند اكتشافه موضعيًا مقابل 13% بعد انتشاره (القولون، ACS/SEER 2014–2020).</li>
+        <li>أجوبة بلغتهم في أي ساعة، وموعد يناسبهم، وطبيبة إن فضّلوا، وما يغطيه تأمينهم قبل الحجز.</li></ul></div>
+      <div><span class="tag built">النظام الصحي</span><h3>فحص يؤتي ثماره</h3><ul>
+        <li>الفحوص المدفوعة أصلًا تقود إلى الرعاية، بدل أن تتوقف عند النتيجة.</li>
+        <li>يرى مسؤول البرنامج من يضيع ولماذا: حسب اللغة والمنطقة والتأمين.</li>
+        <li>يصل عدد أكبر إلى الإجراء دون توظيف موجّه لكل حالة. أضاف التوجيه 13 نقطة مئوية في PRECISE (55.1% مقابل 42.1%).</li>
+        <li>آمنة بالتصميم: القواعد تحدد الأولوية والمواعيد، والأطباء يقررون، والذكاء الاصطناعي يشرح، وكل خطوة تُسجل.</li></ul></div>
+      <div><span class="tag built">الاقتصاد</span><h3>رعاية أقل تكلفة، وعيادات ممتلئة</h3><ul>
+        <li>علاج المراحل المبكرة أقصر وأقل تكلفة من علاج المراحل المتأخرة. ويُقاس الرقم الإماراتي في التجريب.</li>
+        <li>مواعيد تنظير فارغة وتغيّب أقل.</li>
+        <li>وقت أقل للمنسّق لكل حالة (الهدف −50%، افتراض للاختبار).</li>
+        <li>يبقى الناس في عملهم: علاج أقصر، وإجازات مرضية أقل.</li>
+        <li>رسوم أساسية للمنصة، مع مكافأة عن كل متابعة مكتملة ومتحقق منها بشكل مستقل، معدّلة حسب تعقيد الحالات. ولا مكافأة على المرضى السهلين أو الإغلاق على الورق.</li></ul></div>
+    </div>
+    <p class="note valf">القيمة للجهة الدافعة سنويًا = النتائج الإيجابية × الأشخاص الإضافيون الذين يصلون إلى المتابعة × نسبة من يُكتشف لديهم المرض × التوفير من المرحلة الأبكر + ساعات المنسّق الموفرة + التغيب المتجنب. تُملأ ببيانات الشريك نفسه في التجريب.</p>
+    <div class="plan">
+      <div><span class="d">يناير–فبراير 2027</span><b>الشريك وخط الأساس</b><span>شبكة مقدم رعاية واحدة؛ قياس الأشهر الـ12 الأخيرة</span></div>
+      <div><span class="d">مارس–أبريل</span><b>البناء والموافقات</b><span>ملف يومي، حجز عبر المنسّق، مراجعات دائرة الصحة والموافقة</span></div>
+      <div><span class="d">مايو–أغسطس</span><b>تجريب 12 أسبوعًا</b><span>فحص براز إيجابي ← تنظير القولون، 300–500 نتيجة</span></div>
+      <div><span class="d">سبتمبر–ديسمبر</span><b>التقييم، وإضافة مسار</b><span>النتائج إلى دائرة الصحة؛ ثم HPV أو HbA1c</span></div>
+    </div>
+    <div class="ask">
+      <div>
+        <h3>لا مريض يُترك بعد نتيجة غير طبيعية.</h3>
+        <p>الخطوة التالية، إذا اختيرت قافلة: تجريب 12 أسبوعًا في مجموعة عيادات واحدة في أبوظبي في 2027. يبدأ بفحوص البراز الإيجابية، ثم يضيف فحص عنق الرحم (HPV) والسكري (HbA1c) وارتفاع ضغط الدم: الخطوات الخمس نفسها تصلح لأي نتيجة فحص. ويبقى الأطباء مسؤولين عن كل قرار.</p>
+      </div>
+      <a class="btn" href="prototype/?lang=ar" target="_blank" rel="noopener">جرّب النموذج الأولي</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap cols">
+    <div>
+      <details>
+      <summary>المصادر (7)</summary>
+      <ol>
+        <li>Almansoori A et al. BMC Cancer 2021: colorectal cancer screening in SEHA ambulatory clinics, Abu Dhabi, 2015–2016 (436 of 1,429 people, 30.5%, had a follow-up colonoscopy after a positive FIT/gFOBT).</li>
+        <li>Coronado GD et al. PRECISE randomised trial, Ann Intern Med 2025: patient navigation vs usual care after abnormal FIT (55.1% vs 42.1%).</li>
+        <li>Patel MP et al. J Gen Intern Med 2018;33(5):715–721, “Closing the referral loop”: 38.9% of specialist referrals had no documented appointment date, in one US health system.</li>
+        <li>American Cancer Society. Survival rates for colorectal cancer: colon cancer 5-year relative survival by SEER stage, people diagnosed 2014–2020 (localised 91%, regional 74%, distant 13%). cancer.org.</li>
+        <li>Corley DA et al. JAMA 2017;317(16):1631–1641: time to colonoscopy after positive FIT and risk of cancer and advanced-stage disease (10–12 months vs 8–30 days).</li>
+        <li>USPSTF 2021, Colorectal Cancer: Screening.</li>
+        <li>ADPHC، ندوة شرح تحدي الصحة السكانية، 29 أكتوبر 2026.</li>
+      </ol>
+      </details>
+    </div>
+    <div>
+      <h3>عن هذا النموذج الأولي</h3>
+      <p>بُني خلال تحدي المستقبل الصحي للابتكار الرقمي على يد مؤسِّسة منفردة ذات تعليم طبي، تعمل مع فريق من أدوار الذكاء الاصطناعي: مطوّر، مختبِر، محلل أعمال، مهندس بنية، مصمم، مراجع طبي، كاتب.</p>
+      <p class="disc" id="fn-demo">نموذج أولي للفكرة والعرض. كل الأشخاص والنتائج والعيادات وخطط التأمين اصطناعية. المنطق السريري يتبع أدلة منشورة وينتظر مراجعة طبيب مرخّص. الرسائل والحجز والربط محاكاة. ليس للاستخدام السريري. غير مسجل كجهاز طبي، وسيُتحقق من التصنيف قبل أي تجريب. شاشات المراسلة محاكاة وغير تابعة لواتساب أو Meta. WhatsApp وصحتنا وملفي وUAE PASS وثقة وضمان وصحة أسماء لأصحابها. قافلة فكرة مستقلة وغير تابعة لهم ولا معتمدة منهم، ولا من دائرة الصحة أبوظبي أو مركز أبوظبي للصحة العامة. الشعار: فكرة مولّدة بالذكاء الاصطناعي، أعيد رسمها كرسم متجهي.</p>
+    </div>
+  </div>
+</footer>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="الشاشة مكبّرة">
+  <img id="lbImg" src="" alt="">
+  <button class="btn line" type="button" id="lbClose">إغلاق</button>
+</div>
+
+<script>
+(function () {
+  // People with simple illustrated faces (fictional demo characters).
+  function face(f) {
+    const s = [];
+    const top = f.top === "coat" ? "#ffffff" : f.top;
+    if (f.head === "scarf") s.push(`<path d="M13 27c0-11 5-18 11-18s11 7 11 18v6c-3 2.5-7 3.5-11 3.5s-8-1-11-3.5z" fill="${f.scarf}"/>`);
+    if (f.head === "ghutra") s.push(`<path d="M12.5 30c0-12 5-20 11.5-20s11.5 8 11.5 20v4l-4-1v-9c-2 2-5 3-7.5 3s-5.5-1-7.5-3v9l-4 1z" fill="#f4f4f1"/>`);
+    s.push(`<path d="M6 50c0-10 8-15 18-15s18 5 18 15z" fill="${top}"/>`);
+    if (f.top === "coat") s.push(`<path d="M24 35l-5 15M24 35l5 15" stroke="#c9d3cf" stroke-width="1.4"/><path d="M19 37l5 6 5-6" fill="${f.extra === "steth" ? "#5f8f7a" : "#4a6fa5"}"/>`);
+    if (f.head === "scarf") s.push(`<path d="M16 34c2 2.5 5 3.5 8 3.5s6-1 8-3.5l-2 6h-12z" fill="${f.scarf}"/>`);
+    s.push(`<rect x="21" y="27" width="6" height="7" rx="2" fill="${f.skin}"/>`);
+    s.push(`<ellipse cx="24" cy="21.5" rx="${f.head === "scarf" ? 7.2 : 7.8}" ry="8.4" fill="${f.skin}"/>`);
+    if (f.head === "hair") s.push(`<path d="M16 20c0-6 3.5-9.5 8-9.5s8 3.5 8 9.5c-1.5-3-4-4.5-8-4.5s-6.5 1.5-8 4.5z" fill="${f.hair}"/>`);
+    if (f.head === "ghutra") s.push(`<path d="M15.5 15c2-3.5 5-5 8.5-5s6.5 1.5 8.5 5" stroke="#1d1d1f" stroke-width="2.6" fill="none"/><path d="M16 17.5c2.5-2 5-2.8 8-2.8s5.5.8 8 2.8" fill="#f4f4f1"/>`);
+    if (f.extra === "beard") s.push(`<path d="M17 22.5c.5 5 3.5 8 7 8s6.5-3 7-8c-1 2.5-3.5 3.5-7 3.5s-6-1-7-3.5z" fill="#2a211c"/>`);
+    s.push(`<circle cx="21" cy="21" r="1" fill="#1d1d1f"/><circle cx="27" cy="21" r="1" fill="#1d1d1f"/><path d="M21.5 25.2c1.5 1.2 3.5 1.2 5 0" stroke="#7a3b2e" stroke-width="1.1" fill="none" stroke-linecap="round"/>`);
+    if (f.extra === "steth") s.push(`<path d="M20 37c-1 5 1 8 4 8s5-3 4-8" stroke="#3d4a46" stroke-width="1.3" fill="none"/><circle cx="24" cy="45" r="1.6" fill="#3d4a46"/>`);
+    if (f.extra === "headset") s.push(`<path d="M15.5 20a8.5 8.5 0 0 1 17 0" stroke="#e9eef0" stroke-width="1.6" fill="none"/><rect x="14" y="19" width="3" height="5" rx="1.2" fill="#e9eef0"/><rect x="31" y="19" width="3" height="5" rx="1.2" fill="#e9eef0"/><path d="M15.5 24c0 3 2 4.5 5 4.5" stroke="#e9eef0" stroke-width="1.2" fill="none"/>`);
+    if (f.extra === "phone") s.push(`<rect x="30" y="38" width="6.5" height="10" rx="1.4" fill="#1d1d1f"/><rect x="31" y="39.3" width="4.5" height="7" rx=".6" fill="#7fd1a8"/>`);
+    return `<span class="face"><svg viewBox="0 0 48 48" aria-hidden="true">${s.join("")}</svg></span>`;
+  }
+  const P = [
+    { pt: true, name: "فاطمة", role: "المريضة", f: { skin: "#c48d63", head: "scarf", scarf: "#5a2f55", top: "#3b3f4a", extra: "phone" }, w: `لماذا: يجب أن تفهم نتيجتها وتشعر بالتوجيه (المتطلب R3).`, d: "52 عامًا، مدينة خليفة، تقرأ العربية. تفهم نتيجتها وتحجز الفحص التالي.", can: "تسأل · تختار موعدًا · تطلب ممرضة" },
+    { name: "نورة", role: "منسّقة", f: { skin: "#d9a77f", head: "scarf", scarf: "#2d3e6b", top: "#1f7a6d", extra: "headset" }, w: `لماذا: من دونها يمر الحجز الفائت دون انتباه. أضاف التوجيه 13 نقطة مئوية (PRECISE، المتطلب R2).`, d: "تتابع الحالة من النتيجة إلى الإغلاق. تتصل وتساعد في الحجز عندما لا تكفي الرسالة، وتلاحق أي خطوة متأخرة.", can: "تتصل · تحجز · تلاحق الخطوات المتأخرة" },
+    { name: "د. حصة", role: "طبيبة الأسرة", f: { skin: "#e2b893", head: "scarf", scarf: "#4f6a8f", top: "coat", extra: "steth" }, w: `لماذا: الطبيب وحده يحيل ويوقّع ويغلق الحالة (المتطلب R5).`, d: "المسؤولة سريريًا. ترسل الإحالة، وتقرأ التقرير، وتغلق الحالة.", can: "تحيل · تسأل الأخصائي · توقّع · تغلق" },
+    { name: "د. عمر", role: "طبيب الجهاز الهضمي", f: { skin: "#9c6b4a", head: "hair", hair: "#1f1a17", top: "coat", extra: "beard" }, w: `لماذا: تضيع الإحالات بين العيادات؛ 38.9% منها بلا موعد موثّق في نظام صحي أمريكي واحد (Patel 2018، المتطلب R4).`, d: "يقبل الإحالة أو يرفضها مع السبب. ويعيد التقرير.", can: "يقبل · يرفض · يسجل النتيجة" },
+    { name: "د. خالد", role: "مسؤول البرنامج", f: { skin: "#b07b56", head: "ghutra", top: "#f4f4f1", extra: "beard" }, w: `لماذا: لا بد أن يرى أحد البرنامج كله ويتصرف قبل فوات المواعيد (المتطلبات R5 وR6).`, d: "يتسلم كل حالة استهلكت 75% من وقتها، ويرى من يضيع ولماذا.", can: "يراقب · يصعّد · يعيد إسناد الحالة" },
+  ];
+  const box = document.getElementById("people");
+  if (box) box.innerHTML = P.map((p) => `<div class="person${p.pt ? " pt" : ""}">${face(p.f)}<span class="role">${p.role}</span><h3>${p.name}</h3><p>${p.d}</p><span class="can">${p.can}</span><p class="pwhy">${p.w}</p></div>`).join("");
+
+
+  // Hero loop: each step is clickable and shows its screen and a one-line caption.
+  const heroImg = document.querySelector(".loopviz .phone img"), chip = document.querySelector(".casechip");
+  document.querySelectorAll("button.node").forEach((n) => n.addEventListener("click", () => {
+    document.querySelectorAll("button.node").forEach((x) => { x.classList.toggle("on", x === n); x.setAttribute("aria-pressed", String(x === n)); });
+    heroImg.style.opacity = 0; setTimeout(() => { heroImg.src = n.dataset.img; heroImg.alt = "شاشة من النموذج الأولي: " + n.dataset.cap; heroImg.style.opacity = 1; }, 150);
+    chip.innerHTML = "<b>" + n.querySelector("i").textContent + " · " + n.querySelector("b").textContent + "</b><br>" + n.dataset.cap;
+  }));
+
+  // Story: the sticky phone follows the step in view.
+  const beats = [...document.querySelectorAll(".beat")];
+  const sImg = document.getElementById("stickImg"), sCap = document.getElementById("stickCap");
+  let resultLang = "ar";
+  function show(b) {
+    beats.forEach((x) => x.classList.toggle("on", x === b));
+    let src = b.dataset.img, cap = b.dataset.cap;
+    if (b.id === "beat-result") { src = "img/result-" + resultLang + ".webp"; cap = "بطاقة النتيجة " + (resultLang === "ar" ? "بالعربية" : "بالإنجليزية"); }
+    if (sImg.getAttribute("src") !== src) { sImg.style.opacity = 0; setTimeout(() => { sImg.src = src; sImg.style.opacity = 1; }, 160); }
+    sCap.textContent = cap;
+  }
+  if (beats.length) {
+    beats[0].classList.add("on");
+    const io = new IntersectionObserver((es) => { es.forEach((e) => { if (e.isIntersecting) show(e.target); }); }, { rootMargin: "-45% 0px -45% 0px" });
+    beats.forEach((b) => io.observe(b));
+  }
+  document.querySelectorAll(".lang button").forEach((btn) => btn.addEventListener("click", () => {
+    resultLang = btn.dataset.l;
+    document.querySelectorAll(".lang button").forEach((x) => x.setAttribute("aria-pressed", String(x === btn)));
+    const m = document.querySelector("#beat-result .m-shot img"); if (m) m.src = "img/result-" + resultLang + ".webp";
+    show(document.getElementById("beat-result"));
+  }));
+
+  // Loop ring on the right: fills with scroll, shows the section in view.
+  const fg = document.getElementById("pfg"), lbl = document.getElementById("plbl"), pr = document.getElementById("progress");
+  const secs = [...document.querySelectorAll("section[data-state]")];
+  const L = 2 * Math.PI * 23;
+  function onScroll() {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    const k = max > 0 ? Math.min(1, scrollY / max) : 1;
+    fg.style.strokeDashoffset = String(L * (1 - k));
+    let cur = secs[0];
+    secs.forEach((s) => { if (s.getBoundingClientRect().top < innerHeight * 0.5) cur = s; });
+    lbl.textContent = cur.dataset.state;
+    pr.classList.toggle("done", k > 0.985);
+  }
+  fg.style.strokeDasharray = String(L);
+  addEventListener("scroll", onScroll, { passive: true }); addEventListener("resize", onScroll); onScroll();
+
+  // Lightbox for staff screens.
+  const lb = document.getElementById("lb"), lbImg = document.getElementById("lbImg"), lbClose = document.getElementById("lbClose");
+  let opener = null;
+  document.querySelectorAll(".shot").forEach((b) => b.addEventListener("click", () => {
+    opener = b; lbImg.src = b.dataset.full; lbImg.alt = b.querySelector("img").alt; lb.hidden = false; lbClose.focus();
+  }));
+  function closeLb() { lb.hidden = true; if (opener) opener.focus(); }
+  lbClose.addEventListener("click", closeLb);
+  lb.addEventListener("click", (e) => { if (e.target === lb) closeLb(); });
+  addEventListener("keydown", (e) => { if (lb.hidden) return; if (e.key === "Escape") closeLb(); else if (e.key === "Tab") { e.preventDefault(); lbClose.focus(); } });
+})();
+</script>
+<a id="totop" class="totop" href="#top" aria-label="العودة إلى الأعلى" title="العودة إلى الأعلى">↑</a>
+<script>(function(){var b=document.getElementById("totop");if(!b)return;function f(){b.classList.toggle("show",window.scrollY>600)}addEventListener("scroll",f,{passive:true});f();b.addEventListener("click",function(e){e.preventDefault();scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"})})})();</script>
+<script>(function(){var b=document.getElementById("menubtn"),n=document.querySelector(".top nav");if(!b||!n)return;b.onclick=function(){var o=n.classList.toggle("open");b.setAttribute("aria-expanded",String(o));b.textContent=o?"إغلاق ✕":"القائمة";};n.addEventListener("click",function(e){if(e.target.closest("a")){n.classList.remove("open");b.setAttribute("aria-expanded","false");b.textContent="القائمة";}});})();</script>
