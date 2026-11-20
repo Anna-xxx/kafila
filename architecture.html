@@ -384,9 +384,9 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
         </tbody>
       </table>
     </div>
-    <p class="note" style="margin-top:14px">What the partner's IT team has to do: one outbound rule in the integration engine (or a daily file), one read / write connection to the record, and staff sign-in through the clinic's own login. No new hardware. The pilot can start with steps 1–5 and 7. A daily file is enough for positive stool tests only. Urgent results, like a blood pressure of 185/115, need a same-day feed and a clinician on call; without that they stay out of the live pilot.</p>
+    <p class="note" style="margin-top:14px">What the partner's IT team has to do: one outbound rule in the integration engine (or a daily file), one read / write connection to the record, and staff sign-in through the clinic's own login. No new hardware. The pilot can start with steps 1–3, 5 and 7; updates back to the record (step 4) follow once it is connected. A daily file is enough for positive stool tests only. Urgent results, like a blood pressure of 185/115, need a same-day feed and a clinician on call; without that they stay out of the live pilot.</p>
     <figure class="datafig">
-      <p>Where Kafila learns which clinic Fatima belongs to, which language to write in, which slots fit her and what her plan pays for.</p>
+      <p>Where Kafila learns which clinic each patient belongs to, which language to write in, which appointments fit them and what their plan pays for.</p>
       <button class="shot" type="button" data-full="img/data-sources.webp"><img src="img/data-sources.webp" alt="Diagram: laboratory, clinic health record, appointment system and insurer feed Kafila; Fatima gets a WhatsApp from her clinic, in her language"></button>
     </figure>
   </div>
@@ -428,8 +428,8 @@ footer .disc { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
       <div><h3>Rules set urgency</h3><p>Zone, deadline, red flags, escalation and closure come from a versioned rules table. No AI output can change them. AI may flag a concern for a person to review; only the rules and authorised clinicians set urgency.</p></div>
       <div><h3>Works without AI</h3><p>Every AI call has a prepared fallback answer. The pilot can run with AI switched off.</p></div>
       <div><h3>A responsible person at every step</h3><p>Every positive result is one case with a named responsible person and a deadline on each step, until a clinician closes it with evidence. If an expected event does not arrive (no reply, no booking, no report), the case goes to the top of a list.</p></div>
-      <div><h3>No health words in messages</h3><p>WhatsApp and SMS messages, urgent ones included, say only that her clinic needs to reach her, plus a link. The result appears only after an identity check. Consent, opt-outs and every contact attempt are logged.</p></div>
-      <div><h3>Minimum data to AI</h3><p>Kafila does not send her name, Emirates ID, phone, address or record number to the model. She could still type personal details into a free question, so the pilot adds a filter that removes them first. Red-flag questions never reach the AI.</p></div>
+      <div><h3>No health words in messages</h3><p>WhatsApp and SMS messages, urgent ones included, say only that the patient's clinic needs to reach them, plus a link. The result appears only after an identity check. Consent, opt-outs and every contact attempt are logged.</p></div>
+      <div><h3>Minimum data to AI</h3><p>Kafila does not send the patient's name, Emirates ID, phone, address or record number to the model. A patient could still type personal details into a free question, so the pilot adds a filter that removes them first. Red-flag questions never reach the AI.</p></div>
       <div><h3>Designed to stay in the UAE</h3><p>Hosting, database, backups, logs, AI and speech, as the health-data law requires. The whole chain, including message providers and support access, is checked before real patients.</p></div>
     </div>
     <figure class="datafig">
