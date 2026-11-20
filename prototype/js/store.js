@@ -26,7 +26,7 @@
     let saved = null; try { saved = JSON.parse(localStorage.getItem(KEY) || "null"); } catch (e) {}
     S.data = saved && saved.v === 1 ? saved : fresh();
     // Two versions, one build (Anna 18 Nov): no parameter = patient phones in English; ?lang=ar = in Arabic. Staff stay English.
-    const ver = version(); if (S.data.version !== ver) { S.data.version = ver; S.data.lang = ver; }
+    const ver = version(); if (urlLang() || S.data.version !== ver) { S.data.version = ver; S.data.lang = ver; }
     const q = new URLSearchParams(location.search).get("ai"); if (q) S.data.aiUrl = q; else if (!S.data.aiUrl && window.SCREENPATH_AI) S.data.aiUrl = window.SCREENPATH_AI;
     window.addEventListener("storage", (e) => { if (e.key === KEY) { try { S.data = JSON.parse(e.newValue); emit(); } catch (x) {} } });
   }

@@ -5,7 +5,7 @@
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (m) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[m]);
   // One way in (Anna, 20 Nov): the card shows only after "▶ 3-minute tour" or ?tour=1. Open or closed, nothing in between.
   let st = { open: false, step: 0, lang: "en" };
-  try { const o = JSON.parse(localStorage.getItem(KEY) || "{}"); if (o.step >= 0 && o.step < 6) st.step = o.step; if (o.lang) st.lang = o.lang; } catch (e) {}
+  try { const o = JSON.parse(localStorage.getItem(KEY) || "{}"); if (o.step >= 0 && o.step < 7) st.step = o.step; if (o.lang) st.lang = o.lang; } catch (e) {}
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify({ step: st.step, lang: st.lang })); } catch (e) {} };
   const go = (hash, role) => { if (role) Store.S.data.role = role; Store.save(); if (location.hash === hash) window.dispatchEvent(new HashChangeEvent("hashchange")); else location.hash = hash; };
   const setLang = () => { Store.S.data.lang = st.lang; };
@@ -23,12 +23,15 @@
     { en: ["The clinic sees her case", "This is the care team's screen. One page shows who is responsible for each step and by when. Dr. Omar, the specialist, accepts her referral here.", "R1, R2, R4 · one view of the case, deadlines, referral accepted"],
       ar: ["العيادة ترى حالتها", "هذه شاشة فريق الرعاية. صفحة واحدة تُظهر من المسؤول عن كل خطوة وموعدها. يقبل د. عمر، الطبيب المختص، تحويلها هنا.", "R1، R2، R4 · رؤية واحدة للحالة، المواعيد النهائية، قبول التحويل"],
       btn: [["Show me", "أرني"]], run: [async () => { setLang(); Patient.tourGo("C-1042", { tab: "book" }); await Patient.tourBook(); go("#/case/C-1042", "specialist"); }] },
-    { en: ["Rajesh needs help now", "Another patient, Rajesh, writes “I have chest pain”. Kafila does not ask the AI: it shows “Call 998” at once and alerts a doctor. Press “I am safe now” to continue.", "R5 · urgent cases reach staff fast"],
-      ar: ["راجيش يحتاج إلى مساعدة الآن", "مريض آخر، راجيش، يكتب «عندي ألم في الصدر». لا تسأل قافلة الذكاء الاصطناعي: تُظهر «اتصل بالرقم 998» فورًا وتنبّه طبيبًا. اضغط «أنا بأمان الآن» للمتابعة.", "R5 · الحالات العاجلة تصل بسرعة إلى الكادر الطبي"],
+    { en: ["When a patient writes a danger sign", "This can happen with any patient. Here Rajesh writes “I have chest pain”. Kafila does not ask the AI: it shows “Call 998” at once and alerts a doctor. Press “I am safe now” to continue.", "R5 · urgent cases reach staff fast"],
+      ar: ["عندما يكتب المريض علامة خطر", "قد يحدث هذا مع أي مريض. هنا يكتب راجيش «عندي ألم في الصدر». لا تسأل قافلة الذكاء الاصطناعي: تُظهر «اتصل بالرقم 998» فورًا وتنبّه طبيبًا. اضغط «أنا بأمان الآن» للمتابعة.", "R5 · الحالات العاجلة تصل بسرعة إلى الكادر الطبي"],
       btn: [["Show me", "أرني"]], run: [async () => { setLang(); Patient.tourGo("C-1043", { tab: "assistant" }); go("#/patient"); await Patient.send(st.lang === "ar" ? "عندي ألم في الصدر" : "I have chest pain"); }] },
-    { en: ["The doctor closes the case", "Dr. Hessa, the family doctor, records the outcome of her call and Rajesh's plan (follow-up visit booked), then closes the urgent step with that reason. Then open the dashboard to see how many patients reached care. Ahmed has not answered any message: see who follows up.", "R5, R6 · case closed with a reason; results measured"],
-      ar: ["الطبيبة تغلق الحالة", "تسجّل د. حصة، طبيبة الأسرة، نتيجة اتصالها وخطة راجيش (موعد متابعة محجوز)، ثم تغلق الخطوة العاجلة مع ذكر السبب. ثم افتح لوحة المؤشرات لترى كم مريضًا وصل إلى الرعاية. أحمد لم يرد على أي رسالة: شاهد من يتابع حالته.", "R5، R6 · إغلاق الحالة مع السبب؛ قياس النتائج"],
-      btn: [["Rajesh's case", "حالة راجيش"], ["Dashboard", "لوحة المؤشرات"], ["Ahmed's case", "حالة أحمد"]], run: [() => go("#/case/C-1043", "gp"), () => go("#/dashboard"), () => go("#/case/C-1045", "coordinator")] }
+    { en: ["A doctor closes the urgent case", "The family doctor, Dr. Hessa, records her call and the plan, then closes the urgent step with a reason.", "R5 · case closed with a reason"],
+      ar: ["الطبيبة تغلق الحالة العاجلة", "تسجّل طبيبة الأسرة، د. حصة، مكالمتها والخطة، ثم تغلق الخطوة العاجلة مع ذكر السبب.", "R5 · إغلاق الحالة مع السبب"],
+      btn: [["Show me", "أرني"]], run: [() => go("#/case/C-1043", "gp")] },
+    { en: ["Did patients reach care?", "The programme lead sees how many patients with a result that needs action reached care, and where they are stuck.", "R6 · results measured"],
+      ar: ["هل وصل المرضى إلى الرعاية؟", "يرى قائد البرنامج كم مريضًا لديه نتيجة تحتاج إلى إجراء وصل إلى الرعاية، وأين يتعثرون.", "R6 · قياس النتائج"],
+      btn: [["Show me", "أرني"]], run: [() => go("#/dashboard", "lead")] }
   ];
 
   // Each step shows its own screen as soon as it becomes active (BA, 20 Nov: Next moved only the card, not the screen).
@@ -39,18 +42,18 @@
     if (btn) { btn.setAttribute("aria-pressed", st.open); btn.textContent = st.open ? "■ Close tour" : "▶ 3-minute tour"; btn.title = st.open ? "Close the tour" : "Open the 3-minute tour"; }
     if (!st.open) { if (el) el.remove(); return; }
     if (!el) { el = document.createElement("aside"); el.id = "tour"; el.setAttribute("aria-label", "Judge's tour"); document.body.appendChild(el); }
+    st.lang = Store.S.data.version === "ar" ? "ar" : "en"; // one language switch, in the top bar (Anna, 20 Nov)
     const L = st.lang, ar = L === "ar", s = STEPS[st.step], [title, body, req] = s[L];
     el.dir = ar ? "rtl" : "ltr"; el.lang = L; 
     el.innerHTML = `<div class="t-head"><b>${ar ? "ابدأ هنا · جولة في 3 دقائق" : "Start here · 3-minute tour"}</b>
         <span class="t-sp"></span>
-        <button class="t-lang" data-t="lang" aria-label="${ar ? "English" : "العربية"}">${ar ? "EN" : "عربي"}</button>
         <button class="t-x" data-t="close" aria-label="${ar ? "إغلاق الجولة" : "Close tour"}">×</button></div>
       <ol class="t-dots">${STEPS.map((x, i) => `<li><button data-t="step" data-i="${i}" class="${i === st.step ? "on" : i < st.step ? "done" : ""}" aria-label="${ar ? "الخطوة" : "Step"} ${i + 1}" aria-current="${i === st.step}">${i + 1}</button></li>`).join("")}</ol>
       <div class="t-body"><b>${st.step + 1}. ${esc(title)}</b><p>${esc(body)}</p><p class="t-req">${esc(req)}</p>
         ${s.btn.length < 2 ? "" : `<div class="t-acts">${s.btn.map((b, i) => `<button class="btn sm ${i === 0 ? "primary" : ""}" data-t="run" data-i="${i}">${esc(b[ar ? 1 : 0])}</button>`).join("")}</div>`}</div>
       <div class="t-nav"><button class="btn sm" data-t="prev" ${st.step === 0 ? "disabled" : ""}>${ar ? "السابق" : "Back"}</button>
         <span class="tiny">${ar ? "بيانات اصطناعية · محاكاة" : "Synthetic data · simulation"}</span>
-        <button class="btn sm" data-t="next" ${st.step === STEPS.length - 1 ? "disabled" : ""}>${ar ? "التالي" : "Next"}</button></div>`;
+        ${st.step === STEPS.length - 1 ? `<button class="btn sm primary" data-t="close">${ar ? "إنهاء" : "Finish"}</button>` : `<button class="btn sm" data-t="next">${ar ? "التالي" : "Next"}</button>`}</div>`;
     el.querySelectorAll("[data-t]").forEach((b) => (b.onclick = async () => {
       const t = b.dataset.t, i = +b.dataset.i;
       if (t === "close") st.open = false;

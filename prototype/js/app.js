@@ -8,7 +8,7 @@
         <li><b>Result arrives</b> from the lab or screening programme. A <b>rules table</b> (versioned, each rule with its source) sets the zone, urgency level and deadline. The AI never sets them.</li>
         <li><b>Case opens</b> with a named owner and a deadline (SLA) for each step: assigned → notified → acknowledged → referral accepted → booked → attended → closed.</li>
         <li><b>The health centre messages the patient</b> on WhatsApp (SMS, automated call and a coordinator call if there is no reply). An AI assistant explains the result in Arabic or English using only prepared texts (pending clinical review), answers her questions. One tap takes her from the result to booking; if she says not now, the clinic asks what is in the way. A nurse is one tap away.</li>
-        <li><b>A nurse is one tap away</b>: in nurse hours (08:00–20:00, a demo value to agree with the partner) Nurse Layla takes over the chat or calls back. Outside these hours the request is saved as a callback task for 08:00; prepared answers and the 998 rule keep working.</li>
+        <li><b>A nurse is one tap away</b>: in nurse hours (08:00–20:00, a demo value to agree with the partner) Nurse Layla takes over the chat or calls back within 2 hours (also a demo value). Outside these hours the request is saved as a callback task for 08:00; prepared answers and the 998 rule keep working.</li>
         <li><b>Red topics skip the AI</b>: phrases like “chest pain” or “bleeding a lot” get a fixed “Call 998” answer and an urgent clinician task.</li>
         <li><b>Care team works the exceptions</b>: overdue, unassigned, rejected and urgent cases. Specialists accept or reject referrals with a reason. A clinician closes the case only with evidence or a signed reason code.</li>
         <li><b>Dashboard</b> shows the loop funnel, time to care, drop-off reasons and equity gaps.</li>
@@ -47,7 +47,7 @@
   function render() {
     const d = Store.S.data, h = (location.hash || "#/patient").replace(/\?.*$/, ""), [, r, id] = h.split("/");
     const sk = (r || "patient") === "patient" ? "patient" : d.role;
-    markPeople(r, sk);
+    markPeople(r, sk); document.querySelectorAll("[data-glang]").forEach((b) => b.setAttribute("aria-pressed", b.dataset.glang === (d.version === "ar" ? "ar" : "en")));
     $("#role").value = sk; $("#lang").value = d.lang;
     // (Anna, 20 Nov: no screen dropdown in the top bar; "Choose a person" opens the chooser.)
     $("#clock").textContent = new Date(Store.now()).toLocaleString("en-GB", { weekday: "short", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit", timeZone: "Asia/Dubai" }) + " (UAE time)";
@@ -102,6 +102,11 @@
     if (b.dataset.dt === "reset") { if ("speechSynthesis" in window) speechSynthesis.cancel(); Store.reset(); if (location.hash.startsWith("#/patient")) render(); else location.hash = "#/patient"; return; }
     Store.S.data.clockDays += +b.dataset.dt; Store.save(); });
   $("#tourBtn").onclick = () => Tour.toggle();
+  // One language switch for the patient phone and the tour (Anna, 20 Nov). Care-team screens stay in English.
+  const setGLang = (v) => { const d = Store.S.data; d.version = v; d.lang = v; try { sessionStorage.setItem("kafila-ver", v); } catch (e) {}
+    try { const u = new URL(location.href); u.searchParams.set("lang", v); history.replaceState(null, "", u); } catch (e) {}
+    Store.save(); Tour.render(); };
+  document.querySelectorAll("[data-glang]").forEach((b) => (b.onclick = () => setGLang(b.dataset.glang)));
   // Role row under the top bar (Anna, 20 Nov): the role on top, the patient is chosen inside the patient view.
   const ENTRY = [
     ["Patient", "The patient's phone: choose a patient next to it", { hash: "#/patient" }, "patient"],

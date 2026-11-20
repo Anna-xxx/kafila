@@ -142,9 +142,14 @@
   const ic = (n, cls = "") => `<svg class="ic ${cls}" viewBox="0 0 24 24" aria-hidden="true"><path d="${P[n]}"/></svg>`;
   // Nurse hours on the demo clock (UAE time). 08:00–20:00 is a demo value to agree with the partner.
   const nurseHours = () => { const h = new Date(Store.now() + 4 * 3600000).getUTCHours(); return h >= 8 && h < 20; };
+  // Nurse call-back text follows the same nurse-hours rule as the chat (demo values to agree with the pilot clinic).
+  const cbText = (lang) => nurseHours()
+    ? (lang === "ar" ? "ستتصل بكِ الممرضة ليلى على هذا الرقم اليوم خلال ساعتين. في الحالات الطارئة اتصلي بالرقم 998." : "Nurse Layla will call you on this number today, within 2 hours. In an emergency, call 998.")
+    : (lang === "ar" ? "تجيب الممرضات من 08:00 إلى 20:00. ستتصل بكِ الممرضة ليلى بعد الساعة 08:00. في الحالات الطارئة اتصلي بالرقم 998." : "Our nurses answer from 08:00 to 20:00. Nurse Layla will call you after 08:00. In an emergency, call 998.");
   // "Choose a patient" in the panel next to the phone (Anna, 20 Nov).
   const PICK = [["C-1042", "Fatima", "Answers and books a colonoscopy"], ["C-1043", "Rajesh", "Urgent result: a doctor calls today"], ["C-1045", "Ahmed", "Does not answer: the clinic keeps trying"],
-    ["C-1049", "Mariam", "Books a colposcopy with a female doctor"], ["C-1050", "Salem", "Sees his family doctor for a repeat test"], ["C-1042:returned", "Fatima, later", "The clinic sends her referral back"]];
+    // Mariam and Salem stay in the worklist; the chooser shows 4 stories (Anna, 20 Nov).
+    ["C-1042:returned", "Fatima, later", "The clinic sends her referral back"]];
   const curKey = () => { const d = Store.S.data; return d.personaKey && d.personaKey.split(":")[0] === d.persona ? d.personaKey : d.persona; };
   // Demo patients. To add a story: one line here; `preset` (optional) prepares the case when it is picked.
   const PERSONAS = [
@@ -197,7 +202,7 @@
   const nm = (s, lang) => lang !== "ar" ? s : String(s || "").split(" · ").map((x) => AR_NAME[x.trim()] || x).join(" · ");
   const docLine = (s, lang) => `<bdi>${esc(nm(s.doc, lang))}</bdi>${lang === "ar" ? (s.f ? " · طبيبة" : " · طبيب") : s.f ? " (female doctor)" : ""}`;
   // Arabic texts are written to a woman by default; for a man, switch the common verb forms (machine draft).
-  const MASC = [["رسالتكِ", "رسالتك"], ["سؤالكِ", "سؤالك"], ["تفضلين", "تفضل"], ["أجيبكِ", "أجيبك"], ["بكِ", "بك"], ["لكِ", "لك"], ["افتحي", "افتح"], ["احجزي", "احجز"], ["اختاري", "اختر"], ["اسألي", "اسأل"], ["اضغطي", "اضغط"], ["ابدئي", "ابدأ"], ["رتّبي", "رتّب"], ["أحضري", "أحضر"],
+  const MASC = [["فتحتِ", "فتحت"], ["نتيجتكِ", "نتيجتك"], ["رسالتكِ", "رسالتك"], ["سؤالكِ", "سؤالك"], ["تفضلين", "تفضل"], ["أجيبكِ", "أجيبك"], ["بكِ", "بك"], ["لكِ", "لك"], ["افتحي", "افتح"], ["احجزي", "احجز"], ["اختاري", "اختر"], ["اسألي", "اسأل"], ["اضغطي", "اضغط"], ["ابدئي", "ابدأ"], ["رتّبي", "رتّب"], ["أحضري", "أحضر"],
     ["اتبعي", "اتبع"], ["اذهبي", "اذهب"], ["انتظري", "انتظر"], ["اقرئي", "اقرأ"], ["تحدثي", "تحدث"], ["توافقين", "توافق"], ["أرسلي", "أرسل"], ["تدفعينه", "تدفعه"],
     ["فهمتِ", "فهمت"], ["قلقة", "قلق"], ["خائفة", "خائف"], ["تحتاجين", "تحتاج"], ["اكتبي", "اكتب"], ["شعرتِ", "شعرت"], ["افتحيها", "افتحها"], ["اتّبعي", "اتّبع"], ["تناولي", "تناول"], ["تأكدي", "تأكد"], ["اتصلي", "اتصل"], ["خطّطي", "خطّط"], ["أنتِ الآن تتحدثين", "أنت الآن تتحدث"], ["ستقومين بها", "ستقوم بها"],
     ["أخبريها", "أخبرها"], ["كنتِ", "كنت"], ["تتناولين", "تتناول"], ["توقفي", "توقف"], ["تغيّريه", "تغيّره"], ["ستحصلين", "ستحصل"], ["تقودي", "تقُد"], ["تحدّثي", "تحدّث"], ["تشعرين", "تشعر"], ["تريدين", "تريد"], ["كِ", "ك"]];
@@ -265,9 +270,9 @@
       c.waReply = "canttalk"; c.cantTalk = true; c.callback = new Date(Store.now()).toISOString(); c.humanDone = false;
       Store.log(c.id, "Patient", `Tapped "I can't talk today" in WhatsApp. Case stays urgent; duty doctor (${doctorOf(c, "en")}) told to try again today. 998 line shown.`, "urgent");
     }
-    if (a === "waNurse") { if (!c.callback) { c.callback = new Date(Store.now()).toISOString(); Store.log(c.id, "Patient", "Asked for a nurse from the first WhatsApp message. Call-back task, SLA 2 h.", "human"); } }
+    if (a === "waNurse") { if (!c.callback) { c.callback = new Date(Store.now()).toISOString(); Store.log(c.id, "Patient", "Asked for a nurse from the first WhatsApp message. Nurse call-back requested (clinic target: within 2 hours in nurse hours).", "human"); } }
     if (a === "key") {
-      if (arg === 2) { act("callEnd"); if (!c.callback) { c.callback = new Date(Store.now()).toISOString(); } Store.log(c.id, "Patient", "Pressed 2 on the automated call: nurse call-back, SLA 2 h.", "human"); toast(lang === "ar" ? "ستتصل بك ممرضة خلال ساعتين." : "A nurse will call you within 2 hours."); return; }
+      if (arg === 2) { act("callEnd"); if (!c.callback) { c.callback = new Date(Store.now()).toISOString(); } Store.log(c.id, "Patient", "Pressed 2 on the automated call: nurse call-back requested (clinic target: within 2 hours in nurse hours).", "human"); toast(cbText(lang)); return; }
       if (arg === 1) { Agent.speak(lang === "ar" ? "يرجى إدخال تاريخ ميلادك. بعد ذلك ستسمع أن لديك نتيجة تحتاج زيارة متابعة، وكيف تحجز." : "Please enter your date of birth. Then you will hear that your result needs a follow-up visit, and how to book.", lang); Store.log(c.id, "Patient", "Pressed 1 on the automated call: identity check, then result summary.", "channel"); return; }
     }
     if (a === "home") { u.sheet = null; c.pscreen = "home"; }
@@ -422,7 +427,7 @@
       tab(c, "assistant");
       if (!c.human && !nurseHours()) {
         // Out of hours (demo clock): nobody joins. The request becomes a callback task for 08:00 (Anna, 20 Nov: "what if it is night").
-        clearQr(c); push(c, { t: "in", tag: "centre", text: ar ? "تجيب الممرضات من 08:00 إلى 20:00. رسالتكِ محفوظة وستردّ ممرضة بعد الساعة 08:00. في الحالات الطارئة اتصل بالرقم 998." : "Our nurses answer from 08:00 to 20:00. Your message is saved and a nurse will reply after 08:00. In an emergency, call 998." });
+        clearQr(c); push(c, { t: "in", tag: "centre", text: ar ? "تجيب الممرضات من 08:00 إلى 20:00. رسالتكِ محفوظة وستردّ ممرضة بعد الساعة 08:00. في الحالات الطارئة اتصلي بالرقم 998." : "Our nurses answer from 08:00 to 20:00. Your message is saved and a nurse will reply after 08:00. In an emergency, call 998." });
         push(c, { t: "qr", opts: [["nightcall", ar ? "اتصلوا بي صباحًا" : "Call me in the morning"], ["nightwrite", ar ? "سأكتب سؤالي الآن" : "I'll write my question now"]] });
         if (!c.callback || c.humanDone) { c.callback = new Date(Store.now()).toISOString(); c.humanDone = false; }
         Store.log(c.id, "Patient", "Asked for a nurse out of hours. Callback task for the coordinator, due 08:00.", "human");
@@ -460,7 +465,7 @@
       push(c, { t: "me", text: ar ? "ليس الآن" : "Not now" }); askBarriers(c);
     }
     if (a === "callme") {
-      if (!c.callback || c.humanDone) { c.callback = new Date(Store.now()).toISOString(); c.humanDone = false; push(c, { t: "sys", key: "callbackOk" }); Store.log(c.id, "Patient", "Call-back requested. Task for nurse, SLA 2 h.", "human"); }
+      if (!c.callback || c.humanDone) { c.callback = new Date(Store.now()).toISOString(); c.humanDone = false; push(c, { t: "sys", text: cbText(lang) }); Store.log(c.id, "Patient", "Nurse call-back requested (clinic target: within 2 hours in nurse hours).", "human"); }
       tab(c, "assistant");
     }
     if (a === "e998") { u.overlay = "emerg"; u.emergText = (Store.S.F.L4.answer || {})[lang] || ""; Store.log(c.id, "Patient", "Tapped the 998 button in the app", "urgent"); }
@@ -634,10 +639,14 @@
          <div style="margin-top:4px">${lang === "ar" ? "ارتفاع ضغط الدم شائع ويمكن علاجه. غالبًا لا يسبب أعراضًا، لذلك هذا الاتصال مهم حتى لو كنت تشعر أنك بخير." : "High blood pressure is common and can be treated. It often causes no symptoms, so this call matters even if you feel well."}</div>`
       : `${value ? `<div><b style="font-size:17px"><bdi>${esc(value)}</bdi></b></div>` : ""}<div style="margin-top:4px">${esc(meaning)}</div>${M ? `<div class="cmpline small" style="margin-top:4px">${esc(M.c[lang] || M.c.en)}</div>` : ""}`;
     const speakText = [testName, zoneWord, callToday ? "" : meaning, T.nextTitle, ...steps].join(". ");
+    // Booking is the goal: for bookable results the action block sits right under the result card (Anna, 20 Nov).
+    const actions = OPEN.includes(c.state) ? (canBook ? `<button class="btn primary block" data-act="book">${esc(bookLabel(c, lang))}</button><button class="btn block" data-act="askq">${esc(lang === "ar" ? "لديّ سؤال" : "I have a question")}</button><button class="linkbtn" style="display:block;margin:8px auto 0" data-act="notnow">${esc(lang === "ar" ? "ليس الآن" : "Not now")}</button>` : `<button class="btn primary block" data-act="understood">${esc(t.understood)}</button>`)
+        : canBook && !c.slot ? `<button class="btn primary block" data-act="tab" data-arg="book">${esc(bookLabel(c, lang))}</button>` : "";
     return `${outcomeCard(c, lang)}
       <div class="hero z-${r.zone}${callToday ? " calm" : ""}" style="background:var(--${r.zone}-soft)"><div class="hic" aria-hidden="true">${callToday ? ic("phone") : zoneIcon[r.zone] || "!"}</div>
         <div><div class="small">${esc(testName)}</div><b>${esc(zoneWord)}</b>${body}
         <div class="why-row">${lang === "ar" ? "حُدِّد وفق قواعد برنامج الفحص، وليس بالذكاء الاصطناعي." : "Decided by the screening programme's rules, not by AI."}</div></div></div>
+      ${canBook ? `<div class="res-acts">${actions}</div>` : ""}
       <div class="acard"><b>${esc(T.nextTitle)}</b>
         <ol class="steps">${steps.map((s, i) => `<li><span class="d ${i < done ? "on" : ""}">${i < done ? "✓" : i + 1}</span><span>${glossify(s, lang, i, canBook)}</span>${whenFor(c, lang, i, by)}</li>`).join("")}</ol>
         ${callToday ? `<details class="srcs howto"><summary>${lang === "ar" ? "كيف أقيس؟" : "How to measure"}</summary>
@@ -651,8 +660,7 @@
           <div class="small">${esc((PLAIN_SRC[r.test] || PLAIN_SRC.FIT)[lang] || "")}</div>
           <div class="tiny" style="margin-top:4px">${esc(T.disclaimer)}</div></details>
         <button class="btn sm" style="margin-top:8px" data-speak="${esc(speakText)}" data-ai="1">${esc(T.listen)}</button></div>
-      ${OPEN.includes(c.state) ? (canBook ? `<button class="btn primary block" data-act="book">${esc(bookLabel(c, lang))}</button><button class="btn block" data-act="askq">${esc(lang === "ar" ? "لديّ سؤال" : "I have a question")}</button><button class="linkbtn" style="display:block;margin:8px auto 0" data-act="notnow">${esc(lang === "ar" ? "ليس الآن" : "Not now")}</button>` : `<button class="btn primary block" data-act="understood">${esc(t.understood)}</button>`)
-        : canBook && !c.slot ? `<button class="btn primary block" data-act="tab" data-arg="book">${esc(bookLabel(c, lang))}</button>` : ""}`;
+      ${canBook ? "" : actions}`;
   }
   function whenFor(c, lang, i, by) {
     const T = I18N[lang], w = (x) => `<span class="when">${esc(x)}</span>`;
@@ -833,14 +841,14 @@
       <div class="wa-body doodle"><div class="sys">${lang === "ar" ? "اليوم" : "Today"}</div>
         <div class="e2e">${ic("lock")} ${lang === "ar" ? "الرسائل في هذه المحادثة محمية بالتشفير التام بين الطرفين." : "Messages to this chat are secured with end-to-end encryption."}</div>
         <div class="unread">${lang === "ar" ? "رسالة واحدة غير مقروءة" : "1 unread message"}</div>
-        <div class="bub tail"><div class="who">${esc(clinicOf(c, lang))}</div>${esc(isUrgent(c) ? fill(t.waUrgent, { name: first(c), clinic: clinicOf(c, lang), doctor: doctorOf(c, lang), deadline: callByText(c, lang), clinicPhone: CLINIC_PHONE + (lang === "ar" ? " (رقم تجريبي)" : " (demo number)") }) : fill(t.waHello, { name: first(c), clinic: clinicOf(c, lang), doctor: doctorOf(c, lang) }))}
+        <div class="bub tail"><div class="who">${esc(clinicOf(c, lang))}</div>${esc(isUrgent(c) ? fill(t.waUrgent, { name: first(c), clinic: clinicOf(c, lang), doctor: doctorOf(c, lang), deadline: callByText(c, lang), clinicPhone: CLINIC_PHONE + (lang === "ar" ? " (رقم تجريبي)" : " (demo number)") }) : fill(t.waHello, { name: first(c), clinic: clinicOf(c, lang), doctor: doctorOf(c, lang) }).replace(/\.\./g, "."))}
         <button class="linkcard" data-act="openapp"><span class="lc-ic"><img src="img/kafila-app-icon.svg" alt=""></span><span><b>${esc(t.openResult)}</b><br><span class="tiny">${esc(t.secureLink)}</span></span></button>
         <div class="meta"><span>${fmtTime(Store.now())}</span></div></div>
         ${isUrgent(c) ? `<div class="qr"><button data-act="waCallNow">${lang === "ar" ? "اتصلوا بي الآن" : "Call me now"}</button><button data-act="waCantTalk">${lang === "ar" ? "لا أستطيع التحدث اليوم" : "I can't talk today"}</button><button data-act="notme">${lang === "ar" ? "هذا ليس أنا" : "This is not me"}</button></div>
         ${c.waReply === "callnow" ? `<div class="bub me">${lang === "ar" ? "اتصلوا بي الآن" : "Call me now"}</div><div class="bub"><div class="who">${esc(clinicOf(c, lang))}</div>${esc(lang === "ar" ? `سيتصل بك ${doctorOf(c, lang)} في أقرب وقت، ${callByText(c, lang)}. إذا شعرت بأن حالتك تسوء، اتصل بالرقم 998.` : `${doctorOf(c, lang)} will call you as soon as possible, ${callByText(c, lang)}. If you feel worse, call 998.`)}</div>` : ""}
         ${c.waReply === "canttalk" ? `<div class="bub me">${lang === "ar" ? "لا أستطيع التحدث اليوم" : "I can't talk today"}</div><div class="bub"><div class="who">${esc(clinicOf(c, lang))}</div>${esc(lang === "ar" ? `شكرًا لإخبارنا. نتيجتك ما زالت تحتاج إلى طبيب اليوم، لذلك سيحاول ${doctorOf(c, lang)} الاتصال بك مرة أخرى. إذا شعرت بألم في الصدر أو صداع شديد جدًا أو ضعف أو صعوبة في الكلام أو الرؤية، اتصل بالرقم 998 الآن.` : `Thank you for telling us. Your result still needs a doctor today, so ${doctorOf(c, lang)} will try you again. If you have chest pain, a very bad headache, weakness, or trouble speaking or seeing, call 998 now.`)}</div>` : ""}`
         : `<div class="qr"><button data-act="waNurse">${lang === "ar" ? "أريد التحدث مع ممرضة" : "Talk to a nurse"}</button><button data-act="notme">${lang === "ar" ? "هذا ليس أنا" : "This is not me"}</button></div>
-        ${c.callback ? `<div class="bub me">${lang === "ar" ? "أريد التحدث مع ممرضة" : "Talk to a nurse"}</div><div class="bub"><div class="who">${esc(clinicOf(c, lang))}</div>${lang === "ar" ? "ستتصل بك الممرضة ليلى خلال ساعتين." : "Nurse Layla will call you within 2 hours."}</div>` : ""}`}</div>
+        ${c.callback ? `<div class="bub me">${lang === "ar" ? "أريد التحدث مع ممرضة" : "Talk to a nurse"}</div><div class="bub"><div class="who">${esc(clinicOf(c, lang))}</div>${esc(cbText(lang))}</div>` : ""}`}</div>
       <div class="wa-input wa-deco"><div class="wa-field"><span aria-hidden="true">${ic("emoji")}</span><input disabled placeholder="${esc(lang === "ar" ? "رسالة" : "Message")}" aria-label="${esc(T.placeholder)}"><span aria-hidden="true">${ic("clip")}</span><span aria-hidden="true">${ic("camera")}</span></div><button type="button" disabled aria-label="Voice">${ic("mic")}</button></div>`);
     const browserBar = (pct) => `<div class="chrome" dir="ltr"><span class="ch-home">${ic("lock")}</span><span class="ch-url">kafila.demo/r/${esc(c.id.slice(-4))}</span><span class="ch-tabs">1</span><span class="ch-more">⋮</span>${pct ? `<i class="ch-prog"></i>` : ""}</div>`;
     if (sc === "loading") return shell(c, lang, "signin", "dark", `${browserBar(true)}<div class="splash"><div class="appicon"><img src="img/kafila-mark.svg" alt=""></div><b>${lang === "ar" ? "قافلة" : "Kafila"}</b><span class="tiny">${esc(clinicOf(c, lang))}</span></div>`);
@@ -895,8 +903,8 @@
     root.innerHTML = `<div class="cols pcols">
       <div class="stage">
         ${(() => { const pk = PERSONAS.find((x) => x.key === (d.personaKey || d.persona)) || PERSONAS.find((x) => x.id === c.id); const he = c.sex === "female" ? ["Her", "her"] : ["His", "him"];
-          return `<div class="p-cap" dir="ltr" lang="en"><span>${esc(pk ? pk.cap : c.name)}${c.lang === "ar" ? ` · ${lang === "ar" ? `Shown in Arabic, as ${he[1] === "her" ? "her" : "his"} clinic writes it.` : `${he[0]} clinic writes to ${he[1]} in Arabic. Tap العربية to see it.`}` : d.version === "ar" ? ` · ${he[0]} clinic writes to ${he[1]} in English.` : " · English"}</span>
-            ${c.lang === "ar" || d.version === "ar" ? `<span class="p-lang" role="group" aria-label="Phone language"><button data-plang="en" aria-pressed="${lang !== "ar"}">English</button><button data-plang="ar" lang="ar" aria-pressed="${lang === "ar"}">العربية</button></span>` : ""}</div>`; })()}
+          return `<div class="p-cap" dir="ltr" lang="en"><span>${esc(pk ? pk.cap : c.name)}${c.lang === "ar" ? ` · ${lang === "ar" ? `Shown in Arabic, as ${he[1] === "her" ? "her" : "his"} clinic writes it.` : `${he[0]} clinic writes to ${he[1]} in Arabic. Switch to العربية at the top to see it.`}` : d.version === "ar" ? ` · ${he[0]} clinic writes to ${he[1]} in English.` : " · English"}</span>
+            </div>`; })()}
         ${phone(c, lang)}
         <p class="sim-note">${lang === "ar" ? "محاكاة. لا تُرسل أي رسائل إلى أرقام حقيقية. بيانات اصطناعية." : "Simulation. Nothing is sent to real numbers. Synthetic data."}${["wa", "lock"].includes(screen(c)) ? `<br>${lang === "ar" ? "شاشة مراسلة محاكاة. لا علاقة لها بواتساب أو ميتا." : "Simulated messenger screen. Not affiliated with WhatsApp or Meta."}` : ""}</p>
       </div>
@@ -939,7 +947,7 @@
     root.querySelectorAll("[data-act]").forEach((b) => (b.onclick = () => { const v = b.dataset.arg; act(b.dataset.act, v === undefined || v === "" || isNaN(+v) ? v : +v); }));
     root.querySelectorAll("[data-plang]").forEach((b) => (b.onclick = () => { d.lang = b.dataset.plang; Store.save(); }));
     root.querySelectorAll("[data-try]").forEach((b) => (b.onclick = () => send(b.dataset.try)));
-    root.querySelectorAll("[data-pick]").forEach((b) => (b.onclick = async () => { const k = b.dataset.pick; if (k === "C-1043") Store.S.data.lang = "en"; if (window.Tour) Tour.close(); await pickPersona(k); render(root); }));
+    root.querySelectorAll("[data-pick]").forEach((b) => (b.onclick = async () => { const k = b.dataset.pick; if (window.Tour) Tour.close(); await pickPersona(k); render(root); }));
     root.querySelectorAll("[data-lad]").forEach((b) => (b.onclick = () => ladder(b.dataset.lad)));
     // AI voice gets only prepared texts with the patient's name taken out; the 998 and nurse texts use the browser voice.
     const noName = (t) => [c.name.split(" ")[0], NAMES_AR[c.name.split(" ")[0]]].filter(Boolean).reduce((x, n) => x.split(n).join(""), t).replace(/\s+([,.،])/g, "$1");

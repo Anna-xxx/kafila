@@ -54,7 +54,7 @@ window.I18N = {
     track: "My case",
     trackTitle: "Track my care",
     trackSame: "The same steps your care team sees, in plain words.",
-    trackSteps: ["Result received", "You understood it", "Referral sent", "Appointment booked", "Visit done", "Your doctor confirms your care is complete"],
+    trackSteps: ["Result received", "You opened your result", "Referral sent", "Appointment booked", "Visit done", "Your doctor confirms your care is complete"],
     trackOwner: "Who is responsible now",
     disclaimer: "This explanation is for information only. Your doctor will confirm what this result means for you.",
     listen: "▶ Listen",
@@ -109,7 +109,7 @@ window.I18N = {
   ar: {
     dir: "rtl",
     app: {
-      waHello: "مرحبًا {name}. معك {clinic}. لديك رسالة مهمة من {doctor}. يُرجى فتحها اليوم عبر الرابط الآمن أدناه. للاستفسار اضغط \"التحدث مع ممرضة\".",
+      waHello: "مرحبًا {name}. معك {clinic}. لديك رسالة مهمة من {doctor}. يُرجى فتحها اليوم عبر الرابط الآمن أدناه. للاستفسار اضغطي \"التحدث مع ممرضة\".",
       waUrgent: "مرحبًا {name}. معك {clinic}. يحتاج طبيب إلى التحدث معك اليوم. سيتصل بك {doctor} {deadline} من الرقم {clinicPhone}. افتح الرابط الآمن لاختيار وقت. في الحالات الطارئة اتصل بالرقم 998.",
       openResult: "افتحي الرسالة", secureLink: "kafila.demo · آمن، بدون تحميل",
       signinTitle: "تسجيل الدخول", otpSent: "أرسلنا رمزًا من 4 أرقام إلى هاتفك المنتهي بـ ••42 (الرمز التجريبي مُدخل).",
@@ -160,7 +160,7 @@ window.I18N = {
     track: "حالتي",
     trackTitle: "ما المرحلة التي وصلت إليها حالتي؟",
     trackSame: "نفس الخطوات التي يراها فريق رعايتك، بكلمات بسيطة.",
-    trackSteps: ["تم استلام النتيجة", "فهمتِ النتيجة", "تم إرسال التحويل", "تم حجز الموعد", "تمت الزيارة", "يؤكد طبيبكِ اكتمال رعايتكِ"],
+    trackSteps: ["تم استلام النتيجة", "فتحتِ نتيجتكِ", "تم إرسال التحويل", "تم حجز الموعد", "تمت الزيارة", "يؤكد طبيبكِ اكتمال رعايتكِ"],
     trackOwner: "المسؤول عن الخطوة الحالية",
     disclaimer: "هذا الشرح للمعلومات فقط. سيؤكد طبيبك ما تعنيه هذه النتيجة بالنسبة لك.",
     listen: "▶ استمع",
