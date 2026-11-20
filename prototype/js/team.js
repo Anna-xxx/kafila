@@ -187,7 +187,7 @@
     root.innerHTML = `<div class="card wl"><div class="row" style="justify-content:space-between;align-items:baseline"><h2 style="margin:0">Actionable results</h2>
       <span class="tiny">Abu Dhabi screening programme · synthetic data · ${Store.S.data.cases.length} cases</span></div>
       <p class="small" style="margin:6px 0 4px"><b>${esc(intro)}</b>${role === "lead" ? ` <a href="#/dashboard">Open the Dashboard →</a>` : ""}</p>
-      <p class="muted tiny" style="margin:0 0 10px">Switch person with the “Screen” button at the top. “All cases” shows everything.</p>
+      <p class="muted tiny" style="margin:0 0 10px">Switch person with the “Viewing” button at the top. “All cases” shows everything.</p>
       ${role === "gp" && tab === "mine" ? gpCalls() : ""}
       <div class="tabs" role="tablist">${MAIN.map(([k, l]) => `<button role="tab" aria-selected="${k === tab}" class="${k === tab ? "on" : ""}" data-tab="${k}">${l}<span class="n">${filtered(k).length}</span></button>`).join("")}
         <label class="tiny" style="margin-inline-start:auto;display:flex;align-items:center;gap:6px">More <select id="more"><option value="">—</option>${MORE.map(([k, l]) => `<option value="${k}" ${k === tab ? "selected" : ""}>${l} (${filtered(k).length})</option>`).join("")}</select></label></div>
@@ -625,7 +625,7 @@ R: Please accept for ${c.result.next}.${c.barriers && c.barriers.includes("gende
     <div class="grid4">
       <div class="card stat"><span class="tiny">Open actionable results</span><b>${open.length}</b><span class="tiny">of ${n} in cohort</span></div>
       <div class="card stat"><span class="tiny">Overdue now</span><b style="color:var(--red)">${over}</b><span class="tiny">of ${open.length} open (${open.length ? Math.round(over / open.length * 100) : 0}%) · step over SLA</span></div>
-      <div class="card stat"><span class="tiny">Median days to notification</span><b style="${+daysTo("notified") > 3 ? "color:var(--red)" : ""}">${daysTo("notified")}</b><span class="tiny">target ≤ 3</span></div>
+      <div class="card stat"><span class="tiny">Median days to notification</span><b style="${+daysTo("notified") > 2 ? "color:var(--red)" : ""}">${daysTo("notified")}</b><span class="tiny">target ≤ 2 days</span></div>
       <div class="card stat"><span class="tiny">Median days to attended</span><b>${daysTo("attended")}</b><span class="tiny">FIT+: referral ≤15 working days, colonoscopy ≤31 working days after it</span></div></div>
     <div class="grid2" style="margin-top:16px">
       <div class="card"><h2>Loop funnel${sim ? " (simulation)" : ""}</h2>${(() => { let prev = n; return funnel.map(([st, l]) => { let v = reached(st); if (sim && ["booked", "attended", "closed", "done"].includes(st)) v = Math.min(prev, Math.round(v + n * lift / 100)); prev = v; return `<div class="bar"><span>${l}</span><span class="tr"><span class="fl" style="width:${Math.round(v / n * 100)}%"></span></span><span class="num">${v}</span></div>`; }).join(""); })()}

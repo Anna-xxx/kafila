@@ -62,7 +62,7 @@ window.I18N = {
     understood: "I understand",
     question: "I have a question",
     bookNow: "Book now",
-    teach: "One quick check so nothing is missed: what is the next step?",
+    teach: "We want to be sure we explained it clearly. What will you do next?",
     teachOpts: ["A colonoscopy", "Repeat the stool test", "Nothing for now"],
     teachOk: "Exactly. A colonoscopy finds the cause of the hidden blood. Let's find a time that suits you.",
     // One reply per wrong option, in the order of teachOpts[1..]. Option 3 wording is a draft pending the medical review.
@@ -168,7 +168,7 @@ window.I18N = {
     understood: "فهمت",
     question: "لدي سؤال",
     bookNow: "احجزي الآن",
-    teach: "سؤال سريع حتى لا يفوتنا شيء: ما هي الخطوة التالية؟",
+    teach: "نريد أن نتأكد أننا شرحنا بوضوح. ما الخطوة التالية التي ستقومين بها؟",
     teachOpts: ["تنظير القولون", "إعادة اختبار البراز", "لا شيء الآن"],
     teachOk: "بالضبط. يكشف تنظير القولون سبب الدم الخفي. لنجد وقتًا يناسبكِ.",
     teachFix: ["ليس تمامًا. لا يُنصح بإعادة فحص البراز، لأن نتيجة ثانية طبيعية لا تلغي النتيجة الأولى. الخطوة التالية هي تنظير القولون. هل تريدين التحدث مع الممرضة ليلى؟", "ليس تمامًا. حتى لو كنتِ تشعرين أنكِ بخير، الخطوة التالية هي تنظير القولون. وجد فحص البراز دمًا خفيًّا، وتغيّرات الأمعاء لا تسبب أعراضًا في البداية غالبًا. يكشف التنظير السبب، ويمكن عادةً إزالة الزوائد الصغيرة (السلائل) خلال الفحص نفسه. هل تريدين التحدث مع الممرضة ليلى؟"],

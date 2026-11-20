@@ -45,8 +45,10 @@
   }
   function render() {
     const d = Store.S.data, h = (location.hash || "#/patient").replace(/\?.*$/, ""), [, r, id] = h.split("/");
-    document.querySelectorAll(".nav a").forEach((a) => a.classList.toggle("on", a.dataset.r === r || (r === "case" && a.dataset.r === "team")));
     const sk = (r || "patient") === "patient" ? "patient" : d.role;
+    // One button per job (Anna, 20 Nov): the person button says whose screen this is.
+    const pc = sk === "patient" && Store.byId(d.persona), who = sk === "patient" ? (pc ? String(pc.name).split(" ")[0] : null) : VIEWING[sk];
+    $("#startBtn").textContent = (["safety", "about"].includes(r) || !who) ? "Choose a person ▾" : `Viewing: ${who} ▾`;
     $("#role").value = sk; $("#lang").value = d.lang;
     // (Anna, 20 Nov: no screen dropdown in the top bar; "Choose a person" opens the chooser.)
     $("#clock").textContent = new Date(Store.now()).toLocaleString("en-GB", { weekday: "short", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit", timeZone: "Asia/Dubai" }) + " (UAE time)";
@@ -81,6 +83,7 @@
     lead: ["Dr. Khalid · programme lead", "Dr. Khalid", "You now see Dr. Khalid's screen: the dashboard, follow-up completed in time, who is left behind."]
   };
   // One line on staff screens: whose screen this is (replaces the old screen dropdown).
+  const VIEWING = { coordinator: "Noura, coordinator", gp: "Dr. Hessa, family doctor", specialist: "Dr. Omar, specialist", clinlead: "Dr. Mona, clinical lead", lead: "Dr. Khalid, programme lead" };
   const WHO = { coordinator: "Noura's screen (care coordinator)", gp: "Dr. Hessa's screen (family doctor)", specialist: "Dr. Omar's screen (GI specialist)", clinlead: "Dr. Mona's screen (clinical lead)", lead: "Dr. Khalid's screen (programme lead)" };
   const screenKey = () => ((location.hash || "#/patient").startsWith("#/patient") ? "patient" : Store.S.data.role);
   function switchScreen(k) {
@@ -102,45 +105,65 @@
   let demoOn = false; try { demoOn = localStorage.getItem("screenpath-demo-ui") === "1"; } catch (e) {}
   setDemo(demoOn);
   $("#demoBtn").onclick = () => setDemo(!document.body.classList.contains("demo-on"));
-  $("#tourBtn").onclick = () => Tour.open();
-  $("#startBtn").onclick = () => entry(true);
+  $("#tourBtn").onclick = () => Tour.toggle();
+  $("#startBtn").onclick = (e) => { e.stopPropagation(); entry(true); };
   // Judge entry: "How do you want to look at Kafila?" One tap sets role, persona and screen. Shown on the first open of a bare
   // link and from "Start"; deep links (#/patient, #/team, #/case/ID) open directly without it.
   const ENTRY = [
-    ["Patient · Fatima", "Positive stool test, WhatsApp to booking", { persona: "C-1042", hash: "#/patient" }],
-    ["Patient, urgent · Rajesh", "Very high blood pressure: a doctor calls today", { persona: "C-1043", lang: "en", hash: "#/patient" }],
-    ["Coordinator · Noura", "Worklist: what is urgent, late or returned", { role: "coordinator", hash: "#/team" }],
-    ["Family doctor · Dr. Hessa", "Rajesh's case: record the same-day call", { role: "gp", hash: "#/case/C-1043" }],
-    ["Specialist", "A referral to accept or reject, with the packet", { role: "specialist", hash: "#/case/C-2086" }],
-    ["Programme lead", "Dashboard: the loop, time to care, equity", { role: "lead", hash: "#/dashboard" }]
+    ["Fatima", "Positive stool test: WhatsApp to booking", { persona: "C-1042", hash: "#/patient" }, "Patients"],
+    ["Rajesh", "Urgent blood pressure: a doctor calls today", { persona: "C-1043", lang: "en", hash: "#/patient" }, "Patients"],
+    ["Ahmed", "Positive stool test, no reply yet", { persona: "C-1045", hash: "#/patient" }, "Patients"],
+    ["Mariam", "HPV positive", { persona: "C-1049", hash: "#/patient" }, "Patients"],
+    ["Salem", "HbA1c 7.2%: family doctor visit", { persona: "C-1050", hash: "#/patient" }, "Patients"],
+    ["Fatima, later", "Her referral is sent back by the clinic", { persona: "C-1042:returned", hash: "#/patient" }, "Patients"],
+    ["Noura", "Care coordinator: what is urgent, late or returned", { role: "coordinator", hash: "#/team" }, "Care team"],
+    ["Dr. Hessa", "Family doctor: Rajesh's same-day call", { role: "gp", hash: "#/case/C-1043" }, "Care team"],
+    ["Dr. Omar", "Specialist: a referral to accept or send back", { role: "specialist", hash: "#/case/C-2086" }, "Care team"],
+    ["Dr. Khalid", "Programme lead: the dashboard", { role: "lead", hash: "#/dashboard" }, "Care team"]
   ];
+  // "Choose a person": a small menu under the button, not a modal (Anna, 20 Nov: the popup was inconvenient).
   function entry(show) {
     let el = document.getElementById("entry");
-    if (!show) { if (el) el.remove(); return; }
-    if (!el) { el = document.createElement("div"); el.id = "entry"; el.className = "modal-bg"; document.body.appendChild(el); }
-    el.innerHTML = `<div class="modal" role="dialog" aria-modal="true" aria-labelledby="entryT"><h2 id="entryT">How do you want to look at Kafila?</h2>
-      <p class="small muted">Pick a person. Everything is synthetic; you can switch any time with “Choose a person” at the top.</p>
-      <div class="entry-grid">${ENTRY.map(([t, d], i) => `<button class="entry-b" data-e="${i}"><b>${t}</b><span class="tiny">${d}</span></button>`).join("")}
-        <button class="entry-b tour" data-e="tour"><b>▶ 3-minute tour</b><span class="tiny">Guided, six steps</span></button></div>
-      <div class="row" style="justify-content:space-between;margin-top:8px">${Store.S.data.version === "ar" ? `<a class="small" href="?lang=en#/patient">English version</a>` : `<a class="small" href="?lang=ar#/patient" lang="en">Also in Arabic <span lang="ar">(العربية)</span></a>`}<button class="btn sm" data-e="x">Just look around</button></div></div>`;
-    el.querySelectorAll("[data-e]").forEach((b) => (b.onclick = () => {
+    const btn = $("#startBtn");
+    if (!show) { if (el) el.remove(); btn.setAttribute("aria-expanded", "false"); return; }
+    if (el) return entry(false);
+    if (document.getElementById("aboutMenu")) { document.getElementById("aboutMenu").remove(); $("#aboutBtn").setAttribute("aria-expanded", "false"); }
+    el = document.createElement("div"); el.id = "entry"; el.className = "pick-menu"; el.setAttribute("role", "menu"); btn.parentNode.appendChild(el); btn.setAttribute("aria-expanded", "true");
+    el.innerHTML = `${ENTRY.map(([t, d, , g], i) => `${i === 0 || ENTRY[i - 1][3] !== g ? `<div class="pick-g tiny">${g}</div>` : ""}<button class="entry-b" role="menuitem" data-e="${i}"><b>${t}</b><span class="tiny">${d}</span></button>`).join("")}`;
+    el.querySelectorAll("[data-e]").forEach((b) => (b.onclick = async (ev) => {
+      ev.stopPropagation();
       const k = b.dataset.e; try { localStorage.setItem("kafila-entry", "1"); } catch (e) {}
       entry(false);
-      if (k === "tour") { Tour.open(); return; }
-      if (k === "x") return;
+      if (k === "tour") { Tour.start(); return; }
       const o = ENTRY[+k][2], d = Store.S.data;
       (d.ui = d.ui || {}).banner = o.role || (o.persona === "C-1042" ? "patient" : null);
-      if (o.role) { d.role = o.role; d.ui.tab = "mine"; } if (o.persona) { d.persona = o.persona; d.personaKey = o.persona; } if (o.lang) d.lang = o.lang;
-      Tour.collapse(); Tour.render(); Store.save();
+      if (o.role) { d.role = o.role; d.ui.tab = "mine"; } if (o.lang) d.lang = o.lang;
+      Tour.close(); Store.save();
       if (location.hash === o.hash) render(); else location.hash = o.hash;
+      if (o.persona) { await Patient.pickPersona(o.persona); render(); }
     }));
-    el.onkeydown = (e) => { if (e.key === "Escape") { try { localStorage.setItem("kafila-entry", "1"); } catch (x) {} entry(false); } };
+    el.onkeydown = (e) => { if (e.key === "Escape") { entry(false); btn.focus(); } };
     el.querySelector(".entry-b").focus();
   }
+  // "ⓘ About this demo": a small menu, same behaviour as the person menu.
+  function about2(show) {
+    let el = document.getElementById("aboutMenu"); const btn = $("#aboutBtn");
+    if (!show) { if (el) el.remove(); btn.setAttribute("aria-expanded", "false"); return; }
+    if (el) return about2(false);
+    entry(false);
+    el = document.createElement("div"); el.id = "aboutMenu"; el.className = "pick-menu"; el.setAttribute("role", "menu"); btn.parentNode.appendChild(el); btn.setAttribute("aria-expanded", "true");
+    el.innerHTML = `<button class="entry-b" role="menuitem" data-h="#/about"><b>How it works</b><span class="tiny">The problem, the rules and how the demo is built</span></button>
+      <button class="entry-b" role="menuitem" data-h="#/safety"><b>AI safety test</b><span class="tiny">50 questions run through the patient assistant</span></button>`;
+    el.querySelectorAll("[data-h]").forEach((b) => (b.onclick = (ev) => { ev.stopPropagation(); about2(false); Tour.close(); location.hash = b.dataset.h; }));
+    el.querySelector(".entry-b").focus();
+  }
+  $("#aboutBtn").onclick = (e) => { e.stopPropagation(); about2(true); };
+  document.addEventListener("click", (e) => {
+    const el = document.getElementById("entry"); if (el && !el.contains(e.target) && e.target.id !== "startBtn") entry(false);
+    const am = document.getElementById("aboutMenu"); if (am && !am.contains(e.target) && e.target.id !== "aboutBtn") about2(false);
+  });
+  document.addEventListener("keydown", (e) => { if (e.key !== "Escape") return; if (document.getElementById("entry")) { entry(false); $("#startBtn").focus(); } if (document.getElementById("aboutMenu")) { about2(false); $("#aboutBtn").focus(); } });
   render();
-  let seenEntry = false; try { seenEntry = localStorage.getItem("kafila-entry") === "1"; } catch (e) {}
-  const bare = !location.hash || location.hash === "#" || location.hash === "#/";
-  if (!seenEntry && bare) { Tour.collapse(); entry(true); }
-  if (!(location.hash || "#/patient").startsWith("#/patient")) Tour.collapse();
-  Tour.render();
+  // First open: no popup and no tour card, just Fatima's phone. ?tour=1 opens the tour at step 1.
+  if (/[?&]tour=1\b/.test(location.search + location.hash)) Tour.start(); else Tour.render();
 })();

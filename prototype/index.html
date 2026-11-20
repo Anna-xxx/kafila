@@ -17,18 +17,12 @@
 <body>
 <header class="top">
   <div class="logo"><i><img src="img/kafila-mark.svg" alt=""></i>Kafila</div>
-  <nav class="nav" aria-label="Views">
-    <a href="#/patient" data-r="patient">Patient phone</a>
-    <a href="#/team" data-r="team">Care team</a>
-    <a href="#/dashboard" data-r="dashboard">Dashboard</a>
-    <a href="#/safety" data-r="safety">AI safety test</a>
-    <a href="#/about" data-r="about">How it works</a>
-  </nav>
   <span class="sp"></span>
-  <span class="demo-pill">Pilot preview · synthetic data</span>
-  <button id="startBtn" class="demo-btn" title="Choose whose screen you see">Choose a person</button>
-  <button id="tourBtn" class="demo-btn primary-btn" aria-pressed="true" title="Open the 3-minute tour">▶ 3-minute tour</button>
+  <span class="demo-pill">Prototype · synthetic data</span>
+  <span class="pick-wrap"><button id="startBtn" class="demo-btn" title="Choose whose screen you see" aria-haspopup="true" aria-expanded="false">Choose a person ▾</button></span>
+  <button id="tourBtn" class="demo-btn primary-btn" aria-pressed="false" title="Open the 3-minute tour">▶ 3-minute tour</button>
   <button id="demoBtn" class="demo-btn" aria-pressed="false" title="Show demo controls">⚙ Demo tools</button>
+  <span class="pick-wrap"><button id="aboutBtn" class="demo-btn" title="How the demo works and the AI safety test" aria-haspopup="true" aria-expanded="false">ⓘ About<span class="hide-sm"> this demo</span> ▾</button></span>
 </header>
 <div class="ctrl" aria-label="Demo controls">
   <label for="role" hidden>Show the screen of</label>
@@ -48,7 +42,7 @@
   <button id="reset" title="Start the demo again">Reset demo</button>
 </div>
 <main id="view"></main>
-<p class="foot">Prototype for the Future Health Digital Innovation Challenge (Population Health · Challenge 05). All people, results, clinics and insurance rules are synthetic. Clinical logic follows published guidelines and is pending review by a licensed clinician. The AI assistant explains only; zones, deadlines and escalation come from a versioned rules table.</p>
+<p class="foot">Prototype for the Future Health Digital Innovation Challenge (Population Health · Challenge 05). All people, results, clinics and insurance rules are synthetic. Clinical logic follows published guidelines and is pending review by a licensed clinician. The AI assistant explains and may flag a concern for a clinician to review; zones, deadlines and escalation come from a versioned rules table. WhatsApp, Sahatna, Malaffi, UAE PASS, Thiqa, Daman and SEHA are names of their owners. Kafila is an independent concept and is not affiliated with or endorsed by them, DoH Abu Dhabi or ADPHC.</p>
 <script src="js/config.js"></script>
 <script src="js/rules.js"></script>
 <script src="js/i18n.js"></script>

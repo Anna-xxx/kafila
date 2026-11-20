@@ -190,8 +190,10 @@ tr.click:hover td { background: var(--surface-2); }
 .hero.z-yellow .hic { background: var(--yellow); } .hero.z-green .hic { background: var(--green); } .hero.z-red .hic { background: var(--red); }
 .why-row { margin-top: 6px; font-size: 13px; background: var(--surface-2); border-radius: 8px; padding: 6px 8px; }
 .steps { list-style: none; margin: 6px 0 0; padding: 0; }
-.steps li { display: grid; grid-template-columns: 26px 1fr auto; gap: 8px; align-items: center; padding: 5px 0; font-size: 14.5px; }
-.steps .d { width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--line); display: grid; place-items: center; font-size: 12px; font-weight: 800; }
+.steps li { display: grid; grid-template-columns: 26px 1fr; gap: 8px; align-items: start; padding: 5px 0; font-size: 14.5px; }
+.steps li > .when { grid-column: 2; margin-top: -4px; }
+.steps li > span:empty { display: none; }
+.steps .d { margin-top: 1px; width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--line); display: grid; place-items: center; font-size: 12px; font-weight: 800; }
 .steps .d.on { border-color: var(--brand); color: var(--brand); }
 .steps .when { font-size: 12.5px; font-weight: 700; color: var(--ink-2); }
 .btn.block { width: 100%; justify-content: center; }
@@ -501,8 +503,8 @@ details.srcs { margin-top: 8px; } details.srcs summary { cursor: pointer; font-s
 #tour .t-acts { display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0 4px; }
 #tour .t-acts .btn, #tour .t-nav .btn { min-height: 40px; }
 #tour .t-nav { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 12px 12px; }
-#tour .t-minline { display: block; width: 100%; text-align: start; padding: 10px 12px; border: 0; background: transparent; cursor: pointer; font: inherit; color: inherit; }
-@media (max-width: 700px) { #tour, #tour[dir="rtl"] { left: 8px; right: 8px; bottom: 8px; width: auto; max-width: none; max-height: 55vh; overflow: auto; } }
+@media (max-width: 700px) { #tour, #tour[dir="rtl"] { left: 8px; right: 8px; bottom: 8px; width: auto; max-width: none; max-height: 45vh; overflow: auto; font-size: 14px; }
+  #tour .t-body p.t-req { display: none; } #tour .t-dots { padding-top: 6px; } #tour .t-dots button { width: 28px; height: 28px; } }
 
 /* Negative paths: quiet text buttons (still 44px tall) for "phone call instead", "not me", "stop messages". */
 .phone .alt-row { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
@@ -573,3 +575,15 @@ details.srcs { margin-top: 8px; } details.srcs summary { cursor: pointer; font-s
 .chip.filt { background: var(--surface); border: 1.5px solid var(--line); color: var(--ink); cursor: pointer; min-height: 32px; }
 .chip.filt.on { background: var(--brand-soft); border-color: var(--brand); color: var(--brand); }
 .slot .choose { display: flex; align-items: center; justify-content: center; min-height: 48px; margin-top: 8px; }
+.pick-wrap { position: relative; }
+.pick-menu { position: absolute; top: calc(100% + 6px); right: 0; z-index: 60; width: 320px; max-height: calc(100vh - 80px); overflow: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,.14); padding: 6px; display: flex; flex-direction: column; gap: 2px; }
+.pick-menu .entry-b { border: 0; border-radius: 8px; padding: 8px 10px; }
+.pick-menu .entry-b.tour { border: 1px solid var(--brand); margin-top: 4px; }
+.pick-foot { padding: 6px 10px 2px; }
+@media (max-width: 600px) { .pick-menu { position: fixed; top: 56px; left: 16px; right: 16px; width: auto; } }
+.pick-g { padding: 8px 10px 2px; font-weight: 700; color: var(--ink-2); text-transform: uppercase; letter-spacing: .04em; }
+/* v41: no tab row. Top bar = logo · person menu · tour · demo tools · about menu. */
+#startBtn { max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+@media (max-width: 600px) { .top { gap: 8px; padding: 8px 12px; } .top .demo-btn { font-size: 13px; padding: 6px 10px; } #startBtn { max-width: calc(100vw - 140px); } }
+@media (max-width: 600px) { .hide-sm { display: none; } }
+#tour .t-body { min-height: 190px; } @media (max-width: 700px) { #tour .t-body { min-height: 0; } }

@@ -1,0 +1,23 @@
+const {chromium}=require('playwright');const U='http://localhost:8765/';
+(async()=>{const b=await chromium.launch();const ok=(n,c)=>console.log((c?'PASS ':'FAIL ')+n);const errs=[];
+for(const w of [1366,390]){const p=await b.newPage({viewport:{width:w,height:w>500?800:844}});p.on('pageerror',e=>errs.push(e.message));
+await p.goto(U);await p.evaluate(()=>localStorage.clear());await p.reload();await p.waitForTimeout(600);
+ok(w+' no tab row',!(await p.locator('nav.nav').count()));
+const L=async()=>(await p.textContent('#startBtn')).trim();
+ok(w+' Viewing: Fatima '+await L(),await L()==='Viewing: Fatima ▾');
+const tops=await p.evaluate(()=>[...document.querySelectorAll('.top .demo-btn')].map(b=>Math.round(b.getBoundingClientRect().top)));
+if(w>500) ok(w+' one row '+tops,new Set(tops).size===1);
+await p.screenshot({path:`bar-${w}.png`,clip:{x:0,y:0,width:w,height:w>500?70:140}});
+await p.click('#startBtn');await p.click('#entry [data-e="6"]');await p.waitForTimeout(400);ok(w+' Noura label '+await L(),await L()==='Viewing: Noura, coordinator ▾');
+await p.click('#startBtn');await p.click('#entry [data-e="9"]');await p.waitForTimeout(400);ok(w+' Khalid label',await L()==='Viewing: Dr. Khalid, programme lead ▾');
+await p.click('#startBtn');await p.click('#entry [data-e="3"]');await p.waitForTimeout(500);ok(w+' Mariam label '+await L(),await L()==='Viewing: Mariam ▾');
+await p.click('#aboutBtn');await p.waitForTimeout(150);ok(w+' about menu',await p.isVisible('#aboutMenu')&&/How it works/.test(await p.locator('#aboutMenu').innerText()));
+await p.screenshot({path:`about-${w}.png`});
+await p.keyboard.press('Escape');ok(w+' about Esc',!(await p.locator('#aboutMenu').count()));
+await p.click('#aboutBtn');await p.mouse.click(5,w>500?700:800);ok(w+' about outside',!(await p.locator('#aboutMenu').count()));
+await p.click('#aboutBtn');await p.click('#aboutMenu [data-h="#/about"]');await p.waitForTimeout(300);ok(w+' about route + Choose label',p.url().endsWith('#/about')&&await L()==='Choose a person ▾');
+await p.click('#aboutBtn');await p.click('#aboutMenu [data-h="#/safety"]');await p.waitForTimeout(300);ok(w+' safety route',p.url().endsWith('#/safety'));
+await p.click('#startBtn');await p.waitForTimeout(100);await p.locator('#aboutBtn').dispatchEvent('click');ok(w+' only one menu',(await p.locator('.pick-menu').count())===1);
+ok(w+' no h-scroll',!(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth)));
+await p.close();}
+console.log('errors',errs);await b.close()})();

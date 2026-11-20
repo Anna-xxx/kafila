@@ -154,5 +154,10 @@
     log(c.id, who, "State → " + STATE_NAMES[state] + (note ? " (" + note + ")" : ""), "state");
   }
   function reset() { S.data = fresh(); save(); }
-  window.Store = { S, fitClocks, inTime, addWorkdays, workdaysBetween, openConsult, callBlocks, bookCall, rosterDay, windowOf, specialistOf, load, save, log, now, byId, status, move, reset, current, daysInState, STATE_NAMES, CLOSE_REASONS, DAY, on: (f) => S.listeners.push(f) };
+  // One patient back to the start (BA, 20 Nov: choosing "Fatima" after "Fatima, later" must start her from the beginning).
+  function resetCase(id) {
+    const i = S.data.cases.findIndex((c) => c.id === id), seed = S.seed.cases.find((c) => c.id === id); if (i < 0 || !seed) return;
+    S.data.cases[i] = JSON.parse(JSON.stringify(seed)); S.data.log = S.data.log.filter((l) => l.caseId !== id); if (S.data.chats) delete S.data.chats[id];
+  }
+  window.Store = { S, fitClocks, inTime, addWorkdays, workdaysBetween, openConsult, callBlocks, bookCall, rosterDay, windowOf, specialistOf, load, save, log, now, byId, status, move, reset, resetCase, current, daysInState, STATE_NAMES, CLOSE_REASONS, DAY, on: (f) => S.listeners.push(f) };
 })();

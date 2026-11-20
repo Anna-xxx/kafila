@@ -70,8 +70,8 @@
   const TEACH = {
     colonoscopy: null, // uses I18N teach texts
     colposcopy: {
-      en: { q: "One quick check so nothing is missed: what is the next step?", o: ["A colposcopy with a gynaecologist", "Repeat the HPV test in 5 years", "Nothing for now"], ok: "Exactly. A colposcopy looks closely at the cervix.", fix: "Not quite. The next step is a colposcopy with a gynaecologist." },
-      ar: { q: "سؤال سريع حتى لا يفوتنا شيء: ما هي الخطوة التالية؟", o: ["تنظير عنق الرحم مع طبيبة نسائية", "إعادة فحص HPV بعد 5 سنوات", "لا شيء الآن"], ok: "بالضبط. تنظير عنق الرحم ينظر عن قرب إلى عنق الرحم.", fix: "ليس تمامًا. الخطوة التالية هي تنظير عنق الرحم مع طبيبة نسائية." }
+      en: { q: "We want to be sure we explained it clearly. What will you do next?", o: ["A colposcopy with a gynaecologist", "Repeat the HPV test in 5 years", "Nothing for now"], ok: "Exactly. A colposcopy looks closely at the cervix.", fix: "Not quite. The next step is a colposcopy with a gynaecologist." },
+      ar: { q: "نريد أن نتأكد أننا شرحنا بوضوح. ما الخطوة التالية التي ستقومين بها؟", o: ["تنظير عنق الرحم مع طبيبة نسائية", "إعادة فحص HPV بعد 5 سنوات", "لا شيء الآن"], ok: "بالضبط. تنظير عنق الرحم ينظر عن قرب إلى عنق الرحم.", fix: "ليس تمامًا. الخطوة التالية هي تنظير عنق الرحم مع طبيبة نسائية." }
     },
     remeasure_then_doctor_today: null // no quiz on the urgent card (medic M2): the doctor's call is the check
   };
@@ -141,12 +141,12 @@
   const ic = (n, cls = "") => `<svg class="ic ${cls}" viewBox="0 0 24 24" aria-hidden="true"><path d="${P[n]}"/></svg>`;
   // Demo patients. To add a story: one line here; `preset` (optional) prepares the case when it is picked.
   const PERSONAS = [
-    { key: "C-1042", id: "C-1042", label: "Fatima · positive stool test (FIT)", cap: "Fatima, 52 · positive stool test (FIT)" },
+    { key: "C-1042", id: "C-1042", label: "Fatima · positive stool test (FIT)", cap: "Fatima, 52 · positive stool test (FIT)", preset: async () => { Store.resetCase("C-1042"); } },
     { key: "C-1043", id: "C-1043", label: "Rajesh · blood pressure 185/115 (urgent)", cap: "Rajesh, 45 · blood pressure 185/115 · a doctor must call today" },
-    { key: "C-1045", id: "C-1045", label: "Ahmed · positive FIT, no reply yet", cap: "Ahmed, 61 · positive FIT · no reply for 6 days (channel ladder)" },
+    { key: "C-1045", id: "C-1045", label: "Ahmed · positive FIT, no reply yet", cap: "Ahmed, 61 · positive FIT · no reply for 6 days: the clinic tries SMS, then a call" },
     { key: "C-1049", id: "C-1049", label: "Mariam · HPV positive", cap: "Mariam, 38 · HPV 16/18 positive" },
     { key: "C-1050", id: "C-1050", label: "Salem · HbA1c 7.2%", cap: "Salem, 55 · HbA1c 7.2% · family doctor visit" },
-    { key: "C-1042:returned", id: "C-1042", label: "Fatima · referral sent back by the clinic", cap: "Fatima, 52 · the clinic sent her referral back", preset: async () => {
+    { key: "C-1042:returned", id: "C-1042", label: "Fatima, later · her referral is sent back by the clinic", cap: "Fatima, 52, later · the clinic sent her referral back", preset: async () => {
       const c = Store.byId("C-1042");
       if (!c.rejected) {
         tourGo("C-1042", { tab: "book" }); await tourBook();
@@ -192,7 +192,7 @@
   // Arabic texts are written to a woman by default; for a man, switch the common verb forms (machine draft).
   const MASC = [["افتحي", "افتح"], ["احجزي", "احجز"], ["اختاري", "اختر"], ["اسألي", "اسأل"], ["اضغطي", "اضغط"], ["ابدئي", "ابدأ"], ["رتّبي", "رتّب"], ["أحضري", "أحضر"],
     ["اتبعي", "اتبع"], ["اذهبي", "اذهب"], ["انتظري", "انتظر"], ["اقرئي", "اقرأ"], ["تحدثي", "تحدث"], ["توافقين", "توافق"], ["أرسلي", "أرسل"], ["تدفعينه", "تدفعه"],
-    ["فهمتِ", "فهمت"], ["قلقة", "قلق"], ["خائفة", "خائف"], ["تحتاجين", "تحتاج"], ["اكتبي", "اكتب"], ["شعرتِ", "شعرت"], ["افتحيها", "افتحها"], ["اتّبعي", "اتّبع"], ["تناولي", "تناول"], ["تأكدي", "تأكد"], ["اتصلي", "اتصل"], ["خطّطي", "خطّط"], ["أنتِ الآن تتحدثين", "أنت الآن تتحدث"],
+    ["فهمتِ", "فهمت"], ["قلقة", "قلق"], ["خائفة", "خائف"], ["تحتاجين", "تحتاج"], ["اكتبي", "اكتب"], ["شعرتِ", "شعرت"], ["افتحيها", "افتحها"], ["اتّبعي", "اتّبع"], ["تناولي", "تناول"], ["تأكدي", "تأكد"], ["اتصلي", "اتصل"], ["خطّطي", "خطّط"], ["أنتِ الآن تتحدثين", "أنت الآن تتحدث"], ["ستقومين بها", "ستقوم بها"],
     ["أخبريها", "أخبرها"], ["كنتِ", "كنت"], ["تتناولين", "تتناول"], ["توقفي", "توقف"], ["تغيّريه", "تغيّره"], ["ستحصلين", "ستحصل"], ["تقودي", "تقُد"], ["تحدّثي", "تحدّث"], ["تشعرين", "تشعر"], ["تريدين", "تريد"], ["كِ", "ك"]];
   const MALE_GP = /Yousef|Omar|Khalid|Faisal|Rami|Sami/;
   const GPM = [["تراجع طبيبة الأسرة", "يراجع طبيب الأسرة"], ["ترسل طبيبة الأسرة", "يرسل طبيب الأسرة"], ["أرسلت طبيبة الأسرة", "أرسل طبيب الأسرة"], ["طبيبة الأسرة", "طبيب الأسرة"]];
@@ -339,6 +339,12 @@
       } else if (slotsFor(c)) askBarriers(c);
       else push(c, { t: "in", text: t.urgentText, tag: "prepared" });
     }
+    if (a === "teachskip") {
+      clearQr(c); push(c, { t: "me", text: lang === "ar" ? "تخطي" : "Skip" });
+      c.teachBack = "skipped"; if (OPEN.includes(c.state)) Store.move(c, "acknowledged", "Patient", "acknowledged, teach-back skipped");
+      else Store.log(c.id, "Patient", "Teach-back skipped.", "info");
+      if (slotsFor(c)) askBarriers(c); else push(c, { t: "in", text: t.urgentText, tag: "prepared" });
+    }
     if (a === "teachgo") {
       clearQr(c);
       if (slotsFor(c)) askBarriers(c); else push(c, { t: "in", text: t.urgentText, tag: "prepared" });
@@ -432,7 +438,7 @@
     if (p) return p[lang] || p.en;
     return { q: T.teach, o: T.teachOpts, ok: T.teachOk, fix: T.teachFix };
   }
-  function askTeach(c, lang) { const tb = teachFor(c, lang); if (!tb) { push(c, { t: "in", text: I18N[lang].urgentText, tag: "prepared" }); return; } push(c, { t: "in", text: tb.q, tag: "prepared" }); push(c, { t: "qr", opts: tb.o.map((o, i) => ["teach", o, i]) }); }
+  function askTeach(c, lang) { const tb = teachFor(c, lang); if (!tb) { push(c, { t: "in", text: I18N[lang].urgentText, tag: "prepared" }); return; } push(c, { t: "in", text: tb.q, tag: "centre" }); push(c, { t: "qr", opts: [...tb.o.map((o, i) => ["teach", o, i]), ["teachskip", lang === "ar" ? "تخطي" : "Skip"]] }); }
   function askBarriers(c) { push(c, { t: "in", key: "barrierAsk" }); push(c, { t: "multi", sel: [] }); }
 
   function handleFlag(c, r) {
@@ -688,7 +694,7 @@
     if (m.t === "multi") return `<div class="qr">${Object.entries(T.barriers).map(([k, v]) => `<button data-act="bar" data-arg="${k}" aria-pressed="${m.sel.includes(k)}" style="${m.sel.includes(k) ? "background:var(--brand-soft)" : ""}">${m.sel.includes(k) ? "✓ " : ""}${esc(v)}</button>`).join("")}<button data-act="barDone" style="background:var(--brand);color:#fff">${esc(T.barrierDone)}</button></div>`;
     const body = m.key ? fill(T[m.key], { clinic: clinicOf(c, lang), gp: nm(c.gp || "Dr. Hessa M.", lang), name: first(c) }) : (lang === "ar" && m.textAr) || m.text;
     const who = m.t === "nurse" ? (lang === "ar" ? "الممرضة ليلى · من فريق مركزك" : "Nurse Layla · a person at your centre") : clinicOf(c, lang);
-    const tag = m.tag === "ai" ? T.ai : m.tag === "prepared" ? (lang === "ar" ? "إجابة تلقائية · أعدّها مركزك" : "Automatic answer · prepared by your centre") : m.tag === "fixed" ? (lang === "ar" ? "قاعدة سلامة · بدون ذكاء اصطناعي" : "Safety rule · no AI") : "";
+    const tag = m.tag === "ai" ? T.ai : m.tag === "prepared" ? (lang === "ar" ? "إجابة تلقائية · أعدّها مركزك" : "Automatic answer · prepared by your centre") : m.tag === "centre" ? (lang === "ar" ? "مركزك الصحي" : "Your health centre") : m.tag === "fixed" ? (lang === "ar" ? "قاعدة سلامة · بدون ذكاء اصطناعي" : "Safety rule · no AI") : "";
     const cmp = stripCmp(m.c);
     return `<div class="bub"><div class="who">${esc(who)}</div>${esc(body)}
       ${cmp ? `<div class="cmp">${esc(T.compared)}: ${esc(cmp)}</div>` : ""}
@@ -826,20 +832,16 @@
     const d = Store.S.data, c = persona(); deliverDue(c);
     const lang = langOf(c), T = I18N[lang];
     const tryQ = [...((TRY[pathway(c)] || TRY.colonoscopy)[lang] || []), ...TRY.safety[lang].filter((q) => /scared|خائفة/.test(q))], tryRed = TRY.safety[lang].filter((q) => !/scared|خائفة/.test(q));
-    // One person picker: the select follows whoever the phone shows (Anna, 20 Nov: pickers disagreed).
-    const selKey = PERSONAS.some((x) => x.key === d.personaKey && x.id === d.persona) ? d.personaKey : (PERSONAS.find((x) => x.id === d.persona) || PERSONAS[0]).key;
     root.innerHTML = `<div class="cols pcols">
       <div class="stage">
         ${(() => { const pk = PERSONAS.find((x) => x.key === (d.personaKey || d.persona)) || PERSONAS.find((x) => x.id === c.id); const he = c.sex === "female" ? ["Her", "her"] : ["His", "him"];
           return `<div class="p-cap" dir="ltr" lang="en"><span>${esc(pk ? pk.cap : c.name)}${c.lang === "ar" ? ` · ${lang === "ar" ? `Shown in Arabic, as ${he[1] === "her" ? "her" : "his"} clinic writes it.` : `${he[0]} clinic writes to ${he[1]} in Arabic. Tap العربية to see it.`}` : d.version === "ar" ? ` · ${he[0]} clinic writes to ${he[1]} in English.` : " · English"}</span>
             ${c.lang === "ar" || d.version === "ar" ? `<span class="p-lang" role="group" aria-label="Phone language"><button data-plang="en" aria-pressed="${lang !== "ar"}">English</button><button data-plang="ar" lang="ar" aria-pressed="${lang === "ar"}">العربية</button></span>` : ""}</div>`; })()}
         ${phone(c, lang)}
-        <p class="sim-note">${lang === "ar" ? "محاكاة. لا تُرسل أي رسائل إلى أرقام حقيقية. بيانات اصطناعية." : "Simulation. Nothing is sent to real numbers. Synthetic data."}</p>
+        <p class="sim-note">${lang === "ar" ? "محاكاة. لا تُرسل أي رسائل إلى أرقام حقيقية. بيانات اصطناعية." : "Simulation. Nothing is sent to real numbers. Synthetic data."}${["wa", "lock"].includes(screen(c)) ? `<br>${lang === "ar" ? "شاشة مراسلة محاكاة. لا علاقة لها بواتساب أو ميتا." : "Simulated messenger screen. Not affiliated with WhatsApp or Meta."}` : ""}</p>
       </div>
       <div class="demo-side">
         <div class="card"><h2>Demo tools: try it yourself</h2>
-          <div class="row" style="margin-bottom:8px"><label class="tiny" for="persona">Scenario:</label>
-          <select id="persona" class="btn sm">${PERSONAS.map((x) => `<option value="${x.key}" ${x.key === selKey ? "selected" : ""}>${esc(x.label)}</option>`).join("")}</select></div>
           <p class="muted small">Everything here is simulated. Nothing is sent to real phones.</p>
           <h3>Ask a question as the patient (tap one):</h3>
           <div class="row">${tryQ.map((q) => `<button class="btn sm" data-try="${esc(q)}">${esc(q)}</button>`).join("")}</div>
@@ -861,14 +863,6 @@
     const tm = root.querySelector("#ctimer");
     if (tm) { const t0 = (ui().callT0 = ui().callT0 || Date.now()); clearInterval(window.__ct); window.__ct = setInterval(() => { const el = document.querySelector("#ctimer"); if (!el) return clearInterval(window.__ct); const sec = Math.floor((Date.now() - t0) / 1000); el.textContent = String(Math.floor(sec / 60)).padStart(2, "0") + ":" + String(sec % 60).padStart(2, "0"); }, 1000); }
     else ui().callT0 = null;
-    root.querySelector("#persona").onchange = async (e) => {
-      const x = PERSONAS.find((p) => p.key === e.target.value) || PERSONAS[0];
-      d.persona = x.id; d.personaKey = x.key; const p = persona(); ui().overlay = null; ui().sheet = null;
-      // Open the patient's own chat at once, so switching patient visibly changes the phone (Anna: "не все работают").
-      if (screen(p) === "lock") p.pscreen = "wa";
-      if (x.preset) await x.preset();
-      Store.save();
-    };
     const f = root.querySelector("#f");
     if (f) {
       f.onsubmit = (e) => { e.preventDefault(); const v = root.querySelector("#msg").value; root.querySelector("#msg").value = ""; send(v); };
@@ -903,5 +897,14 @@
     Store.save();
   }
   async function tourBook() { const c = persona(); if (c.slot) return; const P = slotsFor(c); if (!P) return; ui().sheet = P.list[0].id; await act("confirm"); ui().sheet = null; Store.save(); }
-  window.Patient = { callBy, callByText, render, toast, esc, fill, fmtDate, SLOTS, tourGo, tourBook, send };
+  // One person picker for the whole demo: the "Choose a person" menu calls this (Anna, 20 Nov: one list).
+  async function pickPersona(key) {
+    const d = Store.S.data, x = PERSONAS.find((p) => p.key === key) || PERSONAS[0];
+    d.persona = x.id; d.personaKey = x.key; ui().overlay = null; ui().sheet = null;
+    if (x.preset) await x.preset();
+    // Open the patient's own chat at once, so switching patient visibly changes the phone (Anna: "не все работают").
+    const p = persona(); if (screen(p) === "lock") p.pscreen = "wa";
+    Store.save();
+  }
+  window.Patient = { pickPersona, PERSONAS, callBy, callByText, render, toast, esc, fill, fmtDate, SLOTS, tourGo, tourBook, send };
 })();

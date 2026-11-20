@@ -1,0 +1,27 @@
+const {chromium}=require('playwright');const U='http://localhost:8765/';
+(async()=>{const b=await chromium.launch();const errs=[];const ok=(n,c)=>console.log((c?'PASS ':'FAIL ')+n);
+for(const vp of [{width:1280,height:900},{width:390,height:844}]){const p=await b.newPage({viewport:vp});p.on('pageerror',e=>errs.push(e.message));const w=vp.width;
+await p.goto(U);await p.evaluate(()=>localStorage.clear());await p.reload();await p.waitForTimeout(700);
+ok(w+' bare open: no entry, no tour, no overlay',!(await p.locator('#entry').count())&&!(await p.locator('#tour').count())&&!(await p.locator('.overlay,.modal').count()));
+ok(w+' Fatima phone',await p.evaluate(()=>Store.S.data.persona==='C-1042')&&await p.isVisible('.phone'));
+ok(w+' tour btn label',(await p.textContent('#tourBtn')).trim()==='▶ 3-minute tour');
+await p.click('#tourBtn');await p.waitForTimeout(200);ok(w+' tour opens, btn says Close',await p.isVisible('#tour')&&(await p.textContent('#tourBtn')).trim()==='■ Close tour'&&await p.getAttribute('#tourBtn','aria-pressed')==='true');
+ok(w+' no minimise',!(await p.locator('#tour [data-t=min], #tour .t-minline').count()));
+await p.click('#tour [data-t=next]');await p.waitForTimeout(600);ok(w+' still open after Next',await p.isVisible('#tour .t-body'));
+await p.click('#tourBtn');await p.waitForTimeout(200);ok(w+' btn closes',!(await p.locator('#tour').count())&&(await p.textContent('#tourBtn')).trim()==='▶ 3-minute tour');
+await p.click('#tourBtn');await p.click('#tour [data-t=close]');ok(w+' × closes',!(await p.locator('#tour').count())&&(await p.textContent('#tourBtn')).trim()==='▶ 3-minute tour');
+await p.reload();await p.waitForTimeout(500);ok(w+' reload keeps closed',!(await p.locator('#tour').count()));
+await p.goto(U+'?tour=1');await p.waitForTimeout(600);ok(w+' ?tour=1 opens step 1',await p.isVisible('#tour')&&/1\. Fatima gets a message/.test(await p.locator('#tour').innerText()));
+await p.screenshot({path:'v41-tour-'+w+'.png'});
+await p.click('#startBtn');await p.waitForTimeout(200);const mt=await p.locator('#entry').innerText();
+ok(w+' menu groups',/Patients/i.test(mt)&&/Care team/i.test(mt)&&!/Also in Arabic|3-minute tour/.test(mt)&&(await p.locator('#entry .entry-b').count())===10&&/Fatima, later/.test(mt));
+await p.screenshot({path:'v41-menu-'+w+'.png'});
+await p.mouse.click(10,vp.height-10);await p.waitForTimeout(150);ok(w+' outside click closes',!(await p.locator('#entry').count()));
+await p.click('#startBtn');await p.keyboard.press('Escape');ok(w+' Esc closes',!(await p.locator('#entry').count()));
+await p.click('#startBtn');await p.click('#entry [data-e="5"]');await p.waitForTimeout(500);ok(w+' returned Fatima, tour closed',await p.evaluate(()=>Store.S.data.personaKey==='C-1042:returned')&&!(await p.locator('#tour').count()));
+await p.click('#startBtn');await p.click('#entry [data-e="0"]');await p.waitForTimeout(500);ok(w+' Fatima restarts after Fatima, later',await p.evaluate(()=>!Store.byId('C-1042').rejected&&Store.S.data.personaKey==='C-1042'));
+ok(w+' no scenario select',!(await p.locator('#persona').count()));
+await p.goto(U+'#/team');await p.evaluate(()=>localStorage.clear());await p.reload();await p.waitForTimeout(500);ok(w+' deep link team no tour',!(await p.locator('#tour,#entry').count())&&/#\/team/.test(p.url()));
+const ov=await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth);ok(w+' no h-scroll',!ov);
+await p.close();}
+console.log('errors',errs);await b.close()})();
